@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btl.findjob.mapper.PersonGraphMapper">
+	<select id="personGetGraph" resultType="com.btl.findjob.model.PersonInfoGraphDTO">
+		select ci.ci_companyName, cp.cp_month, cp.cp_totalcnt, cp.cp_incnt, cp.cp_outcnt
+		from btl.companyinfo ci, btl.companypersonal cp
+		where ci.ci_companyName = cp.ci_companyName
+		        and ci.ci_companyName = #{ci_companyName}
+		order by 1;
+	</select>
+</mapper>
