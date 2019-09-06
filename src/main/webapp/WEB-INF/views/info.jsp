@@ -24,3 +24,7 @@
 
 <%@ include file="includes/footer.jsp" %>
 
+<c:forEach items="${graph}" var="g">
+	${g.ci_companyName} / ${g.cp_month } / ${g.cp_totalcnt} / ${g.cp_incnt} / ${g.cp_outcnt}<br>
+</c:forEach>
+
