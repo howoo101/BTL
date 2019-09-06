@@ -6,6 +6,6 @@ import com.btl.findjob.model.CompanyInfoDTO;
 
 public interface CompanyService {
 
-	public List<CompanyInfoDTO>companyGetList(int startNum,String keyword);
+	public List<CompanyInfoDTO> companyGetList(String keyword, String startNum);
 
 }
