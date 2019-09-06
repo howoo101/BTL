@@ -146,54 +146,60 @@ window.onload = function () {
 const ctx4 = document.getElementById("myChart").getContext("2d");
 
 const myChart = new Chart(ctx4, {
-    type: "bar",
+	 type: "bar",
 
-    data: {
-        datasets: [
-            // 1번 데이터셋
-            {
-                label: "Bar1 Dataset",
-                data: [10, 20, 30, 40],
-                backgroundColor: "rgba(153, 102, 255, 0.2)",
-                borderColor: "rgba(153, 102, 255, 0.2)",
-            },
-            // 2번 데이터셋
-            {
-                label: "Bar2 Dataset",
-                data: [40, 30, 50, 20],
-                backgroundColor: "rgba(255, 159, 64, 0.2)",
-                borderColor: "rgba(255, 159, 64, 0.2)",
-            },
-            // 3번 데이터셋
-            {
-                label: "Line Dataset",
-                data: [50, 50,80, 60],
-                // 선 아래 채우는 걸 false로
-                fill: false,
-                backgroundColor : ["rgba(255, 99, 132, 0.5)"],
-                borderColor: ["rgba(255, 99, 132, 0.5)"],
+     data: {
+       datasets: [
+         // 1번 데이터셋
+         {
+           label: "입사자",
+           data: [10, 20, 30, 40],
+           backgroundColor: "rgba(153, 102, 255, 0.2)",
+           borderColor: "rgba(153, 102, 255, 0.2)"
+         },
+         // 2번 데이터셋
+         {
+           label: "퇴사자",
+           data: [40, 30, 50, 20],
+           backgroundColor: "rgba(255, 159, 64, 0.2)",
+           borderColor: "rgba(255, 159, 64, 0.2)"
+         },
+         // 3번 데이터셋
+         {
+           label: "총 인원",
+           data: [50, 50, 80, 60],
+           // 선 아래 채우는 걸 false로
+           backgroundColor: ["rgba(255, 99, 132, 0.5)"],
+           borderColor: ["rgba(255, 99, 132, 0.5)"],
 
-                // 바 형태였던 그래프를 라인으로
-                type: "line"
-            }
-        ],
+           // 바 형태였던 그래프를 라인으로
+           type: "line"
+         }
+       ],
 
-        // x축 이름들
-        labels: ["January", "February", "March", "April"]
-    },
+       // x축 이름들
+       labels: ["January", "February", "March", "April"]
+     },
 
-    options: {
-        scales: {
-            //X,Y축 옵션
-            yAxes: [
-                {
-                    ticks: {
-                        beginAtZero: true //Y축의 값이 0부터 시작
-                    }
-                }
-            ]
-        }
-    }
+     options: {
+       elements: {
+         line: {
+           fill: false,
+           tension: 0 // disables bezier curves
+         }
+       },
+
+       scales: {
+         //X,Y축 옵션
+         yAxes: [
+           {
+             ticks: {
+               beginAtZero: true //Y축의 값이 0부터 시작
+             }
+           }
+         ]
+       }
+     }
 });
 
     var ctx5 = document.getElementById('companyChart').getContext('2d');
