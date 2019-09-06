@@ -13,9 +13,9 @@
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
 
         <article class="center">
-            <form action="" class="form-inline row" id="main-search-form" novalidate="novalidate">
+            <form action="search" class="form-inline row" id="main-search-form" novalidate="novalidate">
                 <div class="form-group">
-                    <input class="form-control form-control-lg" type="text" placeholder="기업명을 검색해주세요" id="inputLarge">
+                    <input class="form-control form-control-lg" name="keyword" type="text" placeholder="기업명을 검색해주세요" id="inputLarge">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
                 </div>
             </form>

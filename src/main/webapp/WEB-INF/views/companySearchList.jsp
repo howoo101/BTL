@@ -1,56 +1,153 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	
+</head>
+<body>
+	<%@ include file="includes/header.jsp"%>
+	<div class="container mt-4">
+		<div class="card border-primary" id="go">
+			<h5 style="color: royalblue;">기업 검색 결과</h5>
 
-
-<div class="container mt-4">
-	<div class="card border-primary">
-		<h5 style="color: royalblue;">기업 검색 결과</h5>
-		<hr style="border: 1px solid #c7d5f8; padding: 0px;">
-		<div class="card-body">
-
-			<div class="row">
-				<div class="container-fluid">
+			<c:forEach items="${companyList }" var="item">
+				<div class="card-body" data-startNo=${item.ci_id }>
+					<hr style="border: 1px solid #c7d5f8; padding: 0px;">
 					<div class="row">
-						<div class="col-lg-6 ml-5">
+						<div class="container-fluid">
 							<div class="row">
-								<h4>
-									(주)BTL
-									<button class="btn btn-outline-danger">♡</button>
-								</h4>
-							</div>
-							<div class="row">IT/웹/통신 | 서울 서초구</div>
-							<div class="row">평균연봉 4534 만원</div>
-						</div>
-
-						<div class="col-lg-auto">
-							<div class="row ">
-								<h5 class="">*****</h5>
-							</div>
-							<div class="row "
-								style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">
-								<div class="col-sm-12 text-center">23</div>
-								<div class="col-sm-12 text-center">
-									<a href="">리뷰 코멘트</a>
+								<div class="col-lg-6 ml-5">
+									<div class="row justify-content-center">
+										<h4>
+											${item.ci_companyName}
+											<button class="btn btn-outline-danger">♡</button>
+										</h4>
+									</div>
+									<div class="row justify-content-center">
+										${item.ci_industry } | ${item.ci_address }</div>
+									<div class="row justify-content-center">평균연봉 4534 만원</div>
 								</div>
-							</div>
-						</div>
-						<div class="col-lg-auto text-center">
-							<div class="row">
-								<h5>2.9</h5>
-							</div>
-							<div class="row " style="">
-								<div class="col-sm-12 text-center">23</div>
-								<div class="col-sm-12 text-center">
-									<a href="">면접정보</a>
+
+								<div class="col-lg-auto">
+									<div class="row justify-content-center">
+										<h5 class="">*****</h5>
+									</div>
+									<div class="row "
+										style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">
+										<div class="col-sm-12 text-center">23</div>
+										<div class="col-sm-12 text-center">
+											<a href="">리뷰 코멘트</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-auto text-center">
+									<div class="row justify-content-center">
+										<h5>2.9</h5>
+									</div>
+									<div class="row " style="">
+										<div class="col-sm-12 text-center">23</div>
+										<div class="col-sm-12 text-center">
+											<a href="">면접정보</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
-			</div>
+			</c:forEach>
 		</div>
 	</div>
-</div>
-<%@ include file="includes/footer.jsp"%>
+	<%@ include file="includes/footer.jsp"%>
+	<script>
+		let isEnd = false;
+		$(document).ready(
+				function() {
+					var keyword = '${keyword}'
+
+					$(window).scroll(function() {
+						let $window = $(this);
+						let scrollTop = $window.scrollTop();
+						let windowHeight = $window.height();
+						let documentHeight = $(document).height();
+						
+						if (scrollTop + windowHeight >= documentHeight-1) {
+							fetchList();
+						}
+					})
+					let fetchList = function() {
+
+						if (isEnd == true) {
+							return;
+						}
+
+						let lastBno = $(".card-body:last").attr("data-startNo")
+						$.ajax({
+							type : 'post',
+							url : 'scroll',
+							dataType : 'json',
+							contentType : 'application/json;',
+							data : JSON.stringify({
+								'startNo' : lastBno,
+								'keyword' : keyword
+							}),
+							success : function(result) {
+								console.log(result)
+								if (result.length < 5)
+									isEnd = true;
+								 $.each(result, function(a,b){
+					                    renderList(false, a,b);
+					                })
+							},
+							error : function(request, status, error) {
+								alert("code:" + request.status + "\n"
+										+ "message:" + request.responseText
+										+ "\n" + "error:" + error);
+							}
+						})
+					}
+				})	
+				let renderList = function(mode, idx,res){
+				
+        // 리스트 html을 정의
+        let html = "<div class='card-body' data-startNo="+res.ci_id+">"
+        			+ '<hr style="border: 1px solid #c7d5f8; padding: 0px;">'
+        			+	'<div class="row">'
+        	        +		'<div class="container-fluid">'
+                    +			'<div class="row">'
+                    +				'<div class="col-lg-6 ml-5">'
+					+	                 '<div class="row justify-content-center">'
+                    +						'<h4>'+res.ci_companyName
+                    +						'<button class="btn btn-outline-danger">♡</button>'
+                    +						'</h4>'
+        			+					 '</div>'
+        			+					 '<div class="row justify-content-center">'
+        			+						res.ci_industry+" | " + res.ci_address
+        			+					 '</div>'
+        			+					 '<div class="row justify-content-center">'
+        			+					  "평균연봉 4534 만원"+	'</div>'
+        			+					 '</div>'
+        			+					 '<div class="col-lg-auto">'
+        			+						'<div class="row justify-content-center">'
+        			+					    '<h5 class="">'+"*****"+'</h5>'
+        			+					 '</div>'
+        			+					 '<div class="row " style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">'
+        			
+        			
+        			
+        			
+        			
+        if( mode ){
+            $("#go").prepend(html);
+        }
+        else{
+            $("#go").append(html);
+        }
+    }
+	</script>
+</body>
+</html>
