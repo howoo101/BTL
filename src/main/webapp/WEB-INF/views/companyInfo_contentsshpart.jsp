@@ -68,7 +68,7 @@
                     </div>
                 <div class="col-md-2" id="precptxt" ></div>
                 
-                <div class="col-md-3">동종기업</div>
+                <div class="col-md-3">동종기업 </div>
                     <div class="col-md-7">
                         <div class="progress">
                          <div id="samecp" class="progress-bar progress-bar-success" role="progressbar" style="width:40%">
@@ -100,7 +100,7 @@
 	 var tmin = ${tmout} // 이번달 퇴사자
 	 
 	 var sincerank = ${sincerank} //동종업계 업력 순위
-	 var totalrank = ${totalrank} // 동종업계 최신달 순위
+	 var latestcptotal = ${latestcptotal} // 동종업계 인원 최신달 순위
 	 var alltminrank = ${alltminrank} // 동종업계 이번달 입사자 순위
 	 var alltmoutrank = ${alltmoutrank} // 동종업계 이번달 퇴사자 순위
 	 
@@ -108,8 +108,8 @@
 		   $("#select").html("총 인원");
 		   $('#precp').attr("style", "width:100%");
            $('#precptxt').html(cptotal+"명");
-           $('#samecp').attr("style", "width:"+totalrank+"%");
-           $('#samecptxt').html(totalrank+"%");
+           $('#samecp').attr("style", "width:"+latestcptotal+"%");
+           $('#samecptxt').html(latestcptotal+"% 순위");
 		} );
 	
 	 
@@ -119,8 +119,8 @@
                 $("#select").html("총 인원");
                 $('#precp').attr("style", "width:100%");
                 $('#precptxt').html(cptotal+"명");
-                $('#samecp').attr("style", "width:"+totalrank+"%");
-                $('#samecptxt').html(totalrank+"%");
+                $('#samecp').attr("style", "width:"+latestcptotal+"%");
+                $('#samecptxt').html(latestcptotal+"% 순위");
             });
         });
         /* 업력 */
@@ -130,7 +130,7 @@
                 $('#precp').attr("style", "width:100%");
                 $('#precptxt').html(cpsince+"년");
                 $('#samecp').attr("style", "width:"+sincerank+"%");
-                $('#samecptxt').html(sincerank+"%");
+                $('#samecptxt').html(sincerank+"% 순위");
               
       
             });
@@ -142,7 +142,7 @@
                 $('#precp').attr("style", "width:100%");
                 $('#precptxt').html(tmin+"명");
                 $('#samecp').attr("style", "width:"+alltminrank+"%");
-                $('#samecptxt').html(alltminrank+"%");
+                $('#samecptxt').html(alltminrank+"% 순위");
               
                 
                 
@@ -154,7 +154,7 @@
                 $("#select").html("이번 달 퇴사");
                 $('#precptxt').html(tmin+"명");
                 $('#samecp').attr("style", "width:"+alltmoutrank+"%");
-                $('#samecptxt').html(alltmoutrank+"%");
+                $('#samecptxt').html(alltmoutrank+"% 순위");
             });
         });
  }

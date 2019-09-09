@@ -33,6 +33,8 @@ public interface SshService {
 
 	public int alltmoutrank(String ci_companyName);
 	
+	public int latestcptotal(); 
+	
 	// 서송현 코딩 끝 ===================================================
 	
 }

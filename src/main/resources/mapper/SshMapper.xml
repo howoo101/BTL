@@ -19,74 +19,69 @@
 	
 	
 	
-	<!-- 인원 구하기 -->
+	
+	
+	
+	<!-- 이번달 총 인원  -->
 	<select id="cptotal" resultType="INT" parameterType="String">
 	select cp_totalcnt  from companypersonal where ci_companyName = #{ci_companyName} 
-	limit 1
+	order by cp_month  DESC limit 1
 	</select>
 	
-	<!-- 업력 구하기 -->
+	<!-- 업력 -->
 	<select id="cpSince" resultType="INT" parameterType="String">
 	SELECT max(TIMESTAMPDIFF(YEAR, ci_since, CURRENT_DATE())) 
 	FROM  companyinfo 
-	where ci_companyName = #{ci_companyName}
-	limit 1
+	where ci_companyName = #{ci_companyName} limit 1
 	</select>
-	
+
 	<!-- 이번달 입사자 구하기 -->
 	
 	<select id="tmin" resultType="INT" parameterType="String">
-	select cp_incnt
+	 select cp_incnt
 	from companypersonal
-	where cp_month = (select cp_month  from companypersonal where ci_companyName = #{ci_companyName} limit 1) limit 1
+    where cp_month = (select cp_month  from companypersonal where ci_companyName = #{ci_companyName}
+	order by cp_month  DESC limit 1) and ci_companyName = #{ci_companyName} ;
+	
 	</select>
 
-	
 	<!-- 이번달 퇴사자 구하기 -->
 	<select id="tmout" resultType="INT" parameterType="String">
-	select cp_outcnt
+ 	select cp_outcnt
 	from companypersonal
-	where cp_month = (select cp_month  from companypersonal where ci_companyName = #{ci_companyName} limit 1) limit 1
+    where cp_month = (select cp_month  from companypersonal where ci_companyName = #{ci_companyName}
+	order by cp_month  DESC limit 1) and ci_companyName = #{ci_companyName} ;
 	</select>
 	
 	
 	
-	<!-- 기업 순위구하기 -->
+	<!-- 기업  -->
 	
-		<!-- 전체 동종산업 -->
-
+		<!-- 전체 동종산업 수 -->
 		<select id="allcp" resultType="INT" parameterType="String">
 		select count(*)  from companyinfo  where ci_industry like concat('%','응용','%')
 		</select>
 		
-		
-		<!-- 최신달의 전체 동종산업 -->
+		<!-- 최신달의 전체 동종산업 수 -->
 		<select id="latestallcp" resultType="INT" parameterType="String">
-		select count(ci_companyName)
-		from companypersonal 
-		where  cp_month = (select cp_month  from companypersonal where ci_companyName = (select ci_companyName from companypersonal  where ci_companyName = #{ci_companyName} limit 1 )  limit 1 ) limit 1  
+	 	 select count(ci_companyName)
+			from companypersonal
+		    where cp_month = (select cp_month  from companypersonal where ci_companyName
+			order by cp_month  DESC limit 1) 
 		</select>
 	
 	
-	
-	
-	
-		<!-- 인원 동종산업 순위-->
-		
-		<select id="alltotalrank" resultType="INT" parameterType="String">
-		<![CDATA[
-		select  count(*)
-		from companypersonal as A
-		where A.cp_totalcnt >= (select cp_totalcnt from companypersonal 
-		where ci_companyName = #{ci_companyName} limit 1) and  A.cp_month = (select cp_month  from companypersonal where ci_companyName = #{ci_companyName} limit 1 )
-		]]>
+		<!-- 최신달의 전체 동종산업 인원수-->
+		<select id="latestcptotal" resultType="INT">
+   			select sum(A.cp_totalcnt)
+			from companypersonal as A
+			where  A.cp_month = (select cp_month  from companypersonal where ci_companyName  order by cp_month  DESC limit 1 );
 		</select>
-		
-
+	
 		<!-- 업력 동종산업 순위-->
 		<select id="allcprank" resultType="INT" parameterType="String">
 			<![CDATA[
-		 select count(*) 
+		 select count(ci_companyName) 
 		from companyinfo 
 		where ci_industry like concat('%','응용','%') and ci_since <= (select ci_since from companyinfo
 	    where ci_companyName = #{ci_companyName}) 
@@ -94,23 +89,42 @@
 		</select>
 		
 		
-		<!-- 이번달 입사자 동종산업 순위 -->
 		
+		<!-- 동종산업 전체 이번달  인원수 순위   --> 	
+		<select id="alltotalrank" resultType="INT" parameterType="String">
+		    select count(A.cp_totalcnt)
+			from companypersonal as A
+			where A.cp_totalcnt >= (select cp_totalcnt  from companypersonal where ci_companyName =#{ci_companyName} order by  cp_month DESC limit 1) 
+			and A.cp_month = (select cp_month from companypersonal where ci_companyName order by  cp_month DESC limit 1) ;
+		</select>
+
+		
+		<!-- 동종산업 전체 이번달  입사자 순위   --> 	
 		<select id="alltminrank" resultType="INT" parameterType="String">
-		<![CDATA[
-		select  count(*)
-		from companypersonal as A
-		where A.cp_incnt >= (select cp_incnt from companypersonal 
-		where ci_companyName = #{ci_companyName} limit 1) and  A.cp_month = (select cp_month  from companypersonal where ci_companyName = #{ci_companyName} limit 1 )
-		]]>
+			select count(A.cp_incnt)
+			from companypersonal as A
+			where A.cp_incnt >= (select cp_incnt  from companypersonal where ci_companyName =#{ci_companyName} order by  cp_month DESC limit 1) 
+			and A.cp_month = (select cp_month from companypersonal where ci_companyName order by  cp_month DESC limit 1) ;
 		</select>
 	
+		<!-- 동종산업 전체 이번달  퇴사자  순위 --> 	
 		<select id="alltmoutrank" resultType="INT" parameterType="String">
-		<![CDATA[
-		select  count(*)
-		from companypersonal as A
-		where A.cp_outcnt >= (select cp_outcnt from companypersonal 
-		where ci_companyName = #{ci_companyName} limit 1) and  A.cp_month = (select cp_month  from companypersonal where ci_companyName = #{ci_companyName} limit 1 )
-		]]>
+		    select count(A.cp_outcnt)
+			from companypersonal as A
+			where A.cp_outcnt >= (select cp_outcnt  from companypersonal where ci_companyName =#{ci_companyName} order by  cp_month DESC limit 1) 
+			and A.cp_month = (select cp_month from companypersonal where ci_companyName order by  cp_month DESC limit 1) ;
+	
 		</select>
+	
+	
+	
+	
+
+	
+		
+
+		
+	
+
+		
 </mapper>

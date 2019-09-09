@@ -105,6 +105,12 @@ public class SshServiceImpl implements SshService {
 		return mapper.alltmoutrank(ci_companyName);
 	}
 
+	@Override
+	public int latestcptotal() {
+	
+		return mapper.latestcptotal();
+	}
+
 	// 서송현 코딩 끝 ===================================================
 
 }

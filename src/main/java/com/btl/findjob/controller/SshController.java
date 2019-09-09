@@ -30,13 +30,23 @@ public class SshController {
 			model.addAttribute("tmout", service.tmout(ci_companyName));  //이번달 퇴사자
 			
 
-			model.addAttribute("sincerank", service.allcprank(ci_companyName) * 100 / service.allcp(ci_companyName)); // 동종업계 업력 % 순위 
 		
-			model.addAttribute("totalrank", service.alltotalrank(ci_companyName) * 100 / service.latestallcp(ci_companyName)); // 동종업계 인원 % 순위 (최신 달)
 			
-			model.addAttribute("alltminrank",service.alltminrank(ci_companyName) * 100 / service.latestallcp(ci_companyName)); // 동종업계 이번달 입사자 % 순위 (최신 달) 
+			model.addAttribute("sincerank", Math.round((double) service.allcprank(ci_companyName) * 100 / service.allcp(ci_companyName)*100)/100.0); // 동종업계 업력 % 순위 
+
+		
 			
-			model.addAttribute("alltmoutrank", service.alltmoutrank(ci_companyName) * 100 / service.latestallcp(ci_companyName)); // 동종업계 이번달 퇴사자 % 순위 (최신 달)
+			model.addAttribute("latestcptotal", Math.round ((double) service.alltotalrank(ci_companyName)*100 / service.latestallcp(ci_companyName)*100)/100.0);  // 동종업계  인원 순위 (최신 달)
+			
+			
+			model.addAttribute("alltminrank", Math.round((double)service.alltminrank(ci_companyName) * 100 / service.latestallcp(ci_companyName)*100)/100.0); // 동종업계 이번달 입사자 % 순위 (최신 달) 
+			
+			model.addAttribute("alltmoutrank", Math.round((double)service.alltmoutrank(ci_companyName) * 100 / service.latestallcp(ci_companyName)*100)/100.0); // 동종업계 이번달 퇴사자 % 순위 (최신 달)
+			
+			
+			
+
+			
 			
 			
 			return "companyInfo_contentsshpart";
