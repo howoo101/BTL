@@ -53,3 +53,5 @@ btl.iml
 .springBeans
 target/
 .settings/
+.gitignore
+src/test/
