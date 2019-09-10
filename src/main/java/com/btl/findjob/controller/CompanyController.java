@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.btl.findjob.model.CompanyInfoDTO;
+import com.btl.findjob.model.CompanyListVO;
 import com.btl.findjob.service.CompanyService;
 
 @Controller
@@ -28,13 +29,13 @@ public class CompanyController {
 	@RequestMapping(value = "search")
 	public String companySearchList(String keyword, Model model) {
 //		System.out.println("================"+keyword);
-		model.addAttribute("companyList",service.companyGetList(keyword,"0"));
+		model.addAttribute("companyList",service.companyGetListWithCnt(keyword,"0"));
 		model.addAttribute("keyword",keyword);
 		return "companySearchList";
 	}
 	
 	@RequestMapping(value="scroll",method = RequestMethod.POST)
-	public @ResponseBody List<CompanyInfoDTO> scroll(
+	public @ResponseBody List<CompanyListVO> scroll(
 			@RequestBody Map<String, Object> params) {
 		logger.info("scoll is called.....");
 		String keyword = (String)params.get("keyword");
@@ -43,7 +44,7 @@ public class CompanyController {
 		logger.info("keyword: " + keyword);
 		logger.info("startNum: " + startNum);
 		
-		return service.companyGetList(keyword,String.valueOf(Integer.parseInt(startNum)+1));
+		return service.companyGetListWithCnt(keyword,String.valueOf(Integer.parseInt(startNum)));
 		
 	}
 }

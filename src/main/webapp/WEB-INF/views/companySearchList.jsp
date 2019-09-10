@@ -23,7 +23,7 @@
 								<div class="col-lg-6 ml-5">
 									<div class="row justify-content-center">
 										<h4>
-											${item.ci_companyName}
+											<a href="${path }/companyinfo_content?ci_companyName=${item.ci_companyName}">${item.ci_companyName}</a>
 											<button class="btn btn-outline-danger">♡</button>
 										</h4>
 									</div>
@@ -38,7 +38,7 @@
 									</div>
 									<div class="row "
 										style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">
-										<div class="col-sm-12 text-center">23</div>
+										<div class="col-sm-12 text-center">${item.companyReviewCnt }</div>
 										<div class="col-sm-12 text-center">
 											<a href="">리뷰 코멘트</a>
 										</div>
@@ -49,7 +49,7 @@
 										<h5>2.9</h5>
 									</div>
 									<div class="row " style="">
-										<div class="col-sm-12 text-center">23</div>
+										<div class="col-sm-12 text-center">${item.interviewReviewCnt }</div>
 										<div class="col-sm-12 text-center">
 											<a href="">면접정보</a>
 										</div>
@@ -86,6 +86,7 @@
 						}
 
 						let lastBno = $(".card-body:last").attr("data-startNo")
+						
 						$.ajax({
 							type : 'post',
 							url : 'scroll',
@@ -97,10 +98,10 @@
 							}),
 							success : function(result) {
 								console.log(result)
-								if (result.length < 5)
+								if (result.length < 20)
 									isEnd = true;
-								 $.each(result, function(a,b){
-					                    renderList(false, a,b);
+								 $.each(result, function(idx,vo){
+					                    renderList(false, idx,vo);
 					                })
 							},
 							error : function(request, status, error) {
@@ -121,7 +122,8 @@
                     +			'<div class="row">'
                     +				'<div class="col-lg-6 ml-5">'
 					+	                 '<div class="row justify-content-center">'
-                    +						'<h4>'+res.ci_companyName
+                    +						'<h4>'
+                    +						'<a href="${path}/companyinfo_content?ci_companyName='+res.ci_companyName+'">' +res.ci_companyName+'</a>'
                     +						'<button class="btn btn-outline-danger">♡</button>'
                     +						'</h4>'
         			+					 '</div>'
@@ -133,13 +135,30 @@
         			+					 '</div>'
         			+					 '<div class="col-lg-auto">'
         			+						'<div class="row justify-content-center">'
-        			+					    '<h5 class="">'+"*****"+'</h5>'
-        			+					 '</div>'
-        			+					 '<div class="row " style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">'
-        			
-        			
-        			
-        			
+        			+					    	'<h5 class="">'+"*****"+'</h5>'
+        			+					 	'</div>'
+        			+					 	'<div class="row " style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">'
+        			+							'<div class="col-sm-12 text-center">'+res.companyReviewCnt+'</div>'
+					+					 		'<div class="col-sm-12 text-center">'
+					+								'<a href="">'+'리뷰 코멘트</a>'
+					+							'</div>'
+					+						'</div>'
+					+ 					'</div>'
+        			+					'<div class="col-lg-auto text-center">'
+					+						'<div class="row justify-content-center">'
+        			+							'<h5>2.9</h5>'
+					+						 '</div>'	
+					+						'<div class="row ">'
+					+							'<div class="col-sm-12 text-center">'+res.interviewReviewCnt+'</div>'
+					+							'<div class="col-sm-12 text-center">'
+					+								'<a href="">면접정보</a>'
+					+							'</div>'
+					+						'</div>'
+					+					'</div>'
+					+				'</div>'
+					+			'</div>'
+					+		'</div>'
+					+	'</div>'
         			
         if( mode ){
             $("#go").prepend(html);
