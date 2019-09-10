@@ -37,4 +37,6 @@
 	board_writer = #{board_writer},
 	board_updateDate = now() where board_id = #{board_id}
 	</update>
+	
+	
 </mapper>
