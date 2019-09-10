@@ -145,6 +145,35 @@ window.onload = function () {
 
     
 
+// 월별 버튼 관련
+const person = document.getElementById("personBtn");
+const salary = document.getElementById("salaryBtn");
+
+const pDisplay = document.getElementsByClassName("pchart-container");
+const sDisplay = document.getElementsByClassName("schart-container");
+
+// 인원수 이벤트
+person.onclick = () => {
+  // 버튼 클릭 방지
+  person.disabled = "disabled";
+  salary.disabled = "";
+
+  // 차트 보이고 안보이고
+  pDisplay[0].style.display = "block";
+  sDisplay[0].style.display = "none";
+};
+
+// 평균 급여 이벤트
+salary.onclick = () => {
+  person.disabled = "";
+  salary.disabled = "disabled";
+
+  pDisplay[0].style.display = "none";
+  sDisplay[0].style.display = "block";
+};
+
+// 월별 그래프 끝
+
     var ctx5 = document.getElementById('companyChart').getContext('2d');
     var chart5 = new Chart(ctx5, {
         // The type of chart we want to create

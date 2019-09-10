@@ -1,16 +1,19 @@
 package com.btl.findjob.model;
 
+import lombok.Data;
+import lombok.Setter;
+
+import java.util.Date;
+
+@Data
+@Setter
 public class CompanyReview {
-	int cr_id; //기업 리뷰 pk
-	String cr_content; //기업 리뷰
-	double cr_totalRt; //기업 평가점수
-	double cr_promotableRt; //승진기회 점수
-	double cr_welfareRt; //복지점수
-	double cr_wlbRt; //워라밸점수
-	double cr_corCultuerRt; // 기업문화점수
-	double cr_managementRt; //경영진 점수
-	int user_id; //유저 pk
-	String ci_id; //fk 기업 pk
-	
-	
+
+	private int cr_id; //회사 리뷰 아이디
+	private String cr_comment; //회사 리뷰
+	private int cr_starRt; //별점
+	private Date regDate; //등록일
+	private int cr_category; //카테고리 1)승진 기회 및 가능성 2)복지 및 급여 3)업무와 삶의 균형 4)사내문화
+	private int user_id; //유저 아이디
+	private int ci_id;//회사 정보 아이디
 }
