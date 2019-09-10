@@ -1,5 +1,8 @@
 package com.btl.findjob.model;
 
+import lombok.Data;
+
+@Data
 public class CompanyPersonalDTO {
 	private String cp_month; //데이터 생성년월
 	private String ci_companyname; //fk 기업 이름
@@ -8,5 +11,6 @@ public class CompanyPersonalDTO {
 	private int cp_outcnt; //월별 퇴사자
 	private int cp_id; //pk
 	
-		
+
+	
 }

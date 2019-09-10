@@ -12,7 +12,7 @@
 		<property name="driverClassName"
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
 		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:mysql://192.168.0.45:3306/BTL?serverTimezone=Asia/Seoul&amp;useSSL=false" />
+			value="jdbc:log4jdbc:mysql://192.168.0.45:3306/BTL?serverTimezone=Asia/Seoul&amp;useSSL=false"/>
 		<property name="username" value="BTL" />
 		<property name="password" value="tiger" />
 	</bean>
