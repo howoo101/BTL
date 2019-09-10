@@ -8,7 +8,7 @@
 <%--&lt;%&ndash;reviewChart js 불러오기위해서&ndash;%&gt;--%>
 <script type="text/javascript" src="resources/js/forChart.js"></script>
 
-<%@ include file="includes/enterpriseSummary.jsp" %>
+<%-- <%@ include file="includes/enterpriseSummary.jsp" %> --%>
 
 <%@ include file="includes/enterpriseInfo.jsp" %>
 

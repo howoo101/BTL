@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.btl.findjob.mapper.SshMapper;
+import com.btl.findjob.mapper.EnterpriseMapper;
 import com.btl.findjob.model.CompanyInfoDTO;
 import com.btl.findjob.model.CompanyPersonalDTO;
 
 @Service
-public class SshServiceImpl implements SshService {
+public class EnterpriseServiceImpl implements EnterpriseService {
 	
 	@Autowired
-	SshMapper mapper;
+	EnterpriseMapper mapper;
 	
 	// 서송현 코딩 ===================================================
 	@Override

@@ -5,7 +5,7 @@ import java.util.List;
 import com.btl.findjob.model.CompanyInfoDTO;
 import com.btl.findjob.model.CompanyPersonalDTO;
 
-public interface SshService {
+public interface EnterpriseService {
 	
 	//서송현 코딩 =====================================================================
 	

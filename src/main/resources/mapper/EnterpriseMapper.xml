@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.btl.findjob.mapper.SshMapper">
+<mapper namespace="com.btl.findjob.mapper.EnterpriseMapper">
 
 	<!-- 기업 검색 페이지에서 기업클릭시 불러오는 기업정보   -->
 	<select id="companyList" resultType="com.btl.findjob.model.CompanyInfoDTO">
