@@ -154,7 +154,7 @@
  
  
   
- window.onload = function() {
+ $(document).ready ( function() {
 	 
 	 var cptotal = ${cptotal} //인원
 	 var cpsince = ${cpsince} //업력
@@ -220,6 +220,6 @@
             });
         });
  }
- 
+ )
    </script>
 
