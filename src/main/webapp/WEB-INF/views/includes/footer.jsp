@@ -16,7 +16,7 @@
 </footer>
 
 <%--부트스트랩 CSS--%>
-
+<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
 <%--css 커스텀--%>
 <link rel="stylesheet" type="text/css" href="resources/css/indexStyle.css">
 <!--부트스트랩 와치 색상변-->
