@@ -121,7 +121,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: "post",
-                url: "/btl/companyReview/new",
+                url: "/findjob/companyReview/new",
                 data: JSON.stringify({
                     cr_comment: cr_comment,
                     cr_starRt: starRating,
@@ -149,7 +149,7 @@ $(document).ready(function () {
             var ci_id = param.ci_id;
             var page = param.page;
 
-            $.getJSON("/btl/companyReview/pages/" + ci_id + "/" + page + ".json", function (data) {
+            $.getJSON("/findjob/companyReview/pages/" + ci_id + "/" + page + ".json", function (data) {
                 if (callback) {
                     //리뷰의 목록만 가져오는경우
                     callback(data.companyReviewCtn);
@@ -165,7 +165,7 @@ $(document).ready(function () {
 //특정 리뷰 조회
         function get(cr_id, callback, error) {
 
-            $.get("/btl/companyReview/" + cr_id + ".json", function (result) {
+            $.get("/findjob/companyReview/" + cr_id + ".json", function (result) {
 
                 if (callback) {
                     callback(result);

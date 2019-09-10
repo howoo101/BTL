@@ -234,7 +234,7 @@
 
             $.ajax({
                 type: "post",
-                url: "/btl/companyReview/new",
+                url: "/findjob/companyReview/new",
                 data: JSON.stringify({
                     cr_comment: cr_comment,
                     cr_starRt: starRating,
