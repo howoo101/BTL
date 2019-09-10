@@ -7,28 +7,54 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>     
+<div id="section0" class="mt-3">
+    <div class="container center-block">
+        <div class="card border-primary">
+            <div class="card-body">
+            <c:forEach items="${companyList}" var="vo">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="font-weight-bold card-title">${vo.ci_companyName }<h2><button class="btn btn-outline-danger">♡</button></h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="small">평균연봉</div>
+                        <div class="h2">2435만원</div>
+                        <div class="small text-danger">*국민연금 납부 기준</div>
+                    </div>
+                </div>
+               </c:forEach>
+            </div>
+        </div>
+    </div>
+</div>  
 <div id="section1" class="mt-3">
                 <div class="container center-block">
                     <div class="card border-primary"><!-- 기업정보 컨테이너 시작-->
                         <div class="card-body">
                 <div class="info"> <!-- info 컨테이너 시작 -->
                     <div class="text-primary font-weight-bold card-title"><h5>기업 정보</h5></div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-6">소재지</div>
-                        <div class="col-md-6">산업군</div>
-                    </div>
-
+					<c:forEach items="${companyList}" var="vo">
+	                    <div class="row mt-3">
+	                        <div class="col-md-6">
+								소재지 | ${vo.ci_industry}
+							</div>
+	                        <div class="col-md-6">
+								주소 | ${vo.ci_address} 
+							</div>
+	                    </div>
+					</c:forEach>
 
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <button class="btn btn-outline-info btn-lg btn-block" id="human">
-                                인원 5명
+                                	총 인원  ${cptotal}명
                             </button>
                         </div>
                         <div class="col-md-6">
-                            <button class="btn btn-outline-info btn-lg btn-block" id="sinse">
-                                업력 1년
+                            <button class="btn btn-outline-info btn-lg btn-block" id="since">
+                                	업력 ${cpsince}년
                             </button>
                         </div>
                     </div>
@@ -36,12 +62,12 @@
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <button class="btn btn-outline-info btn-lg btn-block" id="join">
-                                입사 5명
+                                	이번달 입사 ${tmin}명
                             </button>
                         </div>
                         <div class="col-md-6">
                             <button class="btn btn-outline-info btn-lg btn-block" id="leave">
-                                퇴사 0명
+                                	이번달 퇴사 ${tmout}명
                             </button>
                         </div>
                     </div>
@@ -64,11 +90,11 @@
                                             </td>
                                             <td class="col-md-9">
                                                 <div class="progress">
-                                                    <div class="progress-bar-danger" role="progressbar"
+                                                    <div id="precp"  class="progress-bar-danger" role="progressbar"
                                                          aria-valuenow="60"
                                                          aria-valuemin="0"
                                                          aria-valuemax="100" style="width: 40%">
-                                                        명
+                                                        <div class="col-md" id="precptxt" ></div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -81,18 +107,17 @@
                                             </td>
                                             <td class="col-md-9">
                                                 <div class="progress">
-                                                    <div class=" progress-bar-warning" role="progressbar"
+                                                    <div id="samecp" class=" progress-bar-warning" role="progressbar"
                                                          aria-valuenow="60"
                                                          aria-valuemin="0"
                                                          aria-valuemax="100" style="width: 80%;">
-                                                        60%
+                                                        <div class="col-md" id="samecptxt" ></div>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr> <!-- 동종산업군 끝 -->
 
-
-                                        <tr class="row"> <!-- 전체 기업-시작 -->
+              <!--                           <tr class="row"> 전체 기업-시작
                                             <td class="col-md-3">
                                                 전체 기업
                                             </td>
@@ -101,12 +126,11 @@
                                                     <div class="progress-bar-info" role="progressbar" aria-valuenow="60"
                                                          aria-valuemin="0"
                                                          aria-valuemax="100" style="width: 80%;">
-                                                        60%
+                                                        
                                                     </div>
                                                 </div>
                                             </td>
-                                        </tr>  <!-- 전체 기업 끝 -->
-
+                                        </tr> -->  <!-- 전체 기업 끝 -->
 
                                     </table> <!--테이블 끝-->
                                 </div> <!-- 그래프 컨테이너 끝-->
@@ -124,3 +148,78 @@
         </div><!-- 기업정보 컨테이너 끝-->
     </div>
 </div>
+
+<script>
+ 
+ 
+ 
+  
+ $(document).ready ( function() {
+	 
+	 var cptotal = ${cptotal} //인원
+	 var cpsince = ${cpsince} //업력
+	 var tmin = ${tmin} // 이번달 입사자
+	 var tmin = ${tmout} // 이번달 퇴사자
+	 
+	 var sincerank = ${sincerank} //동종업계 업력 순위
+	 var latestcptotal = ${latestcptotal} // 동종업계 인원 최신달 순위
+	 var alltminrank = ${alltminrank} // 동종업계 이번달 입사자 순위
+	 var alltmoutrank = ${alltmoutrank} // 동종업계 이번달 퇴사자 순위
+	 
+	 $(document).ready(function() {
+		   $("#select").html("총 인원");
+		   $('#precp').attr("style", "width:100%");
+           $('#precptxt').html(cptotal+"명");
+           $('#samecp').attr("style", "width:"+latestcptotal+"%");
+           $('#samecptxt').html(latestcptotal+"% 순위");
+		} );
+	
+	 
+        /* 인원 */
+        $(document).ready(function(){
+            $("#human").click(function(){
+                $("#select").html("총 인원");
+                $('#precp').attr("style", "width:100%");
+                $('#precptxt').html(cptotal+"명");
+                $('#samecp').attr("style", "width:"+latestcptotal+"%");
+                $('#samecptxt').html(latestcptotal+"% 순위");
+            });
+        });
+        /* 업력 */
+        $(document).ready(function(){
+            $("#since").click(function(){
+                $("#select").html("업력");
+                $('#precp').attr("style", "width:100%");
+                $('#precptxt').html(cpsince+"년");
+                $('#samecp').attr("style", "width:"+sincerank+"%");
+                $('#samecptxt').html(sincerank+"% 순위");
+              
+      
+            });
+        });
+        /* 입사 */
+        $(document).ready(function(){
+            $("#join").click(function(){
+                $("#select").html("이번 달 입사");
+                $('#precp').attr("style", "width:100%");
+                $('#precptxt').html(tmin+"명");
+                $('#samecp').attr("style", "width:"+alltminrank+"%");
+                $('#samecptxt').html(alltminrank+"% 순위");
+              
+                
+                
+            });
+        });
+        /* 퇴사 */
+        $(document).ready(function(){
+            $("#leave").click(function(){
+                $("#select").html("이번 달 퇴사");
+                $('#precptxt').html(tmin+"명");
+                $('#samecp').attr("style", "width:"+alltmoutrank+"%");
+                $('#samecptxt').html(alltmoutrank+"% 순위");
+            });
+        });
+ }
+ )
+   </script>
+

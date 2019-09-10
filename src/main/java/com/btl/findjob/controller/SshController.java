@@ -7,13 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.btl.findjob.service.EnterpriseService;
 import com.btl.findjob.service.SshService;
 
 @Controller
 public class SshController {
 	//서송현 테스트 작업공간 시작  (이 메서드를 참고 하고 변경 or 삭제  ㄱㄱ)=============================================
 	@Autowired
-	SshService service;
+	EnterpriseService service;
 
 		@RequestMapping(value = "companyinfo_content", method = {RequestMethod.GET ,  RequestMethod.POST})
 		public String company_content(@Param ("ci_companyName") String ci_companyName,Model model) {
