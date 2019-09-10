@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.btl.findjob.mapper.CompanyMapper;
 import com.btl.findjob.model.CompanyInfoDTO;
+import com.btl.findjob.model.CompanyListVO;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -18,6 +19,12 @@ public class CompanyServiceImpl implements CompanyService {
 	public List<CompanyInfoDTO> companyGetList(String keyword,String startNum) {
 		
 		return mapper.companyGetList(keyword,startNum);
+	}
+
+	@Override
+	public List<CompanyListVO> companyGetListWithCnt(String keyword, String startNum) {
+		// TODO Auto-generated method stub
+		return mapper.companyGetListWithCnt(keyword, startNum);
 	}
 
 	

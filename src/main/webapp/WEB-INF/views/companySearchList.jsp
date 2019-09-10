@@ -38,7 +38,7 @@
 									</div>
 									<div class="row "
 										style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">
-										<div class="col-sm-12 text-center">23</div>
+										<div class="col-sm-12 text-center">${item.companyReviewCnt }</div>
 										<div class="col-sm-12 text-center">
 											<a href="">리뷰 코멘트</a>
 										</div>
@@ -49,7 +49,7 @@
 										<h5>2.9</h5>
 									</div>
 									<div class="row " style="">
-										<div class="col-sm-12 text-center">23</div>
+										<div class="col-sm-12 text-center">${item.interviewReviewCnt }</div>
 										<div class="col-sm-12 text-center">
 											<a href="">면접정보</a>
 										</div>
@@ -138,7 +138,7 @@
         			+					    	'<h5 class="">'+"*****"+'</h5>'
         			+					 	'</div>'
         			+					 	'<div class="row " style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">'
-        			+							'<div class="col-sm-12 text-center">'+'23'+'</div>'
+        			+							'<div class="col-sm-12 text-center">'+res.companyReviewCnt+'</div>'
 					+					 		'<div class="col-sm-12 text-center">'
 					+								'<a href="">'+'리뷰 코멘트</a>'
 					+							'</div>'
@@ -149,7 +149,7 @@
         			+							'<h5>2.9</h5>'
 					+						 '</div>'	
 					+						'<div class="row ">'
-					+							'<div class="col-sm-12 text-center">23</div>'
+					+							'<div class="col-sm-12 text-center">'+res.interviewReviewCnt+'</div>'
 					+							'<div class="col-sm-12 text-center">'
 					+								'<a href="">면접정보</a>'
 					+							'</div>'
