@@ -49,6 +49,8 @@ public class HomeController {
 		model.addAttribute("alltmoutrank", Math.round((double)enterService.alltmoutrank(ci_companyName) * 100 / enterService.latestallcp(ci_companyName)*100)/100.0); // 동종업계 이번달 퇴사자 % 순위 (최신 달)
 		//Enterprise End
 		
+		//Graph model
+		model.addAttribute("ci_companyName", ci_companyName);		
 		
 	}
 

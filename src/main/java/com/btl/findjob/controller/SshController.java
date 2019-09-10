@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.btl.findjob.service.EnterpriseService;
-import com.btl.findjob.service.SshService;
 
 @Controller
 public class SshController {
-	//서송현 테스트 작업공간 시작  =============================================
+	//�꽌�넚�쁽 �뀒�뒪�듃 �옉�뾽怨듦컙 �떆�옉  =============================================
 	@Autowired
 	EnterpriseService service;
 
@@ -21,29 +20,29 @@ public class SshController {
 		public String company_content(@Param ("ci_companyName") String ci_companyName,Model model) {
 			
 	
-			model.addAttribute("companyList", service.companyList(ci_companyName)); //기업정보 리스트
+			model.addAttribute("companyList", service.companyList(ci_companyName)); //湲곗뾽�젙蹂� 由ъ뒪�듃
 			
-			model.addAttribute("cptotal", service.cptotal(ci_companyName)); //인원 구하기 쿼리
+			model.addAttribute("cptotal", service.cptotal(ci_companyName)); //�씤�썝 援ы븯湲� 荑쇰━
 			
-			model.addAttribute("cpsince", service.cpSince(ci_companyName)); //업력 구하기 쿼리
+			model.addAttribute("cpsince", service.cpSince(ci_companyName)); //�뾽�젰 援ы븯湲� 荑쇰━
 			
-			model.addAttribute("tmin",service.tmin(ci_companyName)); //이번달 입사자
+			model.addAttribute("tmin",service.tmin(ci_companyName)); //�씠踰덈떖 �엯�궗�옄
 			
-			model.addAttribute("tmout", service.tmout(ci_companyName));  //이번달 퇴사자
+			model.addAttribute("tmout", service.tmout(ci_companyName));  //�씠踰덈떖 �눜�궗�옄
 			
 
 		
 			
-			model.addAttribute("sincerank", Math.round((double) service.allcprank(ci_companyName) * 100 / service.allcp(ci_companyName)*100)/100.0); // 동종업계 업력 % 순위 
+			model.addAttribute("sincerank", Math.round((double) service.allcprank(ci_companyName) * 100 / service.allcp(ci_companyName)*100)/100.0); // �룞醫낆뾽怨� �뾽�젰 % �닚�쐞 
 
 		
 			
-			model.addAttribute("latestcptotal", Math.round ((double) service.alltotalrank(ci_companyName)*100 / service.latestallcp(ci_companyName)*100)/100.0);  // 동종업계  인원 순위 (최신 달)
+			model.addAttribute("latestcptotal", Math.round ((double) service.alltotalrank(ci_companyName)*100 / service.latestallcp(ci_companyName)*100)/100.0);  // �룞醫낆뾽怨�  �씤�썝 �닚�쐞 (理쒖떊 �떖)
 			
 			
-			model.addAttribute("alltminrank", Math.round((double)service.alltminrank(ci_companyName) * 100 / service.latestallcp(ci_companyName)*100)/100.0); // 동종업계 이번달 입사자 % 순위 (최신 달) 
+			model.addAttribute("alltminrank", Math.round((double)service.alltminrank(ci_companyName) * 100 / service.latestallcp(ci_companyName)*100)/100.0); // �룞醫낆뾽怨� �씠踰덈떖 �엯�궗�옄 % �닚�쐞 (理쒖떊 �떖) 
 			
-			model.addAttribute("alltmoutrank", Math.round((double)service.alltmoutrank(ci_companyName) * 100 / service.latestallcp(ci_companyName)*100)/100.0); // 동종업계 이번달 퇴사자 % 순위 (최신 달)
+			model.addAttribute("alltmoutrank", Math.round((double)service.alltmoutrank(ci_companyName) * 100 / service.latestallcp(ci_companyName)*100)/100.0); // �룞醫낆뾽怨� �씠踰덈떖 �눜�궗�옄 % �닚�쐞 (理쒖떊 �떖)
 			
 			
 			
@@ -56,7 +55,7 @@ public class SshController {
 		
 
 		
-		// 모달 테스트
+		// 紐⑤떖 �뀒�뒪�듃
 		@RequestMapping(value = "sshmodal", method = {RequestMethod.GET ,  RequestMethod.POST})
 		public String sshtest() {
 
@@ -65,7 +64,7 @@ public class SshController {
 		}
 		
 	
-		// header 모달 테스트
+		// header 紐⑤떖 �뀒�뒪�듃
 		@RequestMapping(value = "sshheader", method = {RequestMethod.GET ,  RequestMethod.POST}) 
 		public String sshheader() {
 
@@ -74,7 +73,7 @@ public class SshController {
 		}
 
 		
-		// 로그인 호출
+		// 濡쒓렇�씤 �샇異�
 		@RequestMapping(value = "sshlogin", method = {RequestMethod.GET ,  RequestMethod.POST}) 
 		public String sshlogin() {
 
@@ -83,7 +82,7 @@ public class SshController {
 		}
 		
 		
-		// 회원가입 호출
+		// �쉶�썝媛��엯 �샇異�
 		@RequestMapping(value = "sshregi", method = {RequestMethod.GET ,  RequestMethod.POST}) 
 		public String sshregi() {
 
@@ -93,7 +92,7 @@ public class SshController {
 		
 		
 
-		// 비밀번호찾기 호출
+		// 鍮꾨�踰덊샇李얘린 �샇異�
 		@RequestMapping(value = "sshpwfind", method = {RequestMethod.GET ,  RequestMethod.POST}) 
 		public String sshpwfind() {
 
@@ -102,7 +101,7 @@ public class SshController {
 		}
 		
 		
-		// 로그인 확인
+		// 濡쒓렇�씤 �솗�씤
 		@RequestMapping(value = "sshlogin_chk", method = {RequestMethod.GET ,  RequestMethod.POST}) 
 		public String sshlogin_chk(@Param("user_email")String user_email,@Param("user_password")String user_password ) {
 				System.out.println(user_email);
@@ -113,7 +112,7 @@ public class SshController {
 		
 		
 		
-		//서송현 테스트 작업 끝===========================================================
+		//�꽌�넚�쁽 �뀒�뒪�듃 �옉�뾽 �걹===========================================================
 		
 		
 		
