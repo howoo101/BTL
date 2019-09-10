@@ -23,7 +23,7 @@
 								<div class="col-lg-6 ml-5">
 									<div class="row justify-content-center">
 										<h4>
-											<a href="${path }/companyinfo_content?ci_companyName=${item.ci_companyName}">${item.ci_companyName}</a>
+											<a href="${path }/info?ci_companyName=${item.ci_companyName}">${item.ci_companyName}</a>
 											<button class="btn btn-outline-danger">♡</button>
 										</h4>
 									</div>
@@ -123,7 +123,7 @@
                     +				'<div class="col-lg-6 ml-5">'
 					+	                 '<div class="row justify-content-center">'
                     +						'<h4>'
-                    +						'<a href="${path}/companyinfo_content?ci_companyName='+res.ci_companyName+'">' +res.ci_companyName+'</a>'
+                    +						'<a href="${path}/info?ci_companyName='+res.ci_companyName+'">' +res.ci_companyName+'</a>'
                     +						'<button class="btn btn-outline-danger">♡</button>'
                     +						'</h4>'
         			+					 '</div>'

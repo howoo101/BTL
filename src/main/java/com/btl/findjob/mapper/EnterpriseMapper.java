@@ -5,7 +5,7 @@ import java.util.List;
 import com.btl.findjob.model.CompanyInfoDTO;
 import com.btl.findjob.model.CompanyPersonalDTO;
 
-public interface SshMapper {
+public interface EnterpriseMapper {
 	
 	// 서송현 코딩================================================================= 
 		public List<CompanyInfoDTO> companyList(String ci_companyName);
