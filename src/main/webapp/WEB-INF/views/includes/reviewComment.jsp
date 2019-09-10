@@ -128,8 +128,8 @@
 
                             <div class="input-group">
                                 <div class="container">
-                                    <div class="row lead">
-                                        <div class="starrr stars"></div>
+                                    <div class="row">
+                                        <div class="starrr stars text-warning"></div>
                                         <span class="count">0</span>점
                                     </div>
                                 </div>
@@ -151,22 +151,79 @@
 
 <%--별점과 리뷰 db에 등록--%>
 <script>
-    //v파라미터로 callback과 error를 함수로 받는다.
-    //Ajax호출이 성공하고 callback값으로 적절한 함수가 존재한다면 해당 함수를 호출하여 결과 반영
-    //자바스크립트는 함수의 개수를 일치 시킬 필요가 없음
-    $(document).ready(function () {
+<%--    //v파라미터로 callback과 error를 함수로 받는다.--%>
+<%--    //Ajax호출이 성공하고 callback값으로 적절한 함수가 존재한다면 해당 함수를 호출하여 결과 반영--%>
+<%--    //자바스크립트는 함수의 개수를 일치 시킬 필요가 없음--%>
+<%--    $(document).ready(function () {--%>
 
-        var ci_idValue = '<c:out value="${companyReview.ci_id}" />';
-        var companyReviewUL = $(".chat");
+<%--        var ci_idValue = '<c:out value="${companyReview.ci_id}" />';--%>
+<%--        var companyReviewUL = $(".chat");--%>
 
-        showList(1);
+<%--        showList(1);--%>
 
-        //showList()는 페이지 번호를 파라미터로 받게 설계 파라미터가 없는경우 자동으로 페이지 1이 되도록
-        //DOM처리 이후 자동적으로 showList()가 호추되며 <ul>태그 내에 내용으로 처리
-        //만약 1페이지가아니라면 <ul>에 <li>들이 추가되는 형태
+<%--        //showList()는 페이지 번호를 파라미터로 받게 설계 파라미터가 없는경우 자동으로 페이지 1이 되도록--%>
+<%--        //DOM처리 이후 자동적으로 showList()가 호추되며 <ul>태그 내에 내용으로 처리--%>
+<%--        //만약 1페이지가아니라면 <tbody>에 <tr>들이 추가되는 형태--%>
 
+<%--        function showList(page) {--%>
 
+<%--            console.log("show list"+page);--%>
 
+<%--            companyReviewService.getList({ci_id: ci_idValue, page: page || 1}, function (companyReviewCtn,list) {--%>
+
+<%--                console.log("companyReviewCtn : "+companyReviewCtn);--%>
+<%--                console.log("list: "+list);--%>
+<%--                console.log(list);--%>
+
+<%--                if(page === -1){--%>
+<%--                    pageNum = Math.ceil(companyReviewCtn/10.0);--%>
+<%--                    showList(pageNum);--%>
+<%--                    return;--%>
+<%--                }--%>
+
+<%--                var str = "";--%>
+<%--                if (list === null || list.length === 0) {--%>
+
+<%--                    companyReviewUL.html("");--%>
+
+<%--                    return;--%>
+<%--                }--%>
+<%--                for (var i = 0, len = list.length || 0; i < len; i++) {--%>
+<%--                    str+="<tr class='clearfix' data-cr_id='"+list[i].cr_id+"'><td>";--%>
+<%--                    str+="<div class='container'><div class='row'><div class='row col-lg-11 text-warning'>";--%>
+<%--                    str+=""--%>
+<%--                    if(companyReview.cr_starRt){}--%>
+
+<%--                }--%>
+<%--            // <tr>--%>
+<%--            //     <td>--%>
+<%--            //     <div class="container">--%>
+<%--            //         <div class="row">--%>
+<%--            //         <div class="row col-lg-11 text-warning">--%>
+<%--            //         <i class="fa fa-star"></i>--%>
+<%--            //         <i class="fa fa-star"></i>--%>
+<%--            //         <i class="fa fa-star"></i>--%>
+<%--            //         <i class="fa fa-star"></i>--%>
+<%--            //         <i class="fa fa-star-o"></i>--%>
+<%--            //         </div>--%>
+<%--            //         <div class="col-lg-auto">--%>
+<%--            //         <p>--%>
+<%--            //         <small class="text-right">2018-01-01</small>--%>
+<%--            //         </p>--%>
+<%--            //         </div>--%>
+<%--            //         </div>--%>
+<%--            //--%>
+<%--            //     내용~~~~~~~~~~~--%>
+<%--            //     </div>--%>
+<%--            //     </td>--%>
+<%--            //     </tr>--%>
+
+<%--                companyReviewUL.html(str);--%>
+
+<%--                showReplyPage(companyReviewCtn);--%>
+<%--            });//end function--%>
+
+<%--        }//end showList--%>
 
         //별점 등록
         $(".registerBtn").on("click", function (e) {
@@ -185,85 +242,56 @@
                 }),
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
-                    alert("리뷰가 등록되었습니다.")
+                    alert("리뷰가 등록되었습니다.");
+                    // showList(-1);
                 }
 
             });
         });
-
-        //리뷰 출력 param이라는 개체를 통해 파라미터를 전달받어 JSON목록을 호출하며 JSON 형태가 필요하므로 URL 호출 확장자를 .json으로 처
-        function getList(param, callback, error) {
-
-            var ci_id = param.ci_id;
-            var page = param.page;
-
-            $.getJSON("/btl/companyReview/pages/" + ci_id + "/" + page + ".json", function (data) {
-                if (callback) {
-                    //리뷰의 목록만 가져오는경우
-                    callback(data.companyReviewCtn);
-                }
-            }).fail(function (xhr, status, err) {
-                if (error) {
-                    error();
-                }
-            })
-
-        }
-
-        //특정 리뷰 조회
-        function get(cr_id, callback, error) {
-
-            $.get("/btl/companyReview/" + cr_id + ".json", function (result) {
-
-                if (callback) {
-                    callback(result);
-                }
-
-            });
-            fail(function (xhr, status, err) {
-                if (error) {
-                    error();
-                }
-            });
-        }
-
-        //시간 표시 XMl이나 JSON의 형태로 데이터를 받을때는 순수하게 숫자로 표현되는 시간ㅇ값이 나오게 되어 벼환해서 사용
-        function displayTime(timeValue) {
-            var today = new Date();
-
-            var gap = today.getTime() - timeValue;
-
-            var dateObj = new Date(timeValue);
-            var str = "";
-
-            if (gap < (1000 * 60 * 60 * 24)) {
-
-                var hh = dateObj.getHours();
-                var mi = dateObj.getMinutes();
-                var ss = dateObj.getSeconds();
-
-                return [(hh > 9 ? '' : '0') + hh, ':', (mi > 9 ? '' : '0') + mi, ':', (ss > 9 ? '' : '0') + ss].join('');
-            } else {
-                var yy = dateObj.getFullYear();
-                var mm = dateObj.getMonth();
-                var dd = dateObj.getDate();
-
-                return [yy, '/', (mm > 9 ? '' : '0') + mm, '/', (dd > 9 ? '' : '0') + dd].join('');
-            }
-
-        }
-
-        //add는 따로 처리 합쳐야하나?
-        return {get: get, getList: getList, displayTime: displayTime}
-
-
-    });
+        // $(".registerBtn").on("click", function (e) {
+        //
+        //     var cr_comment = $(".cr_comment").val();
+        //     var starRating = $(".count").text();
+        //     var cr_category = $(".cr_category").val();
+        //
+        //     var companyReview = {
+        //         cr_comment: cr_comment,
+        //         cr_starRt: starRating,
+        //         cr_category: cr_category
+        //     };
+        //     companyReviewService.add(companyReview, function (result) {
+        //
+        //         alert(result);
+        //
+        //         // showList(-1);
+        //     })
+        //
+        // })
+        // $(".chat").on("click", "li", function (e) {
+        //
+        //     var rno = $(this).data("rno");
+        //
+        //     replyService.get(rno, function (reply) {
+        //
+        //         modalInputReply.val(reply.reply);
+        //         modalInputReplyer.val(reply.replyer);
+        //         modalInputReplyDate.val(replyService.displayTime(reply.replyDate))
+        //             .attr("readonly", "readonly");
+        //         modal.data("rno", reply.rno);
+        //
+        //         modal.find("button[id != 'modalCloseBtn']").hide();
+        //         modalModBtn.show();
+        //         modalRemoveBtn.show();
+        //
+        //         $(".modal").modal("show");
+        //
+        //     });
+        // });
+    //
+    // });
 
 </script>
 
-<%--푸터에 넣음 색 바뀔듯--%>
-<%--starCSS--%>
-<link rel="stylesheet" type="text/css" href="resources/css/star.css">
 <%-- 아이콘--%>
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
       integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
