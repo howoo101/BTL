@@ -11,7 +11,7 @@ import com.btl.findjob.service.SshService;
 
 @Controller
 public class SshController {
-	//서송현 테스트 작업공간 시작  (이 메서드를 참고 하고 변경 or 삭제  ㄱㄱ)=============================================
+	//서송현 테스트 작업공간 시작  =============================================
 	@Autowired
 	SshService service;
 
@@ -52,5 +52,69 @@ public class SshController {
 			return "companyInfo_contentsshpart";
 		}
 		
+
+		
+		// 모달 테스트
+		@RequestMapping(value = "sshmodal", method = {RequestMethod.GET ,  RequestMethod.POST})
+		public String sshtest() {
+
+			
+			return "sshmodal";
+		}
+		
+	
+		// header 모달 테스트
+		@RequestMapping(value = "sshheader", method = {RequestMethod.GET ,  RequestMethod.POST}) 
+		public String sshheader() {
+
+			
+			return "includes/sshheader";
+		}
+
+		
+		// 로그인 호출
+		@RequestMapping(value = "sshlogin", method = {RequestMethod.GET ,  RequestMethod.POST}) 
+		public String sshlogin() {
+
+			
+			return "sshlogin";
+		}
+		
+		
+		// 회원가입 호출
+		@RequestMapping(value = "sshregi", method = {RequestMethod.GET ,  RequestMethod.POST}) 
+		public String sshregi() {
+
+			
+			return "sshregi";
+		}
+		
+		
+
+		// 비밀번호찾기 호출
+		@RequestMapping(value = "sshpwfind", method = {RequestMethod.GET ,  RequestMethod.POST}) 
+		public String sshpwfind() {
+
+			
+			return "sshpwfind";
+		}
+		
+		
+		// 로그인 확인
+		@RequestMapping(value = "sshlogin_chk", method = {RequestMethod.GET ,  RequestMethod.POST}) 
+		public String sshlogin_chk(@Param("user_email")String user_email,@Param("user_password")String user_password ) {
+				System.out.println(user_email);
+				System.out.println(user_password);
+			return "includes/sshheader";
+		}
+	
+		
+		
+		
 		//서송현 테스트 작업 끝===========================================================
+		
+		
+		
+		
+		
 }
