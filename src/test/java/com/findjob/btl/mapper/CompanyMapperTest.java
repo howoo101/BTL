@@ -23,7 +23,6 @@ public class CompanyMapperTest {
 	@Test
 	public void test2() {
 		
-		assertTrue(mapper.companyGetList2("세이").size() == 20);
 	}
 
 }
