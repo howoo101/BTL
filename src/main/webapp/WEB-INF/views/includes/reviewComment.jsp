@@ -145,8 +145,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -160,6 +158,15 @@
 
         var ci_idValue = '<c:out value="${companyReview.ci_id}" />';
         var companyReviewUL = $(".chat");
+
+        showList(1);
+
+        //showList()는 페이지 번호를 파라미터로 받게 설계 파라미터가 없는경우 자동으로 페이지 1이 되도록
+        //DOM처리 이후 자동적으로 showList()가 호추되며 <ul>태그 내에 내용으로 처리
+        //만약 1페이지가아니라면 <ul>에 <li>들이 추가되는 형태
+
+
+
 
         //별점 등록
         $(".registerBtn").on("click", function (e) {
@@ -212,7 +219,8 @@
                     callback(result);
                 }
 
-            }), fail(function (xhr, status, err) {
+            });
+            fail(function (xhr, status, err) {
                 if (error) {
                     error();
                 }
@@ -252,10 +260,12 @@
     });
 
 </script>
+
+<%--푸터에 넣음 색 바뀔듯--%>
 <%--starCSS--%>
 <link rel="stylesheet" type="text/css" href="resources/css/star.css">
-<%--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">--%>
 <%-- 아이콘--%>
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <%--star JS--%>
 <script type="text/javascript" src="resources/js/star.js"></script>
