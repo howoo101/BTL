@@ -35,12 +35,14 @@
                 </form>
             </div>
             <!-- Link trigger modal -->
+            
+            
 			<a href="sshlogin" data-remote="false" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
 			    로그인
 			</a>
 			
 	
-			    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+			    <div id="myModal" class="modal fade" tabindex="-1" role="dialog"> 
 			        <div class="modal-dialog">
 			            <div class="modal-content">
 			                <div class="modal-header">
@@ -51,8 +53,9 @@
 			      <div class="g-signin2" data-onsuccess="onSignIn"></div>    
 			                </div>
 			                <div class="modal-footer">
-							 <button type="button" class="btn btn-primary">회원가입</button>
-							 <button type="button" class="btn btn-primary">비밀번호 찾기</button>
+			                
+			                <button id="signup" class="btn btn-primary">회원가입</button>
+			                <button id="pwfind" class="btn btn-primary">비밀번호찾기</button>
 			                </div>
 			            </div>
 			        </div>
@@ -68,16 +71,27 @@
 <script>
 
 
+//최초 modal-body에 로드되는 로그인 페이지
  $("#myModal").on("show.bs.modal", function(e) {
     var link = $(e.relatedTarget);
     $(this).find(".modal-body").load(link.attr("href"));
 });
+ 
+ 
+ 
+ //클릭시 modal-body에 해당 url로드
 
+     $("#signup").click(function(){
+    	 $( ".modal-body" ).load( "sshsignup");
+     });
 
+     $("#pwfind").click(function(){
+    	 $( ".modal-body" ).load( "sshpwfind");
+     });
+    
+ 
 
-
-
-$('#login-btn').click(function() {
+/* $('#login-btn').click(function() {
     $.ajax({
         type: "POST",
         url: "/sshlogin_chk",
@@ -90,7 +104,7 @@ $('#login-btn').click(function() {
             alert('로그인 정보가 올바르지 않습니다.');
         }
     });
-});
+}); */
 
 
 </script>

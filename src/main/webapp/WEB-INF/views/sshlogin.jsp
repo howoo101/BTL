@@ -23,6 +23,7 @@
 	              
 	       <button id="login-btn" class="btn btn-lg btn-primary btn-block" >로그인</button>    
  	</form>
+ 
  	
 <script>
 function onSignIn(googleUser) {
@@ -52,28 +53,7 @@ function signOut() {
   
   
   
-$('#login-btn').click(function(){
-	$.ajax({
-		url: "${pageContext.request.contextPath}/sshlogin_chk",
-		type: "GET",
-		data:{
-			"user_email":$('#user_email').val()
-			"user_password":$('#user_password').val()
-		},
-		
-		success: function(data){
-		
-			
-			}else{
-			
-			}
-		},
-		error: function(){
-			alert("서버에러");
-		}
-	});
-	
-  
+
   
   
   

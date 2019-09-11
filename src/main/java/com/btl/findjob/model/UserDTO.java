@@ -1,5 +1,8 @@
 package com.btl.findjob.model;
 
+import lombok.Data;
+
+@Data
 public class UserDTO {
 	private int user_id; //유저 pk
 	private String authority; //권한

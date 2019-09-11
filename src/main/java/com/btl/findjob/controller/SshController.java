@@ -2,18 +2,22 @@ package com.btl.findjob.controller;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.btl.findjob.service.EnterpriseService;
+import com.btl.findjob.service.UserService;
 
 @Controller
 public class SshController {
 	//�꽌�넚�쁽 �뀒�뒪�듃 �옉�뾽怨듦컙 �떆�옉  =============================================
 	@Autowired
-	EnterpriseService service;
+	private EnterpriseService service;
+
+	
 
 
 		@RequestMapping(value = "companyinfo_content", method = {RequestMethod.GET ,  RequestMethod.POST})
@@ -44,10 +48,7 @@ public class SshController {
 			
 			model.addAttribute("alltmoutrank", Math.round((double)service.alltmoutrank(ci_companyName) * 100 / service.latestallcp(ci_companyName)*100)/100.0); // �룞醫낆뾽怨� �씠踰덈떖 �눜�궗�옄 % �닚�쐞 (理쒖떊 �떖)
 			
-			
-			
-
-			
+		
 			
 			
 			return "companyInfo_contentsshpart";
@@ -83,15 +84,16 @@ public class SshController {
 		
 		
 		// �쉶�썝媛��엯 �샇異�
-		@RequestMapping(value = "sshregi", method = {RequestMethod.GET ,  RequestMethod.POST}) 
+		@RequestMapping(value = "sshsignup", method = {RequestMethod.GET ,  RequestMethod.POST}) 
 		public String sshregi() {
 
 			
-			return "sshregi";
+			return "sshsignup";
 		}
 		
 		
 
+	
 		// 鍮꾨�踰덊샇李얘린 �샇異�
 		@RequestMapping(value = "sshpwfind", method = {RequestMethod.GET ,  RequestMethod.POST}) 
 		public String sshpwfind() {
@@ -101,14 +103,19 @@ public class SshController {
 		}
 		
 		
-		// 濡쒓렇�씤 �솗�씤
-		@RequestMapping(value = "sshlogin_chk", method = {RequestMethod.GET ,  RequestMethod.POST}) 
-		public String sshlogin_chk(@Param("user_email")String user_email,@Param("user_password")String user_password ) {
-				System.out.println(user_email);
-				System.out.println(user_password);
-			return "includes/sshheader";
+		
+		//가입 테스트
+		@RequestMapping(value = "sshsignup_go" , method = {RequestMethod.GET ,  RequestMethod.POST}) 
+		public String sshsignup_go() {
+
+			
+			return "/";
 		}
-	
+		
+
+		
+		
+
 		
 		
 		
