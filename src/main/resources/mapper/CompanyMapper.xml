@@ -7,9 +7,10 @@
 		where ci_companyName like concat('%',#{keyword},'%') and ci_id > ${startNum}
 		limit 20
 	</select>
-	<!--검색시 단순 리스트+ 회사,면접리뷰 cnt  -->
+	<!--검색시 단순 리스트+ 회사,면접리뷰 cnt, follow 유무까지  -->
+	<!-- 로그인 구현시 userId 변경 -->
 	<select id="companyGetListWithCnt" resultType="com.btl.findjob.model.CompanyListVO">
-		SELECT ci.*,ifnull(comreviewcnt,0) as companyReviewCnt ,ifnull(inreviewcnt,0)as interviewReviewCnt 
+		SELECT ci.*,ifnull(comreviewcnt,0) as companyReviewCnt ,ifnull(inreviewcnt,0)as interviewReviewCnt, ifnull(follow.follow_id,0) as followId 
 		FROM companyinfo ci
 		left join (select ci.ci_id, ci.ci_companyName,count(*) comreviewcnt 
 		FROM companyinfo ci, companyreview cr
@@ -19,8 +20,22 @@
 		FROM companyinfo ci, interviewreview ir
 		WHERE ci.ci_id = ir.ci_id
 		group by ci.ci_companyName)ic on ci.ci_id = ic.ci_id
+		left join (select * from follow
+		where follow.user_id = 1) follow  on follow.ci_id = ci.ci_id 
 		WHERE ci.ci_companyName like concat('%',#{keyword},'%') and ci.ci_id > ${startNum}
+		order by ci_id
 		limit 20
 	</select>
+	<!-- 검색시 리스트에서 follow -->
+	<insert id="companyInsertFollow" parameterType="com.btl.findjob.model.FollowVO">
+		insert into follow (user_id,ci_id) values (1,#{ci_id})
+		<selectKey keyProperty="follow_id" resultType="int" order="AFTER"> 
+			SELECT LAST_INSERT_ID() 
+		</selectKey>
+	</insert>
+	
+	<delete id="companyDeleteFollow">
+		delete from follow where follow_id = #{followId}
+	</delete>
 	
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.btl.findjob.mapper.CompanyMapper;
 import com.btl.findjob.model.CompanyInfoDTO;
 import com.btl.findjob.model.CompanyListVO;
+import com.btl.findjob.model.FollowVO;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -26,6 +27,21 @@ public class CompanyServiceImpl implements CompanyService {
 		// TODO Auto-generated method stub
 		return mapper.companyGetListWithCnt(keyword, startNum);
 	}
+
+	@Override
+	public int companyInsertFollow(FollowVO vo) {
+		// TODO Auto-generated method stub
+		
+		return mapper.companyInsertFollow(vo);
+	}
+
+	@Override
+	public void companyDeleteFollow(String followId) {
+		// TODO Auto-generated method stub
+		mapper.companyDeleteFollow(followId);
+	}
+	
+	
 
 	
 }
