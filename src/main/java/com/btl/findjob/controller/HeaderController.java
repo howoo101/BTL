@@ -49,22 +49,13 @@ public class HeaderController {
 		return "sshlogin";
 	}
 	
-	
-	// 로그인 검사
 	@RequestMapping(value = "sshlogin_chk", method = {RequestMethod.POST}) 
 	@ResponseBody
-	public String sshlogin_chk(@Param("user_email") String user_email,@Param("user_password") String user_password,HttpSession session) {
+	public String sshlogin_chk(@Param("user_email") String user_email,@Param("user_password") String user_password,HttpServletRequest request) {
 	
-			if(session.getAttribute("user") !=null ) {
-				session.removeAttribute("user");
-			}
-
-		
 		if(userservice.login(user_email, user_password)==1) {
-			session.setAttribute("user", user_email);
-			
-			System.out.println(session.getAttribute("user"));
-			return Integer.toString(userservice.login(user_email, user_password));
+			HttpSession session = request.getSession();
+			   session.setAttribute("user", user_email);
 
 		}
 		
@@ -73,14 +64,11 @@ public class HeaderController {
 
 	}
 	
-	 @RequestMapping(value="logout")
-	    public String logout(HttpSession session) {
-	        session.invalidate(); 
-	        return "redirect:/"; 
-	 	}
 	
 	
-
+	
+	
+	
 	// 가입
 	@RequestMapping(value = "sshsignup", method = {RequestMethod.GET ,  RequestMethod.POST}) 
 	public String sshregi() {
