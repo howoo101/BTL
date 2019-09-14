@@ -12,9 +12,15 @@
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>홈</title>
+
+    
 </head>
 
+
 <body>
+
+<% String user = (String) session.getAttribute("user");%>
+
 
 <header class="mt-3">
     <div id="content-wrap">
@@ -34,14 +40,14 @@
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
                 </form>
             </div>
-            <!-- Link trigger modal -->
             
             
-			<a href="sshlogin" data-remote="false" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
+            <!-- login modal -->
+         
+ 			<a href="sshlogin" data-remote="false" id="loginmodal" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
 			    로그인
 			</a>
-			
-	
+
 			    <div id="myModal" class="modal fade" tabindex="-1" role="dialog"> 
 			        <div class="modal-dialog">
 			            <div class="modal-content">
@@ -60,16 +66,33 @@
 			            </div>
 			        </div>
 			    </div>
-	
- 
+			    
+			    
+		 <!-- user modal -->
+		 <div id="usermodal">
+		   <p>ㅎㅇ</p>
+  		 </div>
+  		 
+  		 
         </nav>
-
     </div>
 </header>
 
 
 <script>
 
+var user = '<%out.print(user);%>';
+
+if(user != null){
+	$("#usermodal").show();
+	$("#loginmodal").hide();
+	
+}  
+if (user == 'null'){
+	$("#usermodal").hide();
+	$("#loginmodal").show();
+	
+} 
 
 //최초 modal-body에 로드되는 로그인 페이지
  $("#myModal").on("show.bs.modal", function(e) {
@@ -89,22 +112,7 @@
     	 $( ".modal-body" ).load( "sshpwfind");
      });
     
- 
 
-/* $('#login-btn').click(function() {
-    $.ajax({
-        type: "POST",
-        url: "/sshlogin_chk",
-        data: {    "user_email" : $('#inputEmail').val(),
-            "user_password" : $('#inputPassword').val()},
-        success: function() {
-            alert('로그인 성공');
-            location.reload();
-        }, error: function() {
-            alert('로그인 정보가 올바르지 않습니다.');
-        }
-    });
-}); */
 
 
 </script>
