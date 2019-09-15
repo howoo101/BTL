@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.btl.findjob.mapper.UserMapper;
 
 @Service
-@Component("emailchk")
 public class UserServiceImpl implements UserService {
 
 @Autowired
@@ -51,5 +50,15 @@ UserMapper mapper;
 		
 		return mapper.login(user_email,user_password);
 	}
+
+
+	@Override
+	public void snsjoin_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("authorization") int authorization) {
+		
+		mapper.snsjoin_insert(user_email, user_password, authorization);
+		
+	}
+
+
 
 }

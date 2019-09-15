@@ -19,6 +19,16 @@
 values (#{authorization},#{user_email},'',#{user_password},CURRENT_DATE(),CURRENT_DATE(),#{key})
 	</insert>
 	
+	
+	<!-- sns 회원가입 -->
+	<insert id="snsjoin_insert" parameterType="com.btl.findjob.model.UserDTO">
+	insert into user (authorization_id,user_email,user_name,user_password,user_create_date,user_modify_date,user_emailauthkey)
+values (#{authorization},#{user_email},'',#{user_password},CURRENT_DATE(),CURRENT_DATE(),'')
+	</insert>
+	
+
+
+	
 	<!-- 인증키 체크 -->
 	<select id="keychk" resultType="INT" parameterType="com.btl.findjob.model.UserDTO">
 	select count(*) from user where user_email = #{user_email} AND user_emailauthkey = #{key}	

@@ -34,7 +34,7 @@
  $('#loginbtn').click(function() {
 	 
 		$.ajax({
-			url: "${pageContext.request.contextPath}/sshlogin_chk.do",
+			url: "${pageContext.request.contextPath}/login_chk.do",
 			type: "post",
 			data:{
 				 "user_email" : $('#inputEmail').val(),
@@ -63,16 +63,33 @@
 function onSignIn(googleUser) {
 	  var id_token = googleUser.getAuthResponse().id_token; //id 토큰 획득 (id토큰에 사용자 정보가 모여있다 아이디번호,닉네임,이메일,프로필사진)
 	  
-
 	
-	  //id 토큰을 서버로전송
-	  var xhr = new XMLHttpRequest();
-	  xhr.open('POST', 'tokens');
-	  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	  xhr.onload = function() {
-	    console.log('Signed in as: ' + xhr.responseText);
-	  };
-	  xhr.send('idtoken=' + id_token);
+
+	  
+	 	$.ajax({
+			url: "${pageContext.request.contextPath}/tokens",
+			type: "post",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			data:{
+				 "idtoken" : id_token
+				},
+				success: function(data){
+					if(data == '1' ){
+	
+						$('.close').trigger('click'); 
+						location.reload();
+					}else{
+						alert("가입완료")
+						$('.close').trigger('click'); 
+						location.reload();
+						}
+					},
+					error: function(){
+						alert("서버에러");
+					}
+				});  
+	
+	    
 	
 	}
 function signOut() {
@@ -84,8 +101,7 @@ function signOut() {
   
   
   
-  
-  
+
   
 
   

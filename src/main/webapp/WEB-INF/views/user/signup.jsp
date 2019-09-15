@@ -13,7 +13,7 @@
 			 <input type="password" name="user_password" id="inputPassword" class="form-control" placeholder="비밀번호" required>	      
 	    	 <input type="password" name="user_passwordchk" id="inputPasswordchk" class="form-control" placeholder="비밀번호 확인" required>	      
 	 		   <p id="pwchk">비밀번호는 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.</p>
-	 		  <input type="button" id="signUp" value="가입" class="btn btn-info">
+	 		  <input type="button" id="signUp" value="가입" class="btn btn-lg btn-info btn-block">
 	        
  	</form>
  	
@@ -109,7 +109,7 @@ function pw_chk(pw){
 				return;
 			}else{
 		 	 	$.ajax({
-					url: "${pageContext.request.contextPath}/sshsignup_go.do",
+					url: "${pageContext.request.contextPath}/signup_go.do",
 					type: "post",
 					data:{
 						"user_email":$('#inputEmail').val(),
@@ -117,7 +117,8 @@ function pw_chk(pw){
 					}
 					})
 				 alert("가입이 완료 되었습니다! 가입하신 메일로 인증메일이 발송됩니다. 인증 후 로그인 해주세요.");
-				 $( ".modal-body" ).load( "sshlogin"); 
+		 	 	 $( ".modal-body" ).load( "login"); 
+		 	 	 
 				} 
 		});
 	
