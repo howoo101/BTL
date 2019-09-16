@@ -45,7 +45,7 @@
                                 <div class="col-lg-10">
                                     <button class="btn" type="button" data-toggle="collapse" data-target="#collapseOne"
                                             aria-expanded="false" aria-controls="collapseOne">
-                                        승진 기회 및 가능성 <span class="text-primary totalCompanyReviewCtn2">(5)</span>
+                                        승진 기회 및 가능성 <span class="text-primary totalCompanyReviewCtn2">(<span class="totalCompanyReviewCtnOne">0</span>)</span>
                                     </button>
                                 </div>
                                 <div class="col-lg-2">
@@ -70,7 +70,7 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th class="totalCompanyReviewCtnOne"></th>
+                                    <th class="">총 <span class="totalCompanyReviewCtnOne">0</span>개의 기업 리뷰 코멘트 </th>
                                     <%--기업 총 코메트--%>
                                 </tr>
                                 </thead>
@@ -112,7 +112,6 @@
         var ci_idValue = '<c:out value="${companyList[0].ci_id}"/>';//homeController에 있는 모델 받아서 사용 0 넣지 안으면 에러
         var companyReviewUL = $(".chat");
         var totalCompanyReviewCtnOne = $(".totalCompanyReviewCtnOne");
-        var totalCompanyReviewCtn2 = $(".totalCompanyReviewCtn2");
         var starRatingAveUL = $(".starRatingAve");
         var starRatingAveStarUL = $(".starRatingAveStar");
 
@@ -131,8 +130,7 @@
                     return;
                 }
 
-                totalCompanyReviewCtn2.html("(" + companyReviewCtn + ")");
-                totalCompanyReviewCtnOne.html("총 " + companyReviewCtn + "개의 기업리뷰 코멘트");
+                totalCompanyReviewCtnOne.html(companyReviewCtn);
 
                 var str = "";
                 var starRating = "";
@@ -140,7 +138,6 @@
 
                 //List가 비어있는 경우 "" 처리
                 console.log(companyReviewList);
-                console.log(companyReviewList.length);
                 if (companyReviewList.length === 0) {
 
 
