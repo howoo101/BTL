@@ -107,12 +107,12 @@
 						
 						
 						<!-- Modal-->
-						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-							aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal fade" id="Modal" tabindex="-1" role="dialog"
+							aria-labelledby="ModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="myModalLabel">확 인 창</h5>
+										<h5 class="modal-title" id="ModalLabel">확 인 창</h5>
 										<button class="close" type="button" data-dismiss="modal"
 											aria-label="true">&times;</button>
 									</div>
@@ -157,7 +157,7 @@
 						$(".modal-body").html(
 								"게시글" + parseInt(result) + "번이 등록되었습니다.");
 					}
-					$("#myModal").modal("show");
+					$("#Modal").modal("show");
 				}
 				$("#regBtn").on("click", function() {
 					self.location = "register";
