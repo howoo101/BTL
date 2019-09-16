@@ -50,7 +50,7 @@
     <!-- 인터셉터 맵핑 설정 (로그인이 필요한곳) -->
      <interceptors>
         <interceptor>
-           <mapping path="/register"/>
+           <mapping path="/register"/>   
             <beans:ref bean="authenticationInterceptor"/>
         </interceptor>
     </interceptors>

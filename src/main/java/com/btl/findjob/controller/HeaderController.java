@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.btl.findjob.model.SHA256Util;
 import com.btl.findjob.model.TempKey;
 import com.btl.findjob.service.MailSendService;
 import com.btl.findjob.service.UserService;
@@ -54,20 +55,32 @@ public class HeaderController {
 	
 	@RequestMapping(value = "login_chk", method = {RequestMethod.POST}) 
 	@ResponseBody
-	public String login_chk(@Param("user_email") String user_email,@Param("user_password") String user_password,HttpServletRequest request) {
+	public String login_chk(@Param("user_email") String user_email,@Param("user_password") String user_password,HttpServletRequest request,Model model) {
 	
-		if(userservice.login(user_email, user_password)==1) {
-			HttpSession session = request.getSession();
-			   session.setAttribute("user", user_email);
+		if(userservice.snschk(user_email)==1) { //sns회원인지 먼저 판별 (아닐경우)
+			return userservice.snstype(user_email);  //sns 로그인을 권유
+			
+		} else {
+			 String memberSalt = userservice.getsalt(user_email); // 멤버의 salt 가져오기
+			 String inputpassword = user_password;  //입력된 암호 가져오기
+			 String newpassword = SHA256Util.getEncrypt(inputpassword, memberSalt); // 가져온 salt을 이용하여 sha 암호 get
+						  
+			  if(userservice.login(user_email, newpassword)==1)  { 
+				  HttpSession session = request.getSession(); 
+					  session.setAttribute("user", user_email); 
+					  return "1"; }  // 로그인 성공
+				
+				  
+				  else {
+					  	return "0"; //false
+				
+				  }
 
-		}
-		
-		return Integer.toString(userservice.login(user_email, user_password));
-
+			}
 
 	}
 	
-	
+	//구글 sns
 	@RequestMapping(value = "tokens", method = {RequestMethod.POST})
 	@ResponseBody
 	public String tokens(Model model,@RequestParam("idtoken") String idtoken,HttpServletRequest request)throws Exception {
@@ -91,7 +104,14 @@ public class HeaderController {
 				HttpSession session = request.getSession();
 				   session.setAttribute("user", user_email);
 				   
-				
+		
+				   // sns 정보는 항상 변화할수있으니까 로그인할때마다 sns info 테이블 업데이트
+				    String sns_id = "";
+					String sns_type = "google";
+					String sns_name = "";
+					String sns_profile = "";
+				   
+					userservice.snsupdate(sns_id, sns_type, sns_name, sns_profile, user_email);
 				   
 				   return "1";
 			 }
@@ -102,7 +122,20 @@ public class HeaderController {
 				TempKey tempkey = new TempKey();   
 				String user_password = tempkey.getKey(20, false);//sns회원이라서 랜덤 비밀번호생성
 				
+				
+				//sns 회원가입 (인증키가 없고 비밀번호는 랜덤비밀번호를 사용 (사실상 일반회원로그인이 안되게 막은것))
 				userservice.snsjoin_insert(user_email,user_password,authorization); 
+				
+				
+				
+			
+				String sns_id = "";
+				String sns_type = "google";
+				String sns_name = "";
+				String sns_profile = "";
+	
+		
+				userservice.snsinfo(sns_id, sns_type, sns_name, sns_profile);
 				
 	 
 				 return "0";
@@ -116,14 +149,6 @@ public class HeaderController {
 		}
 		return "includes/header";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -161,13 +186,17 @@ public class HeaderController {
 	@RequestMapping(value = "signup_go" , method = {RequestMethod.POST}) 
 	public String signup_go(@Param("user_email") String user_email,@Param("user_password") String user_password,HttpServletRequest request) {
 
+		
+	String salt = SHA256Util.generateSalt();
+	String newPassword = SHA256Util.getEncrypt(user_password, salt);
+	
 	TempKey tempkey = new TempKey();             
 		String key = tempkey.getKey(30, false); //랜덤으로 이루어진 인증키 30사이즈 생성       
 		
 		int authorization = 5; //비인증회원  
 
 	
-		userservice.join_insert(user_email,user_password,key,authorization); 
+		userservice.join_insert(user_email,newPassword,key,authorization,salt); 
 			 
 		mailsender.mailSendWithUserKey(user_email,key,request); 
 		   
@@ -216,9 +245,13 @@ public class HeaderController {
 	
 	//인터셉터
 	@RequestMapping(value = "logininterceptor" , method = {RequestMethod.GET ,  RequestMethod.POST}) 
-	public String interceptor(){
-
-		return "user/logininterceptor";
+	public String interceptor(Model model){
+		
+		String inter = "alert('로그인 해주세요')";
+		model.addAttribute("inter", inter);
+		
+		
+		 return "user/logininterceptor";
 	}
 	
 }

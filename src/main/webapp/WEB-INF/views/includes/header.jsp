@@ -16,7 +16,13 @@
 
 <body>
 
-<% String user = (String) session.getAttribute("user");%>
+<% String user = (String) session.getAttribute("user");
+
+%>
+
+
+
+
 
 
 <header class="mt-3">
@@ -48,7 +54,7 @@
 			    <div id="myModal" class="modal fade" tabindex="-1" role="dialog"> 
 			        <div class="modal-dialog">
 			            <div class="modal-content">
-			                <div class="modal-header">
+			                <div class="modal-header">	
 			                    <h5 class="modal-title">LOGIN</h5>
 			                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			                </div>
@@ -57,6 +63,7 @@
 			                </div>
 			                <div class="modal-footer">
 			                
+			                <button id="login" class="btn btn-primary">로그인</button>
 			                <button id="signup" class="btn btn-primary">회원가입</button>
 			                <button id="pwfind" class="btn btn-primary">비밀번호찾기</button>
 			                </div>
@@ -84,7 +91,11 @@
 
 <script>
 
+
+
+// 세션이 있을시 로그인 메뉴를 감추고 회원메뉴를 show
 var user = '<%out.print(user);%>';
+
 
 if(user != null){
 	$("#usermodal").show();
@@ -106,6 +117,10 @@ if (user == 'null'){
  
  
  //클릭시 modal-body에 해당 url로드
+ 
+ 	 $("#login").click(function(){
+    	 $( ".modal-body" ).load( "login");
+     });
 
      $("#signup").click(function(){
     	 $( ".modal-body" ).load( "signup");
@@ -114,7 +129,30 @@ if (user == 'null'){
      $("#pwfind").click(function(){
     	 $( ".modal-body" ).load( "pwfind");
      });
-    
+   
+ // modal-footer 
+ 
+ 	$("#login").hide();
+	$("#signup").show();
+	$("#pwfind").show();
+  
+    $("#signup").click(function(){
+    	$("#login").show();
+    	$("#signup").hide();
+    	$("#pwfind").show();
+     });
+
+   $("#pwfind").click(function(){
+    		$("#login").show();
+        	$("#signup").show();
+        	$("#pwfind").hide();
+     });
+   $("#login").click(function(){
+	$("#login").hide();
+   	$("#signup").show();
+   	$("#pwfind").show();
+});
+  
 
 
 

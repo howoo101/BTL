@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.btl.findjob.mapper.UserMapper;
+import com.btl.findjob.model.UserDTO;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,10 +23,10 @@ UserMapper mapper;
 
 
 	@Override
-	public void join_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("key") String key,@Param("authorization") int authorization) {
+	public void join_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("key") String key,@Param("authorization") int authorization,@Param("salt") String salt) {
 		
 		
-		 mapper.join_insert(user_email,user_password,key,authorization);
+		 mapper.join_insert(user_email,user_password,key,authorization,salt);
 		
 	}
 
@@ -57,6 +58,40 @@ UserMapper mapper;
 		
 		mapper.snsjoin_insert(user_email, user_password, authorization);
 		
+	}
+
+
+	@Override
+	public String getsalt(String user_email) {
+
+		return mapper.getsalt(user_email);
+	}
+
+
+	@Override
+	public void snsinfo(@Param("sns_id") String sns_id,@Param("sns_type") String sns_type,@Param("sns_name") String sns_name,@Param("sns_profile") String sns_profile) {
+			mapper.snsinfo(sns_id, sns_type, sns_name, sns_profile);
+	}
+
+
+	@Override
+	public void snsupdate(@Param("sns_id") String sns_id,@Param("sns_type") String sns_type,@Param("sns_name") String sns_name,@Param("sns_profile") String sns_profile,@Param("user_email") String user_email) {
+		 
+		mapper.snsupdate(sns_id, sns_type, sns_name, sns_profile, user_email);
+		
+	}
+
+
+	@Override
+	public int snschk(String user_email) {
+		
+		return mapper.snschk(user_email);
+	}
+
+
+	@Override
+	public String snstype(String user_email) {
+		return mapper.snstype(user_email);
 	}
 
 
