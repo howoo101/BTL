@@ -8,11 +8,12 @@ import java.util.List;
 
 public interface CompanyReviewMapper {
 
-   public int insertCompanyReview(CompanyReview companyReview);
+    int insertCompanyReview(CompanyReview companyReview);
 
-    public CompanyReview read(int cr_id);
+    List<CompanyReview> getListWithPaging(@Param("companyReviewCriteria") CompanyReviewCriteria companyReviewCriteria, @Param("ci_id") int ci_id) throws Exception;
 
-    public  List<CompanyReview> getListWithPaging(@Param("companyReviewCriteria") CompanyReviewCriteria companyReviewCriteria, @Param("ci_id") int ci_id);
+    //숫자 파악위해서 사용N
+    int getCountByCi_id(int ci_id);
 
-    public  int getCountByCi_id(int ci_id);
+    double getStarRtAvg(@Param("cr_category") int cr_category, @Param("ci_id") int ci_id);
 }

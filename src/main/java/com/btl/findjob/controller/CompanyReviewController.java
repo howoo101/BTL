@@ -21,7 +21,7 @@ public class CompanyReviewController {
     private CompanyReviewService companyReviewService;
 
     @PostMapping(value = "/new", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-    public ResponseEntity<String> insertCompanyReview(@RequestBody CompanyReview companyReview){
+    public ResponseEntity<String> insertCompanyReview(@RequestBody CompanyReview companyReview) throws Exception {
 
         log.info("CompanyReview : "+companyReview);
 
@@ -31,19 +31,17 @@ public class CompanyReviewController {
 
     }
 
-    @GetMapping(value = "/{cr_id}")
-    public ResponseEntity<CompanyReview> get(@PathVariable("cr_id") int cr_id){
-
-        return new ResponseEntity<>(companyReviewService.get(cr_id),HttpStatus.OK);
-
-
-    }
-
+    //페이지 처리 위해서 수정
     @GetMapping(value = "/pages/{ci_id}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity<CompanyReviewPageDTO> getList(@PathVariable("page") int page, @PathVariable("ci_id")int ci_id) {
+    public ResponseEntity<CompanyReviewPageDTO> getListWithPaging(@PathVariable("page") int page, @PathVariable("ci_id")  int ci_id) throws Exception {
 
-        CompanyReviewCriteria companyReviewCriteria = new CompanyReviewCriteria(page, 10);
+        CompanyReviewCriteria companyReviewCriteria= new CompanyReviewCriteria(page, 10);
 
-        return new ResponseEntity<>(companyReviewService.getListPage(companyReviewCriteria, ci_id), HttpStatus.OK);
+        log.info("get ci_id List ci_id: "+ci_id);
+
+        log.info("companyReviewCriteria: "+companyReviewCriteria);
+
+        return new ResponseEntity<>(companyReviewService.getListWithPaging(companyReviewCriteria, ci_id),HttpStatus.OK);
     }
+
 }

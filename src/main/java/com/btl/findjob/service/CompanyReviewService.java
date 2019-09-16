@@ -9,13 +9,10 @@ import java.util.List;
 
 public interface CompanyReviewService {
 
-    int insertCompanyReview(CompanyReview companyReview);
+    int insertCompanyReview(CompanyReview companyReview) throws Exception;
 
-    CompanyReview get(int cr_id);
+    CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id) throws Exception;
 
-    List<CompanyReview> getList(CompanyReviewCriteria companyReviewCriteria, int ci_id);
-
-    CompanyReviewPageDTO getListPage(CompanyReviewCriteria companyReviewCriteria, int ci_id);
-
+    double getStarRtAvg(int cr_category, int ci_id);
 
 }
