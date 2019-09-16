@@ -24,7 +24,12 @@
 									<div class="row justify-content-center">
 										<h4>
 											<a href="${path }/info?ci_companyName=${item.ci_companyName}">${item.ci_companyName}</a>
-											<button class="btn btn-outline-danger">♡</button>
+											<c:if test="${item.followId eq 0}">
+												<button id="unfollow" class="follow btn btn-outline-danger" data-ciId=${item.ci_id }>♡</button>
+											</c:if>
+											<c:if test="${item.followId ne 0}">
+												<button id="follow" class="follow btn btn-outline-danger" data-ciId=${item.ci_id } data-followId=${item.followId }>♥</button>
+											</c:if>
 										</h4>
 									</div>
 									<div class="row justify-content-center">
@@ -63,10 +68,21 @@
 		</div>
 	</div>
 	<%@ include file="includes/footer.jsp"%>
+	<script src="resources/js/scroll.js"></script>
+	<script src="resources/js/follow.js"></script>
 	<script>
 		let isEnd = false;
+		var path = "${path}";
 		$(document).ready(
 				function() {
+					//follow
+					$(document).on("click",".follow", function() {
+						var btn = $(this)
+						follow(path,btn)
+					});//onclick
+					//follow end
+					
+					//scroll 
 					var keyword = '${keyword}'
 
 					$(window).scroll(function() {
@@ -76,97 +92,12 @@
 						let documentHeight = $(document).height();
 						
 						if (scrollTop + windowHeight >= documentHeight-1) {
-							fetchList();
+							fetchList(keyword,path);
 						}
-					})
-					let fetchList = function() {
-
-						if (isEnd == true) {
-							return;
-						}
-
-						let lastBno = $(".card-body:last").attr("data-startNo")
-						
-						$.ajax({
-							type : 'post',
-							url : 'scroll',
-							dataType : 'json',
-							contentType : 'application/json;',
-							data : JSON.stringify({
-								'startNo' : lastBno,
-								'keyword' : keyword
-							}),
-							success : function(result) {
-								console.log(result)
-								if (result.length < 20)
-									isEnd = true;
-								 $.each(result, function(idx,vo){
-					                    renderList(false, idx,vo);
-					                })
-							},
-							error : function(request, status, error) {
-								alert("code:" + request.status + "\n"
-										+ "message:" + request.responseText
-										+ "\n" + "error:" + error);
-							}
-						})
-					}
-				})	
-				let renderList = function(mode, idx,res){
+					})//scroll
+				});//ready
 				
-        // 리스트 html을 정의
-        let html = "<div class='card-body' data-startNo="+res.ci_id+">"
-        			+ '<hr style="border: 1px solid #c7d5f8; padding: 0px;">'
-        			+	'<div class="row">'
-        	        +		'<div class="container-fluid">'
-                    +			'<div class="row">'
-                    +				'<div class="col-lg-6 ml-5">'
-					+	                 '<div class="row justify-content-center">'
-                    +						'<h4>'
-                    +						'<a href="${path}/info?ci_companyName='+res.ci_companyName+'">' +res.ci_companyName+'</a>'
-                    +						'<button class="btn btn-outline-danger">♡</button>'
-                    +						'</h4>'
-        			+					 '</div>'
-        			+					 '<div class="row justify-content-center">'
-        			+						res.ci_industry+" | " + res.ci_address
-        			+					 '</div>'
-        			+					 '<div class="row justify-content-center">'
-        			+					  "평균연봉 4534 만원"+	'</div>'
-        			+					 '</div>'
-        			+					 '<div class="col-lg-auto">'
-        			+						'<div class="row justify-content-center">'
-        			+					    	'<h5 class="">'+"*****"+'</h5>'
-        			+					 	'</div>'
-        			+					 	'<div class="row " style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">'
-        			+							'<div class="col-sm-12 text-center">'+res.companyReviewCnt+'</div>'
-					+					 		'<div class="col-sm-12 text-center">'
-					+								'<a href="">'+'리뷰 코멘트</a>'
-					+							'</div>'
-					+						'</div>'
-					+ 					'</div>'
-        			+					'<div class="col-lg-auto text-center">'
-					+						'<div class="row justify-content-center">'
-        			+							'<h5>2.9</h5>'
-					+						 '</div>'	
-					+						'<div class="row ">'
-					+							'<div class="col-sm-12 text-center">'+res.interviewReviewCnt+'</div>'
-					+							'<div class="col-sm-12 text-center">'
-					+								'<a href="">면접정보</a>'
-					+							'</div>'
-					+						'</div>'
-					+					'</div>'
-					+				'</div>'
-					+			'</div>'
-					+		'</div>'
-					+	'</div>'
-        			
-        if( mode ){
-            $("#go").prepend(html);
-        }
-        else{
-            $("#go").append(html);
-        }
-    }
+
 	</script>
 </body>
 </html>

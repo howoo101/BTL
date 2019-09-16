@@ -24,18 +24,18 @@ public class GraphController {
 	PersonGraphService personGraphService;
 
 	public String JsonData(PersonInfoGraphDTO pigdto) {
-		// json ¹Ù²Ù±â À§ÇØ mapper ¼±¾ğ
+		// json ë°”ê¾¸ê¸° ìœ„í•´ mapper ì„ ì–¸
 		ObjectMapper mapper = new ObjectMapper();
-		// Äõ¸®¿¡ ´ëÇÑ °á°ú °ªÀ» tmp¿¡ ÀúÀå
+		// ì¿¼ë¦¬ì— ëŒ€í•œ ê²°ê³¼ ê°’ì„ tmpì— ì €ì¥
 		List tmp = personGraphService.personGetGraph(pigdto.getCi_companyName());
-		// °á°ú°ª ÀúÀå
+		// ê²°ê³¼ê°’ ì €ì¥
 		String jsonInString="";
 		
 		try {
 			 jsonInString = mapper.writeValueAsString(tmp);
-			// °á°ú list¸¦ jsonÀ¸·Î º¯È¯
+			// ê²°ê³¼ listë¥¼ jsonìœ¼ë¡œ ë³€í™˜
 			// System.out.println(jsonInString);
-			// json °á°ú¸¦ jsp·Î ³Ñ±â±â
+			// json ê²°ê³¼ë¥¼ jspë¡œ ë„˜ê¸°ê¸°
 			// req.getWriter().print(jsonInString);
 
 		} catch (IOException e) {
@@ -44,13 +44,6 @@ public class GraphController {
 		}
 		
 		return jsonInString;
-	}
-
-	@RequestMapping(value = "/info")
-	public String infoController(Model model,PersonInfoGraphDTO pigdto) {
-		System.out.println("infoController: "+JsonData(pigdto));
-		model.addAttribute("ci_companyName", pigdto.getCi_companyName());
-		return "/info";
 	}
 
 	@RequestMapping(value = "/test")
