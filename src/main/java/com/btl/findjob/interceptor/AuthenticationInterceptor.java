@@ -12,16 +12,21 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
+			System.out.println("XMLHttpRequest".equals(request.getHeader("x-requested-with")));
 			HttpSession session = request.getSession();
 			Object obj = session.getAttribute("user");
-			
+
 			//로그인이 안되어있을경우.. 컨트롤러 요청으로 가지 않도록 false 반환
 			if(obj==null) {
-				response.sendRedirect("logininterceptor");
+				if("XMLHttpRequest".equals(request.getHeader("x-requested-with"))) {
+					response.sendError(400);
+					return false;
+				}
+				response.sendRedirect(request.getContextPath()+"/logininterceptor");
 				return false; // 컨트롤러 uri로의 요청으로 가지않도록 false
 			}
-			
+
+	
 			return true; // 컨트롤러 uri로의 요청을 허용
 	}
 
