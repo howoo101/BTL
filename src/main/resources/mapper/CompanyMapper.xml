@@ -21,6 +21,23 @@
 		WHERE ci.ci_id = ir.ci_id
 		group by ci.ci_companyName)ic on ci.ci_id = ic.ci_id
 		left join (select * from follow
+		) follow  on follow.ci_id = ci.ci_id 
+		WHERE ci.ci_companyName like concat('%',#{keyword},'%') and ci.ci_id > ${startNum}
+		order by ci_id
+		limit 20
+	</select>
+	<select id="companyGetListWithCntWithLogin" resultType="com.btl.findjob.model.CompanyListVO">
+		SELECT ci.*,ifnull(comreviewcnt,0) as companyReviewCnt ,ifnull(inreviewcnt,0)as interviewReviewCnt, ifnull(follow.follow_id,0) as followId 
+		FROM companyinfo ci
+		left join (select ci.ci_id, ci.ci_companyName,count(*) comreviewcnt 
+		FROM companyinfo ci, companyreview cr
+		WHERE ci.ci_id = cr.ci_id
+		GROUP BY ci.ci_companyName)cc on ci.ci_id = cc.ci_id
+		left join (select ci.ci_id, ci.ci_companyName,count(*) inreviewcnt 
+		FROM companyinfo ci, interviewreview ir
+		WHERE ci.ci_id = ir.ci_id
+		group by ci.ci_companyName)ic on ci.ci_id = ic.ci_id
+		left join (select * from follow
 		where follow.user_id = 1) follow  on follow.ci_id = ci.ci_id 
 		WHERE ci.ci_companyName like concat('%',#{keyword},'%') and ci.ci_id > ${startNum}
 		order by ci_id

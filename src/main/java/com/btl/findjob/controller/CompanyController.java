@@ -3,6 +3,8 @@ package com.btl.findjob.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +32,10 @@ public class CompanyController {
 	CompanyService service;
 	
 	@GetMapping(value = "search")
-	public String companySearchList(String keyword, Model model) {
+	public String companySearchList(String keyword, Model model,HttpServletRequest req) {
 //		System.out.println("================"+keyword);
+		System.out.println(req.getSession());
+//		if(req.getSession() != null)
 		model.addAttribute("companyList",service.companyGetListWithCnt(keyword,"0"));
 		model.addAttribute("keyword",keyword);
 		return "companySearchList";

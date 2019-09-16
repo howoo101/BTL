@@ -33,13 +33,17 @@ let follow = function(path,btn) {
 								id: id
 							}),
 							success : function(data) {
+								
 								if(typeof data === 'number') {
 									btn.attr("data-followId",data)	
 								}
 							},
 							error : function(request,status,error) {
-								alert("status : "+request.status + 
-										"\n error: "+ error)
+//								alert("status : "+request.status + 
+//										"\n error: "+ error)
+								if(request.status === 400) {
+									location.href="logininterceptor";
+								}
 							}
 						})	
 						
