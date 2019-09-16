@@ -11,4 +11,5 @@ public class CompanyListVO {
 	private String ci_since; //연식
 	private int companyReviewCnt;
 	private int interviewReviewCnt;
+	private int followId; //팔로우 유무체크
 }

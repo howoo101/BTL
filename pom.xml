@@ -16,6 +16,22 @@
 	<dependencies>
 	
 	
+	
+	
+		<!-- Mail 가입  인증 -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+	
+	
 		<!-- google api 구글 로그인에 사용-->
 		   <dependency>
 		     <groupId>com.google.api-client</groupId>
