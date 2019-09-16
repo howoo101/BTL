@@ -16,6 +16,9 @@
 
 <body>
 
+<% String user = (String) session.getAttribute("user");%>
+
+
 <header class="mt-3">
     <div id="content-wrap">
 
@@ -34,10 +37,85 @@
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
                 </form>
             </div>
-            <div class="float-lg-right nav-btn-login">
-                <div class="btn-primary">로그인</div>
-            </div>
-        </nav>
+            
+            ${user}
+            <!-- login modal -->
+         
+ 			<a href="login" data-remote="false" id="loginmodal" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
+			    로그인
+			</a>
 
+			    <div id="myModal" class="modal fade" tabindex="-1" role="dialog"> 
+			        <div class="modal-dialog">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <h5 class="modal-title">LOGIN</h5>
+			                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			                </div>
+			                <div class="modal-body">
+			      <div class="g-signin2" data-onsuccess="onSignIn"></div>    
+			                </div>
+			                <div class="modal-footer">
+			                
+			                <button id="signup" class="btn btn-primary">회원가입</button>
+			                <button id="pwfind" class="btn btn-primary">비밀번호찾기</button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			    
+			    
+		 <!-- user modal -->
+		<div class="btn-group" id="usermodal">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				  <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span> 
+				</button>
+			  <ul class="dropdown-menu" role="menu">
+			    <li><a href="#">정회원 인증</a></li>
+			    <li><a href="#">마이페이지</a></li>
+			     <li><a href="logout">log out</a></li>
+			  </ul>
+			</div>
+		
+        </nav>
     </div>
 </header>
+
+
+<script>
+
+var user = '<%out.print(user);%>';
+
+if(user != null){
+	$("#usermodal").show();
+	$("#loginmodal").hide();
+	
+}  
+if (user == 'null'){
+	$("#usermodal").hide();
+	$("#loginmodal").show();
+	
+} 
+
+//최초 modal-body에 로드되는 로그인 페이지
+ $("#myModal").on("show.bs.modal", function(e) {
+    var link = $(e.relatedTarget);
+    $(this).find(".modal-body").load(link.attr("href"));
+});
+ 
+ 
+ 
+ //클릭시 modal-body에 해당 url로드
+
+     $("#signup").click(function(){
+    	 $( ".modal-body" ).load( "signup");
+     });
+
+     $("#pwfind").click(function(){
+    	 $( ".modal-body" ).load( "pwfind");
+     });
+    
+
+
+
+</script>
