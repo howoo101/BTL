@@ -7,6 +7,6 @@ public class ReplyDTO {
 	int user_id; //유저 식별자
 	int board_id; //글번호
 	String reply_content; //댓글 내용
-	Date regDate; //댓글 작성일
+	Date Date; //댓글 작성일
 	
 }
