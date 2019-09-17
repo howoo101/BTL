@@ -28,6 +28,13 @@ public class CompanyServiceImpl implements CompanyService {
 		return mapper.companyGetListWithCnt(keyword, startNum);
 	}
 
+	
+	@Override
+	public List<CompanyListVO> companyGetListWithCntWithLogin(String userEmail,String keyword, String startNum) {
+		// TODO Auto-generated method stub
+		return mapper.companyGetListWithCntWithLogin(userEmail,keyword, startNum);
+	}
+	
 	@Override
 	public int companyInsertFollow(FollowVO vo) {
 		// TODO Auto-generated method stub

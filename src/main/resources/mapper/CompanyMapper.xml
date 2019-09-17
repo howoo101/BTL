@@ -21,7 +21,7 @@
 		WHERE ci.ci_id = ir.ci_id
 		group by ci.ci_companyName)ic on ci.ci_id = ic.ci_id
 		left join (select * from follow
-		) follow  on follow.ci_id = ci.ci_id 
+		) follow  on follow.ci_id = 0
 		WHERE ci.ci_companyName like concat('%',#{keyword},'%') and ci.ci_id > ${startNum}
 		order by ci_id
 		limit 20
@@ -38,7 +38,8 @@
 		WHERE ci.ci_id = ir.ci_id
 		group by ci.ci_companyName)ic on ci.ci_id = ic.ci_id
 		left join (select * from follow
-		where follow.user_id = 1) follow  on follow.ci_id = ci.ci_id 
+		where follow.user_id = (select user.user_id 
+		from user where user_email = #{userEmail})) follow  on follow.ci_id = ci.ci_id 
 		WHERE ci.ci_companyName like concat('%',#{keyword},'%') and ci.ci_id > ${startNum}
 		order by ci_id
 		limit 20

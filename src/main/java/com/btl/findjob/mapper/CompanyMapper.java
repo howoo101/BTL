@@ -12,6 +12,8 @@ public interface CompanyMapper {
 	
 	public List<CompanyInfoDTO>companyGetList(@Param("keyword") String keyword,@Param("startNum") String startNum);
 	public List<CompanyListVO>companyGetListWithCnt(@Param("keyword") String keyword,@Param("startNum") String startNum);
+	public List<CompanyListVO>companyGetListWithCntWithLogin(@Param("userEmail") String userEmail,@Param("keyword") String keyword,@Param("startNum") String startNum);
+	
 	//follow
 	public int companyInsertFollow(FollowVO vo);
 	public void companyDeleteFollow(@Param("followId") String followId);
