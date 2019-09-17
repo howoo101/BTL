@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CompanyReviewServiceImpl implements CompanyReviewService {
@@ -25,8 +26,10 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
         return new CompanyReviewPageDTO(companyReviewMapper.getCountByCi_id(ci_id), companyReviewMapper.getListWithPaging(companyReviewCriteria, ci_id));
     }
 
+
     @Override
-    public double getStarRtAvg(int cr_category, int ci_id) {
-        return companyReviewMapper.getStarRtAvg(cr_category, ci_id);
+    public double getStarRtAvg(int cr_category, String ci_companyName) throws Exception {
+        return companyReviewMapper.getStarRtAvg(cr_category, ci_companyName);
     }
+
 }

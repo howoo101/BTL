@@ -1,7 +1,11 @@
 package com.btl.findjob.controller;
 
 import java.util.Locale;
+import java.util.Map;
 
+import com.btl.findjob.service.CompanyReviewService;
+import com.sun.istack.internal.NotNull;
+import lombok.NonNull;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.btl.findjob.service.EnterpriseService;
 
+import javax.annotation.Nullable;
+
 /**
  * Handles requests for the application home page.
  */
@@ -21,9 +27,12 @@ public class HomeController {
 	
 	@Autowired
 	EnterpriseService enterService;
+
+	@Autowired
+	CompanyReviewService companyReviewService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -35,7 +44,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
-	public void info(@Param ("ci_companyName") String ci_companyName, Model model) {
+	public void info(@Param ("ci_companyName") String ci_companyName, Model model) throws Exception {
 		logger.info("기업 상세 페이지");
 		//Enterpise 영역 (송현)
 		model.addAttribute("companyList", enterService.companyList(ci_companyName)); //기업정보 리스트
@@ -51,7 +60,13 @@ public class HomeController {
 		
 		//Graph model
 		model.addAttribute("ci_companyName", ci_companyName);		
-		
+
+		//CompanyReviewAvg
+				model.addAttribute("getStarRtOne", companyReviewService.getStarRtAvg(0, ci_companyName));
+				model.addAttribute("getStarRtTwo", companyReviewService.getStarRtAvg(1, ci_companyName));
+				model.addAttribute("getStarRtThr", companyReviewService.getStarRtAvg(2, ci_companyName));
+				model.addAttribute("getStarRtFour", companyReviewService.getStarRtAvg(3, ci_companyName));
+
 	}
 
 	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)

@@ -24,9 +24,9 @@
     </select>
 
     <select id="getStarRtAvg" resultType="double">
-        select avg(cr_starRt) from companyreview
-        where cr_category = #{cr_category} and ci_id = #{ci_id}
-        group by cr_category,ci_id;
+        select IFNULL(avg(cr_starRt),0) from companyreview, companyinfo
+        where cr_category = #{cr_category} and ci_companyName = #{ci_companyName}
+#         group by cr_category,ci_companyName;
     </select>
 
 
