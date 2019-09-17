@@ -15,7 +15,15 @@
             <c:forEach items="${companyList}" var="vo">
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="font-weight-bold card-title">${vo.ci_companyName }<h2><button class="btn btn-outline-danger">♡</button></h2>
+                        <div class="font-weight-bold card-title">${vo.ci_companyName }
+                        	<h2>
+                        		<c:if test="${vo.followId eq 0}">
+									<button id="unfollow" class="follow btn btn-outline-danger" data-ciId=${vo.ci_id }>♡</button>
+								</c:if>
+								<c:if test="${vo.followId ne 0}">
+									<button id="follow" class="follow btn btn-outline-danger" data-ciId=${vo.ci_id } data-followId=${item.followId }>♥</button>
+								</c:if>
+                        	</h2>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -149,10 +157,9 @@
     </div>
 </div>
 
+
+<script src="resources/js/follow.js"></script>
 <script>
- 
- 
- 
   
  $(document).ready ( function() {
 	 
@@ -165,6 +172,15 @@
 	 var latestcptotal = ${latestcptotal} // 동종업계 인원 최신달 순위
 	 var alltminrank = ${alltminrank} // 동종업계 이번달 입사자 순위
 	 var alltmoutrank = ${alltmoutrank} // 동종업계 이번달 퇴사자 순위
+	 var path = "${path}"
+	 $(document).ready(function() {
+		//follow
+			$(document).on("click",".follow", function() {
+				var btn = $(this)
+				follow(path,btn)
+			});//onclick
+			//follow end
+	 })
 	 
 	 $(document).ready(function() {
 		   $("#select").html("총 인원");
@@ -221,5 +237,5 @@
         });
  }
  )
-   </script>
+</script>
 

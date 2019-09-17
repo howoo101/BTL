@@ -2,7 +2,10 @@ package com.btl.findjob.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.btl.findjob.model.CompanyInfoDTO;
+import com.btl.findjob.model.CompanyListVO;
 import com.btl.findjob.model.CompanyPersonalDTO;
 
 public interface EnterpriseMapper {
@@ -34,7 +37,7 @@ public interface EnterpriseMapper {
 		
 		public int latestcptotal();
 	
-	
+		public List<CompanyListVO> companyList(@Param("userEmail") String userEmail, @Param("companyName")String ci_companyName);
 		
 		
 	//서송현 코딩 끝 ==========================================================================

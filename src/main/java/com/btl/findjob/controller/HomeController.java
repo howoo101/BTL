@@ -2,6 +2,8 @@ package com.btl.findjob.controller;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +37,12 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
-	public void info(@Param ("ci_companyName") String ci_companyName, Model model) {
+	public void info(@Param ("ci_companyName") String ci_companyName, Model model,HttpServletRequest req) {
 		logger.info("기업 상세 페이지");
+		String userEmail = (String)req.getSession().getAttribute("user");
+		if(userEmail == null) userEmail = "";
 		//Enterpise 영역 (송현)
-		model.addAttribute("companyList", enterService.companyList(ci_companyName)); //기업정보 리스트
+		model.addAttribute("companyList", enterService.companyList(userEmail,ci_companyName)); //기업정보 리스트
 		model.addAttribute("cptotal", enterService.cptotal(ci_companyName)); //인원 구하기 쿼리
 		model.addAttribute("cpsince", enterService.cpSince(ci_companyName)); //업력 구하기 쿼리
 		model.addAttribute("tmin",enterService.tmin(ci_companyName)); //이번달 입사자
