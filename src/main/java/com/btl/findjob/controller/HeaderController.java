@@ -1,7 +1,6 @@
 package com.btl.findjob.controller;
 
 import java.util.Collections;
-import java.util.Date;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +20,8 @@ import com.btl.findjob.model.TempKey;
 import com.btl.findjob.service.MailSendService;
 import com.btl.findjob.service.UserService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -59,7 +58,6 @@ public class HeaderController {
 	
 		if(userservice.snschk(user_email)==1) { //sns회원인지 먼저 판별 (아닐경우)
 			return userservice.snstype(user_email);  //sns 로그인을 권유
-			
 		} else {
 			 String memberSalt = userservice.getsalt(user_email); // 멤버의 salt 가져오기
 			 String inputpassword = user_password;  //입력된 암호 가져오기
@@ -67,17 +65,15 @@ public class HeaderController {
 						  
 			  if(userservice.login(user_email, newpassword)==1)  { 
 				  HttpSession session = request.getSession(); 
-					  session.setAttribute("user", user_email); 
-					  return "1"; }  // 로그인 성공
-				
-				  
-				  else {
-					  	return "0"; //false
-				
+				  session.setAttribute("user", user_email); 
+					  return "1"; 
+					  }  // 로그인 성공
+				 else if(userservice.login(user_email, newpassword)==0){
+					return "2"; //false
 				  }
 
 			}
-
+		return "2";
 	}
 	
 	//구글 sns
@@ -247,11 +243,22 @@ public class HeaderController {
 	@RequestMapping(value = "logininterceptor" , method = {RequestMethod.GET ,  RequestMethod.POST}) 
 	public String interceptor(Model model){
 		
-		String inter = "alert('로그인 해주세요')";
-		model.addAttribute("inter", inter);
+		String ltr = "";	
+		ltr += "<script langueage='JavaScript'>";
+		ltr += "$(window).on('load',function(){";
+		ltr += "var result = confirm('로그인이 필요한 영역입니다. 로그인 하시겠습니까?');";
+		ltr += "if(result) {$('#myModal').modal('show');";
+		ltr +=	"result = null";
+		ltr += "}else {";
+		ltr += "history.back();";
+		ltr += "}";
+		ltr += "});";
+		ltr += "</script>";
+		model.addAttribute("ltr", ltr);
+		
+		 return "#";
 		
 		
-		 return "user/logininterceptor";
 	}
 	
 }

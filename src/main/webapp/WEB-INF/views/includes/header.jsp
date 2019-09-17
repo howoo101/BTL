@@ -16,10 +16,17 @@
 
 <body>
 
-<% String user = (String) session.getAttribute("user");
+<% String user = (String) session.getAttribute("user");%>
 
+<% String ltr = (String) request.getAttribute("ltr");
+  
+  if(ltr != null){  %>
+    <%=ltr%> 
+   
+
+<% 
+  }
 %>
-
 
 
 
@@ -45,18 +52,19 @@
             </div>
             
             ${user}
+            
             <!-- login modal -->
-         
- 			<a href="login" data-remote="false" id="loginmodal" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
-			    로그인
-			</a>
+     
+			<button type="button" id="loginmodal" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+			로그인			
+			</button> 
 
 			    <div id="myModal" class="modal fade" tabindex="-1" role="dialog"> 
 			        <div class="modal-dialog">
 			            <div class="modal-content">
 			                <div class="modal-header">	
 			                    <h5 class="modal-title">LOGIN</h5>
-			                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			                    <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			                </div>
 			                <div class="modal-body">
 			      <div class="g-signin2" data-onsuccess="onSignIn"></div>    
@@ -72,7 +80,7 @@
 			    </div>
 			    
 			    
-		 <!-- user modal -->
+		 <!-- 로그인했을시 보이는 user modal -->
 		<div class="btn-group" id="usermodal">
 				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 				  <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span> 
@@ -94,6 +102,7 @@
 
 
 // 세션이 있을시 로그인 메뉴를 감추고 회원메뉴를 show
+
 var user = '<%out.print(user);%>';
 
 
@@ -109,32 +118,41 @@ if (user == 'null'){
 } 
 
 //최초 modal-body에 로드되는 로그인 페이지
- $("#myModal").on("show.bs.modal", function(e) {
-    var link = $(e.relatedTarget);
-    $(this).find(".modal-body").load(link.attr("href"));
-});
- 
- 
- 
+  $("#myModal").on("show.bs.modal", function() {
+	$( ".modal-body" ).load( "login");
+    $("#login").hide();
+   	$("#signup").show();
+   	$("#pwfind").show();
+}); 
+
+
+
  //클릭시 modal-body에 해당 url로드
  
  	 $("#login").click(function(){
     	 $( ".modal-body" ).load( "login");
+    
      });
 
      $("#signup").click(function(){
     	 $( ".modal-body" ).load( "signup");
+    
      });
 
      $("#pwfind").click(function(){
     	 $( ".modal-body" ).load( "pwfind");
+ 	
      });
    
  // modal-footer 
+
+
  
- 	$("#login").hide();
-	$("#signup").show();
-	$("#pwfind").show();
+ $("#login").click(function(){
+	$("#login").hide();
+   	$("#signup").show();
+   	$("#pwfind").show();
+	});
   
     $("#signup").click(function(){
     	$("#login").show();
@@ -147,11 +165,7 @@ if (user == 'null'){
         	$("#signup").show();
         	$("#pwfind").hide();
      });
-   $("#login").click(function(){
-	$("#login").hide();
-   	$("#signup").show();
-   	$("#pwfind").show();
-});
+ 
   
 
 

@@ -5,9 +5,9 @@
 <script>
 
 
-alert("로그인해주세요");
 
 history.go(-1)();
+
 
 
  

@@ -51,7 +51,6 @@
      <interceptors>
         <interceptor>
            <mapping path="/register"/>   
-           <mapping path="/register"/>
            <mapping path="/follow/*"/>
             <beans:ref bean="authenticationInterceptor"/>
         </interceptor>
