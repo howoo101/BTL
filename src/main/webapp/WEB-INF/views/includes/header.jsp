@@ -20,12 +20,14 @@
 
 <% String ltr = (String) request.getAttribute("ltr");
   
+if(user==null){
   if(ltr != null){  %>
     <%=ltr%> 
    
 
 <% 
   }
+}
 %>
 
 

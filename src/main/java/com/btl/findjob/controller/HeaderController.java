@@ -248,7 +248,6 @@ public class HeaderController {
 		ltr += "$(window).on('load',function(){";
 		ltr += "var result = confirm('로그인이 필요한 영역입니다. 로그인 하시겠습니까?');";
 		ltr += "if(result) {$('#myModal').modal('show');";
-		ltr +=	"result = null";
 		ltr += "}else {";
 		ltr += "history.back();";
 		ltr += "}";
