@@ -20,15 +20,15 @@
                             <div class="card-body">
                                 <div class="row justify-content-center">
                                     <div class="text-warning">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
                                         <i class="fa fa-star-o"></i>
                                     </div>
                                 </div>
                             </div>
-                            <h5 class="card-title">2.9</h5>
+                            <h5 class="card-title">0.0</h5>
                         </div>
                         <div class="card-body col-md-6" style="position: relative; height:30vh; width:80vw">
                             <%--차트 출--%>
@@ -51,13 +51,13 @@
                                 <div class="col-lg-2">
                                     <div class="row">
                                         <div class="text-warning small starRatingAveStar">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                         </div>
-                                        <div class="starRatingAve">4.0</div>
+                                        <div>${getStarRt}</div>
                                     </div>
                                 </div>
                             </div>
@@ -110,10 +110,10 @@
     $(document).ready(function () {
 
         var ci_idValue = '<c:out value="${companyList[0].ci_id}"/>';//homeController에 있는 모델 받아서 사용 0 넣지 안으면 에러
-        var companyReviewUL = $(".chat");
-        var totalCompanyReviewCtnOne = $(".totalCompanyReviewCtnOne");
-        var starRatingAveUL = $(".starRatingAve");
-        var starRatingAveStarUL = $(".starRatingAveStar");
+        var companyReviewUL = $(".chat");//review 생성
+        var totalCompanyReviewCtnOne = $(".totalCompanyReviewCtnOne");//카테고리별 리뷰 갯수
+        var starRatingAveUL = $(".starRatingAve");//평균
+        var starRatingAveStarUL = $(".starRatingAveStar");//평균에 대해 별찍기 위해
 
         showList(1);
 
@@ -137,9 +137,7 @@
                 var starRatingAve = 0;
 
                 //List가 비어있는 경우 "" 처리
-                console.log(companyReviewList);
                 if (companyReviewList.length === 0) {
-
 
                     companyReviewUL.html("");
 
@@ -226,6 +224,8 @@
 
                 var starRatingAveStar = "";
 
+                console.log(starRatingAve);
+
                 if (0 <= starRatingAve < 1) {
                     starRatingAveStar +=
                         "<i class='fa fa-star-o'></i>" +
@@ -269,7 +269,7 @@
                         "<i class='fa fa-star'></i>";
                 }
 
-                console.log(starRatingAveStar);
+                console.log("starRatingAveStar"+starRatingAveStar);
 
                 companyReviewUL.html(str);
 
@@ -380,7 +380,6 @@
                 if (callback) {
                     // callback(data);
                     callback(data.companyReviewCtn, data.list);
-                    console.log(data);
 
                 }
             }).fail(function (xhr, status, err) {
@@ -414,7 +413,6 @@
 
                 return [yy, '/', (mm > 9 ? '' : '0') + mm, '/', (dd > 9 ? '' : '0') + dd].join('');
             }
-
         }
 
         return {getListWithPaging: getListWithPaging, displayTime: displayTime}
