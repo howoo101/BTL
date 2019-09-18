@@ -12,6 +12,6 @@ public interface CompanyService {
 	public List<CompanyListVO> companyGetListWithCnt(String keyword, String startNum);
 	public List<CompanyListVO> companyGetListWithCntWithLogin(String userEmail,String keyword, String startNum);
 	
-	public int companyInsertFollow(FollowVO vo);
+	public void companyInsertFollow(String userEmail,int ciId);
 	public void companyDeleteFollow(String followId);
 }
