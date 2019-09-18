@@ -90,7 +90,7 @@
                                             </td>
                                             <td class="col-md-9">
                                                 <div class="progress">
-                                                    <div id="precp"  class="progress-bar-danger" role="progressbar"
+                                                    <div id="precp"  class="progress-bar bg-info" role="progressbar"
                                                          aria-valuenow="60"
                                                          aria-valuemin="0"
                                                          aria-valuemax="100" style="width: 40%">
@@ -107,7 +107,7 @@
                                             </td>
                                             <td class="col-md-9">
                                                 <div class="progress">
-                                                    <div id="samecp" class=" progress-bar-warning" role="progressbar"
+                                                    <div id="samecp" class="progress-bar bg-success" role="progressbar"
                                                          aria-valuenow="60"
                                                          aria-valuemin="0"
                                                          aria-valuemax="100" style="width: 80%;">
@@ -115,31 +115,13 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                        </tr> <!-- 동종산업군 끝 -->
-
-              <!--                           <tr class="row"> 전체 기업-시작
-                                            <td class="col-md-3">
-                                                전체 기업
-                                            </td>
-                                            <td class="col-md-9">
-                                                <div class="progress">
-                                                    <div class="progress-bar-info" role="progressbar" aria-valuenow="60"
-                                                         aria-valuemin="0"
-                                                         aria-valuemax="100" style="width: 80%;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr> -->  <!-- 전체 기업 끝 -->
+                                        </tr>
 
                                     </table> <!--테이블 끝-->
                                 </div> <!-- 그래프 컨테이너 끝-->
                             </div> <!-- 통계 그래프 끝-->
                         </div>
-
-                        <div class="row"> <!-- 주의사항 -->
-                            <div class="col-lg-11 text-right"> <small style="color: red">※최근 1년간 데이터 기준</small></div>
-                        </div> <!-- 주의사항 끝 -->
+      
 
                     </div>  <!-- info 끝 -->
 
@@ -159,7 +141,7 @@
 	 var cptotal = ${cptotal} //인원
 	 var cpsince = ${cpsince} //업력
 	 var tmin = ${tmin} // 이번달 입사자
-	 var tmin = ${tmout} // 이번달 퇴사자
+	 var tmout = ${tmout} // 이번달 퇴사자
 	 
 	 var sincerank = ${sincerank} //동종업계 업력 순위
 	 var latestcptotal = ${latestcptotal} // 동종업계 인원 최신달 순위
@@ -214,7 +196,8 @@
         $(document).ready(function(){
             $("#leave").click(function(){
                 $("#select").html("이번 달 퇴사");
-                $('#precptxt').html(tmin+"명");
+                $('#precp').attr("style", "width:100%");
+                $('#precptxt').html(tmout+"명");
                 $('#samecp').attr("style", "width:"+alltmoutrank+"%");
                 $('#samecptxt').html(alltmoutrank+"% 순위");
             });

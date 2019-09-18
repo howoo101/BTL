@@ -33,7 +33,6 @@ let follow = function(path,btn) {
 								id: id
 							}),
 							success : function(data) {
-								
 								if(typeof data === 'number') {
 									btn.attr("data-followId",data)	
 								}
@@ -43,6 +42,9 @@ let follow = function(path,btn) {
 //										"\n error: "+ error)
 								if(request.status === 400) {
 									location.href="logininterceptor";
+								}
+								if(request.status === 404) {
+									location.href="gradeceptor";
 								}
 							}
 						})	

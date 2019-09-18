@@ -13,43 +13,43 @@
 	select count(*) from user where user_email = #{user_email} and user_password = #{user_password}
 	</select>
 	
+	<!-- 등급확인 -->
+	<select id="gradechk" resultType="INT" parameterType="com.btl.findjob.model.UserDTO">
+	select authorization_id from user where user_email = #{user_email};
+	</select>
+	
+	
 	<!-- 일반 회원가입 -->
 	<insert id="join_insert" parameterType="com.btl.findjob.model.UserDTO">
 	insert into user (authorization_id,user_email,user_name,user_password,user_create_date,user_modify_date,user_emailauthkey,salt)
-values (#{authorization},#{user_email},'',#{user_password},CURRENT_DATE(),CURRENT_DATE(),#{key},#{salt})
+values (#{authorization},#{user_email},#{user_name},#{user_password},CURRENT_DATE(),CURRENT_DATE(),#{key},#{salt})
 	</insert>
 	
 	
 	<!-- sns 회원가입 -->
 	<insert id="snsjoin_insert" parameterType="com.btl.findjob.model.UserDTO">
-	insert into user (authorization_id,user_email,user_name,user_password,user_create_date,user_modify_date,user_emailauthkey)
-values (#{authorization},#{user_email},'',#{user_password},CURRENT_DATE(),CURRENT_DATE(),'')
+	insert into user (authorization_id,user_email,user_name,user_password,user_create_date,user_modify_date,user_emailauthkey,salt,sns_key,sns_type)
+values (#{authorization},#{user_email},'',#{user_password},CURRENT_DATE(),CURRENT_DATE(),'','',#{sns_key},#{sns_type})
 	</insert>
-	
-	<!-- sns info -->
-	<insert id="snsinfo" parameterType="com.btl.findjob.model.SnsInfoDTO">
-		insert into sns_info (sns_id,sns_type,sns_name,sns_profile,sns_connect_date)
-		values (#{sns_id},#{sns_type},#{sns_name},#{sns_profile},CURRENT_DATE);
-	</insert>
-	
-	<!-- sns update -->
-	<update id="snsupdate" parameterType="String">
-	update sns_info set sns_id = #{sns_id} , sns_type = #{sns_type}, sns_name = #{sns_name} , sns_profile = #{sns_profile} , sns_connect_date = CURRENT_DATE()  where user_id = (select user_id from user where user_email = #{user_email});
-	</update>
 	
 	<!-- sns으로 가입한 회원인지 확인  -->
 	<select id="snschk" resultType="INT"  parameterType="String">
-	select count(*) from sns_info where user_id = (select user_id from user where user_email = #{user_email});
+	select count(sns_type) from user where user_email = #{user_email};
 	</select>
 	
 	<select id="snstype" resultType="String"  parameterType="String">
-	select sns_type from sns_info where user_id = (select user_id from user where user_email = #{user_email});
+	select sns_type from user where user_email = #{user_email};
 	</select>
 	
 	<!-- 인증키 체크 -->
 	<select id="keychk" resultType="INT" parameterType="com.btl.findjob.model.UserDTO">
 	select count(*) from user where user_email = #{user_email} AND user_emailauthkey = #{key}	
 	</select>
+	
+	<!-- 인증키 재인증을 위해 초기화 업데이트 -->
+	<update id="upkey"  parameterType="com.btl.findjob.model.UserDTO">
+	update user set user_emailauthkey = #{key} where user_email = #{user_email} ;	
+	</update>
 
 	<!-- 인증 ok -->
 	<update id="auth_ok" parameterType="com.btl.findjob.model.UserDTO">

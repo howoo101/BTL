@@ -42,6 +42,11 @@
 					$('.close').trigger('click'); 
 					location.reload();
 					}
+				else if(data == '2' ){
+					alert("로그인 되었습니다. 현재 인증메일 비인증회원입니다 인증메일을 확인하시고 인증해주세요.");		
+					$('.close').trigger('click'); 
+					location.reload();
+					}
 				else if(data == "google" || data == "naver" || data == "kakao"){
 					var snstype = data;
 					alert("회원님은 " + snstype  +" SNS 계정으로 가입된 회원입니다.해당 SNS플랫폼으로  로그인 해주세요.");
@@ -78,7 +83,6 @@ function onSignIn(googleUser) {
 				},
 				success: function(data){
 					if(data == '1' ){
-	
 						$('.close').trigger('click'); 
 						location.reload();
 					}else{

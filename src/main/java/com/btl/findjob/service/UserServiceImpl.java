@@ -23,10 +23,10 @@ UserMapper mapper;
 
 
 	@Override
-	public void join_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("key") String key,@Param("authorization") int authorization,@Param("salt") String salt) {
+	public void join_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name,@Param("key") String key,@Param("authorization") int authorization,@Param("salt") String salt) {
 		
 		
-		 mapper.join_insert(user_email,user_password,key,authorization,salt);
+		 mapper.join_insert(user_email,user_password,user_name,key,authorization,salt);
 		
 	}
 
@@ -54,10 +54,8 @@ UserMapper mapper;
 
 
 	@Override
-	public void snsjoin_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("authorization") int authorization) {
-		
-		mapper.snsjoin_insert(user_email, user_password, authorization);
-		
+	public void snsjoin_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("authorization") int authorization,@Param("sns_key") String sns_key,@Param("sns_type") String sns_type){
+	  mapper.snsjoin_insert(user_email, user_password, authorization, sns_key, sns_type);
 	}
 
 
@@ -68,18 +66,6 @@ UserMapper mapper;
 	}
 
 
-	@Override
-	public void snsinfo(@Param("sns_id") String sns_id,@Param("sns_type") String sns_type,@Param("sns_name") String sns_name,@Param("sns_profile") String sns_profile) {
-			mapper.snsinfo(sns_id, sns_type, sns_name, sns_profile);
-	}
-
-
-	@Override
-	public void snsupdate(@Param("sns_id") String sns_id,@Param("sns_type") String sns_type,@Param("sns_name") String sns_name,@Param("sns_profile") String sns_profile,@Param("user_email") String user_email) {
-		 
-		mapper.snsupdate(sns_id, sns_type, sns_name, sns_profile, user_email);
-		
-	}
 
 
 	@Override
@@ -92,6 +78,21 @@ UserMapper mapper;
 	@Override
 	public String snstype(String user_email) {
 		return mapper.snstype(user_email);
+	}
+
+
+	@Override
+	public int gradechk(String user_email) {
+		
+		return mapper.gradechk(user_email);
+	}
+
+
+	@Override
+	public void upkey(@Param("user_email") String user_email,@Param("key") String key) {
+		
+		mapper.upkey(user_email, key);
+		
 	}
 
 
