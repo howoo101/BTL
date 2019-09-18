@@ -12,6 +12,8 @@
 
 <%@ include file="includes/enterpriseInfo.jsp" %>
 
+<%@ include file="includes/map.jsp" %>
+
 <%@ include file="includes/hiringInfo.jsp" %>
 
 <%@ include file="includes/monthChart.jsp" %>
