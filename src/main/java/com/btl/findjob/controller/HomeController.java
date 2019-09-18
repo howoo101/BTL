@@ -1,11 +1,15 @@
 package com.btl.findjob.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import com.btl.findjob.service.CompanyReviewService;
+import com.google.gson.Gson;
 import com.sun.istack.internal.NotNull;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +27,7 @@ import javax.annotation.Nullable;
  * Handles requests for the application home page.
  */
 @Controller
+@Log4j
 public class HomeController {
 	
 	@Autowired
@@ -62,11 +67,12 @@ public class HomeController {
 		model.addAttribute("ci_companyName", ci_companyName);		
 
 		//CompanyReviewAvg
-				model.addAttribute("getStarRtOne", companyReviewService.getStarRtAvg(0, ci_companyName));
-				model.addAttribute("getStarRtTwo", companyReviewService.getStarRtAvg(1, ci_companyName));
-				model.addAttribute("getStarRtThr", companyReviewService.getStarRtAvg(2, ci_companyName));
-				model.addAttribute("getStarRtFour", companyReviewService.getStarRtAvg(3, ci_companyName));
+		Map<String,String> data = new HashMap<>();
+//		data.put("starRtName", ci_companyName);
 
+		model.addAttribute("totalStarRt",companyReviewService.totalStarRtAve(ci_companyName));
+
+		log.info(model);
 	}
 
 	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)

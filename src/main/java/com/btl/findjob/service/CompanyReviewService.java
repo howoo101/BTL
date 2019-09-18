@@ -7,6 +7,7 @@ import com.btl.findjob.model.CompanyReviewPageDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CompanyReviewService {
 
@@ -14,6 +15,7 @@ public interface CompanyReviewService {
 
     CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id) throws Exception;
 
-    double getStarRtAvg(@Param("cr_category") int cr_category, @Param("ci_companyName") String ci_companyName) throws Exception;
+//    double getStarRtAvg(@Param("cr_category") int cr_category, @Param("ci_companyName") String ci_companyName) throws Exception;
 
+    double totalStarRtAve(String ci_companyName);
 }

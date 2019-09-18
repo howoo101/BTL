@@ -15,5 +15,8 @@ public interface CompanyReviewMapper {
     //숫자 파악위해서 사용N
     int getCountByCi_id(int ci_id);
 
-    double getStarRtAvg(@Param("cr_category") int cr_category, @Param("ci_companyName") String ci_companyName) throws Exception;
+    double totalStarRtAve(String ci_companyName);
+
+
 }
+

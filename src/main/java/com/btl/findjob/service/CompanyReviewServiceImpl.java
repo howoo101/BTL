@@ -26,10 +26,10 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
         return new CompanyReviewPageDTO(companyReviewMapper.getCountByCi_id(ci_id), companyReviewMapper.getListWithPaging(companyReviewCriteria, ci_id));
     }
 
-
     @Override
-    public double getStarRtAvg(int cr_category, String ci_companyName) throws Exception {
-        return companyReviewMapper.getStarRtAvg(cr_category, ci_companyName);
+    public double totalStarRtAve(String ci_companyName) {
+        return companyReviewMapper.totalStarRtAve(ci_companyName);
     }
+
 
 }

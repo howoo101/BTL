@@ -20,15 +20,15 @@
                             <div class="card-body">
                                 <div class="row justify-content-center">
                                     <div class="text-warning">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
                                         <i class="fa fa-star-o"></i>
                                     </div>
                                 </div>
                             </div>
-                            <h5 class="card-title">0.0</h5>
+                            <h5 class="card-title">${totalStarRt}</h5>
                         </div>
                         <div class="card-body col-md-6" style="position: relative; height:30vh; width:80vw">
                             <%--차트 출--%>
@@ -45,7 +45,8 @@
                                 <div class="col-lg-10">
                                     <button class="btn" type="button" data-toggle="collapse" data-target="#collapseOne"
                                             aria-expanded="false" aria-controls="collapseOne">
-                                        승진 기회 및 가능성 <span class="text-primary">(<span class="totalCompanyReviewCtnOne">0</span>)</span>
+                                        승진 기회 및 가능성 <span class="text-primary">(<span
+                                            class="totalCompanyReviewCtnOne">0</span>)</span>
                                     </button>
                                 </div>
                                 <div class="col-lg-2">
@@ -57,7 +58,7 @@
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                         </div>
-                                        <div>${getStarRtOne}</div>
+                                        <div class="starRatingAve">0.0</div>
                                     </div>
                                 </div>
                             </div>
@@ -70,209 +71,11 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th class="">총 <span class="totalCompanyReviewCtnOne">0</span>개의 기업 리뷰 코멘트 </th>
+                                    <th>총 <span class="totalCompanyReviewCtnOne">0</span>개의 기업리뷰 코멘트</th>
                                     <%--기업 총 코메트--%>
                                 </tr>
                                 </thead>
-                                <tbody class="chatOne">
-                                <%--리뷰들 들어가는 부분--%>
-                                </tbody>
-                            </table>
-                            <div class="companyComment"></div>
-                            <%--페이징 처리가 들어가는 부분--%>
-                            <div class="input-group">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="starrr stars text-warning"></div>
-                                        <span class="count">0</span>점
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control cr_comment" placeholder="입력해주세요"
-                                       aria-label="Recipient's username with two button addons"
-                                       aria-describedby="button-addon1">
-                                <input class="cr_category" type="hidden" value="0">
-                                <%--회사정보 집어넣기 위해서 id--%>
-                                <input class="forInsert" type="hidden" value="${companyList[0].ci_id}">
-                                <div class="input-group-append" id="button-addon1">
-                                    <button class="btn btn-outline-secondary registerBtnOne" type="button">제출</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-<%--2accodion--%>
-            <div class="accordion" id="accordionTwo">
-                <div class="card-body">
-                    <div class="card-header" id="headingTwo">
-                        <div class="border-info mb-0">
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <button class="btn" type="button" data-toggle="collapse" data-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                        복지 및 급여 <span class="text-primary">(<span class="totalCompanyReviewCtnTwo">0</span>)</span>
-                                    </button>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="row">
-                                        <div class="text-warning small starRatingAveStar">
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div>${getStarRtTwo}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <%-- end border-ingo--%>
-                        </div>
-                    </div>
-
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionTwo">
-                        <div class="card-body">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>총 <span class="totalCompanyReviewCtnTwo">0</span>개의 기업 리뷰 코멘트 </th>
-                                    <%--기업 총 코메트--%>
-                                </tr>
-                                </thead>
-                                <tbody class="chatTwo">
-                                <%--리뷰들 들어가는 부분--%>
-                                </tbody>
-                            </table>
-                            <div class="companyComment"></div>
-                            <%--페이징 처리가 들어가는 부분--%>
-                            <div class="input-group">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="starrr stars text-warning"></div>
-                                        <span class="count">0</span>점
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control cr_comment" placeholder="입력해주세요"
-                                       aria-label="Recipient's username with two button addons"
-                                       aria-describedby="button-addon2">
-                                <input class="cr_category" type="hidden" value="0">
-                                <%--회사정보 집어넣기 위해서 id--%>
-                                <input class="forInsert" type="hidden" value="${companyList[0].ci_id}">
-                                <div class="input-group-append" id="button-addon2">
-                                    <button class="btn btn-outline-secondary registerBtn" type="button">제출</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-<%--3acoodinon--%>
-            <div class="accordion" id="accordionThr">
-                <div class="card-body">
-                    <div class="card-header" id="headingThr">
-                        <div class="border-info mb-0">
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <button class="btn" type="button" data-toggle="collapse" data-target="#collapseThr"
-                                            aria-expanded="false" aria-controls="collapseThr">
-                                        업무와 삶의 균형 <span class="text-primary">(<span class="totalCompanyReviewCtnThr">0</span>)</span>
-                                    </button>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="row">
-                                        <div class="text-warning small starRatingAveStar">
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div>${getStarRtThr}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <%-- end border-ingo--%>
-                        </div>
-                    </div>
-
-                    <div id="collapseThr" class="collapse" aria-labelledby="headingThr" data-parent="#accordionThr">
-                        <div class="card-body">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th class="">총 <span class="totalCompanyReviewCtnThr">0</span>개의 기업 리뷰 코멘트 </th>
-                                    <%--기업 총 코메트--%>
-                                </tr>
-                                </thead>
-                                <tbody class="chatThr">
-                                <%--리뷰들 들어가는 부분--%>
-                                </tbody>
-                            </table>
-                            <div class="companyComment"></div>
-                            <%--페이징 처리가 들어가는 부분--%>
-                            <div class="input-group">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="starrr stars text-warning"></div>
-                                        <span class="count">0</span>점
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control cr_comment" placeholder="입력해주세요"
-                                       aria-label="Recipient's username with two button addons"
-                                       aria-describedby="button-addon3">
-                                <input class="cr_category" type="hidden" value="1">
-                                <%--회사정보 집어넣기 위해서 id--%>
-                                <input class="forInsert" type="hidden" value="${companyList[0].ci_id}">
-                                <div class="input-group-append" id="button-addon3">
-                                    <button class="btn btn-outline-secondary registerBtn" type="button">제출</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-<%--4accodion--%>
-            <div class="accordion" id="accordionFour">
-                <div class="card-body">
-                    <div class="card-header" id="headingFour">
-                        <div class="border-info mb-0">
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <button class="btn" type="button" data-toggle="collapse" data-target="#collapseFour"
-                                            aria-expanded="false" aria-controls="collapseFour">
-                                        사내문화 <span class="text-primary">(<span class="totalCompanyReviewCtnFour">0</span>)</span>
-                                    </button>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="row">
-                                        <div class="text-warning small starRatingAveStar">
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div>${getStarRtFour}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <%-- end border-ingo--%>
-                        </div>
-                    </div>
-
-                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionFour">
-                        <div class="card-body">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th class="">총 <span class="totalCompanyReviewCtnFour">0</span>개의 기업 리뷰 코멘트 </th>
-                                    <%--기업 총 코메트--%>
-                                </tr>
-                                </thead>
-                                <tbody class="chatFour">
+                                <tbody class="chat">
                                 <%--리뷰들 들어가는 부분--%>
                                 </tbody>
                             </table>
@@ -288,7 +91,7 @@
                                 <input type="text" class="form-control cr_comment" placeholder="입력해주세요"
                                        aria-label="Recipient's username with two button addons"
                                        aria-describedby="button-addon4">
-                                <input class="cr_category" type="hidden" value="3">
+                                <input class="cr_category" type="hidden" value="0">
                                 <%--회사정보 집어넣기 위해서 id--%>
                                 <input class="forInsert" type="hidden" value="${companyList[0].ci_id}">
                                 <div class="input-group-append" id="button-addon4">
@@ -299,29 +102,18 @@
                     </div>
                 </div>
             </div>
-            <%--            end--%>
-
         </div>
     </div>
 </div>
-
 <%--별점과 리뷰 db에 등록--%>
 <script>
     $(document).ready(function () {
 
         var ci_idValue = '<c:out value="${companyList[0].ci_id}"/>';//homeController에 있는 모델 받아서 사용 0 넣지 안으면 에러
-
-        var companyReviewOneUL = $(".chatOne");//review 생성
-        var companyReviewTwoUL = $(".chatTwo");//review 생성
-        var companyReviewThrUL = $(".chatThr");//review 생성
-        var companyReviewFourUL = $(".chatFour");//review 생성
-
-        var totalCompanyReviewCtnOne = $(".totalCompanyReviewCtnOne");//카테고리별 리뷰 갯수
-        var totalCompanyReviewCtnTwo = $(".totalCompanyReviewCtnTwo");//카테고리별 리뷰 갯수
-        var totalCompanyReviewCtnThr = $(".totalCompanyReviewCtnThr");//카테고리별 리뷰 갯수
-        var totalCompanyReviewCtnFour = $(".totalCompanyReviewCtnFour");//카테고리별 리뷰 갯수
-
-        var starRatingAveStarUL = $(".starRatingAveStar");//평균에 대해 별찍기 위해
+        var companyReviewUL = $(".chat");
+        var totalCompanyReviewCtnOne = $(".totalCompanyReviewCtnOne");
+        var starRatingAveUL = $(".starRatingAve");
+        var starRatingAveStarUL = $(".starRatingAveStar");
 
         showList(1);
 
@@ -342,11 +134,12 @@
 
                 var str = "";
                 var starRating = "";
+                var starRatingAve = 0.0; //평균
 
                 //List가 비어있는 경우 "" 처리
                 if (companyReviewList.length === 0) {
 
-                    companyReviewOneUL.html("");
+                    companyReviewUL.html("");
 
                     return;
                 }
@@ -423,7 +216,8 @@
                     starRating = "";
                 }
 
-                var starRatingAve = ${getStarRtOne};//별점 평균
+                starRatingAveUL.html(starRatingAve);
+
                 var starRatingAveStar = "";
 
                 if (0 <= starRatingAve < 1) {
@@ -433,34 +227,39 @@
                         "<i class='fa fa-star-o'></i>" +
                         "<i class='fa fa-star-o'></i>" +
                         "<i class='fa fa-star-o'></i>";
-                } if (1 <= starRatingAve < 2) {
+                }
+                if (1 <= starRatingAve < 2) {
                     starRatingAveStar =
                         "<i class='fa fa-star'></i>" +
                         "<i class='fa fa-star-o'></i>" +
                         "<i class='fa fa-star-o'></i>" +
                         "<i class='fa fa-star-o'></i>" +
                         "<i class='fa fa-star-o'></i>";
-                } if (2 <= starRatingAve < 3) {
+                }
+                if (2 <= starRatingAve < 3) {
                     starRatingAveStar = "<i class='fa fa-star'></i>" +
                         "<i class='fa fa-star'></i>" +
                         "<i class='fa fa-star-o'></i>" +
                         "<i class='fa fa-star-o'></i>" +
                         "<i class='fa fa-star-o'></i>";
-                } if (3 <= starRatingAve < 4) {
+                }
+                if (3 <= starRatingAve < 4) {
                     starRatingAveStar =
                         "<i class='fa fa-star'></i>" +
                         "<i class='fa fa-star'></i>" +
                         "<i class='fa fa-star'></i>" +
                         "<i class='fa fa-star-o'></i>" +
                         "<i class='fa fa-star-o'></i>";
-                } if (4 <= starRatingAve <= 5) {
+                }
+                if (4 <= starRatingAve < 5) {
                     starRatingAveStar =
                         "<i class='fa fa-star'></i>" +
                         "<i class='fa fa-star'></i>" +
                         "<i class='fa fa-star'></i>" +
                         "<i class='fa fa-star'></i>" +
                         "<i class='fa fa-star-o'></i>";
-                } if(starRatingAve===5){
+                }
+                if (starRatingAve === 5) {
                     starRatingAveStar =
                         "<i class='fa fa-star'></i>" +
                         "<i class='fa fa-star'></i>" +
@@ -469,7 +268,7 @@
                         "<i class='fa fa-star'></i>";
                 }
 
-                companyReviewOneUL.html(str);
+                companyReviewUL.html(str);
 
                 starRatingAveStarUL.html(starRatingAveStar);
 
@@ -526,8 +325,11 @@
         commpanyReviewFooter.on("click", "li a", function (e) {
 
             e.preventDefault();
+            console.log("page click");
 
             var targetPageNum = $(this).attr("href");
+
+            console.log("targetPageNum: " + targetPageNum);
 
             pageNum = targetPageNum;
 
@@ -575,6 +377,7 @@
                 if (callback) {
                     // callback(data);
                     callback(data.companyReviewCtn, data.list);
+                    console.log(data);
 
                 }
             }).fail(function (xhr, status, err) {
@@ -608,6 +411,7 @@
 
                 return [yy, '/', (mm > 9 ? '' : '0') + mm, '/', (dd > 9 ? '' : '0') + dd].join('');
             }
+
         }
 
         return {getListWithPaging: getListWithPaging, displayTime: displayTime}
