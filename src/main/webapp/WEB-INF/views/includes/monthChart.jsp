@@ -46,10 +46,11 @@ var cpMonthChart = new Array();
 var cpTotalCntChart = new Array();
 var cpInCntChart = new Array();
 var cpOutCntChart = new Array();
+var cpAvgPayChart = new Array();
 
 
 $.ajax({
-      url:"/findjob/test?ci_companyName="+tmp,
+      url:"/findjob/graphajax?ci_companyName="+tmp,
       type:"GET",
       dataType:"JSON",
 
@@ -58,7 +59,8 @@ $.ajax({
    		   cpMonthChart.push(item.cp_month)
    		   cpTotalCntChart.push(item.cp_totalcnt)
    		   cpInCntChart.push(item.cp_incnt)
-   		   cpOutCntChart.push(item.cp_outcnt)
+   		   cpOutCntChart.push(item.cp_outcnt);
+   		   cpAvgPayChart.push(Math.floor(item.cp_avgpay/10000));
    	   });
    	   
 		//월별 그래프
@@ -134,14 +136,14 @@ $.ajax({
 		datasets: [
 		  // 데이터셋 - 연봉
 		  {
-		    label: "연봉",
-		    data: [200, 100, 300, 700],
+		    label: "연봉(만원)",
+		    data: [...cpAvgPayChart],
 		    backgroundColor: "rgba(153, 102, 255, 0.2)",
 		    borderColor: "rgba(153, 102, 255, 0.2)"
 		  }
 		],
 		// 매달 숫자들 2019.07/2019.08 (제일 작은 날 ~ 제일 큰날)
-		labels: ["January", "February", "March", "April"]
+		labels: [...cpMonthChart]
 		},
 		
 		options: {
