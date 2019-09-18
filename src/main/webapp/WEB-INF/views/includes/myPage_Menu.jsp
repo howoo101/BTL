@@ -7,12 +7,17 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+         
+
+
+
 <div id="myPage_Menu">
     <div class="text-center" style="height: 100px; background-color: #ccf8ff">
         <div class="card-group">
             <div class="card-body">
                 <SPAN class="">
-                    사용자 이메일
+                  
+                 ${user}
                 </SPAN>
             </div>
         </div>

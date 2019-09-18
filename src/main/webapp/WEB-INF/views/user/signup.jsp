@@ -4,15 +4,24 @@
 
  <form id="signupform" class="form-signup">
         <h2 class="form-signin-heading">회원가입</h2>
+       		<br>
+	    	<h6>이메일</h6>
 	        <label for="inputEmail" class="sr-only">Email address</label>
 		        <input type="email" name="user_email" id="inputEmail" class="form-control" placeholder="이메일주소" required autofocus>
 		        <input type="button" id="check" value="중복체크" class="btn btn-info">
 	        <p id="EmailCheck"></p>
-	        
+	    	<br>
+	    	<h6>닉네임</h6>
+	        <label for="inputName" class="sr-only">Name</label>
+	 		 <input type="text" name="user_name" id="inputName" class="form-control" placeholder="닉네임" required>
+			<br>
+			<h6>비밀번호</h6>
 	        <label for="inputPassword" class="sr-only">Password</label>
 			 <input type="password" name="user_password" id="inputPassword" class="form-control" placeholder="비밀번호" required>	      
 	    	 <input type="password" name="user_passwordchk" id="inputPasswordchk" class="form-control" placeholder="비밀번호 확인" required>	      
 	 		   <p id="pwchk">비밀번호는 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.</p>
+	 		
+	 		      
 	 		  <input type="button" id="signUp" value="가입" class="btn btn-lg btn-info btn-block">
 	        
  	</form>
@@ -25,7 +34,8 @@ $(document).ready(function(e){
 		
 		var Erchk = 0;
 		var pwch = 0;	
-
+		var namech = 0;	
+		
 // 이메일 실시간 입력감지
 $("#inputEmail").on("propertychange change click keyup input paste",function(){
   var email = $(this).val();
@@ -59,6 +69,20 @@ $("#inputPassword").on("propertychange change click keyup input paste",function(
 		pwch = 1;
 	 
 	});
+	
+//이름 실시간 입력감지
+$("#inputName").on("propertychange change click keyup input paste",function(){
+	var name = $(this).val();
+	 if( name == '' || name == 'undefined' || name == null) 
+		 return;
+	 if(! name_chk(name)){
+		 namech = 0;
+		 return false;
+	 }
+	 else 
+		 namech = 1;
+	 
+	});
 
 	
 //이메일 정규표현식 통과시 true 반환		
@@ -71,6 +95,12 @@ $("#inputPassword").on("propertychange change click keyup input paste",function(
 function pw_chk(pw){
 	var passRule = /^.*(?=^.{8,12}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 	return (pw != '' && pw != 'undefined' && passRule.test(pw)); 
+}
+
+// 닉네임 정규표현식 통과시 true 반환
+function name_chk(name){
+	var nameRule = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$/;
+	return (name != '' && name != 'undefined' && nameRule.test(name)); 
 }
 
 
@@ -103,6 +133,12 @@ function pw_chk(pw){
 				return;
 			}
 			
+			else if(namech==0){
+				alert('닉네임을 2~10글자로 작성해주세요.');
+				$('#inputName').focus();
+				return;
+			}
+			
 			//이메일 중복확인 
 			if(emailch==false){
 				alert("이메일 중복체크를 해주세요.");
@@ -113,7 +149,8 @@ function pw_chk(pw){
 					type: "post",
 					data:{
 						"user_email":$('#inputEmail').val(),
-						"user_password":$('#inputPassword').val()
+						"user_password":$('#inputPassword').val(),
+						"user_name":$('#inputName').val()
 					}
 					})
 				 alert("가입이 완료 되었습니다! 가입하신 메일로 인증메일이 발송됩니다. 인증 후 로그인 해주세요.");
