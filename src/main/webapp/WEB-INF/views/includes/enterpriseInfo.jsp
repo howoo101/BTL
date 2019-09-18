@@ -142,7 +142,15 @@
 
 <script src="resources/js/follow.js"></script>
 <script>
-  
+window.onpageshow = function(event) {
+
+    if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+
+    }
+
+}
+
+
  $(document).ready ( function() {
 	 
 	 var cptotal = ${cptotal} //인원

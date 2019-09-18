@@ -35,7 +35,7 @@ public class CompanyController {
 	public String companySearchList(String keyword, Model model,HttpServletRequest req) {
 //		System.out.println("================"+keyword);
 		String userEmail = (String)req.getSession().getAttribute("user");
-		
+		logger.info(userEmail);
 		if(userEmail == null)
 			model.addAttribute("companyList",service.companyGetListWithCnt(keyword,"0"));
 		else {
@@ -62,21 +62,18 @@ public class CompanyController {
 	
 	
 	 @PostMapping("/follow/new")
-	 public @ResponseBody int companyInsertFollow(@RequestBody Map<String, Object> params) {
+	 public @ResponseBody int companyInsertFollow(@RequestBody Map<String, Object> params,
+			 HttpServletRequest req) {
+		 String userEmail = (String)req.getSession().getAttribute("user");
 		 String ciId = (String)params.get("id");
 		 logger.info("follow  insert " + ciId);
-		 FollowVO vo = new FollowVO();
-		 vo.setCi_id(Integer.parseInt(ciId));
-		 service.companyInsertFollow(vo);
-		 System.out.println(vo.getFollow_id());
-		 return vo.getFollow_id();
+		 service.companyInsertFollow(userEmail,Integer.parseInt(ciId));
+		 return Integer.parseInt(ciId);
 	 }
 	 
 	 @DeleteMapping("/follow/{id}")
-	 public @ResponseBody void companyDeleteFollow(@PathVariable("id") String followId,
-			 @RequestBody Map<String, Object> params) {
+	 public @ResponseBody void companyDeleteFollow(@PathVariable("id") String followId) {
 		 logger.info("follow " + followId+" delete");
-		 logger.info("userId "+(String)params.get("userId"));
 		 service.companyDeleteFollow(followId);
 	 }
 }

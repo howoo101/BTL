@@ -36,10 +36,10 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 	
 	@Override
-	public int companyInsertFollow(FollowVO vo) {
+	public void companyInsertFollow(String userEmail, int ciId) {
 		// TODO Auto-generated method stub
 		
-		return mapper.companyInsertFollow(vo);
+		 mapper.companyInsertFollow(userEmail,ciId);
 	}
 
 	@Override

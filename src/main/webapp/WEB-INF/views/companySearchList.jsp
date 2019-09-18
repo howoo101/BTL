@@ -72,6 +72,13 @@
 	<script src="resources/js/scroll.js"></script>
 	<script src="resources/js/follow.js"></script>
 	<script>
+	window.onpageshow = function(event) {
+
+	    if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+
+	    }
+	}
+
 		let isEnd = false;
 		var path = "${path}";
 		$(document).ready(
