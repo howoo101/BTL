@@ -12,4 +12,5 @@ public class CompanyListVO {
 	private int companyReviewCnt;
 	private int interviewReviewCnt;
 	private int followId; //팔로우 유무체크
+	private int ci_avgsalary; //기업 평균연봉
 }

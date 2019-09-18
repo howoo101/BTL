@@ -30,7 +30,7 @@ UserService userservice;
 			//로그인이 안되어있을경우.. 컨트롤러 요청으로 가지 않도록 false 반환
 			if(obj==null) {
 				if("XMLHttpRequest".equals(request.getHeader("x-requested-with"))) {
-					response.sendError(400);
+					response.sendError(403);
 					return false;
 				}
 				

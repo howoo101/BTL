@@ -59,7 +59,7 @@
 		        			+						res.ci_industry+" | " + res.ci_address
 		        			+					 '</div>'
 		        			+					 '<div class="row justify-content-center">'
-		        			+					  "평균연봉 4534 만원"+	'</div>'
+		        			+					  "평균연봉 "+res.ci_avgsalary+"만원"+	'</div>'
 		        			+					 '</div>'
 		        			+					 '<div class="col-lg-auto">'
 		        			+						'<div class="row justify-content-center">'

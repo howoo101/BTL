@@ -40,7 +40,7 @@ let follow = function(path,btn) {
 							error : function(request,status,error) {
 //								alert("status : "+request.status + 
 //										"\n error: "+ error)
-								if(request.status === 400) {
+								if(request.status === 403) {
 									location.href="logininterceptor";
 								}
 								if(request.status === 404) {
