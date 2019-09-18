@@ -1,40 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.btl.findjob.mapper.BoardMapper">
-	
+
 	<select id="getList" resultType="com.btl.findjob.model.BoardDTO">
 	<![CDATA[
 	select * from board where board_id > 0
 	]]>
 	</select>
-	<insert id = "insert">
-	insert into board(board_id, board_userid, board_title, board_content, board_writer)
-	values(#{board_id}, 1, #{board_title}, #{board_content}, #{board_writer})
+	<insert id="insert">
+		insert into board(board_id, board_userid, board_title, board_content,
+		board_writer)
+		values(#{board_id}, 1, #{board_title}, #{board_content}, #{board_writer})
 	</insert>
-	
-	<!-- 책에서 오라클을 사용하여 있었던 쿼리문 혹시몰라서 주석처리 -->
-<!-- 	<selectKey keyProperty="borad_id" order="BEFORE" resultType="long"> -->
-<!-- 	</selectKey> -->
-<!-- 	insert into board(board_id, board_userid, board_title, board_content, board_writer) -->
-<!-- 	values (#{board_id}, #{board_userid}, #{board_title}, #{board_content}, #{board_writer}) -->
 
-	<insert id ="insertSelectKey">
-	insert into board(board_id, board_userid, board_title, board_content,board_regdate,board_updateDate, board_writer)
-	values (#{board_id}, 1, #{board_title}, #{board_content},now(),now(), #{board_writer})
+	<insert id="insertSelectKey">
+		insert into board(board_id, board_userid, board_title,
+		board_content,board_regdate,board_updateDate, board_writer)
+		values (#{board_id}, 1, #{board_title}, #{board_content},now(),now(),
+		#{board_writer})
 	</insert>
-	
+
 	<select id="read" resultType="com.btl.findjob.model.BoardDTO">
-	select * from board where board_id = #{board_id}
+		select * from board where board_id = #{board_id}
 	</select>
-	
+
 	<delete id="delete">
-	delete from board where board_id = #{board_id}
+		delete from board where board_id = #{board_id}
 	</delete>
-	
+
 	<update id="modify">
-	update board set board_title=#{board_title},
-	board_content = #{board_content},
-	board_writer = #{board_writer},
-	board_updateDate = now() where board_id = #{board_id}
+		update board set board_title=#{board_title},
+		board_content = #{board_content},
+		board_writer = #{board_writer},
+		board_updateDate = now() where board_id = #{board_id}
 	</update>
+
+	<sql id="criteria">
+		<if test="type != null">
+			<if test="type == 't'.toString()">
+				and board_title like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'c'.toString()">
+				and board_content like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'w'.toString()">
+				and board_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'tc'.toString()">
+				and ( board_title like CONCAT('%', #{keyword}, '%') OR
+				board_content
+				like
+				CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="type == 'tw'.toString()">
+				and ( board_title like CONCAT('%', #{keyword}, '%') OR
+				board_writer
+				like
+				CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="type == 'twc'.toString()">
+				and ( board_title like CONCAT('%', #{keyword}, '%')
+				OR
+				board_writer
+				like CONCAT('%', #{keyword}, '%')
+				OR
+				board_content like
+				CONCAT('%', #{keyword}, '%'))
+			</if>
+		</if>
+	</sql>
+
+	<select id="getListWithPaging"
+		resultType="com.btl.findjob.model.BoardDTO">
+	<![CDATA[
+	SELECT board_id, board_title, board_content, board_regdate, board_updateDate,board_writer, board_hit
+	FROM board 
+	where board_id > 0
+	]]>
+		<include refid="criteria"></include>
+	<![CDATA[    
+	ORDER BY board_id DESC
+	LIMIT #{pageStart}, #{amount}
+	]]>
+
+	</select>
+
+
+	<select id="getTotalCount" resultType="int">
+	<![CDATA[  
+		select count(*) from board where board_id > 0
+		]]>
+		<include refid="criteria"></include>
+	</select>
+
 </mapper>

@@ -2,10 +2,11 @@ package com.btl.findjob.service;
 
 import java.util.List;
 
+import com.btl.findjob.model.BoardCriteria;
 import com.btl.findjob.model.BoardDTO;
 
 public interface BoardService {
-    public List<BoardDTO> getList();
+    public List<BoardDTO> getList(BoardCriteria cri);
 
     public void register(BoardDTO board);
 
@@ -15,6 +16,6 @@ public interface BoardService {
 
     public boolean remove(int board);
     
-    
+    public int getTotal(BoardCriteria cri);
 
 }

@@ -15,5 +15,5 @@ public class BoardDTO {
 	private Date board_regdate; //글 작성일
 	private Date board_updateDate; // 글 수정일
 	
-	
+	private int board_hit; //글 조회수
 }

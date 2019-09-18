@@ -28,11 +28,11 @@
 						<div class="panel-body">
 
 							<div class="container">
-							<div class="form-group">
-								<label>글 번호 baord_id</label> <input class="form-control"
-									name='board_id' value='<c:out value="${board.board_id}" />'
-									readonly="readonly">
-							</div>
+								<div class="form-group">
+									<input class="form-control" type='hidden' name='board_id'
+										value='<c:out value="${board.board_id}" />'
+										readonly="readonly">
+								</div>
 								<div class="form-group">
 									<label>제목</label> <input class="form-control"
 										name='board_title'
@@ -67,6 +67,67 @@
 		</div>
 	</div>
 </div>
+
+<form id='operForm' action="modify" method="get">
+	<input type='hidden' id='board_id' name='board_id'
+		value='<c:out value="${board.board_id }"/>'> <input
+		type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
+	<input type='hidden' name='amount'
+		value='<c:out value="${cri.amount }"/>'> <input type='hidden'
+		name='type' value='<c:out value="${cri.type }"/>'> <input
+		type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
+</form>
+
+
+<script type="text/javascript" src="resources/js/reply.js"></script>
+ <script>
+console.log("===========");
+console.log("JS TEST");
+
+var board_idValue = '<c:out value="${board.board_id}"/>';
+replyService.getList({board_id : board_idValue, page:1}, function(list){
+	
+	for(var i=0, len=list.length || 0; i<len; i++) {
+		console.log(list[i]);
+	}
+});
+
+</script> 
+
+<script>
+	console.log("=================");
+	console.log("JS TEST");
+	var board_idValue = '<c:out value="${board.board_id}"/>';
+
+	//for replyService add test
+ 	replyService.add({
+		user_id : 1,
+		reply_content : "JS Test",
+		reply_writer : "tester",
+		board_id : board_idValue
+	}, function(result) {
+		alert("RESULT:" + result);
+	}
+
+	);
+	
+	replyService.getList({board_id : board_idValue, page:1}, function(list){
+		
+		for(var i=0, len=list.length || 0; i<len; i++) {
+			console.log(list[i]);
+		}
+	}); 
+	
+ 	replyService.remove(55, function(count){
+		console.log(count);
+		if(count === "success") {
+			alert("REMOVED");
+		}
+	}, function(err) {
+		alert('ERROR...');
+	});
+</script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 
