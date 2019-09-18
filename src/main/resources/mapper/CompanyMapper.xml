@@ -22,10 +22,14 @@
 		group by ci.ci_companyName)ic on ci.ci_id = ic.ci_id
 		left join (select * from follow
 		) follow  on follow.ci_id = 0
+<!-- 		left join (select ci_companyName,avg(cp.cp_avgpay) cp_avgpay 
+		from companypersonal cp
+        group by ci_companyName) cp on cp.ci_companyName = ci.ci_companyName -->
 		WHERE ci.ci_companyName like concat('%',#{keyword},'%') and ci.ci_id > ${startNum}
 		order by ci_id
 		limit 20
 	</select>
+	
 	<select id="companyGetListWithCntWithLogin" resultType="com.btl.findjob.model.CompanyListVO">
 		SELECT ci.*,ifnull(comreviewcnt,0) as companyReviewCnt ,ifnull(inreviewcnt,0)as interviewReviewCnt, ifnull(follow.follow_id,0) as followId 
 		FROM companyinfo ci
