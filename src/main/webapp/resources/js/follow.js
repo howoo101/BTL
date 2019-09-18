@@ -29,7 +29,6 @@ let follow = function(path,btn) {
 							url : url,
 							contentType : 'application/json;',
 							data : JSON.stringify({
-								userId: "1",
 								id: id
 							}),
 							success : function(data) {
