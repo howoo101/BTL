@@ -96,5 +96,12 @@ UserMapper mapper;
 	}
 
 
+	@Override
+	public void auth_null(String user_email) {
+	
+		mapper.auth_null(user_email);
+	}
+
+
 
 }

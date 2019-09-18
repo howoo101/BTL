@@ -146,9 +146,12 @@ if ($('#nonauth').val() != 'null'){
 					success: function(data){
 						if(data == '1' ){
 							alert("인증메일이 전송되었습니다. 메일함에서 확인해주세요")	;
-							}	
-						},
-							
+							}
+						else if(data == '2' ){
+							alert("이미 인증된 회원입니다. 재 로그인해주세요.");
+							location.reload();
+						}	
+					   },
 						error: function(){
 							alert("서버에러");
 						}

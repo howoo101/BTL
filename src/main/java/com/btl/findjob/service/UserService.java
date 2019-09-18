@@ -27,4 +27,6 @@ public interface UserService {
 	public String getsalt(String user_email);
 	
 	public void upkey(@Param("user_email") String user_email,@Param("key") String key);
+	
+	public void auth_null(String user_email);
 }

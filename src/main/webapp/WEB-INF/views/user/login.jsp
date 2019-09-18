@@ -85,8 +85,13 @@ function onSignIn(googleUser) {
 					if(data == '1' ){
 						$('.close').trigger('click'); 
 						location.reload();
-					}else{
-						alert("가입완료")
+					}else if(data == '2' ){
+						alert("이미 일반회원으로 가입된 이메일입니다. 일반회원 로그인으로 접근해주세요.")
+						$('.close').trigger('click'); 
+						location.reload();
+					}
+					else{
+						alert("sns회원 자동가입이 완료되었습니다.")
 						$('.close').trigger('click'); 
 						location.reload();
 						}
