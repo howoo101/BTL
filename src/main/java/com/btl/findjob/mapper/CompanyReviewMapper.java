@@ -17,6 +17,7 @@ public interface CompanyReviewMapper {
 
     double totalStarRtAve(String ci_companyName);
 
+    double categoryStarRtAve(@Param("ci_companyName") String ci_companyName, @Param("cr_category") int cr_category);
 
 }
 

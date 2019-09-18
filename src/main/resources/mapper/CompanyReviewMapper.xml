@@ -2,8 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.btl.findjob.mapper.CompanyReviewMapper">
 
-    <!--	current_timestamp를 사용하여 현재 시간 입력 userid와 회사 아이디는 임시로 1번에 저장하도록한다.-->
-
     <insert id="insertCompanyReview">
         insert into companyreview (cr_comment, cr_starRt, cr_regDate, cr_category, user_id, ci_id)
         values (#{cr_comment}, #{cr_starRt}, now(), #{cr_category}, 1, #{ci_id})
@@ -31,5 +29,12 @@
                     (select ci_id from companyinfo where ci_companyName = #{ci_companyName})) starRt;
     </select>
 
+    <select id="categoryStarRtAve" resultType="double">
+        select IFNULL(avg(cr_starRt), 0.0)
+        from (select cr_starRt
+              from companyreview
+              where companyreview.ci_id =
+                    (select ci_id from companyinfo where ci_companyName = #{ci_companyName} and cr_category = #{cr_category})) starRt;
+    </select>
 
 </mapper>

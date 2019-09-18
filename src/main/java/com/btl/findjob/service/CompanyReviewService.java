@@ -15,7 +15,7 @@ public interface CompanyReviewService {
 
     CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id) throws Exception;
 
-//    double getStarRtAvg(@Param("cr_category") int cr_category, @Param("ci_companyName") String ci_companyName) throws Exception;
-
     double totalStarRtAve(String ci_companyName);
+
+    double categoryStarRtAve(String ci_companyName,int cr_category);
 }

@@ -31,5 +31,10 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
         return companyReviewMapper.totalStarRtAve(ci_companyName);
     }
 
+    @Override
+    public double categoryStarRtAve(String ci_companyName, int cr_category) {
+        return companyReviewMapper.categoryStarRtAve(ci_companyName, cr_category);
+    }
+
 
 }

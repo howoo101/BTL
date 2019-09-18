@@ -1,9 +1,14 @@
 package com.btl.findjob.controller;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import com.btl.findjob.service.CompanyReviewService;
+import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +23,15 @@ import com.btl.findjob.service.EnterpriseService;
 /**
  * Handles requests for the application home page.
  */
+@Log4j
 @Controller
 public class HomeController {
 	
 	@Autowired
 	EnterpriseService enterService;
+
+	@Autowired
+	private CompanyReviewService companyReviewService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -54,8 +63,22 @@ public class HomeController {
 		//Enterprise End
 		
 		//Graph model
-		model.addAttribute("ci_companyName", ci_companyName);		
-		
+		model.addAttribute("ci_companyName", ci_companyName);
+
+
+		//ave
+		model.addAttribute("totalStarRt", companyReviewService.totalStarRtAve(ci_companyName));
+
+		Map<String, Double> map = new HashMap<>();
+
+		for (int i = 1; i < 5; i++) {
+			map.put(""+i, companyReviewService.categoryStarRtAve(ci_companyName,i));
+		}
+
+		log.info(map);
+		model.addAttribute("getTotalStarRtAvg", map);
+		log.info(model);
+
 	}
 
 	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)
