@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.btl.findjob.mapper.EnterpriseMapper;
 import com.btl.findjob.model.CompanyInfoDTO;
+import com.btl.findjob.model.CompanyListVO;
 import com.btl.findjob.model.CompanyPersonalDTO;
 
 @Service
@@ -109,6 +110,12 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	public int latestcptotal() {
 	
 		return mapper.latestcptotal();
+	}
+
+	@Override
+	public List<CompanyListVO> companyList(String userEmail, String ci_companyName) {
+		// TODO Auto-generated method stub
+		return mapper.companyList(userEmail, ci_companyName);
 	}
 
 	// 서송현 코딩 끝 ===================================================

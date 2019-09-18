@@ -3,6 +3,7 @@ package com.btl.findjob.service;
 import java.util.List;
 
 import com.btl.findjob.model.CompanyInfoDTO;
+import com.btl.findjob.model.CompanyListVO;
 import com.btl.findjob.model.CompanyPersonalDTO;
 
 public interface EnterpriseService {
@@ -33,7 +34,9 @@ public interface EnterpriseService {
 
 	public int alltmoutrank(String ci_companyName);
 	
-	public int latestcptotal(); 
+	public int latestcptotal();
+
+	public List<CompanyListVO> companyList(String userEmail, String ci_companyName); 
 	
 	// 서송현 코딩 끝 ===================================================
 	

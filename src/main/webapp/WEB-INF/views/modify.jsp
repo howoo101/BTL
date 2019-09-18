@@ -28,12 +28,17 @@
 						<div class="panel-body">
 							<div class="container">
 								<form role="form" action="modify" method="post">
+								<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
+								<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+								<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
+								<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+
 
 									<div class="form-group">
-										<label>글 번호 board_id</label> <input class="form-control"
+										 <input class="form-control" type='hidden'
 											name='board_id' value='<c:out value="${board.board_id}" />'
 											readonly="readonly">
-									</div>
+									</div> 
 
 									<div class="form-group">
 										<label>제목</label> <input class="form-control"
@@ -82,6 +87,7 @@
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		var formObj = $("form");
@@ -95,10 +101,18 @@
 			if (operation === 'remove') {
 				formObj.attr("action", "remove");
 			} else if (operation === 'list') {
-				/* 			self.location="list";
-				 return; */
 				formObj.attr("action", "list").attr("method", "get");
+				
+				var pageNumTag = $("input[name='pageNum']").clone();
+				var amountTag = $("input[name='amount']").clone();
+				var typeTag = $("input[name='type']").clone();
+				var keywordTag = $("input[name='keyword']").clone();
+				
 				formObj.empty();
+				formObj.append(pageNumTag);
+				formObj.append(amountTag);
+				formObj.append(typeTag);
+				formObj.append(keywordTag);
 			}
 			formObj.submit();
 		});

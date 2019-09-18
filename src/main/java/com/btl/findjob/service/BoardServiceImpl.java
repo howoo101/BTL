@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.btl.findjob.mapper.BoardMapper;
+import com.btl.findjob.model.BoardCriteria;
 import com.btl.findjob.model.BoardDTO;
 
 import lombok.AllArgsConstructor;
@@ -21,9 +22,10 @@ public class BoardServiceImpl implements BoardService {
     private BoardMapper mapper;
     
     @Override
-    public List<BoardDTO> getList() {
-        log.info("getList.....");
-        return mapper.getList();
+    public List<BoardDTO> getList(BoardCriteria cri) {
+        log.info("get List with boardcriteria:" + cri);
+        
+        return mapper.getListWithPaging(cri);
     }
     
     @Override
@@ -50,15 +52,10 @@ public class BoardServiceImpl implements BoardService {
         log.info("remove..."+board);
       return mapper.delete(board) ==1;
     }
-//    @Override
-//    public boolean modify(BoardDTO board) {
-//        log.info("modify.."+board);
-//        return mapper.update(board) == 1;
-//    }
 
-//    @Override
-//    public boolean remove(int board_id) {
-//        log.info("remove..."+bno);
-//        return mapper.delete(board_id) ==1;
-//    }
+    @Override
+    public int getTotal(BoardCriteria cri) {
+        return  mapper.getTotalCount(cri);
+    }
+
 }

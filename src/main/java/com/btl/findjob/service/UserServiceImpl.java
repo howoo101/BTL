@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.btl.findjob.mapper.UserMapper;
+import com.btl.findjob.model.UserDTO;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,10 +23,10 @@ UserMapper mapper;
 
 
 	@Override
-	public void join_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("key") String key,@Param("authorization") int authorization) {
+	public void join_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name,@Param("key") String key,@Param("authorization") int authorization,@Param("salt") String salt) {
 		
 		
-		 mapper.join_insert(user_email,user_password,key,authorization);
+		 mapper.join_insert(user_email,user_password,user_name,key,authorization,salt);
 		
 	}
 
@@ -53,9 +54,44 @@ UserMapper mapper;
 
 
 	@Override
-	public void snsjoin_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("authorization") int authorization) {
+	public void snsjoin_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("authorization") int authorization,@Param("sns_key") String sns_key,@Param("sns_type") String sns_type){
+	  mapper.snsjoin_insert(user_email, user_password, authorization, sns_key, sns_type);
+	}
+
+
+	@Override
+	public String getsalt(String user_email) {
+
+		return mapper.getsalt(user_email);
+	}
+
+
+
+
+	@Override
+	public int snschk(String user_email) {
 		
-		mapper.snsjoin_insert(user_email, user_password, authorization);
+		return mapper.snschk(user_email);
+	}
+
+
+	@Override
+	public String snstype(String user_email) {
+		return mapper.snstype(user_email);
+	}
+
+
+	@Override
+	public int gradechk(String user_email) {
+		
+		return mapper.gradechk(user_email);
+	}
+
+
+	@Override
+	public void upkey(@Param("user_email") String user_email,@Param("key") String key) {
+		
+		mapper.upkey(user_email, key);
 		
 	}
 

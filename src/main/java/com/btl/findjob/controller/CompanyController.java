@@ -34,9 +34,14 @@ public class CompanyController {
 	@GetMapping(value = "search")
 	public String companySearchList(String keyword, Model model,HttpServletRequest req) {
 //		System.out.println("================"+keyword);
-		System.out.println(req.getSession());
-//		if(req.getSession() != null)
-		model.addAttribute("companyList",service.companyGetListWithCnt(keyword,"0"));
+		String userEmail = (String)req.getSession().getAttribute("user");
+		
+		if(userEmail == null)
+			model.addAttribute("companyList",service.companyGetListWithCnt(keyword,"0"));
+		else {
+			model.addAttribute("companyList",service.companyGetListWithCntWithLogin(userEmail,keyword,"0"));
+		}
+		
 		model.addAttribute("keyword",keyword);
 		return "companySearchList";
 	}

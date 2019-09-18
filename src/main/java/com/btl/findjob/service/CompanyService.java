@@ -10,6 +10,7 @@ public interface CompanyService {
 
 	public List<CompanyInfoDTO> companyGetList(String keyword, String startNum);
 	public List<CompanyListVO> companyGetListWithCnt(String keyword, String startNum);
+	public List<CompanyListVO> companyGetListWithCntWithLogin(String userEmail,String keyword, String startNum);
 	
 	public int companyInsertFollow(FollowVO vo);
 	public void companyDeleteFollow(String followId);
