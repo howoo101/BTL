@@ -9,4 +9,5 @@ public class PersonInfoGraphDTO {
 	private int cp_totalcnt;
 	private int cp_incnt;
 	private int cp_outcnt;
+	private int cp_avgpay;
 }

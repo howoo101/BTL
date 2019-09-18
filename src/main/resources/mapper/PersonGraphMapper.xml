@@ -3,7 +3,7 @@
 
 <mapper namespace="com.btl.findjob.mapper.PersonGraphMapper">
 	<select id="personGetGraph" resultType="com.btl.findjob.model.PersonInfoGraphDTO">
-		select ci.ci_companyName, cp.cp_month, cp.cp_totalcnt, cp.cp_incnt, cp.cp_outcnt
+		select ci.ci_companyName, cp.cp_month, cp.cp_totalcnt, cp.cp_incnt, cp.cp_outcnt, cp.cp_avgpay
 		from btl.companyinfo ci, btl.companypersonal cp
 		where ci.ci_companyName = cp.ci_companyName
 		        and ci.ci_companyName = #{ci_companyName}
