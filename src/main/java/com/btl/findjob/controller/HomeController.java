@@ -75,18 +75,23 @@ public class HomeController {
 
 		List<Double> categoryAve = new ArrayList<>();
 		List<String> categoryName = new ArrayList<>();
+		List<Integer> categoryCtn = new ArrayList<>();
 
-
-		for (int i = 1; i < 5; i++) {
+		for (int i = 0; i < 4; i++) {
 
 			categoryAve.add(companyReviewService.categoryStarRtAve(ci_companyName, i));
 			categoryName.add(companyReviewService.categoryName(i));
+			categoryCtn.add(companyReviewService.getCountByCategory(ci_companyName, i));
 
+			map.put("categoryCtn",categoryCtn);
 			map.put("categoryName",categoryName);
 			map.put("categoryAve", categoryAve);
 
 			data.add(map);
 		}
+
+		log.info(data);
+
 
 		model.addAttribute("map", data);
 

@@ -10,15 +10,23 @@
     <select id="getListWithPaging" resultType="com.btl.findjob.model.CompanyReview">
         select cr_id, cr_comment, cr_starRt, cr_regDate, cr_category, user_id, ci_id
         from companyreview
-        where cr_category=#{cr_category} and ci_id = #{ci_id}
+        where cr_category = #{cr_category}
+          and ci_id = #{ci_id}
         order by cr_id desc
         LIMIT #{companyReviewCriteria.pageStart},#{companyReviewCriteria.amount}
     </select>
 
-    <select id="getCountByCi_id" resultType="int">
+    <select id="getCountTotal" resultType="int">
         select count(ci_id)
         from companyreview
         where ci_id = #{ci_id}
+    </select>
+
+    <select id="getCountByCategory" resultType="int">
+        select count(ci_companyName)
+        from companyreview, companyinfo
+        where ci_companyName = #{ci_companyName}
+          and cr_category = #{cr_category}
     </select>
 
     <select id="totalStarRtAve" resultType="double">
@@ -26,17 +34,17 @@
         from (select cr_starRt
               from companyreview
               where companyreview.ci_id =
-                    (select ci_id from companyinfo where ci_companyName = #{ci_companyName})) starRt;
+                    (select ci_id from companyinfo where ci_companyName = #{ci_companyName})) starRt
     </select>
 
     <select id="categoryStarRtAve" resultType="double">
-        select IFNULL(avg(cr_starRt), 0.0)
+        select ifnull(avg(cr_starRt), 0.0)
         from (select cr_starRt
               from companyreview
               where companyreview.ci_id =
                     (select ci_id
                      from companyinfo
-                     where ci_companyName = #{ci_companyName} and cr_category = #{cr_category})) starRt;
+                     where ci_companyName = #{ci_companyName} and cr_category = #{cr_category})) starRt
     </select>
 
     <select id="categoryName" resultType="String">

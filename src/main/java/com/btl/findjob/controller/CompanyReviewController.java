@@ -5,14 +5,19 @@ import com.btl.findjob.model.CompanyReviewCriteria;
 import com.btl.findjob.model.CompanyReviewPageDTO;
 import com.btl.findjob.service.CompanyReviewService;
 import com.google.common.base.Utf8;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,19 +43,18 @@ public class CompanyReviewController {
     }
 
     //페이지 처리 위해서 수정
-    @GetMapping(value = "/reviewList")
-    public void list(int ci_id, @RequestParam(defaultValue = "1") int cr_category, @RequestParam(defaultValue = "1") int pageNum, HttpServletRequest httpServletRequest) throws Exception {
-        httpServletRequest.setCharacterEncoding("utf-8");
+    @GetMapping(value = "/pages/{ci_id}/{cr_category}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity<CompanyReviewPageDTO> getListWithPaging(@PathVariable("page") int page,@PathVariable("cr_category") int cr_category, @PathVariable("ci_id")  int ci_id) throws Exception {
 
-        Map<String, Integer> dataReview = new HashMap<>();
-        dataReview.put("pageNum", pageNum);
-        dataReview.put("ci_id", ci_id);
-        dataReview.put("cr_category", cr_category);
+        CompanyReviewCriteria companyReviewCriteria= new CompanyReviewCriteria(page, 5);
 
-        Map<String,Object> mapData = new HashMap<>();
-        List<CompanyReview> reviewList = companyReviewService.getReviewsList(dataReview);
-        Map<String,Integer> reviewPageDate = companyReviewService
+        log.info("get ci_id List ci_id: "+ci_id);
 
+        log.info("cr_category : "+ cr_category);
+
+        log.info("companyReviewCriteria: "+companyReviewCriteria);
+
+        return new ResponseEntity<>(companyReviewService.getListWithPaging(companyReviewCriteria, ci_id, cr_category),HttpStatus.OK);
     }
 
 }

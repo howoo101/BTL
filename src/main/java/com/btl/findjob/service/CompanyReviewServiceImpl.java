@@ -22,23 +22,18 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
     }
 
     @Override
-    public List<CompanyReview> getReviewsList(Map<String, Integer> dataReview) {
-        dataReview.put("reviewFlag",1);
-        int pageNum = dataReview.get("pageNum");
-        int starRow = 5 * (pageNum -1);
-        dataReview.put("amount",5);
-        dataReview.put("startRow", starRow);
-        return companyReviewMapper.getReviewsList(dataReview);
+    public CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id, int cr_category) throws Exception {
+        return new CompanyReviewPageDTO(companyReviewMapper.getCountByCi_id(ci_id), companyReviewMapper.getListWithPaging(companyReviewCriteria, ci_id, cr_category));
     }
 
     @Override
     public double totalStarRtAve(String ci_companyName) {
-        return companyReviewMapper.totalStarRtAve(ci_companyName);
+        return Math.ceil(companyReviewMapper.totalStarRtAve(ci_companyName)*10)/10;
     }
 
     @Override
     public double categoryStarRtAve(String ci_companyName, int cr_category) {
-        return companyReviewMapper.categoryStarRtAve(ci_companyName, cr_category);
+        return Math.ceil(companyReviewMapper.categoryStarRtAve(ci_companyName, cr_category)*10)/10;
     }
 
     @Override
@@ -47,40 +42,9 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
     }
 
     @Override
-    public Map<String, Integer> reviewPageData(int pageNum, int ci_id, int cr_category) {
-        Map<String, Integer> reviewPageData = new HashMap<>();
-        Map<String, Integer> data = new HashMap<>();
-        data.put("cr_category",cr_category);
-        data.put("ci_id", ci_id);
-
-        reviewPageData.put("pageNum",pageNum);
-        reviewPageData.put("pageTotalCount",getReviewTotalRows(data));
-        reviewPageData.put("startPage",getReviewStartPage(pageNum));
-        reviewPageData.put("endPage",getReviewEndPage(pageNum));
-        reviewPageData.put("msgPerPage",5);
-        return reviewPageData;
-    }
-    // 페이징 처리할 때 필요한 total rows
-    @Override
-    public int getReviewTotalRows(Map<String, Integer> data) {
-        data.put("reviewFlag", 1);
-        int pageTotalCount = 0;
-        if (companyReviewMapper.selectReviewTotalRows(data) != 0) {
-            pageTotalCount = (int) Math.ceil(((double) companyReviewMapper.selectReviewTotalRows(data) / Constants.Review.NUM_OF_RVW_PER_PAGE));
-        }
-        return pageTotalCount;
+    public int getCountByCategory(String ci_companyName, int cr_category) {
+        return companyReviewMapper.getCountByCategory(ci_companyName, cr_category);
     }
 
-    @Override
-    public int getReviewStartPage(int pageNum) {
-        int startPage = ((pageNum - 1) / 5) * 5 + 1;
-        return startPage;
-    }
-
-    @Override
-    public int getReviewEndPage(int pageNum) {
-        int endPage = (((pageNum - 1) / 5) + 1) * 5E;
-        return endPage;
-    }
 
 }

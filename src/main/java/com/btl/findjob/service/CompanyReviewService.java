@@ -14,7 +14,7 @@ public interface CompanyReviewService {
     int insertCompanyReview(CompanyReview companyReview) throws Exception;
 
     //리뷰코펜트에서 페이징처리 위해
-    List<CompanyReview> getReviewsList(Map<String, Integer> dataReview);
+    CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id, int cr_category) throws Exception;
 
     //총 평점
     double totalStarRtAve(String ci_companyName);
@@ -25,7 +25,6 @@ public interface CompanyReviewService {
     //카테고리 이름 출력위해
     String categoryName(int cr_category);
 
-    Map<String,Integer> reviewPageData(int pageNum, int ci_id, int cr_category);
+    int getCountByCategory(String ci_companyName, int cr_category);
 
-    int getReviewTotalRows(Map<String, Integer> data);
 }
