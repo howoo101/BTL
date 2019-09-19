@@ -20,7 +20,7 @@ public class GraphController {
 	@RequestMapping(value = "/graphajax")
 	public @ResponseBody List AjaxView(PersonInfoGraphDTO pigdto) {
 		List tmp = personGraphService.personGetGraph(pigdto.getCi_companyName());
-		System.out.println("ResponseBody :" + tmp);
+//		System.out.println("ResponseBody :" + tmp);
 		return tmp;
 	}
 }
