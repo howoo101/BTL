@@ -1,6 +1,5 @@
 package com.btl.findjob.service;
 
-import com.btl.findjob.mapper.CompanyMapper;
 import com.btl.findjob.mapper.CompanyReviewMapper;
 import com.btl.findjob.model.CompanyReview;
 import com.btl.findjob.model.CompanyReviewCriteria;
@@ -9,31 +8,43 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CompanyReviewServiceImpl implements CompanyReviewService {
     @Setter(onMethod_ =@Autowired)
     private CompanyReviewMapper companyReviewMapper;
-    @Setter(onMethod_ =@Autowired)
-    private CompanyMapper companyMapper;
 
     @Override
     public int insertCompanyReview(CompanyReview companyReview) {return companyReviewMapper.insertCompanyReview(companyReview);
     }
 
     @Override
-    public CompanyReview get(int cr_id) {
-        return companyReviewMapper.read(cr_id);
+    public CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id, int cr_category) throws Exception {
+        return new CompanyReviewPageDTO(companyReviewMapper.getCountByCi_id(ci_id), companyReviewMapper.getListWithPaging(companyReviewCriteria, ci_id, cr_category));
     }
 
     @Override
-    public List<CompanyReview> getList(CompanyReviewCriteria companyReviewCriteria, int ci_id) {
-        return companyReviewMapper.getListWithPaging(companyReviewCriteria, ci_id);
+    public double totalStarRtAve(String ci_companyName) {
+        return Math.ceil(companyReviewMapper.totalStarRtAve(ci_companyName)*10)/10;
     }
 
     @Override
-    public CompanyReviewPageDTO getListPage(CompanyReviewCriteria companyReviewCriteria, int ci_id) {
-        return new CompanyReviewPageDTO(companyReviewMapper.getCountByCi_id(ci_id), companyReviewMapper.getListWithPaging(companyReviewCriteria, ci_id));
+    public double categoryStarRtAve(String ci_companyName, int cr_category) {
+        return Math.ceil(companyReviewMapper.categoryStarRtAve(ci_companyName, cr_category)*10)/10;
     }
+
+    @Override
+    public String categoryName(int cr_category) {
+        return companyReviewMapper.categoryName(cr_category);
+    }
+
+    @Override
+    public int getCountByCategory(String ci_companyName, int cr_category) {
+        return companyReviewMapper.getCountByCategory(ci_companyName, cr_category);
+    }
+
+
 }

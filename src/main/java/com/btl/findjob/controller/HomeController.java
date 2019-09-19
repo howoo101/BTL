@@ -1,9 +1,13 @@
 package com.btl.findjob.controller;
 
-import java.util.Locale;
+import java.util.*;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import com.btl.findjob.model.CompanyReview;
+import com.btl.findjob.service.CompanyReviewService;
+import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +22,15 @@ import com.btl.findjob.service.EnterpriseService;
 /**
  * Handles requests for the application home page.
  */
+@Log4j
 @Controller
 public class HomeController {
 	
 	@Autowired
 	EnterpriseService enterService;
+
+	@Autowired
+	private CompanyReviewService companyReviewService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -54,8 +62,39 @@ public class HomeController {
 		//Enterprise End
 		
 		//Graph model
-		model.addAttribute("ci_companyName", ci_companyName);		
-		
+		model.addAttribute("ci_companyName", ci_companyName);
+
+
+		//ave
+		model.addAttribute("totalStarRt", companyReviewService.totalStarRtAve(ci_companyName));
+
+		//model에 넘기기 위해서
+		List<Map<String,Object>> data = new ArrayList<>();
+
+		Map<String, Object> map = new HashMap<>();
+
+		List<Double> categoryAve = new ArrayList<>();
+		List<String> categoryName = new ArrayList<>();
+		List<Integer> categoryCtn = new ArrayList<>();
+
+		for (int i = 0; i < 4; i++) {
+
+			categoryAve.add(companyReviewService.categoryStarRtAve(ci_companyName, i));
+			categoryName.add(companyReviewService.categoryName(i));
+			categoryCtn.add(companyReviewService.getCountByCategory(ci_companyName, i));
+
+			map.put("categoryCtn",categoryCtn);
+			map.put("categoryName",categoryName);
+			map.put("categoryAve", categoryAve);
+
+			data.add(map);
+		}
+
+		log.info(data);
+
+
+		model.addAttribute("map", data);
+
 	}
 
 	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)

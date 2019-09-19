@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.btl.findjob.mapper.CompanyReviewMapper">
+
+    <insert id="insertCompanyReview">
+        insert into companyreview (cr_comment, cr_starRt, cr_regDate, cr_category, user_id, ci_id)
+        values (#{cr_comment}, #{cr_starRt}, now(), #{cr_category}, 1, #{ci_id})
+    </insert>
+
+    <select id="getListWithPaging" resultType="com.btl.findjob.model.CompanyReview">
+        select cr_id, cr_comment, cr_starRt, cr_regDate, cr_category, user_id, ci_id
+        from companyreview
+        where cr_category = #{cr_category}
+          and ci_id = #{ci_id}
+        order by cr_id desc
+        LIMIT #{companyReviewCriteria.pageStart},#{companyReviewCriteria.amount}
+    </select>
+
+    <select id="getCountTotal" resultType="int">
+        select count(ci_id)
+        from companyreview
+        where ci_id = #{ci_id}
+    </select>
+
+    <select id="getCountByCategory" resultType="int">
+        select count(ci_companyName)
+        from companyreview, companyinfo
+        where ci_companyName = #{ci_companyName}
+          and cr_category = #{cr_category}
+    </select>
+
+    <select id="totalStarRtAve" resultType="double">
+        select IFNULL(avg(cr_starRt), 0.0)
+        from (select cr_starRt
+              from companyreview
+              where companyreview.ci_id =
+                    (select ci_id from companyinfo where ci_companyName = #{ci_companyName})) starRt
+    </select>
+
+    <select id="categoryStarRtAve" resultType="double">
+        select ifnull(avg(cr_starRt), 0.0)
+        from (select cr_starRt
+              from companyreview
+              where companyreview.ci_id =
+                    (select ci_id
+                     from companyinfo
+                     where ci_companyName = #{ci_companyName} and cr_category = #{cr_category})) starRt
+    </select>
+
+    <select id="categoryName" resultType="String">
+        select category_name
+        from category
+        where cr_category = #{cr_categroy};
+    </select>
+
+</mapper>
