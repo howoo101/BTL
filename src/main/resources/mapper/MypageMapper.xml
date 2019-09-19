@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.btl.findjob.mapper.MypageMapper">
+	<!--마이페이지 팔로잉한기업   -->
+	<select id="followCompanyGetList" resultType="com.btl.findjob.model.CompanyListVO">
+		select follow_id as followId,ifnull(inreviewcnt,0) as interviewReviewCnt,ifnull(comreviewcnt,0) as companyReviewCnt ,ci.* from follow
+		left join (select ci.ci_id,ci.ci_companyName,count(ci.ci_companyName) comreviewcnt
+		from companyinfo ci, companyreview cr
+		where ci.ci_id = cr.ci_id
+		group by ci.ci_companyName
+		) cc on follow.ci_id = cc.ci_id
+		left join (select ci.ci_id,ci.ci_companyName,count(ci.ci_companyName) inreviewcnt
+		from companyinfo ci, interviewreview ir
+		where ci.ci_id = ir.ci_id
+		group by ci.ci_companyName
+		) ic on follow.ci_id = ic.ci_id
+		left join (select * from companyinfo) ci
+		on follow.ci_id = ci.ci_id
+		where user_id = (select user_id from user 
+			  where user_email = #{userEmail})
+		limit 10
+;
+	</select>
+	
+	
+	
+</mapper>
