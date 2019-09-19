@@ -10,8 +10,14 @@
 					<h5>기업 위치</h5>
 				</div>
 				<div class="map_wrap">
-					<div id="map" style="width:100%;height:350px;"></div>
+					<div id="map" style="width:100%;height:350px;display: block;"></div>
+					
+					<div id="notfound" style="display: none;">
+						<img src="https://colorlib.com/wp/wp-content/uploads/sites/2/404-error-template-3.png" style="width:100%;height:350px;">
+					</div>
 				</div>
+				
+				
 				
 			</div>
 		</div>
@@ -62,6 +68,9 @@ function searchPlaces(keywordinput) {
     ps.keywordSearch( keyword, placesSearchCB); 
 }
 
+// 검색이 안됐을때 뜨는 페이지
+var notfoundImg = document.getElementById('notfound');
+
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
 function placesSearchCB(data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
@@ -69,15 +78,18 @@ function placesSearchCB(data, status, pagination) {
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
         displayPlaces(data);
-
+	
+    // 에러가 뜬다면 404 이미지 띄우기
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-
-        alert('검색 결과가 존재하지 않습니다.');
+    	notfoundImg.style.display = "block";
+    	mapContainer.style.display = "none"
+    	console.log('검색 결과 중 오류가 발생했습니다.');
         return;
 
     } else if (status === kakao.maps.services.Status.ERROR) {
-
-        alert('검색 결과 중 오류가 발생했습니다.');
+    	notfoundImg.style.display = "block";
+    	mapContainer.style.display = "none"
+        console.log('검색 결과 중 오류가 발생했습니다.');
         return;
     }
 }

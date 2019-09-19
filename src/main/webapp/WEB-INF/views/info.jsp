@@ -10,6 +10,8 @@
 
 <%-- <%@ include file="includes/enterpriseSummary.jsp" %> --%>
 
+<%@ include file="includes/sidebar.jsp" %>
+
 <%@ include file="includes/enterpriseInfo.jsp" %>
 
 <%@ include file="includes/map.jsp" %>
@@ -25,8 +27,4 @@
 <%@ include file="includes/news.jsp" %>
 
 <%@ include file="includes/footer.jsp" %>
-
-<c:forEach items="${graph}" var="g">
-	${g.ci_companyName} / ${g.cp_month } / ${g.cp_totalcnt} / ${g.cp_incnt} / ${g.cp_outcnt}<br>
-</c:forEach>
 
