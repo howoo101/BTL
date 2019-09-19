@@ -29,4 +29,6 @@
 	</bean> 
 	
 	<mybatis-spring:scan base-package="com.btl.findjob.mapper"/>
+	
+
 </beans>

@@ -1,5 +1,6 @@
 package com.btl.findjob.interceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,8 @@ import com.btl.findjob.service.UserService;
 
 
 public class AuthenticationInterceptor extends HandlerInterceptorAdapter{
+	
+
 	
 @Autowired
 UserService userservice;
@@ -35,6 +38,7 @@ UserService userservice;
 				}
 		
 				logininterceptor.forward(request,response);
+				
 			return false; // 컨트롤러 uri로의 요청으로 가지않도록 false
 			
 			}

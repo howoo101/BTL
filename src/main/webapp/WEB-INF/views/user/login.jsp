@@ -47,6 +47,11 @@
 					$('.close').trigger('click'); 
 					location.reload();
 					}
+				else if(data == '4' ){
+					alert("이미 접속중인 계정입니다.");		
+					$('.close').trigger('click'); 
+					location.reload();
+					}
 				else if(data == "google" || data == "naver" || data == "kakao"){
 					var snstype = data;
 					alert("회원님은 " + snstype  +" SNS 계정으로 가입된 회원입니다.해당 SNS플랫폼으로  로그인 해주세요.");
