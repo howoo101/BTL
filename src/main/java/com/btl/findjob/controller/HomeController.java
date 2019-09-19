@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.btl.findjob.service.EnterpriseService;
+import com.btl.findjob.service.MypageService;
 
 /**
  * Handles requests for the application home page.
@@ -23,6 +24,9 @@ public class HomeController {
 	
 	@Autowired
 	EnterpriseService enterService;
+	
+	@Autowired
+	MypageService mypageService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -59,9 +63,10 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)
-	public String myPage_Following(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-
+	public String myPage_Following(Model model,HttpServletRequest req) {
+		logger.info("mypage following");
+		String userEmail = (String)req.getSession().getAttribute("user");
+		model.addAttribute("companyList",mypageService.followCompanyGetList(userEmail));
 		return "myPage_Following";
 	}
 
