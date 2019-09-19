@@ -7,7 +7,8 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>     
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <div id="section0" class="mt-3">
     <div class="container center-block">
         <div class="card border-primary">
@@ -21,7 +22,7 @@
 									<button id="unfollow" class="follow btn btn-outline-danger" data-ciId=${vo.ci_id }>♡</button>
 								</c:if>
 								<c:if test="${vo.followId ne 0}">
-									<button id="follow" class="follow btn btn-outline-danger" data-ciId=${vo.ci_id } data-followId=${item.followId }>♥</button>
+									<button id="follow" class="follow btn btn-outline-danger" data-ciId=${vo.ci_id } data-followId=${vo.followId }>♥</button>
 								</c:if>
                         	</h2>
                         </div>
@@ -142,17 +143,10 @@
 
 <script src="resources/js/follow.js"></script>
 <script>
-window.onpageshow = function(event) {
 
-    if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
-
-    }
-
-}
 
 
  $(document).ready ( function() {
-	 
 	 var cptotal = ${cptotal} //인원
 	 var cpsince = ${cpsince} //업력
 	 var tmin = ${tmin} // 이번달 입사자
