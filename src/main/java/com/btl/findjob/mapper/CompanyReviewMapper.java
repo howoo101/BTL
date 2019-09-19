@@ -5,6 +5,7 @@ import com.btl.findjob.model.CompanyReviewCriteria;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CompanyReviewMapper {
 
@@ -18,6 +19,11 @@ public interface CompanyReviewMapper {
     double totalStarRtAve(String ci_companyName);
 
     double categoryStarRtAve(@Param("ci_companyName") String ci_companyName, @Param("cr_category") int cr_category);
+
+    String categoryName(int cr_category);
+
+    List<CompanyReview> getReviewsList(Map<String, Integer> dataReview);
+
 
 }
 

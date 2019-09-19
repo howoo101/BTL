@@ -1,12 +1,11 @@
 package com.btl.findjob.controller;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import com.btl.findjob.model.CompanyReview;
 import com.btl.findjob.service.CompanyReviewService;
 import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.annotations.Param;
@@ -69,15 +68,27 @@ public class HomeController {
 		//ave
 		model.addAttribute("totalStarRt", companyReviewService.totalStarRtAve(ci_companyName));
 
-		Map<String, Double> map = new HashMap<>();
+		//model에 넘기기 위해서
+		List<Map<String,Object>> data = new ArrayList<>();
+
+		Map<String, Object> map = new HashMap<>();
+
+		List<Double> categoryAve = new ArrayList<>();
+		List<String> categoryName = new ArrayList<>();
+
 
 		for (int i = 1; i < 5; i++) {
-			map.put(""+i, companyReviewService.categoryStarRtAve(ci_companyName,i));
+
+			categoryAve.add(companyReviewService.categoryStarRtAve(ci_companyName, i));
+			categoryName.add(companyReviewService.categoryName(i));
+
+			map.put("categoryName",categoryName);
+			map.put("categoryAve", categoryAve);
+
+			data.add(map);
 		}
 
-		log.info(map);
-		model.addAttribute("getTotalStarRtAvg", map);
-		log.info(model);
+		model.addAttribute("map", data);
 
 	}
 
