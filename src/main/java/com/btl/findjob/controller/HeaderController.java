@@ -1,10 +1,13 @@
 package com.btl.findjob.controller;
 
+import java.io.IOException;
 import java.util.Collections;
 
 import javax.inject.Inject;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.btl.findjob.model.SHA256Util;
+import com.btl.findjob.model.SessionListener;
 import com.btl.findjob.model.TempKey;
 import com.btl.findjob.service.MailSendService;
 import com.btl.findjob.service.UserService;
@@ -66,13 +70,27 @@ public class HeaderController {
 			 String newpassword = SHA256Util.getEncrypt(inputpassword, memberSalt); // 가져온 salt을 이용하여 sha 암호 get
 						  
 			  if(userservice.login(user_email, newpassword)==1)  { 
-					HttpSession session = request.getSession();  //로그인 세션 추가
-					session.setAttribute("user", user_email); 
+				
+				HttpSession session = request.getSession(true);     //로그인 세션 추가
 					
+				
+				
+				     if(SessionListener.getInstance().isUsing(user_email)) {
+				        	System.out.println("이미 아이디가 접속중입니다.");
+				        	return "4";
+				        }
+			    			
 					if(userservice.gradechk(user_email)==5) { //비인증회원로그인
+						session.setAttribute("user", user_email);
 						session.setAttribute("non_auth", user_email);  // 비인증회원 세션 추가
+						SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장
 						return "2"; 
 					}
+					
+					
+					session.setAttribute("user", user_email); // 세션추가
+					SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장
+
 					return "1"; //인증회원 로그인
 				  }  
 		
@@ -82,7 +100,7 @@ public class HeaderController {
 				  }
 
 			}
-		return "4";
+		return "5";
 	}
 	
 	//구글 sns
@@ -103,17 +121,18 @@ public class HeaderController {
 	
 	
 		  //이메일이 중복일경우 로그인
-		  if(userservice.emailchk(user_email) >= 1 ) {		
+		  if(userservice.emailchk(user_email) >= 1 ) {	
+			  
+			  if(userservice.snschk(user_email)>=1) {
 				HttpSession session = request.getSession();
 				   session.setAttribute("user", user_email);
-				   
-		
-				   // sns 정보는 항상 변화할수있으니까 로그인할때마다 sns info 테이블 업데이트
-	
-				   
 				   return "1";
+			  		}
+				
+	
+			  return "2";
 			 }
-		  //아닐경우 가입후 자동 로그인
+		  //아닐경우 가입 후 자동 로그인
 			 else {
 				 int authorization = 4; // sns 회원은 메일인증이 필요없어서 인증등급부여
 		 
@@ -193,18 +212,24 @@ public class HeaderController {
 	}
 	
 	@RequestMapping(value = "key_alter" , method = {RequestMethod.GET}) 
-	public String key_alter(@Param("user_email") String user_email,@Param("user_emailauthkey") String user_emailauthkey,Model model) {
+	public String key_alter(@Param("user_email") String user_email,@Param("user_emailauthkey") String user_emailauthkey,Model model,HttpSession session,HttpServletResponse response) throws IOException {
 	
 		
 		 String auth = "";
 		
 		if(userservice.keychk(user_email,user_emailauthkey)==1) {
 			userservice.auth_ok(user_email); //이메일 인증 되었으므로 등급 4로 변경
-			auth = "인증되었습니다.";
+			userservice.auth_null(user_email);
+			auth = "인증되었습니다. 다시 로그인 해주세요.";
+			
+	
 			model.addAttribute("auth", auth);
+			
+			
 			return "user/auth";
 		}else{
 			auth = "인증이 이미 완료되었거나 불가한 상태입니다.";
+		
 			model.addAttribute("auth", auth);
 			return "user/auth";
 		}
@@ -276,16 +301,21 @@ public class HeaderController {
 		//인증 이메일 다시보내기
 		@RequestMapping(value = "re_auth" , method = {RequestMethod.GET ,  RequestMethod.POST}) 
 		@ResponseBody 
-		public String reauth(@Param ("user_email") String user_email,HttpServletRequest request){
+		public String reauth(@Param ("user_email") String user_email,HttpServletRequest request,HttpSession session){
 			
+			if(userservice.gradechk(user_email)==5) {
 				TempKey tempkey = new TempKey();             
 				String key = tempkey.getKey(30, false); //랜덤으로 이루어진 인증키 30사이즈 생성       
-				
+			
 				userservice.upkey(user_email, key);
 				mailsender.mailSendWithUserKey(user_email,key,request);
-	
-	
-			return "1";
+				
+				return "1";
+				}
+			else {
+			 session.invalidate();
+			return "2";
+			}
 		}
 
 	

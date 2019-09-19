@@ -47,6 +47,11 @@
 					$('.close').trigger('click'); 
 					location.reload();
 					}
+				else if(data == '4' ){
+					alert("이미 접속중인 계정입니다.");		
+					$('.close').trigger('click'); 
+					location.reload();
+					}
 				else if(data == "google" || data == "naver" || data == "kakao"){
 					var snstype = data;
 					alert("회원님은 " + snstype  +" SNS 계정으로 가입된 회원입니다.해당 SNS플랫폼으로  로그인 해주세요.");
@@ -85,8 +90,13 @@ function onSignIn(googleUser) {
 					if(data == '1' ){
 						$('.close').trigger('click'); 
 						location.reload();
-					}else{
-						alert("가입완료")
+					}else if(data == '2' ){
+						alert("이미 일반회원으로 가입된 이메일입니다. 일반회원 로그인으로 접근해주세요.")
+						$('.close').trigger('click'); 
+						location.reload();
+					}
+					else{
+						alert("sns회원 자동가입이 완료되었습니다.")
 						$('.close').trigger('click'); 
 						location.reload();
 						}

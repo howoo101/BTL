@@ -56,6 +56,11 @@ values (#{authorization},#{user_email},'',#{user_password},CURRENT_DATE(),CURREN
 		update user set authorization_id = '4' where user_email = #{user_email}
 	</update>
 	
+	<!-- 인증 후 이메일 인증키 제거 -->
+	<update id="auth_null" parameterType="com.btl.findjob.model.UserDTO">
+		update user set user_emailauthkey = '' where user_email = #{user_email}
+	</update>
+	
 	<!-- salt 호출 -->
 	<select id="getsalt" resultType="String" parameterType="com.btl.findjob.model.UserDTO">
 	select salt from user where user_email = #{user_email}

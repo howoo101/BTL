@@ -2,4 +2,11 @@
          pageEncoding="UTF-8" %>
          
   
-  ${auth}
+  
+ 
+  <script>
+  alert('${auth}');
+  window.close();
+  </script>
+
+ 
