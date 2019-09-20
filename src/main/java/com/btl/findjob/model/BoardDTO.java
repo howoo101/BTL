@@ -3,7 +3,11 @@ package com.btl.findjob.model;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Data
 public class BoardDTO {
 	
@@ -16,4 +20,7 @@ public class BoardDTO {
 	private Date board_updateDate; // 글 수정일
 	
 	private int board_hit; //글 조회수
+	private int replyCnt;// 댓글갯수
+	
+	
 }

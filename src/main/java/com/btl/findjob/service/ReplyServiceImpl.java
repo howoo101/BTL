@@ -1,27 +1,33 @@
 package com.btl.findjob.service;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.btl.findjob.mapper.BoardMapper;
 import com.btl.findjob.mapper.ReplyMapper;
 import com.btl.findjob.model.BoardCriteria;
 import com.btl.findjob.model.ReplyDTO;
+import com.btl.findjob.model.ReplyPageDTO;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
 public class ReplyServiceImpl implements ReplyService {
     
-    @Inject
+    @Setter(onMethod_ = @Autowired)
     private ReplyMapper replymapper;
+    
+    @Setter(onMethod_ = @Autowired)
+    private BoardMapper mapper;
 
+    @Transactional
     @Override
     public int replyRegister(ReplyDTO dto) {
         log.info("register..."+dto);
+        mapper.updateReplyCnt(dto.getBoard_id(), 1);
         return replymapper.insert(dto);
     }
 
@@ -37,17 +43,18 @@ public class ReplyServiceImpl implements ReplyService {
         return replymapper.update(dto);
     }
 
+    @Transactional
     @Override
     public int replyRemove(int reply_id) {
         log.info("remove..."+reply_id);
+        ReplyDTO dto = replymapper.read(reply_id);
+        mapper.updateReplyCnt(dto.getBoard_id(), -1);
         return replymapper.delete(reply_id);
     }
 
     @Override
-    public List<ReplyDTO> replyGetList(BoardCriteria cri, int board_id) {
-        log.info("get Reply List od a Board"+board_id);
-        return replymapper.getListWithPaging(cri, board_id);
+    public ReplyPageDTO getListPage(BoardCriteria cri, int board_id) {
+        log.info("listpage....");
+        return new ReplyPageDTO(replymapper.getCountByBoard_id(board_id), replymapper.getListWithPaging(cri, board_id));
     }
-    
-    
 }

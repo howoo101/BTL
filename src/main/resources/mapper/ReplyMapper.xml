@@ -5,13 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.btl.findjob.mapper.ReplyMapper">
 
 	<select id="read" resultType="com.btl.findjob.model.ReplyDTO">
-		select * from reply where board_id = ${board_id}
+		select * from reply where reply_id = #{reply_id}
 		order by reply_id desc
 	</select>
 
 	<insert id="insert">
-		insert into reply (board_id,user_id,reply_content,reply_writer)
-		values (#{board_id},1 ,#{reply_content}, #{reply_writer})
+		insert into reply (board_id, user_id, reply_content, reply_date,reply_updateDate ,reply_writer)
+		values (#{board_id}, 1, #{reply_content},now(),now(), #{reply_writer})
 	</insert>
 
 	<update id="update">
@@ -29,16 +29,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from reply
 		where board_id = #{board_id}
 		order by reply_id desc
-		limit #{cri.pageNum}, #{cri.amount}
+		limit #{cri.pageStart}, #{cri.amount}
 	</select>
 
-	<select id="count" resultType="int">
-		select count(board_id) from reply where board_id =#{board_id}
+	<select id="getCountByBoard_id" resultType="int">
+		select count(reply_id) from reply where board_id =#{board_id}
 	</select>
 
-
-	<select id="getBoard_id" resultType="int">
-		select board_id from reply where reply_id = #{reply_id}
-	</select>
 
 </mapper>

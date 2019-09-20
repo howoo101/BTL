@@ -27,7 +27,6 @@
 						<div class="container">
 							<table class="table table-striped table-bordered table-hover">
 								<thead>
-								<!--게시판 이름-->
 									<tr>
 										<th>#번호</th>
 										<th>제목</th>
@@ -37,15 +36,15 @@
 										<th>조회</th>
 									</tr>
 								</thead>
-								
-								<!--연결  -->
+
+
 								<c:forEach items="${list }" var="board">
 									<tr>
 										<td><c:out value="${board.board_id }" /></td>
 										<td><a class='move'
 											href='<c:out value="${board.board_id }"/>'>
 												<c:out value="${board.board_title }" />
-										</a></td>
+												<b>[<c:out value="${board.replyCnt}" />]</b></a></td>
 										<td><c:out value="${board.board_writer }" /></td>
 										<td><fmt:formatDate pattern="yyyy-MM-dd"
 												value="${board.board_regdate }" /></td>
@@ -55,13 +54,10 @@
 									</tr>
 								</c:forEach>
 							</table>
-							
-							<!--검색창-->
 							<div class = 'row'>
 							<div class="col-lg-12">
 							
 							<form id = 'searchForm' action="list" method='get'>
-							
 							<select name='type'>
 							<option value=""
 							<c:out value="${pageMaker.cri.type == null? 'selected' : ''}"/>>--</option>
@@ -79,7 +75,6 @@
 							<c:out value="${pageMaker.cri.type eq 'twc'? 'selected' : ''}"/>>제목 or 작성자 or 내용</option>
 							</select>
 							
-							
 							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
 							<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
 							<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
@@ -87,11 +82,11 @@
 							</form>
 							</div>
 							</div>
-							
-							<!--페이징 버튼-->
-							<div>
-							<nav aria-label="Board Page navigation">
-									<ul class="pagination justify-content-start">
+
+					
+
+								<nav aria-label="Board Page navigation">
+									<ul class="pagination justify-content-end">
 										<c:if test="${pageMaker.prev}">
 												<li class="page-item previous"><a class="page-link" href="${pageMaker.startPage -1 }">Previous</a></li>
 											</c:if> <c:forEach var="num" begin="${pageMaker.startPage }"
@@ -100,19 +95,19 @@
 											</c:forEach> <c:if test="${pageMaker.next }">
 												<li class="page-item next"><a class="page-link" href="${pageMaker.endPage +1}">Next</a></li>
 											</c:if>
+								
 									</ul>
 								</nav>
 							</div>
-						</div>
-						
-						
+				
+
 						<!-- Modal-->
-						<div class="modal fade" id="Modal" tabindex="-1" role="dialog"
-							aria-labelledby="ModalLabel" aria-hidden="true">
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="ModalLabel">확 인 창</h5>
+										<h5 class="modal-title" id="myModalLabel">확 인 창</h5>
 										<button class="close" type="button" data-dismiss="modal"
 											aria-label="true">&times;</button>
 									</div>
@@ -157,7 +152,7 @@
 						$(".modal-body").html(
 								"게시글" + parseInt(result) + "번이 등록되었습니다.");
 					}
-					$("#Modal").modal("show");
+					$("#myModal").modal("show");
 				}
 				$("#regBtn").on("click", function() {
 					self.location = "register";
@@ -179,7 +174,7 @@
 					actionForm.submit()
 					
 				});
-				
+
 				var searchForm = $("#searchForm");
 				$("#searchForm button").on("click", function(e) {
 					if(!searchForm.find("option:selected").val()) {
@@ -194,7 +189,7 @@
 					e.preventDefault();
 					
 					searchForm.submit();
-				});
+				}); 
 				
 			});
 </script>
