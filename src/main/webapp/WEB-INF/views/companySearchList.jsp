@@ -92,16 +92,24 @@
 					
 					//scroll 
 					var keyword = '${keyword}'
-
+					var timer;
 					$(window).scroll(function() {
+						
 						let $window = $(this);
-						let scrollTop = $window.scrollTop();
+						let scrollTop = Intger.parseInt($window.scrollTop());
 						let windowHeight = $window.height();
 						let documentHeight = $(document).height();
-						
-						if (scrollTop + windowHeight >= documentHeight-1) {
-							fetchList(keyword,path);
+						if(timer) {
+							clearTimeout(timer);
 						}
+						timer = setTimeout(function() {
+							if (scrollTop + windowHeight >= documentHeight-1) {
+								fetchList(keyword,path);
+							}
+						},100)
+						/* if (scrollTop + windowHeight >= documentHeight-1) {
+							fetchList(keyword,path);
+						} */
 					})//scroll
 				});//ready
 				
