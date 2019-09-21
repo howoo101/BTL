@@ -69,13 +69,44 @@
 
                     </div>
                     </c:forEach>
+                    
                 </div>
+                <!--페이징 버튼-->
+				<div class="row justify-content-center">
+				<nav aria-label="Board Page navigation">
+						<ul class="pagination justify-content-start">
+							<c:if test="${pageMaker.prev}">
+									<li class="page-item previous">
+									<a class="page-link" href="${pageMaker.startPage -1 }">Previous</a></li>
+							</c:if> 
+							<c:forEach var="num" begin="${pageMaker.startPage }"
+									end="${pageMaker.endPage }">
+								<li class="page-item ${pageMaker.cri.pageNum == num? 'active' : ''}">
+								<a class="page-link" href="${num}">${num}</a></li>
+							</c:forEach> 
+							<c:if test="${pageMaker.next }">
+								<li class="page-item next"><a class="page-link" href="${pageMaker.endPage +1}">Next</a></li>
+							</c:if>
+						</ul>
+					</nav>
+				</div>
             </div>
+            
+            <form id="actionForm" action="myPage_Following" method="get">
+            	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+            	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+            </form>
         </div>
     <%@ include file="includes/footer.jsp" %>
 	<script src="resources/js/follow.js"></script>
 	<script>
 	var path = "${path}";
+	window.onpageshow = function(event) {
+
+	    if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+	    	 location.reload(true); 
+	    }
+	}
 	$(document).ready(
 			function() {
 				//follow
@@ -84,5 +115,19 @@
 					follow(path,btn)
 				});//onclick
 				//follow end
+				
+				//page
+				var actionForm = $("#actionForm");
+				
+				$(".page-item a").on("click", function(e) {
+					e.preventDefault();
+					
+					console.log("click");
+					
+					actionForm.find("input[name='pageNum']").val($(this).attr("href"));	
+					actionForm.submit();
+				})
+				
+				
 			});
 	</script>
