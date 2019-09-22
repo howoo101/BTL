@@ -20,11 +20,12 @@
                             <div class="card-body">
                                 <div class="row justify-content-center">
                                     <div class="text-warning">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
+                                        <c:forEach begin="1" end="${totalStarRt}" step="1">
+                                            <i class="fa fa-star"></i>
+                                        </c:forEach>
+                                        <c:forEach begin="${totalStarRt}" end="4" step="1">
+                                            <i class="fa fa-star-o"></i>
+                                        </c:forEach>
                                     </div>
                                 </div>
                             </div>
@@ -56,11 +57,9 @@
                                         <div class="col-lg-2">
                                             <div class="row">
                                                 <div class="text-warning small starRatingAveStar">
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
+                                                    <c:forEach begin="1" end="5" step="1">
+                                                        <i class="fa fa-star-o"></i>
+                                                    </c:forEach>
                                                 </div>
                                                 <div class="categoryAve">${list.categoryAve[status.index]}</div>
                                             </div>
@@ -127,6 +126,13 @@
     $(document).ready(function () {
         const ci_idValue = '<c:out value="${companyList[0].ci_id}"/>';//homeController에 있는 모델 받아서 사용 0 넣지 안으면 에러
 
+        //총 별점 보여주기 처리
+        let totalStarRt = ${totalStarRt};
+        console.log(totalStarRt);
+        if (totalStarRt) {
+
+        }
+
         $("#accordion0, #accordion1, #accordion2, #accordion3 ").on("click", function (e) {
 
             const $div = $(this).closest('div');
@@ -180,7 +186,7 @@
 
                     for (let i = 0, len = companyReviewList.length || 0; i < len; i++) {
 
-                        //별처리 위해
+                        // 별처리 위해
                         switch (companyReviewList[i].cr_starRt) {
                             case 1:
                                 starRating +=
@@ -229,6 +235,7 @@
                                     "<i class='fa fa-star-o'></i>";
                                 break;
                         }
+
 
                         categoryAve += companyReviewList[i].cr_starRt;
 
@@ -280,7 +287,7 @@
                             "<i class='fa fa-star'></i>" +
                             "<i class='fa fa-star-o'></i>" +
                             "<i class='fa fa-star-o'></i>";
-                    } else if (4 <= categoryAve <= 5) {
+                    } else if (4 <= categoryAve < 5) {
                         starRatingAveStar +=
                             "<i class='fa fa-star'></i>" +
                             "<i class='fa fa-star'></i>" +
