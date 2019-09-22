@@ -8,9 +8,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CompanyReviewServiceImpl implements CompanyReviewService {
@@ -22,8 +20,8 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
     }
 
     @Override
-    public CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id, int cr_category) throws Exception {
-        return new CompanyReviewPageDTO(companyReviewMapper.getCountByCi_id(ci_id), companyReviewMapper.getListWithPaging(companyReviewCriteria, ci_id, cr_category));
+    public CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id) throws Exception {
+        return new CompanyReviewPageDTO(companyReviewMapper.crTotalCount(ci_id), companyReviewMapper.getListWithPaging(companyReviewCriteria, ci_id));
     }
 
     @Override
@@ -45,6 +43,5 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
     public int getCountByCategory(String ci_companyName, int cr_category) {
         return companyReviewMapper.getCountByCategory(ci_companyName, cr_category);
     }
-
 
 }

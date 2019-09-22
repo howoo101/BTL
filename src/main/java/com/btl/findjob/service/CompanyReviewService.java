@@ -6,7 +6,6 @@ import com.btl.findjob.model.CompanyReviewCriteria;
 import com.btl.findjob.model.CompanyReviewPageDTO;
 
 import java.util.List;
-import java.util.Map;
 
 public interface CompanyReviewService {
 
@@ -14,7 +13,7 @@ public interface CompanyReviewService {
     int insertCompanyReview(CompanyReview companyReview) throws Exception;
 
     //리뷰코펜트에서 페이징처리 위해
-    CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id, int cr_category) throws Exception;
+    CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id) throws Exception;
 
     //총 평점
     double totalStarRtAve(String ci_companyName);
@@ -25,6 +24,7 @@ public interface CompanyReviewService {
     //카테고리 이름 출력위해
     String categoryName(int cr_category);
 
+    //카테고리별 카운트
     int getCountByCategory(String ci_companyName, int cr_category);
 
 }

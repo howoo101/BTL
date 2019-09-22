@@ -92,10 +92,8 @@ public class HomeController {
 			map.put("categoryAve", categoryAve);
 
 			data.add(map);
+
 		}
-
-		log.info(data);
-
 
 		model.addAttribute("map", data);
 
