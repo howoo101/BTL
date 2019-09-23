@@ -8,20 +8,26 @@
 	]]>
 	</select>
 	<insert id="insert">
-		insert into board(board_id, board_userid, board_title, board_content,
+		insert into board(board_id, board_userid,
+		board_title, board_content,
 		board_writer)
-		values(#{board_id}, 1, #{board_title}, #{board_content}, #{board_writer})
+		values(#{board_id}, 1,
+		#{board_title}, #{board_content}, #{board_writer})
 	</insert>
 
 	<insert id="insertSelectKey">
-		insert into board(board_id, board_userid, board_title,
-		board_content,board_regdate,board_updateDate, board_writer)
-		values (#{board_id}, 1, #{board_title}, #{board_content},now(),now(),
+		insert into board(board_id, board_userid,
+		board_title,
+		board_content,board_regdate,board_updateDate,
+		board_writer)
+		values (#{board_id}, 1, #{board_title},
+		#{board_content},now(),now(),
 		#{board_writer})
 	</insert>
 
 	<select id="read" resultType="com.btl.findjob.model.BoardDTO">
-		select * from board where board_id = #{board_id}
+		select * from board where board_id
+		= #{board_id}
 	</select>
 
 	<delete id="delete">
@@ -34,6 +40,11 @@
 		board_writer = #{board_writer},
 		board_updateDate = now() where board_id = #{board_id}
 	</update>
+
+
+	<!-- <select id="getTotalCount" resultType="int"> select count(*) from board 
+		where board_id > 0 </select> -->
+
 
 	<sql id="criteria">
 		<if test="type != null">
@@ -53,27 +64,36 @@
 				CONCAT('%', #{keyword}, '%'))
 			</if>
 			<if test="type == 'tw'.toString()">
-				and ( board_title like CONCAT('%', #{keyword}, '%') OR
-				board_writer
+				and ( board_writer like CONCAT('%', #{keyword}, '%') OR
+				board_content
 				like
 				CONCAT('%', #{keyword}, '%'))
 			</if>
 			<if test="type == 'twc'.toString()">
-				and ( board_title like CONCAT('%', #{keyword}, '%')
-				OR
+				and ( board_title like CONCAT('%', #{keyword}, '%') OR
 				board_writer
-				like CONCAT('%', #{keyword}, '%')
-				OR
-				board_content like
+				like
+				CONCAT('%', #{keyword}, '%')OR board_content
+				like
 				CONCAT('%', #{keyword}, '%'))
 			</if>
 		</if>
 	</sql>
 
+	<!-- <sql id="criteria"> <if test="type !=null"> <if test="type == 'T'.toString()"> 
+		and board_id like CONCAT('%', #{keyword}, '%') </if> <if test="type == 'C'.toString()"> 
+		and board_content like CONCAT('%', #{keyword}, '%') </if> <if test="type 
+		== 'W'.toString()"> and board_writer like CONCAT('%', #{keyword}, '%') </if> 
+		<if test="type == 'all'.toString()"> and ( T like CONCAT('%', #{keyword},;../, 
+		'%') OR C CONCAT('%', #{keyword}, '%') OR W like CONCAT('%', #{keyword}, 
+		'%') ) </if> </if> </sql> -->
+
+
+
 	<select id="getListWithPaging"
 		resultType="com.btl.findjob.model.BoardDTO">
 	<![CDATA[
-	SELECT board_id, board_title, board_content, board_regdate, board_updateDate,board_writer, board_hit
+	SELECT board_id, board_title, board_content, board_regdate, board_updateDate,board_writer, board_hit, replycnt
 	FROM board 
 	where board_id > 0
 	]]>
@@ -92,5 +112,9 @@
 		]]>
 		<include refid="criteria"></include>
 	</select>
+
+	<update id="updateReplyCnt">
+		update board set replyCnt = replyCnt + #{amount} where board_id = #{board_id}
+	</update>
 
 </mapper>

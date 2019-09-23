@@ -1,7 +1,5 @@
 package com.btl.findjob.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.btl.findjob.model.BoardCriteria;
 import com.btl.findjob.model.ReplyDTO;
+import com.btl.findjob.model.ReplyPageDTO;
 import com.btl.findjob.service.ReplyService;
 
 import lombok.AllArgsConstructor;
@@ -35,9 +34,7 @@ public class ReplyController {
         int insertCount = service.replyRegister(dto);
         
         log.info("Reply INSERT COUNT :"+insertCount);
-        
-        System.out.println("new : 구문 이쪽으로: delete 구문");
-        
+                
         return insertCount == 1 
         ? new ResponseEntity<>("success", HttpStatus.OK) 
         : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -45,17 +42,19 @@ public class ReplyController {
     }
     
     @GetMapping(value="/pages/{board_id}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity<List<ReplyDTO>> getList(@PathVariable("page") int page, @PathVariable("board_id") int board_id) {
-       log.info("getList...........");
+    public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("board_id") int board_id) {
+       log.info("get Reply List board_id : " +board_id);
        BoardCriteria cri = new BoardCriteria(page, 10);
-       log.info(cri);
-        return new ResponseEntity<>(service.replyGetList(cri, board_id),HttpStatus.OK);
+       log.info("cri : " +cri);
+        return new ResponseEntity<>(service.getListPage(cri, board_id), HttpStatus.OK);
     }
     
-    @GetMapping(value="/{reply_id}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity<ReplyDTO> get(@PathVariable("reply_id") int reply_id) {
-        log.info("get:" + reply_id);
-        return new ResponseEntity<>(service.replyGet(reply_id),HttpStatus.OK);
+    @GetMapping(value = "/{reply_id}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity<ReplyDTO> get(@PathVariable("reply_id") int reply_id){
+
+        log.info("reply_id: "+reply_id);
+
+        return new ResponseEntity<>(service.replyGet(reply_id), HttpStatus.OK);
     }
     
     @DeleteMapping(value = "/{reply_id}", produces = {MediaType.TEXT_PLAIN_VALUE})

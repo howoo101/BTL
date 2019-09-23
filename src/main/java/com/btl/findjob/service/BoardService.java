@@ -17,5 +17,6 @@ public interface BoardService {
     public boolean remove(int board);
     
     public int getTotal(BoardCriteria cri);
+    
 
 }

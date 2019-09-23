@@ -57,6 +57,7 @@ public class BoardController {
     @PostMapping("modify")
     public String modify(BoardDTO board, @ModelAttribute("cri") BoardCriteria cri, RedirectAttributes rttr) {
         log.info("modify : " + board);
+        
         if(service.modify(board)) {
             rttr.addFlashAttribute("result","success");
         }
@@ -82,4 +83,5 @@ public class BoardController {
         
         return "redirect:list";
     }
+    
 } 
