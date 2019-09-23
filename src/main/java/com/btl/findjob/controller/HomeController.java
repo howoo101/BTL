@@ -65,9 +65,8 @@ public class HomeController {
 		model.addAttribute("alltmoutrank", Math.round((double)enterService.alltmoutrank(ci_companyName) * 100 / enterService.latestallcp(ci_companyName)*100)/100.0); // 동종업계 이번달 퇴사자 % 순위 (최신 달)
 		//Enterprise End
 		
-		//Graph model
+		//info model
 		model.addAttribute("ci_companyName", ci_companyName);
-
 
 		//ave
 		model.addAttribute("totalStarRt", companyReviewService.totalStarRtAve(ci_companyName));
@@ -128,6 +127,11 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
 		return "myPage_ReviewComment";
+	}
+	
+	@RequestMapping(value="/faq")
+	public String FAQ() {
+		return "/faq";
 	}
 
 
