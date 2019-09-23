@@ -46,23 +46,21 @@
 			</div>
 		</div>
 	</div>
-	</div>
-	<!--필수값 입력하게 하기  -->
-	<script type="text/javascript">
-		function check() {
-			
-			var need = document.need;
-			var board_title = need.board_title.value;
-			var board_content = need.board_content.value;
-			
-			if (!board_title || !board_content) {
-				alert("필수값이 입력되지 않았습니다.");
-				return;
-			}
-			need.submit();
-		}
+</div>
+
+<!--필수값 입력하게 하기  -->
+<script type="text/javascript">
+function check() {
+	var need = document.need;
+	var board_title = need.board_title.value;
+	var board_content = need.board_content.value;
 	
-	</script>
+	if (!board_title || !board_content) {
+		alert("필수값이 입력되지 않았습니다.");
+		return;
+	}
+	need.submit();
+}
+</script>
 
-
-	<%@ include file="includes/footer.jsp"%>
+<%@ include file="includes/footer.jsp"%>

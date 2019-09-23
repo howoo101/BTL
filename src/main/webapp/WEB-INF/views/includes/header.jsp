@@ -7,23 +7,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>  
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>  <!-- 카카오 js -->
-   <script>Kakao.init('34800e916b17799e85bcefde72c06423')</script>  <!-- 카카오 init -->
-  
-  
-   <!-- 네이버 js -->
- <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
- 
- 
+	<!-- 부트스트랩 -->
+	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
+	<%--부트스트랩 CSS--%>
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
+	<%--css 커스텀--%>
+	<link rel="stylesheet" type="text/css" href="resources/css/indexStyle.css">
+	<!--부트스트랩 와치-->
+	<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet"
+	      integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
 
+	<!-- 카카오 js -->
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<!-- 카카오 init -->
+    <script>Kakao.init('34800e916b17799e85bcefde72c06423')</script>
+    <!-- 네이버 js -->
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 
-    <title>홈</title>
+	<!-- 구글 아이콘 -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<%-- 아이콘--%>
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+	<!-- 카카오 지도 -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c3c4fdcbe2ae096fbd9562312c53b316&libraries=services,clusterer,drawing"></script>
+    
+    <%-- chart 생성 위한 Chart.js --%>
+	<script type="text/javascript" src="resources/js/Chart.js"></script>
+	<script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
+    <title>홈</title>
 </head>
 
 <body>
@@ -35,32 +53,27 @@
 
 <!-- 로그인 인터셉터 관련 -->
 <% String ltr = (String) request.getAttribute("ltr");
-	
-	 if(user==null){
-  if(ltr != null){  %>
-    <%=ltr%> 
-  
+	if(user==null){
+		if(ltr != null){  
+%>
+		    <%=ltr%> 
 <% 
-  }
-}
+  		}
+	}
 %> 
 <!-- 등급 인터셉터 관련 -->
 <% String gtr = (String) request.getAttribute("gtr");
 	
-	 if(user!=null){
-  if(gtr != null){  %>
-    <%=gtr%> 
-  
+	if(user!=null){
+		if(gtr != null){  %>
+    		<%=gtr%> 
 <% 
-  }
-}
+  		}
+	}
 %> 
-
    <input id="session" type="hidden" value="<%=user%>">  <!-- 로그인 세션파라미터 -->
    <input id="nonauth" type="hidden" value="<%=non_auth%>">  <!-- 비인증회원 세션파라미터  -->
    <input id="name" type="hidden" value="<%=name%>">  <!-- 유저 이름 세션파라미터 -->
-
-
 
 <header class="mt-3">
     <div id="content-wrap">
@@ -87,8 +100,6 @@
             </div>
             
             <div id="ucon">${name}님 로그인 하셨습니다.</div>
-            
-
             
             <!-- login modal -->
 			<button type="button" id="loginmodal" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
@@ -129,147 +140,107 @@
 			  </ul>
 		</div>
 		<!-- 로그인했을시 보이는 user dropmenu 끝 -->
-		
-
-	  
         </nav>
     </div>
-    
-
-    
 </header>
-
 
 <script>
 $("#loading-bar").hide(); // 평상시 감춤
 
-
 // 인증메일 보내기
 
 if ($('#nonauth').val() == 'null'){
-		$("#authmail").hide();
-		} 
+	$("#authmail").hide();
+}
+
 if ($('#nonauth').val() != 'null'){
-		$("#authmail").show();
-		$("#authmail").click(function(){
-	
-			var result = confirm (" 현재 가입된 "+ $('#session').val() + "으로 인증메일을 다시 보내겠습니까?");
-			if(result){
-				$.ajax({
-					url:"${pageContext.request.contextPath}/re_auth",
-					type: "POST",
-					data:{
-						 "user_email" :$('#session').val(),
-						},
-						beforeSend:function(){
-							$("#loading-bar").show();
-						},
-					success: function(data){
-						$("#loading-bar").hide();
-						if(data == '1' ){
-							alert("인증메일이 전송되었습니다. 메일함에서 확인해주세요")	;
-							}
-						else if(data == '2' ){
-							alert("이미 인증된 회원입니다. 재 로그인해주세요.");
-							location.reload();
-						}	
-					   },
-						error: function(){
-							alert("서버에러");
-						}
-						}); 			
-			}
-			else {
-			
-			} 
-			
-		});
+	$("#authmail").show();
+	$("#authmail").click(function(){
 
-
+		var result = confirm (" 현재 가입된 "+ $('#session').val() + "으로 인증메일을 다시 보내겠습니까?");
+		if(result){
+			$.ajax({
+				url:"${pageContext.request.contextPath}/re_auth",
+				type: "POST",
+				data:{
+					 "user_email" :$('#session').val(),
+					},
+					beforeSend:function(){
+						$("#loading-bar").show();
+					},
+				success: function(data){
+					$("#loading-bar").hide();
+					if(data == '1' ){
+						alert("인증메일이 전송되었습니다. 메일함에서 확인해주세요")	;
+					}
+					else if(data == '2' ){
+						alert("이미 인증된 회원입니다. 재 로그인해주세요.");
+						location.reload();
+					}	
+				},
+				error: function(){
+					alert("서버에러");
+				}
+			}); 			
+		}
+	});
 } 
-
-
-
-
-
 
 //로그인 후 유저 이름표시
-
 if ($('#name').val() == 'null'){
-			$("#ucon").hide();
-		} 
-if ($('#name').val() != 'null'){
-		$("#ucon").show();
+	$("#ucon").hide();
 } 
-	
-
+if ($('#name').val() != 'null'){
+	$("#ucon").show();
+} 
 
 // 세션이 있을시 로그인 메뉴를 감추고 회원메뉴를 show
-
 if ($('#session').val() == 'null'){
-			$("#usermodal").hide();
-			$("#loginmodal").show();	
-		} 
+	$("#usermodal").hide();
+	$("#loginmodal").show();	
+} 
 if ($('#session').val() != 'null'){
-		$("#usermodal").show();
-		$("#loginmodal").hide();	
+	$("#usermodal").show();
+	$("#loginmodal").hide();	
 } 
 
-
 //최초 modal-body에 로드되는 로그인 페이지
-  $("#loginModal").on("show.bs.modal", function() {
+$("#loginModal").on("show.bs.modal", function() {
 	$( "#loginmodal-body" ).load( "login");
     $("#login").hide();
    	$("#signup").show();
    	$("#pwfind").show();
 }); 
 
+//클릭시 modal-body에 해당 url로드
+$("#login").click(function(){
+	$( "#loginmodal-body" ).load( "login");
+});
 
+$("#signup").click(function(){
+	$( "#loginmodal-body" ).load( "signup");
+});
 
- //클릭시 modal-body에 해당 url로드
- 
- 	 $("#login").click(function(){
-    	 $( "#loginmodal-body" ).load( "login");
-    
-     });
-
-     $("#signup").click(function(){
-    	 $( "#loginmodal-body" ).load( "signup");
-    
-     });
-
-     $("#pwfind").click(function(){
-    	 $( "#loginmodal-body" ).load( "pwfind");
- 	
-     });
+$("#pwfind").click(function(){
+	$( "#loginmodal-body" ).load( "pwfind");
+});
    
  // modal-footer 
-
-
- 
- $("#login").click(function(){
+$("#login").click(function(){
 	$("#login").hide();
    	$("#signup").show();
    	$("#pwfind").show();
-	});
+});
   
-    $("#signup").click(function(){
-    	$("#login").show();
-    	$("#signup").hide();
-    	$("#pwfind").show();
-     });
+$("#signup").click(function(){
+	$("#login").show();
+	$("#signup").hide();
+	$("#pwfind").show();
+});
 
-   $("#pwfind").click(function(){
-    		$("#login").show();
-        	$("#signup").show();
-        	$("#pwfind").hide();
-     });
- 
-  
- 
- 
-
-
-
-
+$("#pwfind").click(function(){
+	$("#login").show();
+   	$("#signup").show();
+   	$("#pwfind").hide();
+});
 </script>

@@ -33,7 +33,7 @@
                         </div>
                         <div class="card-body col-md-6" style="position: relative; height:30vh; width:80vw">
                             <%--차트 출력--%>
-                            <canvas id="companyChart"></canvas>
+                            <canvas id="12345"></canvas>
                         </div>
                     </div>
                 </div>
@@ -121,8 +121,102 @@
     </div>
 </div>
 
+<!-- <script>
+window.onload=function(){
 
-<%--별점과 리뷰 db에 등록--%>
+    var comapaynyChart = document.getElementById('companyChart').getContext('2d');
+    var chart5 = new Chart(comapaynyChart
+    		, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: ['1점', '2점', '3점', '4점', '5점'],
+            datasets: [{
+                label: '평가 인원',
+                backgroundColor: 'rgb(255,235,142)',
+                borderColor: 'rgb(255,235,142)',
+                data: [0, 10, 5, 2, 20]
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            scales: {
+                xAxes: [{
+                    display: true,
+                    ticks: {
+                        autoSkip: false
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        suggestedMin: 0,
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            }
+
+        }
+    });
+}
+</script>
+ --><%--별점과 리뷰 db에 등록--%>
+<script>
+<!--strackbar-->
+
+window.onload = function () {
+    var ctx = document.getElementById('12345');
+    var data = {
+        labels: [
+            "쉬움",
+            "",
+            "보통",
+            "",
+            "어려움"
+        ],
+        datasets: [
+            {
+                label: "",
+                data: [7, 5, 3, 1, 1],
+                backgroundColor: [
+                    "#36A2EB",// 빨강
+                    "#9ceb8a",// 초록
+                    "#FFCE56",// 파랑
+                    "#ebb67b",// 주황
+                    "#FF6384"// 노랑
+                ],
+                hoverBackgroundColor: [
+                    "#36A2EB",// 빨강
+                    "#9ceb8a",// 초록
+                    "#FFCE56",// 파랑
+                    "#eb9579",// 주황
+                    "#FF6384"// 노랑
+                ]
+            }]
+    };
+    var stackedBar = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            scales: {
+                xAxes: [{stacked: true}],
+                yAxes: [{stacked: true}]
+            },
+            legend: {
+                display: false
+            }
+
+        }
+    });
+};
+
+</script>
+
 <script>
     $(document).ready(function () {
         const ci_idValue = '<c:out value="${companyList[0].ci_id}"/>';//homeController에 있는 모델 받아서 사용 0 넣지 안으면 에러
@@ -446,8 +540,6 @@
     });
 
 </script>
-<%-- 아이콘--%>
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
 <%--star JS--%>
 <script type="text/javascript" src="resources/js/star.js"></script>

@@ -9,12 +9,12 @@
 </head>
 <!-- 네이버 로그인 콜백 jsp -->
 <section>
-	<script type="text/javascript">
+<script type="text/javascript">
 	  var naver_id_login = new naver_id_login("qbkbZvOsyDOQedGRhs0e", "http://localhost:8282/findjob/callback");
 		 naver_id_login.get_naver_userprofile("naverSignInCallback()");
-
-   function naverSignInCallback() {
-
+	
+	  function naverSignInCallback() {
+	
 	  var user_email = naver_id_login.getProfileData('email')
 	  var user_name =  naver_id_login.getProfileData('nickname');	
 	
@@ -26,10 +26,7 @@
 		
 		 self.close(); // 콜백창 닫음
 	  } 
-   
-		
-	</script>
-
+</script>
 </section>
 
 

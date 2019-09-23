@@ -140,12 +140,8 @@
     </div>
 </div>
 
-
 <script src="resources/js/follow.js"></script>
 <script>
-
-
-
  $(document).ready ( function() {
 	 var cptotal = ${cptotal} //인원
 	 var cpsince = ${cpsince} //업력
@@ -157,70 +153,53 @@
 	 var alltminrank = ${alltminrank} // 동종업계 이번달 입사자 순위
 	 var alltmoutrank = ${alltmoutrank} // 동종업계 이번달 퇴사자 순위
 	 var path = "${path}"
-	 $(document).ready(function() {
-		//follow
-			$(document).on("click",".follow", function() {
-				var btn = $(this)
-				follow(path,btn)
-			});//onclick
-			//follow end
-	 })
 	 
-	 $(document).ready(function() {
-		   $("#select").html("총 인원");
-		   $('#precp').attr("style", "width:100%");
-           $('#precptxt').html(cptotal+"명");
-           $('#samecp').attr("style", "width:"+latestcptotal+"%");
-           $('#samecptxt').html(latestcptotal+"% 순위");
-		} );
+	//follow
+	$(document).on("click",".follow", function() {
+		var btn = $(this)
+		follow(path,btn)
+	});//onclick
+	//follow end
 	
+	// 최초에 보이는 기업정보
+	  $("#select").html("총 인원");
+	  $('#precp').attr("style", "width:100%");
+      $('#precptxt').html(cptotal+"명");
+      $('#samecp').attr("style", "width:"+latestcptotal+"%");
+      $('#samecptxt').html(latestcptotal+"% 순위");
 	 
-        /* 인원 */
-        $(document).ready(function(){
-            $("#human").click(function(){
-                $("#select").html("총 인원");
-                $('#precp').attr("style", "width:100%");
-                $('#precptxt').html(cptotal+"명");
-                $('#samecp').attr("style", "width:"+latestcptotal+"%");
-                $('#samecptxt').html(latestcptotal+"% 순위");
-            });
-        });
-        /* 업력 */
-        $(document).ready(function(){
-            $("#since").click(function(){
-                $("#select").html("업력");
-                $('#precp').attr("style", "width:100%");
-                $('#precptxt').html(cpsince+"년");
-                $('#samecp').attr("style", "width:"+sincerank+"%");
-                $('#samecptxt').html(sincerank+"% 순위");
-              
-      
-            });
-        });
-        /* 입사 */
-        $(document).ready(function(){
-            $("#join").click(function(){
-                $("#select").html("이번 달 입사");
-                $('#precp').attr("style", "width:100%");
-                $('#precptxt').html(tmin+"명");
-                $('#samecp').attr("style", "width:"+alltminrank+"%");
-                $('#samecptxt').html(alltminrank+"% 순위");
-              
-                
-                
-            });
-        });
-        /* 퇴사 */
-        $(document).ready(function(){
-            $("#leave").click(function(){
-                $("#select").html("이번 달 퇴사");
-                $('#precp').attr("style", "width:100%");
-                $('#precptxt').html(tmout+"명");
-                $('#samecp').attr("style", "width:"+alltmoutrank+"%");
-                $('#samecptxt').html(alltmoutrank+"% 순위");
-            });
-        });
- }
- )
+     /* 인원 */
+      $("#human").click(function(){
+	      $("#select").html("총 인원");
+	      $('#precp').attr("style", "width:100%");
+	      $('#precptxt').html(cptotal+"명");
+	      $('#samecp').attr("style", "width:"+latestcptotal+"%");
+	      $('#samecptxt').html(latestcptotal+"% 순위");
+      });
+     /* 업력 */
+      $("#since").click(function(){
+          $("#select").html("업력");
+          $('#precp').attr("style", "width:100%");
+          $('#precptxt').html(cpsince+"년");
+          $('#samecp').attr("style", "width:"+sincerank+"%");
+          $('#samecptxt').html(sincerank+"% 순위");
+      });
+     /* 입사 */
+      $("#join").click(function(){
+          $("#select").html("이번 달 입사");
+          $('#precp').attr("style", "width:100%");
+          $('#precptxt').html(tmin+"명");
+          $('#samecp').attr("style", "width:"+alltminrank+"%");
+          $('#samecptxt').html(alltminrank+"% 순위");
+      });
+     /* 퇴사 */
+      $("#leave").click(function(){
+          $("#select").html("이번 달 퇴사");
+          $('#precp').attr("style", "width:100%");
+          $('#precptxt').html(tmout+"명");
+          $('#samecp').attr("style", "width:"+alltmoutrank+"%");
+          $('#samecptxt').html(alltmoutrank+"% 순위");
+      });
+ })
 </script>
 

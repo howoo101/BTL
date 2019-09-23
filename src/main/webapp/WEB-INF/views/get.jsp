@@ -152,270 +152,234 @@
 
 <!-- get 동작설정 -->
 <script type="text/javascript">
-	$(document).ready(function() {
+$(document).ready(function() {
 
-		var operForm = $("#operForm");
+	var operForm = $("#operForm");
 
-		$("button[data-oper='modify']").on("click", function(e) {
-			operForm.attr("action", "modify").submit();
-		});
-
-		$("button[data-oper='list']").on("click", function(e) {
-			operForm.find("#board_id").remove();
-			operForm.attr("action", "list");
-			operForm.submit();
-		});
-
+	$("button[data-oper='modify']").on("click", function(e) {
+		operForm.attr("action", "modify").submit();
 	});
+
+	$("button[data-oper='list']").on("click", function(e) {
+		operForm.find("#board_id").remove();
+		operForm.attr("action", "list");
+		operForm.submit();
+	});
+});
 </script>
 
 <!-- js같이 코드돌아감 -->
 <script type="text/javascript" src="resources/js/reply.js"></script>
 
 <script>
-	$(document)
-			.ready(
-					function() {
-						var board_idValue = '<c:out value="${board.board_id}"/> ';
-						var replyUL = $(".chat");
+	$(document).ready(function() {
+		var board_idValue = '<c:out value="${board.board_id}"/> ';
+		var replyUL = $(".chat");
 
-						showList(1);
+		showList(1);
 
-						//showList()는 페이지 번호를 파라미터로 받게 설계하며 파라미터가 없는경우 자동르로 1페이지가 되도록 설정
-						//브라우저에서 DOM 처리가 끝나면 자동적으로 showList()가 호출되며 <ul> 태그 내에 내용으로 처리
-						//만약 1페이지가 아니라면 <ul>에 <li>들이 추가되는 형태
-						function showList(page) {
+		//showList()는 페이지 번호를 파라미터로 받게 설계하며 파라미터가 없는경우 자동르로 1페이지가 되도록 설정
+		//브라우저에서 DOM 처리가 끝나면 자동적으로 showList()가 호출되며 <ul> 태그 내에 내용으로 처리
+		//만약 1페이지가 아니라면 <ul>에 <li>들이 추가되는 형태
+		function showList(page) {
+			console.log("show list" + page);
 
-							console.log("show list" + page);
+			replyService.getList(
+				{
+					board_id : board_idValue,
+					page : page || 1
+				},
+				function(replyCnt, list) {
 
-							replyService
-									.getList(
-											{
-												board_id : board_idValue,
-												page : page || 1
-											},
-											function(replyCnt, list) {
+					console.log("replyCnt : "
+							+ replyCnt);
+					console.log("list: " + list);
+					console.log(list);
 
-												console.log("replyCnt : "
-														+ replyCnt);
-												console.log("list: " + list);
-												console.log(list);
+					if (page === -1) {
+						pageNum = Math
+								.ceil(replyCnt / 10.0);
+						showList(pageNum);
+						return;
+					}
 
-												if (page === -1) {
-													pageNum = Math
-															.ceil(replyCnt / 10.0);
-													showList(pageNum);
-													return;
-												}
+					var str = "";
+					if (list === null
+							|| list.length === 0) {
 
-												var str = "";
-												if (list === null
-														|| list.length === 0) {
+						replyUL.html("");
 
-													replyUL.html("");
+						return;
+					}
+					for (var i = 0, len = list.length || 0; i < len; i++) {
+						str += "<li class= 'clearfix' data-reply_id='" + list[i].reply_id + "'>";
+						str += "<div><div class='header'><strong class='primary-font'>"
+								+ list[i].reply_writer
+								+ "</strong>";
+						str += "<small class='text-muted'>"
+								+ replyService
+										.displayTime(list[i].reply_date)
+								+ "</small></div>";
+						str += "<p>"
+								+ list[i].reply_content
+								+ "</p></div></li>";
+					}
 
-													return;
-												}
-												for (var i = 0, len = list.length || 0; i < len; i++) {
-													str += "<li class= 'clearfix' data-reply_id='" + list[i].reply_id + "'>";
-													str += "<div><div class='header'><strong class='primary-font'>"
-															+ list[i].reply_writer
-															+ "</strong>";
-													str += "<small class='text-muted'>"
-															+ replyService
-																	.displayTime(list[i].reply_date)
-															+ "</small></div>";
-													str += "<p>"
-															+ list[i].reply_content
-															+ "</p></div></li>";
-												}
+					replyUL.html(str);
 
-												replyUL.html(str);
+					showReplyPage(replyCnt);
+				});//end function
+		}//end showList
 
-												showReplyPage(replyCnt);
-											});//end function
+		/* 페이지 번호를 출력하는 로직*/
+		var pageNum = 1;
+		var replyPageFooter = $(".panel-footer");
 
-						}//end showList
+		function showReplyPage(replyCnt) {
 
-						/* 페이지 번호를 출력하는 로직*/
-						var pageNum = 1;
-						var replyPageFooter = $(".panel-footer");
+			var endNum = Math.ceil(pageNum / 10.0) * 10;
+			var startNum = endNum - 9;
+			var prev = startNum !== 1;
+			var next = false;
 
-						function showReplyPage(replyCnt) {
+			if (endNum * 10 >= replyCnt) {
+				endNum = Math.ceil(replyCnt / 10.0);
+			}
+			if (endNum * 10 < replyCnt) {
+				next = true;
+			}
+			
+			var str = "<ul class='pagination pull-right'>";
+			if (prev) {
+				str += "<li class='page-item'><a class='page-link' href='"
+						+ (startNum - 1)
+						+ "'>Previous</a></li>";
+			}
+			
+			for (var i = startNum; i <= endNum; i++) {
+				var active = pageNum === i ? "active" : "";
+				str += "<li class='page-item "+active+"'><a class='page-link' href='"+i+"'>"
+						+ i + "</a></li>";
+			}
 
-							var endNum = Math.ceil(pageNum / 10.0) * 10;
-							var startNum = endNum - 9;
-							var prev = startNum !== 1;
-							var next = false;
+			if (next) {
+				str += "<li class ='page-item'><a class='page-link' href='"
+						+ (endNum + 1) + "'>Next</a><li>";
+			}
 
-							if (endNum * 10 >= replyCnt) {
-								endNum = Math.ceil(replyCnt / 10.0);
-							}
-							if (endNum * 10 < replyCnt) {
-								next = true;
-							}
-							var str = "<ul class='pagination pull-right'>";
-							if (prev) {
-								str += "<li class='page-item'><a class='page-link' href='"
-										+ (startNum - 1)
-										+ "'>Previous</a></li>";
-							}
-							for (var i = startNum; i <= endNum; i++) {
-								var active = pageNum === i ? "active" : "";
-								str += "<li class='page-item "+active+"'><a class='page-link' href='"+i+"'>"
-										+ i + "</a></li>";
-							}
+			str += "</ul></div>";
+			console.log(str);
+			replyPageFooter.html(str);
+		}
 
-							if (next) {
-								str += "<li class ='page-item'><a class='page-link' href='"
-										+ (endNum + 1) + "'>Next</a><li>";
-							}
+		replyPageFooter.on("click", "li a", function(e) {
+			e.preventDefault();
+			console.log("page click");
 
-							str += "</ul></div>";
-							console.log(str);
-							replyPageFooter.html(str);
-						}
+			var targetPageNum = $(this).attr("href");
+			console.log("targetPageNum: " + targetPageNum);
+			pageNum = targetPageNum;
+			showList(pageNum);
+		});
 
-						replyPageFooter.on("click", "li a", function(e) {
-							e.preventDefault();
-							console.log("page click");
+		var modal = $(".modal");
+		var modalInputReply = modal.find("input[name='reply_content']");
+		var modalInputReplyer = modal.find("input[name='reply_writer']");
+		var modalInputReplyDate = modal.find("input[name='reply_date']");
 
-							var targetPageNum = $(this).attr("href");
-							console.log("targetPageNum: " + targetPageNum);
-							pageNum = targetPageNum;
-							showList(pageNum);
-						});
+		var modalModBtn = $("#modalModBtn");
+		var modalRemoveBtn = $("#modalRemoveBtn");
+		var modalRegisterBtn = $("#modalRegisterBtn");
 
-						var modal = $(".modal");
-						var modalInputReply = modal
-								.find("input[name='reply_content']");
-						var modalInputReplyer = modal
-								.find("input[name='reply_writer']");
-						var modalInputReplyDate = modal
-								.find("input[name='reply_date']");
+		//추가 버튼 누를시 close빼고 hide이후 등록 버튼만 보이도록 수정
+		$("#addReplyBtn").on("click", function(e) {
 
-						var modalModBtn = $("#modalModBtn");
-						var modalRemoveBtn = $("#modalRemoveBtn");
-						var modalRegisterBtn = $("#modalRegisterBtn");
+			modal.find("input").val("");
+			modalInputReplyDate.closest("div").hide();
+			modal.find("button[id != 'modalCloseBtn']").hide();
 
-						//추가 버튼 누를시 close빼고 hide이후 등록 버튼만 보이도록 수정
-						$("#addReplyBtn").on("click", function(e) {
+			modalRegisterBtn.show();
 
-							modal.find("input").val("");
-							modalInputReplyDate.closest("div").hide();
-							modal.find("button[id != 'modalCloseBtn']").hide();
+			$(".modal").modal("show");
+		});
 
-							modalRegisterBtn.show();
+		//댓글이 정상적으로 추가되면 경고창을 이용해 성공
+		modalRegisterBtn.on("click", function(e) {
 
-							$(".modal").modal("show");
+			var reply_content = {
+				reply_content : modalInputReply.val(),
+				reply_writer : modalInputReplyer.val(),
+				board_id : board_idValue
+			};
+			
+			replyService.add(reply_content, function(result) {
 
-						});
+				alert(result);
 
-						//댓글이 정상적으로 추가되면 경고창을 이용해 성공
-						modalRegisterBtn.on("click", function(e) {
+				modal.find("input").val("");
+				modal.modal("hide");
 
-							var reply_content = {
-								reply_content : modalInputReply.val(),
-								reply_writer : modalInputReplyer.val(),
-								board_id : board_idValue
-							};
-							replyService.add(reply_content, function(result) {
+				//작성후 새로고침을 통해 불러오기 위해서
+				// showList(1);
+				//page변수를 이용해서 원하는 댓글 페이지를 가져오게하며 page번호가 -1로 전달되면
+				//마지막 페이지를 찾아서 다시 호출하게 하게 한다.
+				showList(1);
 
-								alert(result);
+			});
+		});
 
-								modal.find("input").val("");
-								modal.modal("hide");
+		//DOM에서 이벤트 리스너를 등록하는 것은 반드시 해당 DOM 요소가 존재해야만 가능.
+		//동적으로 Ajax를 통해 li태그들이 만들어지면 이후 이벤트를 등록해야 하기에 일방적인 방식이 아니라 이벤트 위임의 형태로 작성
+		//이벤트 위임은 이벤트를 동적으로 생성되는 요소가 아닌 이미 존재하는 요소에 이벤트를 걸어준후 나중에 이벤트의 대상을 변경 on()을 통해 처리한다.
+		//댓글조회는 별도조회 필요가 없지만 Ajax로 댓글을 조회한 후 수정/삭제 하는 것이 정상
+		//댓글을 가져온후 필요한 항목들을 채우고 수정과 삭제에 필요한 댓글 번호는 data-reply_id 속성을 만들어서 추가해둔다.
+		$(".chat").on("click", "li", function(e) {
 
-								//작성후 새로고침을 통해 불러오기 위해서
-								// showList(1);
-								//page변수를 이용해서 원하는 댓글 페이지를 가져오게하며 page번호가 -1로 전달되면
-								//마지막 페이지를 찾아서 다시 호출하게 하게 한다.
-								showList(1);
+			var reply_id = $(this).data("reply_id");
 
-							});
-						});
+			replyService.get(reply_id,function(reply_content) {
 
-						//DOM에서 이벤트 리스너를 등록하는 것은 반드시 해당 DOM 요소가 존재해야만 가능.
-						//동적으로 Ajax를 통해 li태그들이 만들어지면 이후 이벤트를 등록해야 하기에 일방적인 방식이 아니라 이벤트 위임의 형태로 작성
-						//이벤트 위임은 이벤트를 동적으로 생성되는 요소가 아닌 이미 존재하는 요소에 이벤트를 걸어준후 나중에 이벤트의 대상을 변경 on()을 통해 처리한다.
-						//댓글조회는 별도조회 필요가 없지만 Ajax로 댓글을 조회한 후 수정/삭제 하는 것이 정상
-						//댓글을 가져온후 필요한 항목들을 채우고 수정과 삭제에 필요한 댓글 번호는 data-reply_id 속성을 만들어서 추가해둔다.
-						$(".chat")
-								.on(
-										"click",
-										"li",
-										function(e) {
+				modalInputReply.val(reply_content.reply_content);
+				modalInputReplyer.val(reply_content.reply_writer);
+				modalInputReplyDate
+					.val(replyService.displayTime(reply_content.reply_date))
+					.attr("readonly", "readonly");
+				modal.data("reply_id",reply_content.reply_id);
 
-											var reply_id = $(this).data(
-													"reply_id");
+				modal.find("button[id != 'modalCloseBtn']").hide();
+				modalModBtn.show();
+				modalRemoveBtn.show();
 
-											replyService
-													.get(
-															reply_id,
-															function(
-																	reply_content) {
+				$(".modal").modal("show");
 
-																modalInputReply
-																		.val(reply_content.reply_content);
-																modalInputReplyer
-																		.val(reply_content.reply_writer);
-																modalInputReplyDate
-																		.val(
-																				replyService
-																						.displayTime(reply_content.reply_date))
-																		.attr(
-																				"readonly",
-																				"readonly");
-																modal
-																		.data(
-																				"reply_id",
-																				reply_content.reply_id);
+			});
+		});
 
-																modal
-																		.find(
-																				"button[id != 'modalCloseBtn']")
-																		.hide();
-																modalModBtn
-																		.show();
-																modalRemoveBtn
-																		.show();
+		modalModBtn.on("click", function(e) {
+			var reply_content = {
+				reply_id : modal.data("reply_id"),
+				reply_content : modalInputReply.val()
+			};
 
-																$(".modal")
-																		.modal(
-																				"show");
+			replyService.update(reply_content, function(result) {
+				alert(result);
+				modal.modal("hide");
+				showList(pageNum);
 
-															});
-										});
+			});
 
-						modalModBtn.on("click", function(e) {
-							var reply_content = {
-								reply_id : modal.data("reply_id"),
-								reply_content : modalInputReply.val()
-							};
+		});
 
-							replyService.update(reply_content,
-									function(result) {
+		modalRemoveBtn.on("click", function(e) {
+			var reply_id = modal.data("reply_id");
 
-										alert(result);
-										modal.modal("hide");
-										showList(pageNum);
-
-									});
-
-						});
-
-						modalRemoveBtn.on("click", function(e) {
-
-							var reply_id = modal.data("reply_id");
-
-							replyService.remove(reply_id, function(result) {
-
-								alert(result);
-								modal.modal("hide");
-								showList(pageNum);
-							});
-						});
-					});
+			replyService.remove(reply_id, function(result) {
+				alert(result);
+				modal.modal("hide");
+				showList(pageNum);
+			});
+		});
+	});
 </script>
 
 <%@ include file="includes/footer.jsp"%>

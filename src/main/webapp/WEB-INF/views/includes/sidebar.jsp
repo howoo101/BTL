@@ -58,10 +58,10 @@
 	</div>
 </div>
 <script>
-	function fnMove(seq) {
-		var offset = $("#section" + seq).offset();
-		$('html, body').animate({
-			scrollTop : offset.top
-		}, 400);
-	}
+function fnMove(seq) {
+	var offset = $("#section" + seq).offset();
+	$('html, body').animate({
+		scrollTop : offset.top
+	}, 400);
+}
 </script>

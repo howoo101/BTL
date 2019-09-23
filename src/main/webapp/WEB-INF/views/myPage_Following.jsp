@@ -12,8 +12,7 @@
 
 <div class="mySection">
 
-    <%@ include file="includes/myPage_Menu.jsp" %>
-
+<%@ include file="includes/myPage_Menu.jsp" %>
 
         <div class="container mt-4">
             <div class="card border-primary">
@@ -97,37 +96,37 @@
             	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
             </form>
         </div>
-    <%@ include file="includes/footer.jsp" %>
-	<script src="resources/js/follow.js"></script>
-	<script>
-	var path = "${path}";
-	window.onpageshow = function(event) {
+</div>
+        
+<%@ include file="includes/footer.jsp" %>
+<script src="resources/js/follow.js"></script>
+<script>
+var path = "${path}";
+window.onpageshow = function(event) {
 
-	    if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
-	    	 location.reload(true); 
-	    }
-	}
-	$(document).ready(
-			function() {
-				//follow
-				$(document).on("click",".follow", function() {
-					var btn = $(this)
-					follow(path,btn)
-				});//onclick
-				//follow end
-				
-				//page
-				var actionForm = $("#actionForm");
-				
-				$(".page-item a").on("click", function(e) {
-					e.preventDefault();
-					
-					console.log("click");
-					
-					actionForm.find("input[name='pageNum']").val($(this).attr("href"));	
-					actionForm.submit();
-				})
-				
-				
-			});
-	</script>
+    if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+    	 location.reload(true); 
+    }
+}
+
+$(document).ready(function() {
+	//follow
+	$(document).on("click",".follow", function() {
+		var btn = $(this)
+		follow(path,btn)
+	});//onclick
+	//follow end
+	
+	//page
+	var actionForm = $("#actionForm");
+	
+	$(".page-item a").on("click", function(e) {
+		e.preventDefault();
+		
+		console.log("click");
+		
+		actionForm.find("input[name='pageNum']").val($(this).attr("href"));	
+		actionForm.submit();
+	})
+});
+</script>

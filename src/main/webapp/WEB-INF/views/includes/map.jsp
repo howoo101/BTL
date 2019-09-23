@@ -22,7 +22,7 @@
 	<%--end section --%>
 </div>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c3c4fdcbe2ae096fbd9562312c53b316&libraries=services,clusterer,drawing"></script>
+
 <script>
 	//마커를 담을 배열입니다
 	var markers = [];

@@ -69,11 +69,11 @@
 		</div>
 	</div>
 	<%@ include file="includes/footer.jsp"%>
+	
 	<script src="resources/js/scroll.js"></script>
 	<script src="resources/js/follow.js"></script>
 	<script>
 	window.onpageshow = function(event) {
-
 	    if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
 	    	 location.reload(true); 
 	    }
@@ -81,39 +81,36 @@
 
 		let isEnd = false;
 		var path = "${path}";
-		$(document).ready(
-				function() {
-					//follow
-					$(document).on("click",".follow", function() {
-						var btn = $(this)
-						follow(path,btn)
-					});//onclick
-					//follow end
-					
-					//scroll 
-					var keyword = '${keyword}'
-					var timer;
-					$(window).scroll(function() {
-						
-						let $window = $(this);
-						let scrollTop = parseInt($window.scrollTop());
-						let windowHeight = $window.height();
-						let documentHeight = $(document).height();
-						if(timer) {
-							clearTimeout(timer);
-						}
-						timer = setTimeout(function() {
-							if (scrollTop + windowHeight >= documentHeight-1) {
-								fetchList(keyword,path);
-							}
-						},100)
-						/* if (scrollTop + windowHeight >= documentHeight-1) {
-							fetchList(keyword,path);
-						} */
-					})//scroll
-				});//ready
+		$(document).ready( function() {
+			//follow
+			$(document).on("click",".follow", function() {
+				var btn = $(this)
+				follow(path,btn)
+			});//onclick
+			//follow end
+			
+			//scroll 
+			var keyword = '${keyword}'
+			var timer;
+			$(window).scroll(function() {
 				
-
+				let $window = $(this);
+				let scrollTop = parseInt($window.scrollTop());
+				let windowHeight = $window.height();
+				let documentHeight = $(document).height();
+				if(timer) {
+					clearTimeout(timer);
+				}
+				timer = setTimeout(function() {
+					if (scrollTop + windowHeight >= documentHeight-1) {
+						fetchList(keyword,path);
+					}
+				},100)
+				/* if (scrollTop + windowHeight >= documentHeight-1) {
+					fetchList(keyword,path);
+				} */
+			})//scroll
+		});//ready
 	</script>
 </body>
 </html>

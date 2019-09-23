@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-         
-  
-  
  
-  <script>
-  alert('${auth}');
-  window.close();
-  </script>
+<script>
+	alert('${auth}');
+	window.close();
+</script>
 
  
