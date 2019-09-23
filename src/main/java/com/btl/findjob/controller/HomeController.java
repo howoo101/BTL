@@ -81,23 +81,27 @@ public class HomeController {
 		List<Double> categoryAve = new ArrayList<>();
 		List<String> categoryName = new ArrayList<>();
 		List<Integer> categoryCtn = new ArrayList<>();
+		List<Integer> getStarCtn = new ArrayList<>();
 
 		for (int i = 0; i < 4; i++) {
 
 			categoryAve.add(companyReviewService.categoryStarRtAve(ci_companyName, i));
 			categoryName.add(companyReviewService.categoryName(i));
 			categoryCtn.add(companyReviewService.getCountByCategory(ci_companyName, i));
-
 			map.put("categoryCtn",categoryCtn);
 			map.put("categoryName",categoryName);
 			map.put("categoryAve", categoryAve);
 
 			data.add(map);
+		}
 
+		//기업 리뷰 차트정보
+		for (int i = 1; i < 6; i++) {
+			getStarCtn.add(companyReviewService.getStarCtn(ci_companyName,i));
+			model.addAttribute("starCtn", getStarCtn);
 		}
 
 		model.addAttribute("map", data);
-
 	}
 
 	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)
