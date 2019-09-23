@@ -13,7 +13,7 @@ public interface CompanyReviewService {
     int insertCompanyReview(CompanyReview companyReview) throws Exception;
 
     //리뷰코펜트에서 페이징처리 위해
-    CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id) throws Exception;
+    CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria,int cr_category ,int ci_id) throws Exception;
 
     //총 평점
     double totalStarRtAve(String ci_companyName);

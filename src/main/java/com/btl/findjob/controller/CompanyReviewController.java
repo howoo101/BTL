@@ -45,15 +45,11 @@ public class CompanyReviewController {
     }
 
     //페이지 처리 위해서 수정
-    @GetMapping(value = "/pages/{ci_id}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity<CompanyReviewPageDTO> getListWithPaging(@PathVariable("page") int page, @PathVariable("ci_id")  int ci_id) throws Exception {
+    @GetMapping(value = "/pages/{ci_id}/{cr_category}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity<CompanyReviewPageDTO> getListWithPaging(@PathVariable("page") int page,@PathVariable("cr_category") int cr_category, @PathVariable("ci_id")  int ci_id) throws Exception {
 
         CompanyReviewCriteria companyReviewCriteria= new CompanyReviewCriteria(page, 10);
 
-        log.info("get ci_id List ci_id: "+ci_id);
-
-        log.info("companyReviewCriteria: "+companyReviewCriteria);
-
-        return new ResponseEntity<>(companyReviewService.getListWithPaging(companyReviewCriteria, ci_id),HttpStatus.OK);
+        return new ResponseEntity<>(companyReviewService.getListWithPaging(companyReviewCriteria,cr_category, ci_id),HttpStatus.OK);
     }
 }

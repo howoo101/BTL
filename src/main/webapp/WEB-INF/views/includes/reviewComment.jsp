@@ -40,8 +40,8 @@
             </div>
 
             <c:forEach items="${map}" var="list" begin="0" end="4" varStatus="status">
-                <div>
-                    <div class="accordion" id="accordion${status.index}">
+                <div id="reviewAccordion${status.index}">
+                    <div class="accordion" id="accordion">
                         <div class="card-body">
                             <div class="card-header" id="heading${status.index}">
                                 <div class="border-info mb-0">
@@ -56,7 +56,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <div class="row">
-                                                <div class="text-warning small starRatingAveStar">
+                                                <div class="text-warning small starRatingAveStar${status.index}">
                                                     <c:forEach begin="1" end="5" step="1">
                                                         <i class="fa fa-star-o"></i>
                                                     </c:forEach>
@@ -68,7 +68,8 @@
                                         <%-- end border-ingo--%>
                                 </div>
                             </div>
-                            <div id="collapse${status.index}" class="collapse" data-parent="#accordion${status.index}">
+                            <div id="collapse${status.index}" class="collapse" aria-expanded="false"
+                                 data-parent="#accordion">
                                 <div class="card-body">
                                     <table class="table table-striped">
                                         <thead>
@@ -88,7 +89,6 @@
                                         <div class="container">
                                             <div class="row">
                                                 <div class="starrr stars text-warning"></div>
-                                                    <%--<span class="count">0</span>점--%>
                                             </div>
                                         </div>
                                         <div class="input-group">
@@ -126,35 +126,116 @@
     $(document).ready(function () {
         const ci_idValue = '<c:out value="${companyList[0].ci_id}"/>';//homeController에 있는 모델 받아서 사용 0 넣지 안으면 에러
 
-        //총 별점 보여주기 처리
-        let totalStarRt = ${totalStarRt};
-        console.log(totalStarRt);
-        if (totalStarRt) {
+        //별점 등록
+        $(".registerBtn0,.registerBtn1,.registerBtn2,.registerBtn3").on("click", function (e) {
+            var cr_index = $(".cr_index");
 
+            var $div = $(this).closest('div');
+
+            // var fudate = $tr.find('input[name="fdate"]').val();
+            var cr_comment = $div.find('input[name="cr_comment"]').val();
+            var starRating = $div.find('input[class="count"]').text();
+            var forInsert = $div.find('input[class="forInsert"]').val();
+
+            $.ajax({
+                    type: "post",
+                    url: "${path}/companyReview/new",
+                    data: JSON.stringify({
+                        cr_comment: cr_comment,
+                        cr_starRt: starRating,
+                        ci_id: forInsert
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        alert("리뷰가 등록되었습니다.");
+                        showList(1);
+                    }
+
+                }
+            );
+
+        });
+
+        let starRating = "";//별 표현하기 위해
+        let starRatingAveStar = {}; //string 담기 위
+
+        let starRatingAveStarUL0 = $(".starRatingAveStar0");
+        let starRatingAveStarUL1 = $(".starRatingAveStar1");
+        let starRatingAveStarUL2 = $(".starRatingAveStar2");
+        let starRatingAveStarUL3 = $(".starRatingAveStar3");
+
+        for (let i = 0; i < 4; i++) {
+            let categoryAve = Number($(".categoryAve")[i].innerHTML); //카테고리별 평균 평점
+
+            if (0.0 <= categoryAve && categoryAve < 1.0) {
+                starRatingAveStar[i] =
+                    "<i class='fa fa-star-o'></i>" +
+                    "<i class='fa fa-star-o'></i>" +
+                    "<i class='fa fa-star-o'></i>" +
+                    "<i class='fa fa-star-o'></i>" +
+                    "<i class='fa fa-star-o'></i>";
+            } else if (1.0 <= categoryAve && categoryAve < 2.0) {
+                starRatingAveStar[i] =
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star-o'></i>" +
+                    "<i class='fa fa-star-o'></i>" +
+                    "<i class='fa fa-star-o'></i>" +
+                    "<i class='fa fa-star-o'></i>";
+            } else if (2.0 <= categoryAve && categoryAve < 3.0) {
+                starRatingAveStar[i] =
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star-o'></i>" +
+                    "<i class='fa fa-star-o'></i>" +
+                    "<i class='fa fa-star-o'></i>";
+            } else if (3.0 <= categoryAve && categoryAve < 4.0) {
+                starRatingAveStar[i] =
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star-o'></i>" +
+                    "<i class='fa fa-star-o'></i>";
+            } else if (4.0 <= categoryAve && categoryAve < 5.0) {
+                starRatingAveStar[i] =
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star-o'></i>";
+            } else if (categoryAve === 5) {
+                starRatingAveStar[i] =
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star'></i>" +
+                    "<i class='fa fa-star'></i>";
+            }
         }
+        starRatingAveStarUL0.html(starRatingAveStar[0]);
+        starRatingAveStarUL1.html(starRatingAveStar[1]);
+        starRatingAveStarUL2.html(starRatingAveStar[2]);
+        starRatingAveStarUL3.html(starRatingAveStar[3]);
 
-        $("#accordion0, #accordion1, #accordion2, #accordion3 ").on("click", function (e) {
+
+        $("#reviewAccordion0, #reviewAccordion1, #reviewAccordion2, #reviewAccordion3 ").on("click", function (e) {
 
             const $div = $(this).closest('div');
             const cr_category = $div.find('input[class="cr_category"]').val();
-
-            console.log(cr_category);
-
             const companyReviewUL = $(".reviews");
 
             showList(1);
 
             let pageNum = 1;
-            var companyReviewFooter = $(".companyReview_pagination");
+            const companyReviewFooter = $(".companyReview_pagination");
 
             //showList
             function showList(page) {
 
                 companyReviewService.getCrWithPaging({
                     ci_id: ci_idValue,
+                    cr_category: cr_category,
                     page: page || 1,
                 }, function (companyReviewCtn, companyReviewList) {
-                    console.log(companyReviewList);
                     if (page === -1) {
                         pageNum = Math.ceil(companyReviewCtn / 10.0);
                         showList(pageNum);
@@ -163,26 +244,13 @@
 
                     let str = "";
 
-                    let starRatingAveStar = ""; //string 담기 위
-                    let starRatingAveStarUL = $(".starRatingAveStar");// 평균 별점 html 처리 위해서
-
-
                     //List가 비어있는 경우 "" 처리
-                    console.log(companyReviewList);
-                    console.log(companyReviewList.length);
-
                     if (companyReviewList.length === 0) {
 
                         companyReviewUL.html("");
 
                         return;
                     }
-
-                    let starRating = "";//별 표현하기 위해
-
-                    let categoryAve = $(".categoryAve")[cr_category].innerHTML; //카테고리별 평균 평점
-
-                    console.log(categoryAve);
 
                     for (let i = 0, len = companyReviewList.length || 0; i < len; i++) {
 
@@ -237,7 +305,7 @@
                         }
 
 
-                        categoryAve += companyReviewList[i].cr_starRt;
+                        // categoryAve += companyReviewList[i].cr_starRt;
 
                         str += "<tr>" +
                             "<td>" +
@@ -257,59 +325,10 @@
 
                         //별초기
                         starRating = "";
-                    }
 
-                    if (0 <= categoryAve < 1) {
-                        starRatingAveStar +=
-                            "<i class='fa fa-star-o'></i>" +
-                            "<i class='fa fa-star-o'></i>" +
-                            "<i class='fa fa-star-o'></i>" +
-                            "<i class='fa fa-star-o'></i>" +
-                            "<i class='fa fa-star-o'></i>";
-                    } else if (1 <= categoryAve < 2) {
-                        starRatingAveStar +=
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star-o'></i>" +
-                            "<i class='fa fa-star-o'></i>" +
-                            "<i class='fa fa-star-o'></i>" +
-                            "<i class='fa fa-star-o'></i>";
-                    } else if (2 <= categoryAve < 3) {
-                        starRatingAveStar +=
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star-o'></i>" +
-                            "<i class='fa fa-star-o'></i>" +
-                            "<i class='fa fa-star-o'></i>";
-                    } else if (3 <= categoryAve < 4) {
-                        starRatingAveStar +=
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star-o'></i>" +
-                            "<i class='fa fa-star-o'></i>";
-                    } else if (4 <= categoryAve < 5) {
-                        starRatingAveStar +=
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star-o'></i>";
-                    } else {
-                        starRatingAveStar +=
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star'></i>" +
-                            "<i class='fa fa-star'></i>";
                     }
-
-                    console.log(starRatingAveStar);
 
                     companyReviewUL.html(str);
-
-                    starRatingAveStarUL.html(starRatingAveStar);
-
-                    starRatingAveStar = "";
 
                     showCompanyReviewPage(companyReviewCtn);
                 })
@@ -318,7 +337,6 @@
 
             //페이지처리
             function showCompanyReviewPage(companyReviewCtn) {
-                console.log("--------------여기까지");
 
                 let endNum = Math.ceil(pageNum / 10.0) * 10;
                 const startNum = endNum - 9;
@@ -361,11 +379,8 @@
             companyReviewFooter.on("click", "li a", function (e) {
 
                 e.preventDefault();
-                console.log("page click");
 
                 var targetPageNum = $(this).attr("href");
-
-                console.log("targetPageNum: " + targetPageNum);
 
                 pageNum = targetPageNum;
 
@@ -375,50 +390,18 @@
 
         });
 
-
-        //별점 등록
-        $(".registerBtn0,.registerBtn1,.registerBtn2,.registerBtn3").on("click", function (e) {
-            var cr_index = $(".cr_index");
-
-            var $div = $(this).closest('div');
-
-            // var fudate = $tr.find('input[name="fdate"]').val();
-            var cr_comment = $div.find('input[name="cr_comment"]').val();
-            var starRating = $div.find('input[class="count"]').text();
-            var forInsert = $div.find('input[class="forInsert"]').val();
-
-            $.ajax({
-                    type: "post",
-                    url: "${path}/companyReview/new",
-                    data: JSON.stringify({
-                        cr_comment: cr_comment,
-                        cr_starRt: starRating,
-                        ci_id: forInsert
-                    }),
-                    contentType: "application/json; charset=utf-8",
-                    success: function (result) {
-                        alert("리뷰가 등록되었습니다.");
-                        showList(1);
-                    }
-
-                }
-            );
-
-        });
-
         var companyReviewService = (function () {
             //리뷰 출력 param이라는 개체를 통해 파라미터를 전달받어 JSON목록을 호출하며 JSON 형태가 필요하므로 URL 호출 확장자를 .json으로 처
             function getCrWithPaging(param, callback, error) {
 
                 var ci_id = param.ci_id;
+                var cr_category = param.cr_category;
                 var page = param.page;
 
-                $.getJSON("${path}/companyReview/pages/" + ci_id + "/" + page + ".json", function (data) {
+                $.getJSON("${path}/companyReview/pages/" + ci_id + "/" + cr_category + "/" + page + ".json", function (data) {
                     if (callback) {
                         // callback(data);
                         callback(data.companyReviewCtn, data.list);
-                        console.log(data);
-
                     }
                 }).fail(function (xhr, status, err) {
                     if (error) {
@@ -458,6 +441,7 @@
 
         })();
     });
+
 </script>
 <%-- 아이콘--%>
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"

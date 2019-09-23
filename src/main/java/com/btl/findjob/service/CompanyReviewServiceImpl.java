@@ -20,8 +20,8 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
     }
 
     @Override
-    public CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria, int ci_id) throws Exception {
-        return new CompanyReviewPageDTO(companyReviewMapper.crTotalCount(ci_id), companyReviewMapper.getListWithPaging(companyReviewCriteria, ci_id));
+    public CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria,int cr_category ,int ci_id) throws Exception {
+        return new CompanyReviewPageDTO(companyReviewMapper.getCountCr(ci_id, cr_category), companyReviewMapper.getListWithPaging(companyReviewCriteria, cr_category ,ci_id));
     }
 
     @Override
