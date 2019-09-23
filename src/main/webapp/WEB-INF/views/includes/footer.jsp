@@ -4,7 +4,7 @@
         <div class="footer-nav-left" style="font-size: 15px; font-weight: bold;">
             <div class="row">
                 <div class="footer-infos col-sm-2 pull-left">
-                    <a href="${contextPath}/faq">FAQ</a>
+                    <a href="${path}/faq">FAQ</a>
                 </div>
                 <div class="footer-infos col-sm-10 text-right">
                     <strong>Copyright &copy;<a href="https://github.com/" target="_blank">BTL</a></strong> All rights

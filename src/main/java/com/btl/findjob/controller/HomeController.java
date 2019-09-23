@@ -128,6 +128,11 @@ public class HomeController {
 
 		return "myPage_ReviewComment";
 	}
+	
+	@RequestMapping(value="/faq")
+	public String FAQ() {
+		return "/faq";
+	}
 
 
 }
