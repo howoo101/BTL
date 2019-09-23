@@ -14,7 +14,7 @@ public class CompanyReviewCriteria {
     private int amount;
 
     public CompanyReviewCriteria() {
-        this(1, 5);
+        this(1, 10);
     }
 
     public CompanyReviewCriteria(int pageNum, int amount) {
@@ -33,9 +33,9 @@ public class CompanyReviewCriteria {
 
     //MyBatis SQL의 Mapper에서 인식해서 가져가는 파라미터 값 메소드
     public void setAmount(int amount){
-        //몇개씩 보여줄 것인지에 대해 0보다 작거나 100보다 크면 5으로 초기화 시킨다.
+        //몇개씩 보여줄 것인지에 대해 0보다 작거나 100보다 크면 10으로 초기화 시킨다.
         if(amount<=0||amount > 100){
-            this.amount = 5;
+            this.amount = 10;
             return;
         }
         this.amount = amount;
