@@ -32,7 +32,7 @@
                             <h5 class="card-title">${totalStarRt}</h5>
                         </div>
                         <div class="card-body col-md-6" style="position: relative; height:30vh; width:80vw">
-                            <%--차트 출--%>
+                            <%--차트 출력--%>
                             <canvas id="companyChart"></canvas>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                                                 <%--기업 총 코메트--%>
                                         </tr>
                                         </thead>
-                                        <tbody id="reviews">
+                                        <tbody class="reviews">
                                             <%--리뷰들 들어가는 부분--%>
                                         </tbody>
                                     </table>
@@ -140,12 +140,12 @@
 
             console.log(cr_category);
 
-            const companyReviewUL = $("#reviews");
+            const companyReviewUL = $(".reviews");
 
             showList(1);
 
             let pageNum = 1;
-            const companyReviewFooter = $(".companyReview_pagination");
+            var companyReviewFooter = $(".companyReview_pagination");
 
             //showList
             function showList(page) {
@@ -337,7 +337,7 @@
                 let str = "<ul class='pagination justify-content-center'>";
 
                 if (prev) {
-                    str += "<li class='page-item'><a class='page-link' href='" + +"/" + (startNum - 1) + "'>Previous</a></li>";
+                    str += "<li class='page-item'><a class='page-link' href='" + "/" + (startNum - 1) + "'>Previous</a></li>";
                 }
 
                 for (var i = startNum; i <= endNum; i++) {
