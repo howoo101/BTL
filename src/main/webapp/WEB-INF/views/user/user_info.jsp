@@ -1,40 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="../includes/header.jsp" %>
 
+<style>
+.col-xs-12 { margin: 10px; padding: 20px; }
 
- <form id="signupform">
-        <h2 class="form-signin-heading">회원가입</h2>
-       		<br>
-	    	<h6>이메일</h6>
-	        <label for="inputEmail" class="sr-only">Email address</label>
-		        <input type="email" name="user_email" id="inputEmail" class="form-control" placeholder="이메일주소" required autofocus>
-		        <input type="button" id="check" value="중복체크" class="btn btn-info">
-	        <p id="EmailCheck"></p>
-	    	<br>
-	    	<h6>닉네임</h6>
-	        <label for="inputName" class="sr-only">Name</label>
-	 		 <input type="text" name="user_name" id="inputName" class="form-control" placeholder="닉네임" required>
-			<br>
-			<h6>비밀번호</h6>
-	        <label for="inputPassword" class="sr-only">Password</label>
-			 <input type="password" name="user_password" id="inputPassword" class="form-control" placeholder="비밀번호" required>	      
-	    	 <input type="password" name="user_passwordchk" id="inputPasswordchk" class="form-control" placeholder="비밀번호 확인" required>	      
-	 		   <p id="pwchk">비밀번호는 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.</p>
-	 		
-	 	 <div class="container text-center" id="loading-bar"><img class="img-responsive center-block" src="resources/img/ajax-loader.gif" /></div><br>
-	 		      
-	 		  <input type="button" id="signUp" value="가입" class="btn btn-lg btn-info btn-block">
-	        
- 	</form>
- 	
+</style>
+<section>
+
+<!-- 정보 수정 -->
+
+<div class="container">
+	 <form id="userinfo_modify">
+	        <h2 class="userinfo_modify">회원가입</h2>
+	       		<br>
+		    	<h6>이메일</h6>
+		        <label for="inputEmail" class="sr-only">Email address</label>
+			        <input type="email" name="user_email" id="inputEmail" class="form-control" placeholder="이메일주소" required autofocus>
+			        <input type="button" id="check" value="중복체크" class="btn btn-info">
+		        <p id="EmailCheck"></p>
+		    	<br>
+		    	<h6>닉네임</h6>
+		        <label for="inputName" class="sr-only">Name</label>
+		 		 <input type="text" name="user_name" id="inputName" class="form-control" placeholder="닉네임" required>
+				<br>
+				<h6>비밀번호</h6>
+		        <label for="inputPassword" class="sr-only">Password</label>
+				 <input type="password" name="user_password" id="inputPassword" class="form-control" placeholder="비밀번호" required>	      
+		    	 <input type="password" name="user_passwordchk" id="inputPasswordchk" class="form-control" placeholder="비밀번호 확인" required>	      
+		 		   <p id="pwchk">비밀번호는 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.</p>
+		 		
+		 	 <div class="container text-center" id="loading-bar"><img class="img-responsive center-block" src="resources/img/ajax-loader.gif" /></div><br>
+		 		      
+		 		  <input type="button" id="signUp" value="가입" class="btn btn-lg btn-info btn-block">
+		        
+	 	</form>
+ </div>	
  	
  	
 <script>
-
 $(document).ready(function(e){
-
-	$("#loading-bar").hide(); 
-
+$("#loading-bar").hide(); 
 
 	
 		var Erchk = 0;
@@ -220,3 +227,9 @@ function name_chk(name){
 
 
  	
+
+
+</section>
+
+<%@ include file="../includes/footer.jsp" %>
+

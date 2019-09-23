@@ -29,7 +29,7 @@ values (#{authorization},#{user_email},#{user_name},#{user_password},CURRENT_DAT
 	<!-- sns 회원가입 -->
 	<insert id="snsjoin_insert" parameterType="com.btl.findjob.model.UserDTO">
 	insert into user (authorization_id,user_email,user_name,user_password,user_create_date,user_modify_date,user_emailauthkey,salt,sns_key,sns_type)
-values (#{authorization},#{user_email},'',#{user_password},CURRENT_DATE(),CURRENT_DATE(),'','',#{sns_key},#{sns_type})
+values (#{authorization},#{user_email},#{user_name},#{user_password},CURRENT_DATE(),CURRENT_DATE(),'','',#{sns_key},#{sns_type})
 	</insert>
 	
 	<!-- sns으로 가입한 회원인지 확인  -->
@@ -37,6 +37,7 @@ values (#{authorization},#{user_email},'',#{user_password},CURRENT_DATE(),CURREN
 	select count(sns_type) from user where user_email = #{user_email};
 	</select>
 	
+	<!-- sns 타입 확인 -->
 	<select id="snstype" resultType="String"  parameterType="String">
 	select sns_type from user where user_email = #{user_email};
 	</select>
@@ -65,7 +66,16 @@ values (#{authorization},#{user_email},'',#{user_password},CURRENT_DATE(),CURREN
 	<select id="getsalt" resultType="String" parameterType="com.btl.findjob.model.UserDTO">
 	select salt from user where user_email = #{user_email}
 	</select>
-
+	
+	<!-- 비밀번호 수정 -->
+	<update id="pw_modify" parameterType="com.btl.findjob.model.UserDTO">
+	update user set user_password = #{user_password} , salt = #{salt}  where user_email = #{user_email} 
+	</update>
+	
+	<!-- 닉네임 확인 -->
+	<select id="getname" resultType="String" parameterType="com.btl.findjob.model.UserDTO">
+	select user_name from user where user_email = #{user_email}
+	</select>
 		
 </mapper>
 

@@ -54,8 +54,8 @@ UserMapper mapper;
 
 
 	@Override
-	public void snsjoin_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("authorization") int authorization,@Param("sns_key") String sns_key,@Param("sns_type") String sns_type){
-	  mapper.snsjoin_insert(user_email, user_password, authorization, sns_key, sns_type);
+	public void snsjoin_insert(@Param("user_email") String user_email,@Param("user_name") String user_name,@Param("user_password") String user_password,@Param("authorization") int authorization,@Param("sns_key") String sns_key,@Param("sns_type") String sns_type){
+	  mapper.snsjoin_insert(user_email,user_name,user_password, authorization, sns_key, sns_type);
 	}
 
 
@@ -101,6 +101,23 @@ UserMapper mapper;
 	
 		mapper.auth_null(user_email);
 	}
+
+
+	@Override
+	public void pw_modify(@Param("user_password") String user_password,@Param("salt") String salt,@Param("user_email") String user_email) {
+		mapper.pw_modify(user_password, salt, user_email);
+		
+	}
+
+
+	@Override
+	public String getname(String user_email) {
+		
+		return mapper.getname(user_email);
+	}
+
+
+
 
 
 
