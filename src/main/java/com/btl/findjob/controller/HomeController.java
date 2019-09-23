@@ -32,9 +32,13 @@ public class HomeController {
 	@Autowired
 	EnterpriseService enterService;
 
-	@Autowired
 	private CompanyReviewService companyReviewService;
-	
+
+	@Autowired
+	public void setCompanyReviewService(CompanyReviewService companyReviewService){
+	    this.companyReviewService=companyReviewService;
+    };
+
 	@Autowired
 	MypageService mypageService;
 	
