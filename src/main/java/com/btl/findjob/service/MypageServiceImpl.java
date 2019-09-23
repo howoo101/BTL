@@ -7,17 +7,27 @@ import org.springframework.stereotype.Service;
 
 import com.btl.findjob.mapper.MypageMapper;
 import com.btl.findjob.model.CompanyListVO;
+import com.btl.findjob.model.MypageCriteria;
+
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class MypageServiceImpl implements MypageService {
 
 	@Autowired
 	MypageMapper mapper;
 	
 	@Override
-	public List<CompanyListVO> followCompanyGetList(String userEmail) {
+	public List<CompanyListVO> followCompanyGetList(String userEmail,MypageCriteria criteria) {
 		// TODO Auto-generated method stub
-		return mapper.followCompanyGetList(userEmail);
+		return mapper.followCompanyGetListWithPage(userEmail,criteria);
+	}
+
+	@Override
+	public int getTotalFollowCount(String userEmail) {
+		// TODO Auto-generated method stub
+		return mapper.getTotalFollowCount(userEmail);
 	}
 
 }

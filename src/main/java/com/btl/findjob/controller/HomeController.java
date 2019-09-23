@@ -6,6 +6,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import com.btl.findjob.model.CompanyReview;
+import com.btl.findjob.model.MypageCriteria;
+import com.btl.findjob.model.MypagePageDTO;
 import com.btl.findjob.service.CompanyReviewService;
 import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.annotations.Param;
@@ -99,10 +101,12 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)
-	public String myPage_Following(Model model,HttpServletRequest req) {
+	public String myPage_Following(MypageCriteria criteria,Model model,HttpServletRequest req) {
 		logger.info("mypage following");
 		String userEmail = (String)req.getSession().getAttribute("user");
-		model.addAttribute("companyList",mypageService.followCompanyGetList(userEmail));
+		model.addAttribute("companyList",mypageService.followCompanyGetList(userEmail,criteria));
+		int total = mypageService.getTotalFollowCount(userEmail);
+		model.addAttribute("pageMaker", new MypagePageDTO(criteria,total));
 		return "myPage_Following";
 	}
 

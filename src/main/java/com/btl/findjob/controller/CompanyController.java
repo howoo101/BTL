@@ -48,15 +48,20 @@ public class CompanyController {
 	
 	@PostMapping(value="scroll")
 	public @ResponseBody List<CompanyListVO> scroll(
-			@RequestBody Map<String, Object> params) {
+			@RequestBody Map<String, Object> params, HttpServletRequest req) {
 		logger.info("scoll is called.....");
 		String keyword = (String)params.get("keyword");
 		String startNum = (String)params.get("startNo");
 		
-		logger.info("keyword: " + keyword);
-		logger.info("startNum: " + startNum);
+		String userEmail = (String)req.getSession().getAttribute("user");
+		logger.info(userEmail);
 		
-		return service.companyGetListWithCnt(keyword,String.valueOf(Integer.parseInt(startNum)));
+		if(userEmail == null)
+			return service.companyGetListWithCnt(keyword,String.valueOf(Integer.parseInt(startNum)));
+		
+		else {
+			return service.companyGetListWithCntWithLogin(userEmail,keyword,String.valueOf(Integer.parseInt(startNum)));
+		}
 		
 	}
 	
