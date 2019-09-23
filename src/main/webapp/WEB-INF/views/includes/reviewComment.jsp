@@ -33,100 +33,96 @@
                         </div>
                         <div class="card-body col-md-6" style="position: relative; height:30vh; width:80vw">
                             <%--차트 출력--%>
-                            <canvas id="12345"></canvas>
+                            <canvas id="companyChart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="accordion" id="test">
-            <c:forEach items="${map}" var="list" begin="0" end="4" varStatus="status">
-                <div id="reviewAccordion${status.index}">
-                    <div class="accordion" id="accordion">
-                        <div class="card-body">
-                            <div class="card-header" id="heading${status.index}">
-                                <div class="border-info mb-0">
-                                    <div class="row">
-                                        <div class="col-lg-10">
-                                            <button class="btn" type="button" data-toggle="collapse"
-                                                    data-target="#collapse${status.index}"
-                                                    aria-expanded="false" aria-controls="collapse${status.index}">
-                                                    ${list.categoryName[status.index]} <span class="text-primary">(<span
-                                            >${list.categoryCtn[status.index]}</span>)</span>
-                                            </button>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <div class="row">
-                                                <div class="text-warning small starRatingAveStar${status.index}">
-                                                    <c:forEach begin="1" end="5" step="1">
-                                                        <i class="fa fa-star-o"></i>
-                                                    </c:forEach>
+                <c:forEach items="${map}" var="list" begin="0" end="4" varStatus="status">
+                    <div id="reviewAccordion${status.index}">
+                        <div class="accordion" id="accordion">
+                            <div class="card-body">
+                                <div class="card-header" id="heading${status.index}">
+                                    <div class="border-info mb-0">
+                                        <div class="row">
+                                            <div class="col-lg-10">
+                                                <button class="btn" type="button" data-toggle="collapse"
+                                                        data-target="#collapse${status.index}"
+                                                        aria-expanded="false" aria-controls="collapse${status.index}">
+                                                        ${list.categoryName[status.index]} <span
+                                                        class="text-primary">(<span
+                                                >${list.categoryCtn[status.index]}</span>)</span>
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <div class="row">
+                                                    <div class="text-warning small starRatingAveStar${status.index}">
+                                                        <c:forEach begin="1" end="5" step="1">
+                                                            <i class="fa fa-star-o"></i>
+                                                        </c:forEach>
+                                                    </div>
+                                                    <div class="categoryAve">${list.categoryAve[status.index]}</div>
                                                 </div>
-                                                <div class="categoryAve">${list.categoryAve[status.index]}</div>
                                             </div>
                                         </div>
+                                            <%-- end border-ingo--%>
                                     </div>
-                                        <%-- end border-ingo--%>
                                 </div>
-                            </div>
-                            <div id="collapse${status.index}" class="collapse" aria-expanded="false"
-                                 data-parent="#test">
-                                <div class="card-body">
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>총 <span>${list.categoryCtn[status.index]}</span>개의 기업리뷰 코멘트
-                                            </th>
-                                                <%--기업 총 코메트--%>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="reviews">
-                                            <%--리뷰들 들어가는 부분--%>
-                                        </tbody>
-                                    </table>
-                                    <div class="companyReview_pagination"></div>
-                                        <%--페이징 처리가 들어가는 부분--%>
-                                    <div class="input-group">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="starrr stars text-warning"></div>
-                                            </div>
-                                        </div>
+                                <div id="collapse${status.index}" class="collapse" aria-expanded="false"
+                                     data-parent="#test">
+                                    <div class="card-body">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>총 <span>${list.categoryCtn[status.index]}</span>개의 기업리뷰 코멘트
+                                                </th>
+                                                    <%--기업 총 코메트--%>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="reviews">
+                                                <%--리뷰들 들어가는 부분--%>
+                                            </tbody>
+                                        </table>
+                                        <div class="companyReview_pagination"></div>
+                                            <%--페이징 처리가 들어가는 부분--%>
                                         <div class="input-group">
-                                            <input type="text" name="cr_comment"
-                                                   class="form-control cr_comment${status.index}"
-                                                   placeholder="입력해주세요.">
-                                            <input type="hidden" class="cr_index" value="${status.index}">
-                                            <input class="count" type="hidden">
-                                            <input class="cr_category" type="hidden"
-                                                   value="${status.index}">
-                                                <%--회사정보 집어넣기 위해서 id--%>
-                                            <input class="forInsert" type="hidden"
-                                                   value="${companyList[0].ci_id}">
-                                                <%--<input class="user_id" type="hidden">--%>
-                                            <button class="btn btn-outline-secondary registerBtn${status.index}"
-                                                    type="button">제출
-                                            </button>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="starrr stars text-warning"></div>
+                                                </div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" name="cr_comment"
+                                                       class="form-control cr_comment${status.index}"
+                                                       placeholder="입력해주세요.">
+                                                <input type="hidden" class="cr_index" value="${status.index}">
+                                                <input class="count" type="hidden">
+                                                <input class="cr_category" type="hidden"
+                                                       value="${status.index}">
+                                                    <%--회사정보 집어넣기 위해서 id--%>
+                                                <input class="forInsert" type="hidden"
+                                                       value="${companyList[0].ci_id}">
+                                                    <%--<input class="user_id" type="hidden">--%>
+                                                <button class="btn btn-outline-secondary registerBtn${status.index}"
+                                                        type="button">제출
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </c:forEach>
+                </c:forEach>
+                <input type="hidden" value="${starCtn}">
             </div>
-
         </div>
     </div>
 </div>
-
-<!-- <script>
-window.onload=function(){
-
-    var comapaynyChart = document.getElementById('companyChart').getContext('2d');
-    var chart5 = new Chart(comapaynyChart
-    		, {
+<script>
+    const ctx = document.getElementById('companyChart').getContext('2d');
+    const chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'bar',
 
@@ -137,7 +133,7 @@ window.onload=function(){
                 label: '평가 인원',
                 backgroundColor: 'rgb(255,235,142)',
                 borderColor: 'rgb(255,235,142)',
-                data: [0, 10, 5, 2, 20]
+                data: [...${starCtn}]
             }]
         },
 
@@ -163,60 +159,10 @@ window.onload=function(){
 
         }
     });
-}
-</script>
- --><%--별점과 리뷰 db에 등록--%>
-<script>
-<!--strackbar-->
-
-window.onload = function () {
-    var ctx = document.getElementById('12345');
-    var data = {
-        labels: [
-            "쉬움",
-            "",
-            "보통",
-            "",
-            "어려움"
-        ],
-        datasets: [
-            {
-                label: "",
-                data: [7, 5, 3, 1, 1],
-                backgroundColor: [
-                    "#36A2EB",// 빨강
-                    "#9ceb8a",// 초록
-                    "#FFCE56",// 파랑
-                    "#ebb67b",// 주황
-                    "#FF6384"// 노랑
-                ],
-                hoverBackgroundColor: [
-                    "#36A2EB",// 빨강
-                    "#9ceb8a",// 초록
-                    "#FFCE56",// 파랑
-                    "#eb9579",// 주황
-                    "#FF6384"// 노랑
-                ]
-            }]
-    };
-    var stackedBar = new Chart(ctx, {
-        type: 'bar',
-        data: data,
-        options: {
-            scales: {
-                xAxes: [{stacked: true}],
-                yAxes: [{stacked: true}]
-            },
-            legend: {
-                display: false
-            }
-
-        }
-    });
-};
 
 </script>
 
+<%--별점과 리뷰 db에 등록--%>
 <script>
     $(document).ready(function () {
         const ci_idValue = '<c:out value="${companyList[0].ci_id}"/>';//homeController에 있는 모델 받아서 사용 0 넣지 안으면 에러
