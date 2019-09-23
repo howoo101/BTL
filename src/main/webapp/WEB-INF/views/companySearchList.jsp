@@ -96,7 +96,7 @@
 					$(window).scroll(function() {
 						
 						let $window = $(this);
-						let scrollTop = Intger.parseInt($window.scrollTop());
+						let scrollTop = parseInt($window.scrollTop());
 						let windowHeight = $window.height();
 						let documentHeight = $(document).height();
 						if(timer) {
