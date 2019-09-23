@@ -39,6 +39,7 @@
                 </div>
             </div>
 
+            <div class="accordion" id="test">
             <c:forEach items="${map}" var="list" begin="0" end="4" varStatus="status">
                 <div id="reviewAccordion${status.index}">
                     <div class="accordion" id="accordion">
@@ -69,7 +70,7 @@
                                 </div>
                             </div>
                             <div id="collapse${status.index}" class="collapse" aria-expanded="false"
-                                 data-parent="#accordion">
+                                 data-parent="#test">
                                 <div class="card-body">
                                     <table class="table table-striped">
                                         <thead>
@@ -114,7 +115,7 @@
                     </div>
                 </div>
             </c:forEach>
-
+            </div>
 
         </div>
     </div>
@@ -136,19 +137,21 @@
             var cr_comment = $div.find('input[name="cr_comment"]').val();
             var starRating = $div.find('input[class="count"]').text();
             var forInsert = $div.find('input[class="forInsert"]').val();
-
+            var cr_category = $div.find('input[class="cr_category"]').val();
             $.ajax({
                     type: "post",
                     url: "${path}/companyReview/new",
                     data: JSON.stringify({
                         cr_comment: cr_comment,
                         cr_starRt: starRating,
+                        cr_category: cr_category,
                         ci_id: forInsert
                     }),
                     contentType: "application/json; charset=utf-8",
                     success: function (result) {
                         alert("리뷰가 등록되었습니다.");
-                        showList(1);
+                        // showList(1);
+                        location.reload();
                     }
 
                 }
