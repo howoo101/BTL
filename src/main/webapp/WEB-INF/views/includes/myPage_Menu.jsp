@@ -16,8 +16,8 @@
         <div class="card-group">
             <div class="card-body">
                 <SPAN class="">
-                  
-                 ${user}
+                 ${name}님 안녕하세요.<br> 
+                <a href="user_info">회원정보 수정</a> 
                 </SPAN>
             </div>
         </div>

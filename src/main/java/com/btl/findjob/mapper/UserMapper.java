@@ -10,7 +10,7 @@ public interface UserMapper {
 
 	public void join_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name,@Param("key") String key,@Param("authorization") int authorization,@Param("salt") String salt);
 
-	public void snsjoin_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("authorization") int authorization,@Param("sns_key") String sns_key,@Param("sns_type") String sns_type);
+	public void snsjoin_insert(@Param("user_email") String user_email,@Param("user_name") String user_name,@Param("user_password") String user_password,@Param("authorization") int authorization,@Param("sns_key") String sns_key,@Param("sns_type") String sns_type);
 
 	public int snschk(String user_email);
 	
@@ -30,4 +30,8 @@ public interface UserMapper {
 	
 	public void auth_null(String user_email);
 	
+	public void pw_modify(@Param("user_password") String user_password,@Param("salt") String salt,@Param("user_email") String user_email);
+
+	public String getname(String user_email);
+
 }
