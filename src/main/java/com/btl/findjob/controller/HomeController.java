@@ -9,6 +9,7 @@ import com.btl.findjob.model.CompanyReview;
 import com.btl.findjob.model.MypageCriteria;
 import com.btl.findjob.model.MypagePageDTO;
 import com.btl.findjob.service.CompanyReviewService;
+import com.btl.findjob.service.InterviewReviewService;
 import lombok.extern.log4j.Log4j;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
@@ -38,6 +39,13 @@ public class HomeController {
 	public void setCompanyReviewService(CompanyReviewService companyReviewService){
 	    this.companyReviewService=companyReviewService;
     };
+
+	private InterviewReviewService interviewReviewService;
+
+	@Autowired
+	public void setInterviewReviewService(InterviewReviewService interviewReviewService){
+		this.interviewReviewService=interviewReviewService;
+	};
 
 	@Autowired
 	MypageService mypageService;
@@ -106,6 +114,31 @@ public class HomeController {
 		}
 
 		model.addAttribute("map", data);
+
+
+		//면접 차트 정보
+		String[] difficultyArr = {"쉬움","약간 쉬움","보통","약간 어려움", "어려움"};
+		List<Integer> difficultyList = new ArrayList<>();
+
+		for (String s : difficultyArr) {
+			difficultyList.add(interviewReviewService.difficultyCnt(ci_companyName, s));
+			model.addAttribute("difficultyList", difficultyList);
+		}
+
+		String[] expArr = {"부정적","보통","긍정적"};
+		List<Integer> expList = new ArrayList<>();
+
+		for (String s : expArr) {
+			expList.add(interviewReviewService.expCnt(ci_companyName, s));
+			model.addAttribute("expList", expList);
+		}
+
+		String[] resultArr = {"합격", "불합격", "대기중"};
+		List<Integer> resultList = new ArrayList<>();
+		for(String s: resultArr){
+			resultList.add(interviewReviewService.resultCnt(ci_companyName,s));
+			model.addAttribute("resultList",resultList);
+		}
 	}
 
 	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)

@@ -48,7 +48,7 @@ public class CompanyReviewController {
     @GetMapping(value = "/pages/{ci_id}/{cr_category}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<CompanyReviewPageDTO> getListWithPaging(@PathVariable("page") int page,@PathVariable("cr_category") int cr_category, @PathVariable("ci_id")  int ci_id) throws Exception {
 
-        CompanyReviewCriteria companyReviewCriteria= new CompanyReviewCriteria(page, 10);
+        CompanyReviewCriteria companyReviewCriteria= new CompanyReviewCriteria(page, 5);
 
         return new ResponseEntity<>(companyReviewService.getListWithPaging(companyReviewCriteria,cr_category, ci_id),HttpStatus.OK);
     }

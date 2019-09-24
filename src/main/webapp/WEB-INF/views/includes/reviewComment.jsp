@@ -46,7 +46,7 @@
                                 <div class="card-header" id="heading${status.index}">
                                     <div class="border-info mb-0">
                                         <div class="row">
-                                            <div class="col-lg-10">
+                                                <div class="col-lg-10">
                                                 <button class="btn" type="button" data-toggle="collapse"
                                                         data-target="#collapse${status.index}"
                                                         aria-expanded="false" aria-controls="collapse${status.index}">
@@ -175,7 +175,7 @@
 
             // var fudate = $tr.find('input[name="fdate"]').val();
             var cr_comment = $div.find('input[name="cr_comment"]').val();
-            var starRating = $div.find('input[class="count"]').text();
+            var cr_starRt = $div.find('input[class="count"]').text();
             var forInsert = $div.find('input[class="forInsert"]').val();
             var cr_category = $div.find('input[class="cr_category"]').val();
             $.ajax({
@@ -183,7 +183,7 @@
                     url: "${path}/companyReview/new",
                     data: JSON.stringify({
                         cr_comment: cr_comment,
-                        cr_starRt: starRating,
+                        cr_starRt: cr_starRt,
                         cr_category: cr_category,
                         ci_id: forInsert
                     }),
@@ -209,49 +209,19 @@
 
         for (let i = 0; i < 4; i++) {
             let categoryAve = Number($(".categoryAve")[i].innerHTML); //카테고리별 평균 평점
-
-            if (0.0 <= categoryAve && categoryAve < 1.0) {
-                starRatingAveStar[i] =
-                    "<i class='fa fa-star-o'></i>" +
-                    "<i class='fa fa-star-o'></i>" +
-                    "<i class='fa fa-star-o'></i>" +
-                    "<i class='fa fa-star-o'></i>" +
-                    "<i class='fa fa-star-o'></i>";
-            } else if (1.0 <= categoryAve && categoryAve < 2.0) {
-                starRatingAveStar[i] =
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star-o'></i>" +
-                    "<i class='fa fa-star-o'></i>" +
-                    "<i class='fa fa-star-o'></i>" +
-                    "<i class='fa fa-star-o'></i>";
-            } else if (2.0 <= categoryAve && categoryAve < 3.0) {
-                starRatingAveStar[i] =
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star-o'></i>" +
-                    "<i class='fa fa-star-o'></i>" +
-                    "<i class='fa fa-star-o'></i>";
-            } else if (3.0 <= categoryAve && categoryAve < 4.0) {
-                starRatingAveStar[i] =
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star-o'></i>" +
-                    "<i class='fa fa-star-o'></i>";
-            } else if (4.0 <= categoryAve && categoryAve < 5.0) {
-                starRatingAveStar[i] =
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star-o'></i>";
-            } else if (categoryAve === 5) {
-                starRatingAveStar[i] =
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star'></i>" +
-                    "<i class='fa fa-star'></i>";
+            let floor = Math.floor(categoryAve);
+            starRatingAveStar[i] = "";//undifind 제거용
+            if(floor !== 0){
+                for (let j = 0; j < floor; j++) {
+                    starRatingAveStar[i] += "<i class = 'fa fa-star'></i>";
+                }
+                for (let j = 0; j < 5-floor; j++) {
+                    starRatingAveStar[i] +="<i class = 'fa fa-star-o'></i>";
+                }
+            }else{
+                for (let j = 0; j < 5; j++) {
+                    starRatingAveStar[i] +="<i class = 'fa fa-star-o'></i>";
+                }
             }
         }
         starRatingAveStarUL0.html(starRatingAveStar[0]);
@@ -280,7 +250,7 @@
                     page: page || 1,
                 }, function (companyReviewCtn, companyReviewList) {
                     if (page === -1) {
-                        pageNum = Math.ceil(companyReviewCtn / 10.0);
+                        pageNum = Math.ceil(companyReviewCtn / 5);
                         showList(pageNum);
                         return;
                     }
@@ -298,57 +268,14 @@
                     for (let i = 0, len = companyReviewList.length || 0; i < len; i++) {
 
                         // 별처리 위해
-                        switch (companyReviewList[i].cr_starRt) {
-                            case 1:
-                                starRating +=
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star-o'></i>" +
-                                    "<i class='fa fa-star-o'></i>" +
-                                    "<i class='fa fa-star-o'></i>" +
-                                    "<i class='fa fa-star-o'></i>";
-                                break;
-                            case 2:
-                                starRating +=
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star-o'></i>" +
-                                    "<i class='fa fa-star-o'></i>" +
-                                    "<i class='fa fa-star-o'></i>";
-                                break;
-                            case 3:
-                                starRating +=
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star-o'></i>" +
-                                    "<i class='fa fa-star-o'></i>";
-                                break;
-                            case 4:
-                                starRating +=
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star-o'></i>";
-                                break;
-                            case 5:
-                                starRating += "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star'></i>" +
-                                    "<i class='fa fa-star'></i>";
-                                break;
-                            default:
-                                starRating += "<i class='fa fa-star-o'></i>" +
-                                    "<i class='fa fa-star-o'></i>" +
-                                    "<i class='fa fa-star-o'></i>" +
-                                    "<i class='fa fa-star-o'></i>" +
-                                    "<i class='fa fa-star-o'></i>";
-                                break;
+                        for (let j = 0; j < companyReviewList[i].cr_starRt; j++) {
+                            starRating+="<i class='fa fa-star'></i>"
                         }
-
-
-                        // categoryAve += companyReviewList[i].cr_starRt;
+                        if(companyReviewList[i].cr_starRt !== 5) {
+                            for (let j = 0; j < (5 - companyReviewList[i].cr_starRt); j++) {
+                            starRating+="<i class='fa fa-star-o'></i>"
+                            }
+                        }
 
                         str += "<tr>" +
                             "<td>" +
@@ -387,11 +314,11 @@
                 const prev = startNum !== 1;
                 let next = false;
 
-                if (endNum * 10 >= companyReviewCtn) {
-                    endNum = Math.ceil(companyReviewCtn / 10.0);
+                if (endNum * 5 >= companyReviewCtn) {
+                    endNum = Math.ceil(companyReviewCtn / 5);
                 }
 
-                if (endNum * 10 < companyReviewCtn) {
+                if (endNum * 5 < companyReviewCtn) {
                     next = true;
                 }
 

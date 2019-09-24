@@ -7,7 +7,7 @@ import java.sql.Date;
 @Data
 public class InterviewReviewDTO {
     private int ir_id;//리뷰 번호
-    private int ir_difficulty; //난이도
+    private String ir_difficulty; //난이도
     private Date ir_interviewDate; //면접 날짜
     private String ir_experience; //면접 내용
     private String ir_route; //면접 경로
