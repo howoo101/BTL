@@ -51,7 +51,7 @@
 		                    +				'<div class="col-lg-6 ml-5">'
 							+	                 '<div class="row justify-content-center">'
 		                    +						'<h4>'
-		                    +						'<a href="'+path+'/info?ci_companyName='+res.ci_companyName+'">' +res.ci_companyName+'</a>'
+		                    +						'<a href="'+path+'/info?ci_companyName='+res.ci_companyName+'&ci_id='+res.ci_id+'">' +res.ci_companyName+'</a>'
 		                    +						followBtn
 		                    +						'</h4>'
 		        			+					 '</div>'

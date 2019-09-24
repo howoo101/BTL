@@ -1,26 +1,34 @@
 package com.btl.findjob.controller;
 
+import java.net.URLEncoder;
 import java.util.*;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.btl.findjob.model.CompanyReview;
 import com.btl.findjob.model.MypageCriteria;
 import com.btl.findjob.model.MypagePageDTO;
 import com.btl.findjob.service.CompanyReviewService;
 import lombok.extern.log4j.Log4j;
+
+import org.apache.http.HttpResponse;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.btl.findjob.service.EnterpriseService;
 import com.btl.findjob.service.MypageService;
+import com.btl.findjob.utils.CookieUtils;
+import com.btl.findjob.utils.NaverSearchAPI;
 
 /**
  * Handles requests for the application home page.
@@ -51,8 +59,31 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
-	public void info(@Param ("ci_companyName") String ci_companyName, Model model,HttpServletRequest req) {
+	public String info(@Param ("ci_companyName") String ci_companyName,
+			@Param ("ci_id") String ci_id,HttpServletResponse res,
+			Model model,HttpServletRequest req) {
 		logger.info("기업 상세 페이지");
+		System.out.println(ci_id);
+		Cookie[] cookies = req.getCookies();
+		Cookie cookie = CookieUtils.getCookie(cookies, "ciId");
+		if(cookie != null) {
+			if(!cookie.getValue().contains(ci_id)) {
+				String tmp = cookie.getValue();
+			//최근본기업 5개까지
+			if (tmp.split("/").length > 4) {
+				tmp = tmp.substring(0,tmp.lastIndexOf("/"));
+			}
+			cookie = new Cookie("ciId",ci_id+"/"+tmp);
+			cookie.setMaxAge(60*60);
+			res.addCookie(cookie);
+			}
+		}else {
+			cookie = new Cookie("ciId",ci_id);
+			cookie.setMaxAge(60*60);
+			res.addCookie(cookie);
+		}
+		
+		
 		String userEmail = (String)req.getSession().getAttribute("user");
 		if(userEmail == null) userEmail = "";
 		//Enterpise 영역 (송현)
@@ -95,9 +126,10 @@ public class HomeController {
 			data.add(map);
 
 		}
-
 		model.addAttribute("map", data);
-
+		
+		
+		return "info";
 	}
 
 	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)
@@ -118,9 +150,13 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/myPage_Last", method = RequestMethod.GET)
-	public String myPage_Last(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-
+	public String myPage_Last(HttpServletRequest req, Model model) {
+		String userEmail = (String)req.getSession().getAttribute("user");
+		String[] arr = null; 
+		arr = CookieUtils.getValues(req.getCookies(), "ciId");
+		
+		model.addAttribute("companyList",
+				mypageService.getRecentCompanyList(userEmail, arr));
 		return "myPage_Last";
 	}
 

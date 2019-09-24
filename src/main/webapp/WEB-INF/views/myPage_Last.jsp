@@ -19,24 +19,29 @@
         <div class="card border-primary">
             <div class="card-body">
                 <h5 style="color:royalblue;">최근 본 기업</h5>
+				<c:forEach items="${companyList }" var="item">
                 <hr style="border:1px solid #c7d5f8; padding: 0px;">
-
-
+				
                 <div class="row">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-6 ml-5">
                                 <div class="row">
                                     <h4>
-                                        (주)BTL
-                                        <button class="btn btn-outline-danger">♡</button>
+                                        <a href="${path }/info?ci_companyName=${item.ci_companyName}">${item.ci_companyName}</a>
+										<c:if test="${item.followId eq 0}">
+											<button id="unfollow" class="follow btn btn-outline-danger" data-ciId=${item.ci_id }>♡</button>
+										</c:if>
+										<c:if test="${item.followId ne 0}">
+											<button id="follow" class="follow btn btn-outline-danger" data-ciId=${item.ci_id } data-followId=${item.followId }>♥</button>
+										</c:if>
                                     </h4>
                                 </div>
                                 <div class="row">
-                                    IT/웹/통신 | 서울 서초구
+                                    ${item.ci_industry } | ${item.ci_address }
                                 </div>
                                 <div class="row">
-                                    평균연봉 4534 만원
+                                   	평균연봉 ${item.ci_avgsalary } 만원
                                 </div>
                             </div>
 
@@ -62,8 +67,10 @@
                     </div>
 
                 </div>
+                </c:forEach>
             </div>
         </div>
     </div>
+</div>
     <%@ include file="includes/footer.jsp" %>
-
+	<script src="resources/js/follow.js"></script>
