@@ -90,7 +90,7 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <form action="search" class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="기업명을 검색해주세요">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
+                    <input type="button" class="btn btn-info my-2 my-sm-0" onclick="location.href='http://localhost:8282/findjob/list'" name="게시판" value="우리다함께 취업합시다 ,취뽀게시판">
                 </form>
             </div>
             

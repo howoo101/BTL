@@ -18,5 +18,6 @@ public interface BoardService {
     
     public int getTotal(BoardCriteria cri);
     
-
+  //조회수 카운트
+    public void updateBoardHit(int board_id);
 }

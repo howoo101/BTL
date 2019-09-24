@@ -12,8 +12,8 @@ import lombok.ToString;
 public class BoardCriteria {
     
     private int pageStart;
-    private int pageNum;//page
-    private int amount;//perPageNum
+    private int pageNum;//페이지번호
+    private int amount;//양
     
     private String type;
     private String keyword;
@@ -31,7 +31,6 @@ public class BoardCriteria {
     
     public void setPageNum(int pageNum) {
         //페이지 번호가 0이거나 0보다 작으면 1페이지로 한다.
-        //
         if(pageNum <=0){
             this.pageNum=1;
             return;

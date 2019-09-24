@@ -17,23 +17,21 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-//@RequestMapping("/board/*")
 @Log4j
 @AllArgsConstructor
 public class BoardController {
     
     private BoardService service;
-    
+    //목록
     @GetMapping("list")
     public void list(BoardCriteria cri,Model model) {
         log.info("list:"+cri);
         model.addAttribute("list",service.getList(cri));
-//        model.addAttribute("pageMaker", new BoardPageDTO(cri, 20));
         int total = service.getTotal(cri);
         log.info("total:"+total);
         model.addAttribute("pageMaker", new BoardPageDTO(cri, total));
     }
-    
+    //등록
     @PostMapping("register")
     public String register(BoardDTO board, RedirectAttributes rttr) {
         log.info("register:"+board);
@@ -51,9 +49,9 @@ public class BoardController {
     public void get(@RequestParam("board_id") int board_id, @ModelAttribute("cri") BoardCriteria cri, Model model) {
         log.info("/get or modify");
         model.addAttribute("board",service.get(board_id));
-//        log.info(service.get(board_id));
+
     }
-    
+    //수정
     @PostMapping("modify")
     public String modify(BoardDTO board, @ModelAttribute("cri") BoardCriteria cri, RedirectAttributes rttr) {
         log.info("modify : " + board);
@@ -68,7 +66,7 @@ public class BoardController {
         
         return "redirect:list";
     }
-    
+    //삭제
     @PostMapping("remove")
     public String remove(@RequestParam("board_id") int board_id, @ModelAttribute("cri") BoardCriteria cri, RedirectAttributes rttr) {
         log.info("remove.."+ board_id);
