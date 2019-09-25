@@ -97,6 +97,7 @@ if(user==null){
                                value="우리다함께 취업합시다 ,취뽀게시판">
 
                         <!-- login modal -->
+
                         <button type="button" id="loginmd" class="btn btn-primary" data-toggle="modal"
                                 data-target="#loginModal" data-backdrop="false">
                             로그인
@@ -123,6 +124,7 @@ if(user==null){
 
 
             <!-- 모달 div -->
+
             <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 2000">
                 <div class="modal-dialog loginmodal-dialog">
                     <div class="modal-content loginmodal-content">

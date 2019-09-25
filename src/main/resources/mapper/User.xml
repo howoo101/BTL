@@ -8,9 +8,9 @@
 		select * from user where user_email = #{user_email}
 	</select>
 	
-	<!-- 유저 정보 수정  -->
-	<update id="user_info_modify" parameterType="com.btl.findjob.model.UserDTO" >
- update user set user_name = #{user_name} , user_password = #{user_password} , user_modify_date = CURRENT_DATE() , salt = #{salt} where user_email = #{user_email}
+	<!-- 닉네임 수정  -->
+	<update id="name_modify" parameterType="com.btl.findjob.model.UserDTO" >
+ update user set user_name = #{user_name} , user_modify_date = CURRENT_DATE() where user_email = #{user_email}
 	</update>
 	
 	<!-- 이메일 중복 체크-->
@@ -86,6 +86,12 @@ values (#{authorization},#{user_email},#{user_name},#{user_password},CURRENT_DAT
 	<select id="getname" resultType="String" parameterType="com.btl.findjob.model.UserDTO">
 	select user_name from user where user_email = #{user_email}
 	</select>
+	
+	<!-- user_id 확인 -->
+	<select id="get_userid" resultType="String" parameterType="com.btl.findjob.model.UserDTO">
+	select user_id from user where user_email = #{user_email}
+	</select>
+	
 		
 </mapper>
 

@@ -35,7 +35,7 @@
         <div class="col-md-12">
             <div id="infoCarousel" class="carousel slide" data-ride="carousel">
 
-                <ol class="carousel-indicators" style="margin-bottom: 0; margin-top: 20px; height: 25px;">
+                <ol class="carousel-indicators" style="margin-bottom: 0; margin-top: 20px; height: 25px; z-index:-1">
                     <li data-target="#infoCarousel" data-slide-to="0" class="active"></li>
                     <li data-target="#infoCarousel" data-slide-to="1"></li>
                     <li data-target="#infoCarousel" data-slide-to="2"></li>

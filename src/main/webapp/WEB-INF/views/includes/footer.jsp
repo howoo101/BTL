@@ -1,4 +1,4 @@
-<footer class="main-footer" style="height:150px;">
+<footer class="main-footer" style="height:100px;">
     <hr class="foot-hr">
     <div class="footer-nav col-md-auto mt-3">
         <div class="footer-nav-left" style="font-size: 15px; font-weight: bold;">

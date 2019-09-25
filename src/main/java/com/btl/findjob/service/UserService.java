@@ -38,7 +38,7 @@ public interface UserService {
 	
 	public List<UserDTO> user_info(String user_email);
 	
-	public void user_info_modify(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name,@Param("salt") String salt);
+	public void name_modify(@Param("user_email") String user_email,@Param("user_name") String user_name);
 
-
+	public String get_userid(String user_email);
 }
