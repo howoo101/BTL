@@ -42,7 +42,14 @@
 						if(res.followId === 0) followBtn = '<button id="unfollow" class="follow btn btn-outline-danger" data-ciId="'+res.ci_id+ '">♡</button>'
 						else followBtn = '<button id="follow" class="follow btn btn-outline-danger" data=ciId="' +res.ci_id+ '" data-followId="'+res.followId+ '">♥</button>'
 						// check end
-						
+						var starHtml = '<div class="text-warning">';
+						for(var i = 1; i <= res.companyReviewAvg; i++) {
+							starHtml += '<i class="fa fa-star"></i>'
+						}
+						for(var i = 1; i <= 5-res.companyReviewAvg; i++) {
+							starHtml += '<i class="fa fa-star-o"></i>'
+						}
+						starHtml += '</div>'
 		        // 리스트 html을 정의
 		        let html = "<div class='card-body' data-startNo="+res.ci_id+">"
 		        			+ '<hr style="border: 1px solid #c7d5f8; padding: 0px;">'
@@ -64,7 +71,7 @@
 		        			+					 '</div>'
 		        			+					 '<div class="col-lg-auto">'
 		        			+						'<div class="row justify-content-center">'
-		        			+					    	'<h5 class="">'+"*****"+'</h5>'
+		        			+					    	'<h5 class="">'+starHtml+'</h5>'
 		        			+					 	'</div>'
 		        			+					 	'<div class="row " style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">'
 		        			+							'<div class="col-sm-12 text-center">'+res.companyReviewCnt+'</div>'
