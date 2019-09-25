@@ -27,4 +27,5 @@ public interface CompanyReviewService {
     //카테고리별 카운트
     int getCountByCategory(String ci_companyName, int cr_category);
 
+    int getStarCtn(String ci_companyName, int cr_starRt);
 }

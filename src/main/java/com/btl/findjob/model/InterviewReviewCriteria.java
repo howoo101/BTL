@@ -8,16 +8,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Getter
 @Setter
 @ToString
-public class CompanyReviewCriteria {
+public class InterviewReviewCriteria {
     private int pageStart;
     private int pageNum;
     private int amount;
 
-    public CompanyReviewCriteria() {
-        this(1, 5);
+    public InterviewReviewCriteria() {
+        this(1, 2);
     }
 
-    public CompanyReviewCriteria(int pageNum, int amount) {
+    public InterviewReviewCriteria(int pageNum, int amount) {
         this.pageNum = pageNum;
         this.amount = amount;
     }
@@ -35,7 +35,7 @@ public class CompanyReviewCriteria {
     public void setAmount(int amount){
         //몇개씩 보여줄 것인지에 대해 0보다 작거나 100보다 크면 10으로 초기화 시킨다.
         if(amount<=0||amount > 100){
-            this.amount = 5;
+            this.amount = 2;
             return;
         }
         this.amount = amount;
@@ -62,5 +62,4 @@ public class CompanyReviewCriteria {
 
         return uriComponentsBuilder.toUriString();
     }
-
 }
