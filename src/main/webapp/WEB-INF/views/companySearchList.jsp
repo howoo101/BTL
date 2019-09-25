@@ -13,7 +13,7 @@
 	<%@ include file="includes/header.jsp"%>
 	<div class="container mt-4">
 		<div class="card border-primary" id="go">
-			<h5 style="color: royalblue;">기업 검색 결과</h5>
+			<h5 class="ml-4 mt-4" style="color: royalblue;">기업 검색 결과</h5>
 
 			<c:forEach items="${companyList }" var="item">
 				<div class="card-body" data-startNo=${item.ci_id }>

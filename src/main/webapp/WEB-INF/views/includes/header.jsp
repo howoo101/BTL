@@ -9,25 +9,25 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-	
-	<!-- jQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>  
-	<!-- 부트스트랩 -->
-	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
-	<%--부트스트랩 CSS--%>
-	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
-	<%-- index css 커스텀--%>
-	<link rel="stylesheet" type="text/css" href="resources/css/indexStyle.css">
-	<%-- TH css 커스텀--%>
-	<link rel="stylesheet" type="text/css" href="resources/css/THStyle.css">
-	
-	<!--부트스트랩 와치-->
-	<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet"
-	      integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
 
-	<!-- 카카오 js -->
-	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-	<!-- 카카오 init -->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- 부트스트랩 -->
+    <script type="text/javascript" src="resources/js/bootstrap.js"></script>
+    <%--부트스트랩 CSS--%>
+    <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
+    <%-- index css 커스텀--%>
+    <link rel="stylesheet" type="text/css" href="resources/css/indexStyle.css">
+    <%-- TH css 커스텀--%>
+    <link rel="stylesheet" type="text/css" href="resources/css/THStyle.css">
+
+    <!--부트스트랩 와치-->
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
+
+    <!-- 카카오 js -->
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <!-- 카카오 init -->
 
     <script>Kakao.init('34800e916b17799e85bcefde72c06423')</script>
     <!-- 네이버 js -->
@@ -85,20 +85,27 @@ if(user==null){
             </button>
 
             <div class="collapse navbar-collapse" id="navbarColor01">
-                        <form action="search" class="form-inline my-2 my-lg-0">
+                <div class="row">
+                    <div style=" display:inline-block; position:fixed; top:10px">
+                        <form action="search" class="form-inline my-2 my-lg-0" style="padding-left: 20px">
                             <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="기업명을 검색해주세요">
                             <button type="submit" class="btn btn-dark">검색</button>
                         </form>
+                    </div>
+                    <div style="display:inline-block; position:fixed; top:13px;right: 10px">
+                        <input type="button" class="btn btn-info" onclick="location.href='${path}/list'" name="게시판"
+                               value="우리다함께 취업합시다 ,취뽀게시판">
+
+                        <div id="ucon">${name}</div>
+                        <!-- login modal -->
+                        <button type="button" id="loginmd" class="btn btn-primary" data-toggle="modal"
+                                data-target="#loginModal">
+                            로그인
+                        </button>
+                    </div>
+                </div>
             </div>
 
-			<input type="button" class="btn btn-info" onclick="location.href='${path}/list'" name="게시판"
-				   value="우리다함께 취업합시다 ,취뽀게시판">
-
-            <div id="ucon">${name}</div>
-			<!-- login modal -->
-            <button type="button" id="loginmd" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
-                로그인
-            </button>
 
             <!-- 모달 div -->
             <div id="loginModal" class="modal fade" tabindex="-1" role="dialog">
