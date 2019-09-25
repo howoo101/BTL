@@ -165,8 +165,8 @@
                         <div class="col-sm-9">
                             <label>
                                 <select class="form-control custom-select" name="ir_result">
-                                    <option>대기중</option>
                                     <option>합격</option>
+                                    <option>대기중</option>
                                     <option>불합격</option>
                                 </select>
                             </label>
@@ -403,7 +403,7 @@
                     aveResult += difficultyAve[i] * (i + 1);
                     difCtn += difficultyAve[i];
                 }
-                aveResult /= difCtn;
+                aveResult = Math.round(aveResult/difCtn*10.0)/10;
                 if (aveResult !== 0) {
                     difAveUL.html(aveResult);
                 }
@@ -513,22 +513,22 @@
 
         var data2 = {
             labels: [
-                "부정적",
                 "긍정적",
-                "보통"
+                "보통",
+                "부정적"
             ],
             datasets: [
                 {
                     data: [...${expList}],
                     backgroundColor: [
-                        "#FF6384",
                         "#36A2EB",
-                        "#FFCE56"
+                        "#FFCE56",
+                        "#FF6384",
                     ],
                     hoverBackgroundColor: [
-                        "#FF6384",
                         "#36A2EB",
-                        "#FFCE56"
+                        "#FFCE56",
+                        "#FF6384",
                     ]
                 }]
         };
@@ -561,22 +561,22 @@
 //     두번째 도넛
         var data3 = {
             labels: [
-                "불합격",
                 "합격",
-                "대기중"
+                "대기중",
+                "불합격"
             ],
             datasets: [
                 {
                     data: [...${resultList}],
                     backgroundColor: [
-                        "#FF6384",
                         "#36A2EB",
-                        "#FFCE56"
+                        "#FFCE56",
+                        "#FF6384"
                     ],
                     hoverBackgroundColor: [
-                        "#FF6384",
                         "#36A2EB",
-                        "#FFCE56"
+                        "#FFCE56",
+                        "#FF6384"
                     ]
                 }]
         };

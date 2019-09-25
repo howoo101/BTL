@@ -171,15 +171,16 @@ public class HomeController {
 			model.addAttribute("difficultyList", difficultyList);
 		}
 
-		String[] expArr = {"부정적","보통","긍정적"};
+		String[] expArr = {"긍정적","보통","부정적"};
 		List<Integer> expList = new ArrayList<>();
 
 		for (String s : expArr) {
 			expList.add(interviewReviewService.expCnt(ci_companyName, s));
 			model.addAttribute("expList", expList);
 		}
+			log.info(expList);
 
-		String[] resultArr = {"합격", "불합격", "대기중"};
+		String[] resultArr = {"합격", "대기중", "불합격"};
 		List<Integer> resultList = new ArrayList<>();
 		for(String s: resultArr){
 			resultList.add(interviewReviewService.resultCnt(ci_companyName,s));
