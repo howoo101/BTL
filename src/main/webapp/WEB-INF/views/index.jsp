@@ -4,26 +4,33 @@
 <%@ include file="includes/header.jsp" %>
 
 <section>
-
-    <div class="jumbotron">
-        <h1 class="display-3">Hello, world!</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-            featured content or information.</p>
-        <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-
-        <article class="center">
-            <form action="search" class="form-inline row" id="main-search-form" novalidate="novalidate">
-                <div class="form-group">
-                    <input class="form-control form-control-lg" name="keyword" type="text" placeholder="기업명을 검색해주세요" id="inputLarge">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
+    <div class="headerVideo">
+        <div class="overlay"></div>
+        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+            <source src="${path}/resources/video/Internet-Cafe-156.mp4" type="video/mp4">
+            <source src="${path}/resources/video/Internet-Cafe-156.webm" type="video/webm">
+            죄송합니다. 동영상이 지원되지 않습니다.
+        </video>
+        <div class="container h-100">
+            <div class="d-flex h-100 text-center align-items-center">
+                <div class="w-100 text-white">
+                    <h1 class="display-3">Find Job     </h1>
+                    <article class="center">
+                    <form action="search" class="form-inline row" id="main-search-form" novalidate="novalidate">
+                        <div class="form-group">
+                            <input class="form-control form-control-lg" name="keyword" type="text" placeholder="기업명을 검색해주세요" id="inputLarge">
+                            <button class="btn btn-secondary my-2 my-sm-0 ml-2" type="submit">검색</button>
+                        </div>
+                    </form>
+                    </article>
                 </div>
-            </form>
-        </article>
+            </div>
+        </div>
     </div>
 
+
     <!--carousel-->
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-md-12">
             <div id="infoCarousel" class="carousel slide" data-ride="carousel">
 
