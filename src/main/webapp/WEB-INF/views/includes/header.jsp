@@ -67,12 +67,12 @@ if(user==null){
 <input id="session" type="hidden" value="<%=user%>">  <!-- 로그인 세션파라미터 -->
 <input id="name" type="hidden" value="<%=name%>">  <!-- 유저 이름 세션파라미터 -->
 
-<header class="mt-3">
+<header>
     <div id="content-wrap">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <a class="navbar-brand" href="${path}/">
-                <img src="resources/img/logo.png" height="36" width="69" alt="">
+                <img src="${path}/resources/img/logo.png" height="36" width="69" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
                     aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
