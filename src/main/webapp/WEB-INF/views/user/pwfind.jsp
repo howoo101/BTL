@@ -106,7 +106,7 @@ $(document).ready(function(e){
 	 	 			$("#loading-bar").hide(); 
 		 	 		if(data=='1'){
 		 	 			 alert("이메일로 임시비밀번호가 전송 되었습니다. 확인해주세요.");
-		 		 	 	 $( "#loginmodal-body" ).load( "login");  	
+		 		 	 	 $( ".loginmodal-body" ).load( "login");  	
 		 	 		}
 		 	 		else if(data=='2'){
 					alert("소셜 기능으로 가입된 회원님의 비밀번호 찾기기능은 이 홈페이지에서 제공하지 않습니다.");

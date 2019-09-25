@@ -38,26 +38,10 @@ UserService userservice;
 				}
 		
 				logininterceptor.forward(request,response);
-				
-			return false; // 컨트롤러 uri로의 요청으로 가지않도록 false
+				return false; // 컨트롤러 uri로의 요청으로 가지않도록 false
 			
 			}
-			else if(obj!=null) {
-				String user = (String) obj; 
-				if(userservice.gradechk(user)==5) { //메일인증안된 등급일 경우
-					
-					if("XMLHttpRequest".equals(request.getHeader("x-requested-with"))) {
-						response.sendError(404);
-						return false;
-					}
-					
-					gradeceptor.forward(request,response);
-					return false; // 컨트롤러 uri로의 요청으로 가지않도록 false
-					
-				}
-			}
-	
-			return true; // 컨트롤러 uri로의 요청을 허용
+			return true; // 요청 true
 	}
 
 	@Override

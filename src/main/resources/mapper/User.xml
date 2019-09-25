@@ -3,6 +3,16 @@
 
 <mapper namespace="com.btl.findjob.mapper.UserMapper">
 	
+	<!-- 유저 정보  -->
+	<select id="user_info" resultType="com.btl.findjob.model.UserDTO" >
+		select * from user where user_email = #{user_email}
+	</select>
+	
+	<!-- 유저 정보 수정  -->
+	<update id="user_info_modify" parameterType="com.btl.findjob.model.UserDTO" >
+ update user set user_name = #{user_name} , user_password = #{user_password} , user_modify_date = CURRENT_DATE() , salt = #{salt} where user_email = #{user_email}
+	</update>
+	
 	<!-- 이메일 중복 체크-->
 	<select id="emailchk" resultType="INT" parameterType="com.btl.findjob.model.UserDTO">
 		select count(*) from user where user_email = #{user_email}
@@ -15,14 +25,14 @@
 	
 	<!-- 등급확인 -->
 	<select id="gradechk" resultType="INT" parameterType="com.btl.findjob.model.UserDTO">
-	select authorization_id from user where user_email = #{user_email};
+	select authorization_id from user where user_email = #{user_email}
 	</select>
 	
 	
 	<!-- 일반 회원가입 -->
 	<insert id="join_insert" parameterType="com.btl.findjob.model.UserDTO">
-	insert into user (authorization_id,user_email,user_name,user_password,user_create_date,user_modify_date,user_emailauthkey,salt)
-values (#{authorization},#{user_email},#{user_name},#{user_password},CURRENT_DATE(),CURRENT_DATE(),#{key},#{salt})
+	insert into user (authorization_id,user_email,user_name,user_password,user_create_date,user_modify_date,salt)
+values (#{authorization},#{user_email},#{user_name},#{user_password},CURRENT_DATE(),CURRENT_DATE(),#{salt})
 	</insert>
 	
 	
@@ -34,12 +44,12 @@ values (#{authorization},#{user_email},#{user_name},#{user_password},CURRENT_DAT
 	
 	<!-- sns으로 가입한 회원인지 확인  -->
 	<select id="snschk" resultType="INT"  parameterType="String">
-	select count(sns_type) from user where user_email = #{user_email};
+	select count(sns_type) from user where user_email = #{user_email}
 	</select>
 	
 	<!-- sns 타입 확인 -->
-	<select id="snstype" resultType="String"  parameterType="String">
-	select sns_type from user where user_email = #{user_email};
+	<select id="snstype" resultType="String"  parameterType="com.btl.findjob.model.UserDTO">
+	select sns_type from user where user_email = #{user_email}
 	</select>
 	
 	<!-- 인증키 체크 -->
@@ -49,7 +59,7 @@ values (#{authorization},#{user_email},#{user_name},#{user_password},CURRENT_DAT
 	
 	<!-- 인증키 재인증을 위해 초기화 업데이트 -->
 	<update id="upkey"  parameterType="com.btl.findjob.model.UserDTO">
-	update user set user_emailauthkey = #{key} where user_email = #{user_email} ;	
+	update user set user_emailauthkey = #{key} where user_email = #{user_email} 
 	</update>
 
 	<!-- 인증 ok -->
