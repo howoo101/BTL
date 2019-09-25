@@ -1,34 +1,34 @@
 package com.btl.findjob.controller;
 
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
-import javax.inject.Inject;
+import javax.mail.internet.NewsAddress;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.btl.findjob.model.CompanyReview;
-import com.btl.findjob.model.MypageCriteria;
-import com.btl.findjob.model.MypagePageDTO;
-import com.btl.findjob.service.CompanyReviewService;
-import lombok.extern.log4j.Log4j;
-
-import org.apache.http.HttpResponse;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.btl.findjob.model.MypageCriteria;
+import com.btl.findjob.model.MypagePageDTO;
+import com.btl.findjob.service.CompanyReviewService;
 import com.btl.findjob.service.EnterpriseService;
 import com.btl.findjob.service.MypageService;
 import com.btl.findjob.utils.CookieUtils;
 import com.btl.findjob.utils.NaverSearchAPI;
+
+import lombok.extern.log4j.Log4j;
 
 /**
  * Handles requests for the application home page.
@@ -127,7 +127,11 @@ public class HomeController {
 
 		}
 		model.addAttribute("map", data);
+		// news
+		NaverSearchAPI api = new NaverSearchAPI();
+		List<String[]> list = api.result(ci_companyName);
 		
+		model.addAttribute("news",api.result(ci_companyName));
 		
 		return "info";
 	}
