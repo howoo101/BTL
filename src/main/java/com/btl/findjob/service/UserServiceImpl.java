@@ -1,5 +1,7 @@
 package com.btl.findjob.service;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,14 +23,8 @@ UserMapper mapper;
 		return mapper.emailchk(user_email);
 	}
 
-
-	@Override
-	public void join_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name,@Param("key") String key,@Param("authorization") int authorization,@Param("salt") String salt) {
-		
-		
-		 mapper.join_insert(user_email,user_password,user_name,key,authorization,salt);
-		
-	}
+	
+	
 
 
 	@Override
@@ -115,6 +111,36 @@ UserMapper mapper;
 		
 		return mapper.getname(user_email);
 	}
+
+
+
+
+
+	@Override
+	public void join_insert(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name,@Param("authorization") int authorization,@Param("salt") String salt) {
+	
+		mapper.join_insert(user_email,user_password,user_name,authorization,salt);
+			
+		}
+
+
+
+	@Override
+	public List<UserDTO> user_info(String user_email) {
+		
+		return  mapper.user_info(user_email);
+
+	}
+
+
+
+
+
+	@Override
+	public void user_info_modify(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name,@Param("salt") String salt) {
+		mapper.user_info_modify(user_email, user_password, user_name, salt);
+	}
+		
 
 
 

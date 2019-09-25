@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <meta name="google-signin-client_id"
 	content="589581046105-skr2iee57c8j3o02lsl3g284ts0g0ks9.apps.googleusercontent.com">
 
@@ -9,21 +10,19 @@
 <!-- 구글 login -->
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- 카카오 로그인 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <form class="form-login">
 	<h2 class="form-signin-heading">LOGIN</h2>
 	<br> <label for="inputEmail" class="sr-only">Email address</label>
-	<input type="email" name="user_email" id="inputEmail"
-		class="form-control" placeholder="이메일주소" required autofocus> <label
-		for="inputPassword" class="sr-only">Password</label> <input
-		type="password" name="user_password" id="inputPassword"
-		class="form-control" placeholder="비밀번호" required> <br> <input
-		type="button" id="loginbtn" value="로그인"
-		class="btn btn-lg btn-primary btn-block">
+	<input type="email" name="user_email" id="inputEmail" class="form-control" placeholder="이메일주소" required autofocus> 
+	<label for="inputPassword" class="sr-only">Password</label> 
+	<input type="password" name="user_password" id="inputPassword"class="form-control" placeholder="비밀번호" required> <br> 
+	<input type="button" id="loginbtn" value="로그인"class="btn btn-lg btn-primary btn-block">
 </form>
 <br>
+
 
 <!-- 소셜 로그인 패널 -->
 <div id="sns_nav">
@@ -47,6 +46,8 @@
 
 <script>
 // 네이버로그인 처리
+
+
 var naver_id_login = new naver_id_login("qbkbZvOsyDOQedGRhs0e",
 		"http://localhost:8282/findjob/callback");
 var state = naver_id_login.getUniqState();
@@ -62,9 +63,8 @@ $('#loginbtn').click(function(){
 		url : "${pageContext.request.contextPath}/login_chk.do",
 		type : "POST",
 		data : {
-			"user_email" : $('#inputEmail').val(),
-			"user_password" : $('#inputPassword')
-					.val(),
+		"user_email" : $('#inputEmail').val(),
+		"user_password" : $('#inputPassword').val(),
 		},
 		success : function(data) {
 			if (data == '1') {
@@ -72,10 +72,9 @@ $('#loginbtn').click(function(){
 				$('.close').trigger('click');
 				location.reload();
 			} else if (data == '2') {
-				alert("로그인 되었습니다. 현재 인증메일 비인증회원입니다 인증메일을 확인하시고 인증해주세요.");
-				$('.close').trigger('click');
-				location.reload();
-			} else if (data == '4') {
+				alert("이메일 혹은 비밀번호를 다시 확인해주세요.");
+				$('#inputEmail').focus();
+			} else if (data == '3') {
 				alert("이미 접속중인 계정입니다.");
 				$('.close').trigger('click');
 				location.reload();
@@ -85,13 +84,10 @@ $('#loginbtn').click(function(){
 				var snstype = data;
 				alert("회원님은 "
 						+ snstype
-						+ " SNS 계정으로 가입된 회원입니다.해당 SNS플랫폼으로  로그인 해주세요.");
+						+ " SNS 계정으로 가입된 회원입니다.\n 해당 SNS플랫폼으로 로그인 해주세요.");
 				$('#inputEmail').focus();
-			} else {
-				alert("이메일 혹은 비밀번호를 다시 확인해주세요.");
-				$('#inputEmail').focus();
-			}
-		},
+			 } 
+			},
 		error : function() {
 			alert("서버에러");
 		}
@@ -99,6 +95,8 @@ $('#loginbtn').click(function(){
 });
 
 /* 구글 로그인 */
+ 
+
 function onSignIn(googleUser) {
 	var id_token = googleUser.getAuthResponse().id_token; //id 토큰 획득 (id토큰에 사용자 정보가 모여있다 아이디번호,닉네임,이메일,프로필사진)
 
@@ -136,6 +134,7 @@ function signOut() {
 	});
 }
 
+
 /* 카카오 로그인  */
 function loginWithKakao() {
 	// 로그인 창을 띄웁니다.
@@ -146,40 +145,32 @@ function loginWithKakao() {
 				success : function(res) {
 					var user_email = res.kaccount_email;
 					var user_name = res.properties['nickname'];
-
-					$
-							.ajax({
-								url : "${pageContext.request.contextPath}/kakao",
-								type : "post",
-								contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-								data : {
-									"user_email" : user_email,
-									"user_name" : user_name
-								},
-								success : function(data) {
-									if (data == '1') {
-										$('.close')
-												.trigger(
-														'click');
-										location.reload();
-									} else if (data == '2') {
-										alert("로그인에 실패하였습니다 해당 이메일은 이미 다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다.")
-										$('.close')
-												.trigger(
-														'click');
-										location.reload();
-									} else if (data == '3') {
-										alert("sns회원 자동가입이 완료되었습니다.")
-										$('.close')
-												.trigger(
-														'click');
-										location.reload();
-									}
-								},
-								error : function() {
-									alert("서버에러");
+					$.ajax({
+							url : "${pageContext.request.contextPath}/kakao",
+							type : "post",
+							contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+							data : {
+								"user_email" : user_email,
+								"user_name" : user_name
+							},
+							success : function(data) {
+								if (data == '1') {
+									$('.close').trigger('click');
+									location.reload();
+								} else if (data == '2') {
+									alert("로그인에 실패하였습니다 해당 이메일은 이미 다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다.")
+									$('.close').trigger('click');
+									location.reload();
+								} else if (data == '3') {
+									alert("sns회원 자동가입이 완료되었습니다.")
+									$('.close').trigger('click');
+									location.reload();
 								}
-							});
+							},
+							error : function() {
+								alert("서버에러");
+							}
+						});
 				}
 			});
 		},
@@ -203,7 +194,6 @@ function naverlogin() {
 			if (data == '1') {
 				$('.close').trigger('click');
 				location.reload();
-	
 			} else if (data == '2') {
 				alert("로그인에 실패하였습니다 해당 이메일은 이미 다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다.")
 				$('.close').trigger('click');
