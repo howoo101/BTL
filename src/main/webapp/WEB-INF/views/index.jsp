@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="includes/header.jsp" %>
 
@@ -14,14 +14,15 @@
         <div class="container h-100">
             <div class="d-flex h-100 text-center align-items-center">
                 <div class="w-100 text-white">
-                    <h1 class="display-3">Find Job     </h1>
+                    <h1 class="display-3">Find Job </h1>
                     <article class="center">
-                    <form action="search" class="form-inline row" id="main-search-form" novalidate="novalidate">
-                        <div class="form-group">
-                            <input class="form-control form-control-lg" name="keyword" type="text" placeholder="기업명을 검색해주세요" id="inputLarge">
-                            <button class="btn btn-secondary my-2 my-sm-0 ml-2" type="submit">검색</button>
-                        </div>
-                    </form>
+                        <form action="search" class="form-inline row" id="main-search-form" novalidate="novalidate">
+                            <div class="form-group">
+                                <input class="form-control form-control-lg" name="keyword" type="text"
+                                       placeholder="기업명을 검색해주세요" id="inputLarge">
+                                <button class="btn btn-secondary my-2 my-sm-0 ml-2" type="submit">검색</button>
+                            </div>
+                        </form>
                     </article>
                 </div>
             </div>
@@ -34,7 +35,7 @@
         <div class="col-md-12">
             <div id="infoCarousel" class="carousel slide" data-ride="carousel">
 
-                <ol class="carousel-indicators">
+                <ol class="carousel-indicators" style="margin-bottom: 0; margin-top: 20px; height: 25px;">
                     <li data-target="#infoCarousel" data-slide-to="0" class="active"></li>
                     <li data-target="#infoCarousel" data-slide-to="1"></li>
                     <li data-target="#infoCarousel" data-slide-to="2"></li>

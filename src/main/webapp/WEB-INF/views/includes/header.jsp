@@ -96,19 +96,34 @@ if(user==null){
                         <input type="button" class="btn btn-info" onclick="location.href='${path}/list'" name="게시판"
                                value="우리다함께 취업합시다 ,취뽀게시판">
 
-                        <div id="ucon">${name}</div>
                         <!-- login modal -->
                         <button type="button" id="loginmd" class="btn btn-primary" data-toggle="modal"
-                                data-target="#loginModal">
+                                data-target="#loginModal" data-backdrop="false">
                             로그인
                         </button>
+
+                        <!-- 로그인했을시 보이는 user dropmenu -->
+                        <div class="btn-group" id="usermodal">
+                            <div id="ucon" class="mt-2 ml-5 btn-outline-light">${name}</div>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                    aria-expanded="false">
+                                <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">정회원 인증</a></li>
+                                <li><a href="${pageContext.request.contextPath}/myPage_Following">마이페이지</a></li>
+                                <li><a href="logout">log out</a></li>
+                            </ul>
+                        </div>
+                        <!-- 로그인했을시 보이는 user dropmenu 끝 -->
+
                     </div>
                 </div>
             </div>
 
 
             <!-- 모달 div -->
-            <div id="loginModal" class="modal fade" tabindex="-1" role="dialog">
+            <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 2000">
                 <div class="modal-dialog loginmodal-dialog">
                     <div class="modal-content loginmodal-content">
                         <div class="modal-header loginmodal-header">
@@ -130,19 +145,7 @@ if(user==null){
             </div>
             <!-- 모달 div 끝 -->
 
-            <!-- 로그인했을시 보이는 user dropmenu -->
-            <div class="btn-group" id="usermodal">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                        aria-expanded="false">
-                    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">정회원 인증</a></li>
-                    <li><a href="${pageContext.request.contextPath}/myPage_Following">마이페이지</a></li>
-                    <li><a href="logout">log out</a></li>
-                </ul>
-            </div>
-            <!-- 로그인했을시 보이는 user dropmenu 끝 -->
+
         </nav>
     </div>
 </header>
