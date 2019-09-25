@@ -27,5 +27,6 @@ public interface CompanyReviewMapper {
 
     int getCountByCategory(@Param("ci_companyName") String ci_companyName, @Param("cr_category") int cr_category);
 
+    int getStarCtn(@Param("ci_companyName") String ci_companyName, @Param("cr_starRt") int starRt);
 }
 

@@ -11,6 +11,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+import com.btl.findjob.model.CompanyReview;
+import com.btl.findjob.model.MypageCriteria;
+import com.btl.findjob.model.MypagePageDTO;
+import com.btl.findjob.service.CompanyReviewService;
+import com.btl.findjob.service.InterviewReviewService;
+import lombok.extern.log4j.Log4j;
+
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,9 +48,20 @@ public class HomeController {
 	@Autowired
 	EnterpriseService enterService;
 
-	@Autowired
 	private CompanyReviewService companyReviewService;
-	
+
+	@Autowired
+	public void setCompanyReviewService(CompanyReviewService companyReviewService){
+	    this.companyReviewService=companyReviewService;
+    };
+
+	private InterviewReviewService interviewReviewService;
+
+	@Autowired
+	public void setInterviewReviewService(InterviewReviewService interviewReviewService){
+		this.interviewReviewService=interviewReviewService;
+	};
+
 	@Autowired
 	MypageService mypageService;
 	
@@ -112,28 +131,61 @@ public class HomeController {
 		List<Double> categoryAve = new ArrayList<>();
 		List<String> categoryName = new ArrayList<>();
 		List<Integer> categoryCtn = new ArrayList<>();
+		List<Integer> getStarCtn = new ArrayList<>();
 
 		for (int i = 0; i < 4; i++) {
 
 			categoryAve.add(companyReviewService.categoryStarRtAve(ci_companyName, i));
 			categoryName.add(companyReviewService.categoryName(i));
 			categoryCtn.add(companyReviewService.getCountByCategory(ci_companyName, i));
-
 			map.put("categoryCtn",categoryCtn);
 			map.put("categoryName",categoryName);
 			map.put("categoryAve", categoryAve);
 
 			data.add(map);
+		}
 
+		//기업 리뷰 차트정보
+		for (int i = 1; i < 6; i++) {
+			getStarCtn.add(companyReviewService.getStarCtn(ci_companyName,i));
+			model.addAttribute("starCtn", getStarCtn);
 		}
 		model.addAttribute("map", data);
+
 		// news
 		NaverSearchAPI api = new NaverSearchAPI();
 		List<String[]> list = api.result(ci_companyName);
 		
 		model.addAttribute("news",api.result(ci_companyName));
 		
-		return "info";
+		
+
+
+
+		//면접 차트 정보
+		String[] difficultyArr = {"쉬움","약간 쉬움","보통","약간 어려움", "어려움"};
+		List<Integer> difficultyList = new ArrayList<>();
+
+		for (String s : difficultyArr) {
+			difficultyList.add(interviewReviewService.difficultyCnt(ci_companyName, s));
+			model.addAttribute("difficultyList", difficultyList);
+		}
+
+		String[] expArr = {"부정적","보통","긍정적"};
+		List<Integer> expList = new ArrayList<>();
+
+		for (String s : expArr) {
+			expList.add(interviewReviewService.expCnt(ci_companyName, s));
+			model.addAttribute("expList", expList);
+		}
+
+		String[] resultArr = {"합격", "불합격", "대기중"};
+		List<Integer> resultList = new ArrayList<>();
+		for(String s: resultArr){
+			resultList.add(interviewReviewService.resultCnt(ci_companyName,s));
+			model.addAttribute("resultList",resultList);
+		}
+    return "info";
 	}
 
 	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)

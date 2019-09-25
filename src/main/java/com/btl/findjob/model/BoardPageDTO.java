@@ -12,13 +12,14 @@ public class BoardPageDTO {
     private int endPage;
     private boolean prev, next;
     
-    private int total;
-    private BoardCriteria cri;
+    private int total; //전체데이터 수
+    private BoardCriteria cri; 
     
     public BoardPageDTO(BoardCriteria cri, int total) {
         this.cri = cri;
         this.total = total;
         
+        //페이지 번호 계산
         this.endPage = (int)(Math.ceil(cri.getPageNum() / 10.0)) * 10;
         
         this.startPage = this.endPage-9;

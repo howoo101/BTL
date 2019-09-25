@@ -44,4 +44,9 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
         return companyReviewMapper.getCountByCategory(ci_companyName, cr_category);
     }
 
+    @Override
+    public int getStarCtn(String ci_companyName, int cr_starRt) {
+        return companyReviewMapper.getStarCtn(ci_companyName, cr_starRt);
+    }
+
 }

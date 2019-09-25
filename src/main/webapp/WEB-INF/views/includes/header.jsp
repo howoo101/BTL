@@ -28,6 +28,7 @@
     <script>Kakao.init('34800e916b17799e85bcefde72c06423')</script>
     <!-- 네이버 js -->
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+	<%--구글 로그인 커스텀--%>
 
 	<!-- 구글 아이콘 -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -48,31 +49,20 @@
 
 <!-- 세션받아오기 -->
 <% String user = (String) session.getAttribute("user");%>
-<% String non_auth = (String) session.getAttribute("non_auth");%>
 <% String name = (String) session.getAttribute("name");%>
 
-<!-- 로그인 인터셉터 관련 -->
+<!-- 로그인 인터셉터 (로그인창을 띄어주는 스크립트 임시호출)-->
 <% String ltr = (String) request.getAttribute("ltr");
-	if(user==null){
-		if(ltr != null){  
+if(user==null){
+	if(ltr != null){  
 %>
-		    <%=ltr%> 
+   <%=ltr%> 
 <% 
-  		}
 	}
+}
 %> 
-<!-- 등급 인터셉터 관련 -->
-<% String gtr = (String) request.getAttribute("gtr");
-	
-	if(user!=null){
-		if(gtr != null){  %>
-    		<%=gtr%> 
-<% 
-  		}
-	}
-%> 
+
    <input id="session" type="hidden" value="<%=user%>">  <!-- 로그인 세션파라미터 -->
-   <input id="nonauth" type="hidden" value="<%=non_auth%>">  <!-- 비인증회원 세션파라미터  -->
    <input id="name" type="hidden" value="<%=name%>">  <!-- 유저 이름 세션파라미터 -->
 
 <header class="mt-3">
@@ -90,34 +80,31 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <form action="search" class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="기업명을 검색해주세요">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
+                    <input type="button" class="btn btn-info my-2 my-sm-0" onclick="location.href='http://localhost:8282/findjob/list'" name="게시판" value="우리다함께 취업합시다 ,취뽀게시판">
                 </form>
             </div>
             
-            <div id="authmail">
-               <img id ="loading-bar" class="img-responsive center-block" src="resources/img/ajax-loader.gif" />  
-            	<button class="btn btn-dark" id="authbtn">인증메일 다시 받기</button>
-            </div>
+       
             
-            <div id="ucon">${name}님 로그인 하셨습니다.</div>
+            <div id="ucon">${name}</div>
             
             <!-- login modal -->
-			<button type="button" id="loginmodal" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+			<button type="button" id="loginmd" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
 			  로그인			
 			</button> 
 			
 			<!-- 모달 div -->
 	 	     <div id="loginModal" class="modal fade" tabindex="-1" role="dialog"> 
-			        <div class="modal-dialog" id="loginmodal-dialog">
-			            <div class="modal-content" id="loginmodal-content">
-			                <div class="modal-header" id="loginmodal-header">	
-			                    <h5 class="modal-title" id="loginmodal-title">LOGIN</h5>
+			        <div class="modal-dialog loginmodal-dialog" >
+			            <div class="modal-content loginmodal-content">
+			                <div class="modal-header loginmodal-header">	
+			                    <h5 class="modal-title loginmodal-title"  >LOGIN</h5>
 			                    <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			                </div>
-			                <div class="modal-body" id="loginmodal-body">
+			                <div class="modal-body loginmodal-body">
 			 
 			                </div>
-			                <div class="modal-footer" id="loginmodal-footer">
+			                <div class="modal-footer loginmodal-footer">
 					     
 			                <button id="login" class="btn btn-primary">로그인</button>
 			                <button id="signup" class="btn btn-primary">회원가입</button>
@@ -147,44 +134,7 @@
 <script>
 $("#loading-bar").hide(); // 평상시 감춤
 
-// 인증메일 보내기
 
-if ($('#nonauth').val() == 'null'){
-	$("#authmail").hide();
-}
-
-if ($('#nonauth').val() != 'null'){
-	$("#authmail").show();
-	$("#authmail").click(function(){
-
-		var result = confirm (" 현재 가입된 "+ $('#session').val() + "으로 인증메일을 다시 보내겠습니까?");
-		if(result){
-			$.ajax({
-				url:"${pageContext.request.contextPath}/re_auth",
-				type: "POST",
-				data:{
-					 "user_email" :$('#session').val(),
-					},
-					beforeSend:function(){
-						$("#loading-bar").show();
-					},
-				success: function(data){
-					$("#loading-bar").hide();
-					if(data == '1' ){
-						alert("인증메일이 전송되었습니다. 메일함에서 확인해주세요")	;
-					}
-					else if(data == '2' ){
-						alert("이미 인증된 회원입니다. 재 로그인해주세요.");
-						location.reload();
-					}	
-				},
-				error: function(){
-					alert("서버에러");
-				}
-			}); 			
-		}
-	});
-} 
 
 //로그인 후 유저 이름표시
 if ($('#name').val() == 'null'){
@@ -197,16 +147,16 @@ if ($('#name').val() != 'null'){
 // 세션이 있을시 로그인 메뉴를 감추고 회원메뉴를 show
 if ($('#session').val() == 'null'){
 	$("#usermodal").hide();
-	$("#loginmodal").show();	
+	$("#loginmd").show();	
 } 
 if ($('#session').val() != 'null'){
 	$("#usermodal").show();
-	$("#loginmodal").hide();	
+	$("#loginmd").hide();	
 } 
 
 //최초 modal-body에 로드되는 로그인 페이지
 $("#loginModal").on("show.bs.modal", function() {
-	$( "#loginmodal-body" ).load( "login");
+	$( ".loginmodal-body" ).load( "login");
     $("#login").hide();
    	$("#signup").show();
    	$("#pwfind").show();
@@ -214,15 +164,15 @@ $("#loginModal").on("show.bs.modal", function() {
 
 //클릭시 modal-body에 해당 url로드
 $("#login").click(function(){
-	$( "#loginmodal-body" ).load( "login");
+	$( ".loginmodal-body" ).load( "login");
 });
 
 $("#signup").click(function(){
-	$( "#loginmodal-body" ).load( "signup");
+	$( ".loginmodal-body" ).load( "signup"); 
 });
 
 $("#pwfind").click(function(){
-	$( "#loginmodal-body" ).load( "pwfind");
+	$( ".loginmodal-body" ).load( "pwfind");
 });
    
  // modal-footer 
