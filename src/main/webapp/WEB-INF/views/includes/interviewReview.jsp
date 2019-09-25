@@ -69,78 +69,118 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="form-group">
-                        <label>면접 난이도</label> <label>
-                        <select class="form-control custom-select" name="ir_difficulty">
-                            <option>쉬움</option>
-                            <option>약간 쉬움</option>
-                            <option>보통</option>
-                            <option>약간 어려움</option>
-                            <option>어려움</option>
-                        </select>
-                    </label>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>면접 난이도</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <label>
+                                <select class="form-control custom-select" name="ir_difficulty">
+                                    <option>쉬움</option>
+                                    <option>약간 쉬움</option>
+                                    <option>보통</option>
+                                    <option>약간 어려움</option>
+                                    <option>어려움</option>
+                                </select>
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>면접 날짜</label>
-                        <label>
-                            <input class="form-control" type="date" name='ir_interviewDate' value=''>
-                        </label>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>면접 날짜</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <label>
+                                <input class="form-control" type="date" name='ir_interviewDate' value=''>
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>면접 경험</label>
-                        <label>
-                            <select class="form-control custom-select" name="ir_experience">
-                                <option>긍정적</option>
-                                <option>보통</option>
-                                <option>부정적</option>
-                            </select>
-                        </label>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>면접 경험</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <label>
+                                <select class="form-control custom-select" name="ir_experience">
+                                    <option>긍정적</option>
+                                    <option>보통</option>
+                                    <option>부정적</option>
+                                </select>
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>면접 경로</label>
-                        <label>
-                            <select class="form-control custom-select" name="ir_route">
-                                <option>공개 채용</option>
-                                <option>상시 채용</option>
-                                <option>취업 센터</option>
-                                <option>학교 취업 센터</option>
-                                <option>기타</option>
-                            </select>
-                        </label>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>지원 경로</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <label>
+                                <select class="form-control custom-select" name="ir_route">
+                                    <option>공개 채용</option>
+                                    <option>상시 채용</option>
+                                    <option>취업 센터</option>
+                                    <option>학교 취업 센터</option>
+                                    <option>온라인 지원</option>
+                                    <option>기타</option>
+                                </select>
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>면접 제목</label>
-                        <label>
-                            <input class="form-control" name='ir_title' value=''>
-                        </label>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>면접, 채용 과정 등 요약</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <label>
+                                <textarea class="form-control" name='ir_title' rows="4"
+                                          placeholder="최대한 자세하게 작성해주세요. 최초 연락부터 인터뷰 횟수, 분위기, 면접관의 특징, 면접 팁 등"></textarea>
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>면접 질문</label>
-                        <label>
-                            <input class="form-control" name='ir_question' value=''>
-                        </label>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>면접 질문</label>
+                        </div>
+                        <div class="col-sm-9">
+
+                            <label>
+                                <textarea class="form-control" name='ir_question' rows="4"></textarea>
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>면접 답변</label>
-                        <label>
-                            <input class="form-control" name='ir_answer' value=''>
-                        </label>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>면접 답변</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <label>
+                                <textarea class="form-control" name='ir_answer' rows="4"></textarea>
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>면접 결과</label>
-                        <label>
-                            <select class="form-control custom-select" name="ir_result">
-                                <option>대기중</option>
-                                <option>합격</option>
-                                <option>불합격</option>
-                            </select>
-                        </label>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>면접 결과</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <label>
+                                <select class="form-control custom-select" name="ir_result">
+                                    <option>대기중</option>
+                                    <option>합격</option>
+                                    <option>불합격</option>
+                                </select>
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>결과 발표</label>
-                        <label>
-                            <input class="form-control" type="date" name='ir_resultDate' value=''>
-                        </label>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>결과 발표</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <label>
+                                <input class="form-control" type="date" name='ir_resultDate' value=''>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -153,6 +193,7 @@
         </div>
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
         const ci_idValue = '<c:out value="${companyList[0].ci_id}"/>';//homeController에 있는 모델 받아서 사용 0 넣지 안으면 에러
@@ -204,9 +245,9 @@
         let interviewDateModal = interviewModal.find("input[name='ir_interviewDate']");
         let interviewExperienceModal = interviewModal.find("select[name='ir_experience']");
         let interviewRouteModal = interviewModal.find("select[name='ir_route']");
-        let interviewTitleModal = interviewModal.find("input[name='ir_title']");
-        let interviewQuestionModal = interviewModal.find("input[name='ir_question']");
-        let interviewAnswerModal = interviewModal.find("input[name='ir_answer']");
+        let interviewTitleModal = interviewModal.find("textarea[name='ir_title']");
+        let interviewQuestionModal = interviewModal.find("textarea[name='ir_question']");
+        let interviewAnswerModal = interviewModal.find("textarea[name='ir_answer']");
         let interviewResultModal = interviewModal.find("select[name='ir_result']");
         let interviewResultDateModal = interviewModal.find("input[name='ir_resultDate']");
 
@@ -311,8 +352,7 @@
                     str += "                <div class='col-lg-3'>";
                     str += "                   <div class='container-fluid'>";
                     str += "                     <small class='font-weight-bold'>면접 난이도</small><br>";
-                    str += "                       <small class='difficultyColor font-weight-bold'>" +interviewReviewDTOList[i].ir_difficulty + "</small><br>";
-                    str += "                         <div class='chart'>차트</div><br>";
+                    str += "                       <small class='difficultyColor font-weight-bold'>" +interviewReviewDTOList[i].ir_difficulty + "</small><br><br>";
                     str += "                           <small class='font-weight-bold'>면접 일자</small><br>";
                     str += "                             <small>" + interviewReviewService.displayTime(interviewReviewDTOList[i].ir_interviewDate) + "</small> <br><br>";
                     str += "                               <small class='font-weight-bold'>면접 경로</small><br>";
@@ -368,11 +408,11 @@
                 const difAveUL = $(".difAve");
 
                 for (let i = 0; i < 5; i++) {
-                    aveResult += difficultyAve[i] * (i+1);
+                    aveResult += difficultyAve[i] * (i + 1);
                     difCtn += difficultyAve[i];
                 }
                 aveResult /= difCtn;
-                if(aveResult !== 0) {
+                if (aveResult !== 0) {
                     difAveUL.html(aveResult);
                 }
             })
@@ -462,7 +502,7 @@
                     ]
                 }]
         };
-        var stackedBar = new Chart(ctx, {
+        var stackedBarChart = new Chart(ctx, {
             type: 'bar',
             data: data,
             options: {
@@ -574,6 +614,7 @@
                 }
             }
         });
+
     };
 
 </script>
