@@ -40,7 +40,7 @@ public interface UserMapper {
 	
 	public void name_modify(@Param("user_email") String user_email,@Param("user_name") String user_name);
 	
-	public String get_userid(String get_userid);
+	public String get_userid(String user_email);
 	
 
 }
