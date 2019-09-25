@@ -9,22 +9,26 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>  
+	<!-- 부트스트랩 -->
+	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
+	<%--부트스트랩 CSS--%>
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
+	<%-- index css 커스텀--%>
+	<link rel="stylesheet" type="text/css" href="resources/css/indexStyle.css">
+	<%-- TH css 커스텀--%>
+	<link rel="stylesheet" type="text/css" href="resources/css/THStyle.css">
+	
+	<!--부트스트랩 와치-->
+	<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet"
+	      integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- 부트스트랩 -->
-    <script type="text/javascript" src="resources/js/bootstrap.js"></script>
-    <%--부트스트랩 CSS--%>
-    <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
-    <%--css 커스텀--%>
-    <link rel="stylesheet" type="text/css" href="resources/css/indexStyle.css">
-    <!--부트스트랩 와치-->
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
+	<!-- 카카오 js -->
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<!-- 카카오 init -->
 
-    <!-- 카카오 js -->
-    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-    <!-- 카카오 init -->
     <script>Kakao.init('34800e916b17799e85bcefde72c06423')</script>
     <!-- 네이버 js -->
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
@@ -67,7 +71,8 @@ if(user==null){
 <input id="session" type="hidden" value="<%=user%>">  <!-- 로그인 세션파라미터 -->
 <input id="name" type="hidden" value="<%=name%>">  <!-- 유저 이름 세션파라미터 -->
 
-<header>
+<header class="header-fixed">
+
     <div id="content-wrap">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -134,6 +139,8 @@ if(user==null){
         </nav>
     </div>
 </header>
+<br/>
+<br/>
 
 <script>
     $("#loading-bar").hide(); // 평상시 감춤

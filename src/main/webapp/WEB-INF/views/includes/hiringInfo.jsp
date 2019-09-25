@@ -63,14 +63,14 @@ $.ajax({
 			var location = data['jobs']['job'][i]['position']['location']['name'];
     	
     		saramInRow.innerHTML +=
-    			  '<div class="col-sm-4 ">'
-    			+ '  <!-- 패널 배경색 넣는곳 만약 색을 바꾸고 싶다면, bootstrap.css 파일에서 bg-원하는 색 컬러를 추가해서 해야한다.-->'
-    			+ '  <div class="panels panel-default text-center" style="background-color: #F2F2F2;">'
+    			  '<div class="col-sm-4" style="padding-top:5px; padding-bottom: 5px;">'
+    			+ '  <!-- 패널 배경색 넣는곳 -->'
+    			+ '  <div class="panels panel-default text-center panel-border">'
     			+ '    <!-- 패널 헤드 배경색 넣는곳  -->'
-    			+ '    <div class="panel-headings" style="background-color: #819FF7;">'
+    			+ '    <div class="panel-headings panel-border" style="background-color: #819FF7;">'
     			+ '      <span class="text-light font-weight-bold">'+hireDate+'</span>'
     			+ '    </div>'
-    			+ '    <div class="panels-body">'
+    			+ '    <div class="panel-body">'
     			+ '      <!-- 회사 이름을 넣는곳 -->'
     			+ '      <h4 class="name">'+companyName+'</h4>'
     			+ '      <h5>'

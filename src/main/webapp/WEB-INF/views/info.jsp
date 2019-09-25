@@ -4,7 +4,7 @@
 
 <%@ include file="includes/header.jsp" %>
 
-<%@ include file="includes/sidebar.jsp" %>
+<%@ include file="includes/sidebar2.jsp" %>
 
 <%@ include file="includes/enterpriseInfo.jsp" %>
 
