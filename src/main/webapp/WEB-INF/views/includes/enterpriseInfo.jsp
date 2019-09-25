@@ -16,8 +16,9 @@
             <c:forEach items="${companyList}" var="vo">
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="font-weight-bold card-title">${vo.ci_companyName }
+                        <div class="font-weight-bold card-title">
                         	<h2>
+                        		${vo.ci_companyName }
                         		<c:if test="${vo.followId eq 0}">
 									<button id="unfollow" class="follow btn btn-outline-danger" data-ciId=${vo.ci_id }>♡</button>
 								</c:if>

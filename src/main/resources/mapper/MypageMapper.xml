@@ -48,5 +48,25 @@
 	
 	</select>
 	
+	<select id="getRecentCompanyList" resultType = "com.btl.findjob.model.CompanyListVO">
+		select companyinfo.*,ifnull(follow.follow_id,0) as followId 
+		from  companyinfo
+		left join (select * from follow 
+		where follow.user_id = (SELECT user_id FROM user
+		where user_email = #{userEmail})
+		) follow on  follow.ci_id = companyinfo.ci_id
+		where companyinfo.ci_id in 
+		<if test="recentArr != null">
+		<foreach collection="recentArr" item = "item" index="index"  open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        	ORDER BY FIELD(companyinfo.ci_id,
+         	<foreach collection="recentArr" item="item"  separator=",">#{item}</foreach>)
+        </if>
+        <if test="recentArr == null">
+        (0)
+        </if>
+	</select>
+	
 	
 </mapper>

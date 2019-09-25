@@ -30,4 +30,10 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.getTotalFollowCount(userEmail);
 	}
 
+	@Override
+	public List<CompanyListVO> getRecentCompanyList(String userEmail, String[] recentArr) {
+		// TODO Auto-generated method stub
+		return mapper.getRecentCompanyList(userEmail, recentArr);
+	}
+
 }
