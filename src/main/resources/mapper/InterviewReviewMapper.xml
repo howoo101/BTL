@@ -4,7 +4,7 @@
 
     <insert id="interviewReviewRegister">
         insert into interviewreview (ir_difficulty, ir_interviewDate, ir_experience, ir_route, ir_title, ir_question, ir_answer, ir_result, ir_resultDate, user_id, ci_id)
-        VALUES (#{ir_difficulty}, #{ir_interviewDate},#{ir_experience}, #{ir_route}, #{ir_title}, #{ir_question}, #{ir_answer}, #{ir_result}, #{ir_resultDate}, 31, #{ci_id})
+        VALUES (#{ir_difficulty}, #{ir_interviewDate},#{ir_experience}, #{ir_route}, #{ir_title}, #{ir_question}, #{ir_answer}, #{ir_result}, #{ir_resultDate}, #{user_id}, #{ci_id})
     </insert>
 
     <select id="getListWithPaging" resultType="com.btl.findjob.model.InterviewReviewDTO">

@@ -5,7 +5,7 @@
     <!--insert-->
     <insert id="insertCompanyReview">
         insert into companyreview (cr_comment, cr_starRt, cr_regDate, cr_category, user_id, ci_id)
-        values (#{cr_comment}, #{cr_starRt}, now(), #{cr_category}, 31, #{ci_id})
+        values (#{cr_comment}, #{cr_starRt}, now(), #{cr_category}, #{user_id}, #{ci_id})
     </insert>
 
     <!--페이징-->

@@ -56,6 +56,7 @@
 <!-- 세션받아오기 -->
     <% String user = (String) session.getAttribute("user");%>
     <% String name = (String) session.getAttribute("name");%>
+    <% String user_id = (String) session.getAttribute("user_id");%>
 
 <!-- 로그인 인터셉터 (로그인창을 띄어주는 스크립트 임시호출)-->
     <% String ltr = (String) request.getAttribute("ltr");

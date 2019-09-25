@@ -100,6 +100,7 @@
                                                 <input class="count" type="hidden">
                                                 <input class="cr_category" type="hidden"
                                                        value="${status.index}">
+                                                <input class="user_id" type="hidden" value="<%=user_id%>">
                                                     <%--회사정보 집어넣기 위해서 id--%>
                                                 <input class="forInsert" type="hidden"
                                                        value="${companyList[0].ci_id}">
@@ -166,7 +167,6 @@
 <script>
     $(document).ready(function () {
         const ci_idValue = '<c:out value="${companyList[0].ci_id}"/>';//homeController에 있는 모델 받아서 사용 0 넣지 안으면 에러
-
         //별점 등록
         $(".registerBtn0,.registerBtn1,.registerBtn2,.registerBtn3").on("click", function (e) {
             var cr_index = $(".cr_index");
@@ -178,6 +178,7 @@
             var cr_starRt = $div.find('input[class="count"]').text();
             var forInsert = $div.find('input[class="forInsert"]').val();
             var cr_category = $div.find('input[class="cr_category"]').val();
+            var user_id = $div.find('input[class="user_id"]').val();
             $.ajax({
                     type: "post",
                     url: "${path}/companyReview/new",
@@ -185,6 +186,7 @@
                         cr_comment: cr_comment,
                         cr_starRt: cr_starRt,
                         cr_category: cr_category,
+                        user_id: user_id,
                         ci_id: forInsert
                     }),
                     contentType: "application/json; charset=utf-8",

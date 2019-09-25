@@ -179,6 +179,7 @@
                         <div class="col-sm-9">
                             <label>
                                 <input class="form-control" type="date" name='ir_resultDate' value=''>
+                                <input class="user_id" type="hidden" value="<%=user_id%>">
                             </label>
                         </div>
                     </div>
@@ -250,19 +251,8 @@
         let interviewAnswerModal = interviewModal.find("textarea[name='ir_answer']");
         let interviewResultModal = interviewModal.find("select[name='ir_result']");
         let interviewResultDateModal = interviewModal.find("input[name='ir_resultDate']");
+        const user_id = interviewModal.find('input[class="user_id"]');
 
-        const interviewReview = {
-            ir_difficulty: difficultyModal.val(),
-            ir_interviewDate: interviewDateModal.val(),
-            ir_experience: interviewExperienceModal.val(),
-            ir_route: interviewRouteModal.val(),
-            ir_title: interviewTitleModal.val(),
-            ir_question: interviewQuestionModal.val(),
-            ir_answer: interviewAnswerModal.val(),
-            ir_result: interviewResultModal.val(),
-            ir_resultDate: interviewResultDateModal.val(),
-            ci_id: ci_idValue
-        };
 
         $("#interviewReviewRegister").on("click", function (e) {
             $(".interviewModal").modal("show");
@@ -278,6 +268,7 @@
                 ir_interviewDate: interviewDateModal.val(),
                 ir_experience: interviewExperienceModal.val(),
                 ir_route: interviewRouteModal.val(),
+                user_id : user_id.val(),
                 ir_title: interviewTitleModal.val(),
                 ir_question: interviewQuestionModal.val(),
                 ir_answer: interviewAnswerModal.val(),
@@ -287,12 +278,13 @@
             };
 
             add(interviewReview, function (result) {
-                alert(result);
+                alert("등록에 성공하였습니다.");
 
                 interviewModal.find("input").val("");
                 interviewModal.modal("hide");
 
-                showList(1);
+                // showList(1);
+                location.reload();
             });
         });
 
