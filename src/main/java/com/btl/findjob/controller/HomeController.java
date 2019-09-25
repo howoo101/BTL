@@ -156,7 +156,7 @@ public class HomeController {
 		NaverSearchAPI api = new NaverSearchAPI();
 		List<String[]> list = api.result(ci_companyName);
 		
-		model.addAttribute("news",api.result(ci_companyName));
+		model.addAttribute("news", list);
 		
 		
 

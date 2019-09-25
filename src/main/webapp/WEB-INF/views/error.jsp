@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>에러다 에러~~~~~</title>
 </head>
 <body>
 	<h2>${exception.getMessage() }</h2>
