@@ -40,7 +40,14 @@
 
 								<div class="col-lg-auto">
 									<div class="row justify-content-center">
-										<h5 class="">*****</h5>
+										<div class="text-warning">
+											<c:forEach begin="1" end="${item.companyReviewAvg}" step="1">
+												<i class="fa fa-star"></i>
+											</c:forEach>
+											<c:forEach begin="${item.companyReviewAvg}" end="4" step="1">
+												<i class="fa fa-star-o"></i>
+											</c:forEach>
+										</div>
 									</div>
 									<div class="row "
 										style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">
@@ -52,7 +59,7 @@
 								</div>
 								<div class="col-lg-auto text-center">
 									<div class="row justify-content-center">
-										<h5>2.9</h5>
+										<h5>${item.companyReviewAvg }</h5>
 									</div>
 									<div class="row " style="">
 										<div class="col-sm-12 text-center">${item.interviewReviewCnt }</div>
@@ -106,9 +113,7 @@
 						fetchList(keyword,path);
 					}
 				},100)
-				/* if (scrollTop + windowHeight >= documentHeight-1) {
-					fetchList(keyword,path);
-				} */
+				
 			})//scroll
 		});//ready
 	</script>

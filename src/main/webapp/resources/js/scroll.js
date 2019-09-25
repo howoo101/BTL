@@ -36,6 +36,7 @@
 					
 					
 					let renderList = function(mode, idx,res,path){
+						console.log(res)
 						//follow check
 						let followBtn = ""
 						if(res.followId === 0) followBtn = '<button id="unfollow" class="follow btn btn-outline-danger" data-ciId="'+res.ci_id+ '">♡</button>'
@@ -74,7 +75,7 @@
 							+ 					'</div>'
 		        			+					'<div class="col-lg-auto text-center">'
 							+						'<div class="row justify-content-center">'
-		        			+							'<h5>2.9</h5>'
+		        			+							'<h5>'+res.companyReviewAvg.toFixed(1)+'</h5>'
 							+						 '</div>'	
 							+						'<div class="row ">'
 							+							'<div class="col-sm-12 text-center">'+res.interviewReviewCnt+'</div>'
