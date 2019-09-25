@@ -28,7 +28,7 @@
                             <div class="col-lg-6 ml-5">
                                 <div class="row">
                                     <h4>
-                                        <a href="${path }/info?ci_companyName=${item.ci_companyName}">${item.ci_companyName}</a>
+                                        <a href="${path }/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">${item.ci_companyName}</a>
 										<c:if test="${item.followId eq 0}">
 											<button id="unfollow" class="follow btn btn-outline-danger" data-ciId=${item.ci_id }>♡</button>
 										</c:if>
@@ -47,7 +47,14 @@
 
                             <div class="col-lg-auto ">
                                 <div class="row ">
-                                    <h5 class="">*****</h5>
+                                   	<div class="text-warning">
+                                       <c:forEach begin="1" end="${item.companyReviewAvg}" step="1">
+                                           <i class="fa fa-star"></i>
+                                       </c:forEach>
+                                       <c:forEach begin="${item.companyReviewAvg}" end="4" step="1">
+                                           <i class="fa fa-star-o"></i>
+                                       </c:forEach>
+                                   	</div>
                                 </div>
                                 <div class="row " style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">
                                     <div class="col-sm-12 text-center">23</div>
@@ -56,7 +63,7 @@
                             </div>
                             <div class="col-lg-auto">
                                 <div class="row">
-                                    <h5>2.9</h5>
+                                    <h5>${item.companyReviewAvg }</h5>
                                 </div>
                                 <div class="row " style="">
                                     <div class="col-sm-12 text-center">23</div>
