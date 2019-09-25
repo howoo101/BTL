@@ -137,8 +137,18 @@ UserMapper mapper;
 
 
 	@Override
-	public void user_info_modify(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name,@Param("salt") String salt) {
-		mapper.user_info_modify(user_email, user_password, user_name, salt);
+	public void name_modify(@Param("user_email") String user_email,@Param("user_name") String user_name) {
+		mapper.name_modify(user_email, user_name);
+	}
+
+
+
+
+
+	@Override
+	public String get_userid(String user_email) {
+		
+		return mapper.get_userid(user_email);
 	}
 		
 

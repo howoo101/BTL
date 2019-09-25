@@ -48,7 +48,7 @@
 					<c:forEach items="${companyList}" var="vo">
 	                    <div class="row mt-3">
 	                        <div class="col-md-6">
-								소재지 | ${vo.ci_industry}
+								업종 | ${vo.ci_industry}
 							</div>
 	                        <div class="col-md-6">
 								주소 | ${vo.ci_address} 

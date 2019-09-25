@@ -1,15 +1,106 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+	
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <script src="https://apis.google.com/js/api:client.js"></script>
+<script>  
 
-<meta name="google-signin-client_id"
-	content="589581046105-skr2iee57c8j3o02lsl3g284ts0g0ks9.apps.googleusercontent.com">
+  
+  var googleUser = {};
+  
+  
+  var startApp = function() {
+	    gapi.load('auth2', function(){
+	      auth2 = gapi.auth2.init({
+	        client_id: '589581046105-skr2iee57c8j3o02lsl3g284ts0g0ks9.apps.googleusercontent.com',
+	        cookiepolicy: 'single_host_origin',
+	     });
+	      attachSignin(document.getElementById('customBtn'));
+	    });
+	  };
+
+
+  
+  
+  function attachSignin(element) {
+    console.log(element.id);
+    auth2.attachClickHandler(element, {},
+        function(googleUser) {
+          document.getElementById('name').innerText = "Signed in: " +
+              googleUser.getBasicProfile().getName();
+        }, function(error) {
+          alert(JSON.stringify(error, undefined, 2));
+        });
+  }
+  </script>	
+  
+<style type="text/css">
+  #customBtn {
+      display: inline-block;
+      background: white;
+      color: #444;
+      width: 100%;
+      border-radius: 5px;
+      border: thin solid #888;
+      box-shadow: 1px 1px 1px grey;
+      white-space: nowrap;
+    }
+    #customBtn:hover {
+      cursor: pointer;
+    }
+    span.label {
+      font-family: serif;
+      font-weight: normal;
+    }
+    span.icon {
+      background: url('resources/img/google_icon.png') transparent 5px 50% no-repeat;
+      display: inline-block;
+      vertical-align: middle;
+      width: 42px;
+      height: 42px;
+    }
+    span.buttonText {
+      display: inline-block;
+      vertical-align: middle;
+      padding-left: 42px;
+      padding-right: 42px;
+      font-size: 14px;
+      font-weight: bold;
+      /* Use the Roboto font that is loaded in the <head> */
+      font-family: 'Roboto', sans-serif;
+    }
+  
+    #kakao_btn {
+    display: inline-block;
+    background: #ffeb00;
+    color: #444;
+    width: 100%;
+    border-radius: 5px;
+    border: thin solid #888;
+    box-shadow: 1px 1px 1px grey;
+    white-space: nowrap;
+  }
+  
+    #naver_btn {
+    display: inline-block;
+    background: #00c73c;
+    color: #444;
+    width: 100%;
+    border-radius: 5px;
+    border: thin solid #888;
+    box-shadow: 1px 1px 1px grey;
+    white-space: nowrap;
+  }
+  
+  </style>
+	
 
 <!-- 네이버 js -->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 
 <!-- 구글 login -->
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-
+ 
 <!-- 카카오 로그인 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
@@ -25,17 +116,24 @@
 
 
 <!-- 소셜 로그인 패널 -->
-<div id="sns_nav">
-	<button>
-		<div class="g-signin2 div-inline" data-onsuccess="onSignIn"></div>
-	</button>
-	<button>
-		<a id="custom-login-btn" href="javascript:loginWithKakao()"><img
-			src="resources/img/kakao_login_btn_medium.png" height="42px"></a>
-	</button>
-	<button>
-		<div id="naver_id_login"></div>
-	</button>
+<div id="sns_nav" class="text-center">
+
+<div id="gSignInWrapper">
+    <span class="label">Sign in with:</span>
+    <div id="customBtn" class="customGPlusSignIn">
+      <span class="icon"></span>
+      <span class="buttonText">Google</span>
+    </div>
+ </div>
+   <div id="name"></div>
+   
+<input type="button" id="kakao_btn" value="카카오 로그인" class="btn btn-lg">  <br>
+<input type="button" id="naver_btn" value="네이버 로그인" class="btn btn-lg"> 
+
+<div class="g-signin2 div-inline" data-onsuccess="onSignIn"></div> 
+<a id="custom-login-btn" href="javascript:loginWithKakao()"><img src="resources/img/kakao_login_btn_medium.png"  height="42px"></a>
+<div id="naver_id_login"></div>
+
 </div>
 
 <!-- 네이버 이메일 콜백리턴 -->
@@ -45,8 +143,10 @@
 
 
 <script>
-// 네이버로그인 처리
 
+startApp();
+
+// 네이버로그인 처리
 
 var naver_id_login = new naver_id_login("qbkbZvOsyDOQedGRhs0e",
 		"http://localhost:8282/findjob/callback");
@@ -97,7 +197,7 @@ $('#loginbtn').click(function(){
 /* 구글 로그인 */
  
 
-function onSignIn(googleUser) {
+ function onSignIn(googleUser) {
 	var id_token = googleUser.getAuthResponse().id_token; //id 토큰 획득 (id토큰에 사용자 정보가 모여있다 아이디번호,닉네임,이메일,프로필사진)
 
 	$.ajax({

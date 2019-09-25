@@ -81,6 +81,7 @@ public class UserController {
 				     else {
 					session.setAttribute("user", user_email); // 세션추가
 					session.setAttribute("name", userservice.getname(user_email)); //닉네임 겟 
+					session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
 					SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장
 					return "1"; //인증회원 로그인
 				     }
@@ -117,6 +118,7 @@ public class UserController {
 			  if(userservice.snstype(user_email).equals("google")) {
 				   session.setAttribute("user", user_email);
 				   session.setAttribute("name", userservice.getname(user_email));
+				   session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
 				   SessionListener.getInstance().setSession(session, user_email);
 				   return "1";
 			  		}
@@ -137,6 +139,7 @@ public class UserController {
 				userservice.snsjoin_insert(user_email,user_name,user_password,authorization,sns_key,sns_type);
 				session.setAttribute("user", user_email);
 				session.setAttribute("name", userservice.getname(user_email));
+				session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
 				SessionListener.getInstance().setSession(session, user_email);
 			 return "3";
 			 }
@@ -163,6 +166,7 @@ HttpSession session = request.getSession();
   if(userservice.snstype(user_email).equals("kakao")) {
    session.setAttribute("user", user_email);
    session.setAttribute("name", userservice.getname(user_email));
+   session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
    SessionListener.getInstance().setSession(session, user_email);
    return "1";
   }
@@ -185,6 +189,7 @@ HttpSession session = request.getSession();
 	userservice.snsjoin_insert(user_email,user_name,user_password,authorization,sns_key,sns_type); 
 	session.setAttribute("user", user_email);
 	session.setAttribute("name", userservice.getname(user_email));
+	session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
 	SessionListener.getInstance().setSession(session, user_email);
 
  return "3";
@@ -206,6 +211,7 @@ HttpSession session = request.getSession();
   if(userservice.snstype(user_email).equals("naver")) {
    session.setAttribute("user", user_email);
    session.setAttribute("name", userservice.getname(user_email));
+   session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
    SessionListener.getInstance().setSession(session, user_email);
    return "1";
   }
@@ -225,6 +231,7 @@ HttpSession session = request.getSession();
 	userservice.snsjoin_insert(user_email,user_name,user_password,authorization,sns_key,sns_type); 
 	session.setAttribute("user", user_email);
 	session.setAttribute("name", userservice.getname(user_email));
+	session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
 	SessionListener.getInstance().setSession(session, user_email);
 	 return "3";		
 	 }
@@ -407,25 +414,38 @@ public String pwfind() {
 		String user_email = (String) session.getAttribute("user");
 	
 		model.addAttribute("Uinfo_list", userservice.user_info(user_email));
-		 
+		model.addAttribute("snschk", Integer.toString(userservice.snschk(user_email))); 
 		
 		return "mypage/user_info";
 	}
 		
 	
-	@RequestMapping(value = "user_info_modify" , method = {RequestMethod.POST}) 
+	@RequestMapping(value = "name_modify" , method = {RequestMethod.POST}) 
 	@ResponseBody
-	public String user_info_modify(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name){
+	public String user_info_modify(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name,HttpSession session){
 		
-		String salt = SHA256Util.generateSalt();
-		String newPassword = SHA256Util.getEncrypt(user_password, salt);
+		userservice.name_modify(user_email, user_name);
 		
-		userservice.user_info_modify(user_email, newPassword, user_name, salt);
-
+		session.removeAttribute("name");
+		session.setAttribute("name", userservice.getname(user_email)); 
 		
 		return "1";
 	}
 	
+	@RequestMapping(value = "pw_modify" , method = {RequestMethod.POST}) 
+	@ResponseBody
+	public String pw_modify(@Param("user_email") String user_email,@Param("user_password") String user_password,HttpSession session){
+		
+		String salt = SHA256Util.generateSalt();
+		String newPassword = SHA256Util.getEncrypt(user_password, salt);
+		
+		userservice.pw_modify(newPassword, salt, user_email);
+		
+		SessionListener.getInstance().removeSession(SessionListener.getInstance().getUserID(session));
+
+		
+		return "1";
+	}
 	
 		
 }
