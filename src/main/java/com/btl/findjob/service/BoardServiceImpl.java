@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.btl.findjob.mapper.BoardMapper;
 import com.btl.findjob.model.BoardCriteria;
@@ -34,9 +35,11 @@ public class BoardServiceImpl implements BoardService {
         mapper.insertSelectKey(board);
     }
     
+    @Transactional
     @Override
     public BoardDTO get(int board_id) {
         log.info("get..."+board_id);
+        mapper.updateBoardHit(board_id);
         return mapper.read(board_id);
     }
 
@@ -56,6 +59,11 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int getTotal(BoardCriteria cri) {
         return mapper.getTotalCount(cri);
+    }
+
+    @Override
+    public void updateBoardHit(int board_id) {
+
     }
 
 }

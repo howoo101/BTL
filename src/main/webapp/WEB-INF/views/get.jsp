@@ -53,24 +53,20 @@
 
 								<button data-oper='modify' class="btn btn-warning"
 									onclick="location.href='modify?board_id=<c:out value="${board.board_id }"/>'">수정</button>
-								<!-- 				<button data-oper='list' class="btn btn-info" onclick="javascript:test();">List</button> -->
 
 								<button data-oper='list' class="btn btn-info"
 									onclick="location.href='list'">List</button>
 							</div>
 							<br>
 
+							<%--댓글 목록처리 위한 div--%>
+							<%--각 li태그는 하나의 댓글을 의미한다. 수정이나 삭제시 이를 클릭하며 댓글번호가 필요하기에 data-reply_id속성을 이용한다.--%>
 							<div class="container">
-								<%--댓글 목록처리 위한 div--%>
-								<%--각 li태그는 하나의 댓글을 의미한다. 수정이나 삭제시 이를 클릭하며 댓글번호가 필요하기에 data-rno속성을 이용한다.--%>
 								<div class="row">
 									<div class="col-lg-12">
 
 										<%--/.panel--%>
 										<div class="penel penel-default">
-											<!-- <div class="panel-heading">
-										<i class="fa fa-comments fa-fw"></i> 댓글
-									</div> -->
 											<div class="panel-heading">
 												<i class="fa fa-comments fa-fw"></i>댓글
 												<button id='addReplyBtn'
@@ -114,16 +110,14 @@
 </form>
 
 <!-- 댓글 모달창 -->
-<div class="modal fade" id="Modal" tabindex="-1" role="dialog"
+<div class="modal  modal_r fade" tabindex="-1" role="dialog"
 	aria-labelledby="ModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<!-- <button type="button" class="close" data-dismiss="modal"
-												aria-hidden="true">&times;</button> -->
 				<h4 class="modal-title" id="myModalLabel">댓글</h4>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body replyM">
 
 				<div class="form-group">
 					<label>내용</label> <input class="form-control" name='reply_content'
@@ -131,7 +125,7 @@
 				</div>
 				<div class="form-group">
 					<label>작성자</label> <input class="form-control" name=reply_writer
-						value=''>
+						value='' readonly="readonly">
 				</div>
 				<div class="form-group">
 					<label>Reply Date</label> <input class="form-control"
@@ -142,8 +136,6 @@
 				<button id='modalModBtn' type="button" class="btn btn-warning">Modify</button>
 				<button id='modalRemoveBtn' type="button" class="btn btn-danger">Remove</button>
 				<button id='modalRegisterBtn' type="button" class="btn btn-primary">Register</button>
-				<!-- <button id='modalCloseBtn' type="button"
-												class="btn btn-default">Close</button> -->
 			</div>
 		</div>
 	</div>
@@ -167,6 +159,8 @@ $(document).ready(function() {
 	});
 });
 </script>
+
+
 
 <!-- js같이 코드돌아감 -->
 <script type="text/javascript" src="resources/js/reply.js"></script>
@@ -282,7 +276,8 @@ $(document).ready(function() {
 			showList(pageNum);
 		});
 
-		var modal = $(".modal");
+		/* 모달창*/
+		var modal = $(".modal_r");
 		var modalInputReply = modal.find("input[name='reply_content']");
 		var modalInputReplyer = modal.find("input[name='reply_writer']");
 		var modalInputReplyDate = modal.find("input[name='reply_date']");
@@ -300,7 +295,7 @@ $(document).ready(function() {
 
 			modalRegisterBtn.show();
 
-			$(".modal").modal("show");
+			$(".modal_r").modal("show");
 		});
 
 		//댓글이 정상적으로 추가되면 경고창을 이용해 성공
@@ -350,7 +345,7 @@ $(document).ready(function() {
 				modalModBtn.show();
 				modalRemoveBtn.show();
 
-				$(".modal").modal("show");
+				$(".modal_r").modal("show");
 
 			});
 		});

@@ -114,7 +114,13 @@
 	</select>
 
 	<update id="updateReplyCnt">
-		update board set replyCnt = replyCnt + #{amount} where board_id = #{board_id}
+		update board set replyCnt = replyCnt + #{amount}
+		where board_id = #{board_id}
+	</update>
+
+	<update id="updateBoardHit">
+		update board set board_hit = board_hit +1 where
+		board_id = #{board_id}
 	</update>
 
 </mapper>

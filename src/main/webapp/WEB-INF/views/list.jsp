@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@ include file="includes/header.jsp"%>
-<!--공간띄우는것 필요함. 임시로 br태그사용-->
+
 <div class="container center-block mt-4">
 	<div class="card border-primary">
 		<div class="row">
@@ -37,7 +37,7 @@
 									</tr>
 								</thead>
 
-
+								<!--  테이블-->
 								<c:forEach items="${list }" var="board">
 									<tr>
 										<td><c:out value="${board.board_id }" /></td>
@@ -54,9 +54,10 @@
 									</tr>
 								</c:forEach>
 							</table>
+							
+							<!--  검색 조건 처리기능-->
 							<div class = 'row'>
 							<div class="col-lg-12">
-							
 							<form id = 'searchForm' action="list" method='get'>
 							<select name='type'>
 							<option value=""
@@ -83,8 +84,7 @@
 							</div>
 							</div>
 
-					
-
+								<!--  페이지번호 이벤트 처리-->
 								<nav aria-label="Board Page navigation">
 									<ul class="pagination justify-content-end">
 										<c:if test="${pageMaker.prev}">
@@ -101,17 +101,17 @@
 							</div>
 				
 
-						<!-- Modal-->
+						<!--작업 처리용 Modal-->
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 							aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="myModalLabel">확 인 창</h5>
+										<h5 class="modal-title" id="myModalLabel">알 림 창</h5>
 										<button class="close" type="button" data-dismiss="modal"
 											aria-label="true">&times;</button>
 									</div>
-									<div class="modal-body">처리가 완료되었습니다.</div>
+									<div class="modal-body">완료되었습니다.</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-primary"
 											data-dismiss="modal">확 인</button>
@@ -128,7 +128,7 @@
 		</div>
 	</div>
 </div>
-
+<!--  페이징기능-->
 <form id='actionForm' action="list" method='get'>
 <input type = 'hidden' name='pageNum' value='${pageMaker.cri.pageNum}'> 
 <input type = 'hidden' name='amount' value='${pageMaker.cri.amount}'> 
@@ -144,12 +144,13 @@
 		history.replaceState({}, null, null);
 
 		function checkModal(result) {
+
 			if (result === '' || history.state) {
 				return;
 			}
 			if (parseInt(result) > 0) {
 				$(".modal-body").html(
-						"게시글" + parseInt(result) + "번이 등록되었습니다.");
+						"게시글" + parseInt(result) + "번이 등록되었습니다."); /* 사용하려했으나  mysql ai 자동증가기능으로 사용안해도됨. */
 			}
 			$("#myModal").modal("show");
 		}
