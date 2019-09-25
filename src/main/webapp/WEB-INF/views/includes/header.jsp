@@ -98,17 +98,16 @@ if(user==null){
 
                         <div id="ucon">${name}</div>
                         <!-- login modal -->
-                        <button type="button" id="loginmd" class="btn btn-primary" data-toggle="modal"
-                                data-target="#loginModal">
-                            로그인
-                        </button>
+                        <button type="button" id="loginmd" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" data-backdrop="false">
+    					로그인
+						</button>
                     </div>
                 </div>
             </div>
 
 
             <!-- 모달 div -->
-            <div id="loginModal" class="modal fade" tabindex="-1" role="dialog">
+            <div id="loginModal" class="modal fade" tabindex="-10" role="dialog">
                 <div class="modal-dialog loginmodal-dialog">
                     <div class="modal-content loginmodal-content">
                         <div class="modal-header loginmodal-header">
