@@ -16,8 +16,11 @@
 	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 	<%--부트스트랩 CSS--%>
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
-	<%--css 커스텀--%>
+	<%-- index css 커스텀--%>
 	<link rel="stylesheet" type="text/css" href="resources/css/indexStyle.css">
+	<%-- TH css 커스텀--%>
+	<link rel="stylesheet" type="text/css" href="resources/css/THStyle.css">
+	
 	<!--부트스트랩 와치-->
 	<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet"
 	      integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
@@ -65,7 +68,7 @@ if(user==null){
    <input id="session" type="hidden" value="<%=user%>">  <!-- 로그인 세션파라미터 -->
    <input id="name" type="hidden" value="<%=name%>">  <!-- 유저 이름 세션파라미터 -->
 
-<header class="mt-3">
+<header class="header-fixed">
     <div id="content-wrap">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -130,6 +133,8 @@ if(user==null){
         </nav>
     </div>
 </header>
+<br/>
+<br/>
 
 <script>
 $("#loading-bar").hide(); // 평상시 감춤
