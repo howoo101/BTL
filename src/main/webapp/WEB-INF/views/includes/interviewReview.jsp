@@ -67,7 +67,7 @@
                     </button>
                     <h4 class="modal-title"></h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" name="need">
 
                     <div class="form-group row">
                         <div class="col-sm-3">
@@ -268,7 +268,7 @@
                 ir_interviewDate: interviewDateModal.val(),
                 ir_experience: interviewExperienceModal.val(),
                 ir_route: interviewRouteModal.val(),
-                user_id : user_id.val(),
+                user_id: user_id.val(),
                 ir_title: interviewTitleModal.val(),
                 ir_question: interviewQuestionModal.val(),
                 ir_answer: interviewAnswerModal.val(),
@@ -277,15 +277,20 @@
                 ci_id: ci_idValue
             };
 
-            add(interviewReview, function (result) {
-                alert("등록에 성공하였습니다.");
+            if (!interviewReview.ir_interviewDate || !interviewReview.ir_difficulty || !interviewReview.ir_experience || !interviewReview.ir_route || !interviewReview.user_id || !interviewReview.ir_title || !interviewReview.ir_question || !interviewReview.ir_answer || !interviewReview.ir_result || !interviewReview.ir_resultDate) {
+                alert("필수값이 입력되지 않았습니다.");
+                return;
+            } else {
+                add(interviewReview, function (result) {
+                    alert("등록에 성공하였습니다.");
 
-                interviewModal.find("input").val("");
-                interviewModal.modal("hide");
+                    interviewModal.find("input").val("");
+                    interviewModal.modal("hide");
 
-                // showList(1);
-                location.reload();
-            });
+                    // showList(1);
+                    location.reload();
+                });
+            }
         });
 
         function add(interviewReview, callback, error) {
@@ -299,9 +304,12 @@
                         callback(result);
                     }
                 },
-                error: function (xhr, status, er) {
-                    if (error) {
-                        error(er);
+                error: function (request, status, error) {
+                    if (request.status === 403) {
+                        location.href = "logininterceptor";
+                    }
+                    if (request.status === 404) {
+                        location.href = "gradeceptor";
                     }
                 }
             });
@@ -344,7 +352,7 @@
                     str += "                <div class='col-lg-3'>";
                     str += "                   <div class='container-fluid'>";
                     str += "                     <small class='font-weight-bold'>면접 난이도</small><br>";
-                    str += "                       <small class='difficultyColor font-weight-bold'>" +interviewReviewDTOList[i].ir_difficulty + "</small><br><br>";
+                    str += "                       <small class='difficultyColor font-weight-bold'>" + interviewReviewDTOList[i].ir_difficulty + "</small><br><br>";
                     str += "                           <small class='font-weight-bold'>면접 일자</small><br>";
                     str += "                             <small>" + interviewReviewService.displayTime(interviewReviewDTOList[i].ir_interviewDate) + "</small> <br><br>";
                     str += "                               <small class='font-weight-bold'>면접 경로</small><br>";
@@ -403,7 +411,7 @@
                     aveResult += difficultyAve[i] * (i + 1);
                     difCtn += difficultyAve[i];
                 }
-                aveResult = Math.round(aveResult/difCtn*10.0)/10;
+                aveResult = Math.round(aveResult / difCtn * 10.0) / 10;
                 if (aveResult !== 0) {
                     difAveUL.html(aveResult);
                 }

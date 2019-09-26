@@ -46,7 +46,7 @@
                                 <div class="card-header" id="heading${status.index}">
                                     <div class="border-info mb-0">
                                         <div class="row">
-                                                <div class="col-lg-10">
+                                            <div class="col-lg-10">
                                                 <button class="btn" type="button" data-toggle="collapse"
                                                         data-target="#collapse${status.index}"
                                                         aria-expanded="false" aria-controls="collapse${status.index}">
@@ -96,7 +96,6 @@
                                                 <input type="text" name="cr_comment"
                                                        class="form-control cr_comment${status.index}"
                                                        placeholder="입력해주세요.">
-                                                <input type="hidden" class="cr_index" value="${status.index}">
                                                 <input class="count" type="hidden">
                                                 <input class="cr_category" type="hidden"
                                                        value="${status.index}">
@@ -167,10 +166,9 @@
 <script>
     $(document).ready(function () {
         const ci_idValue = '<c:out value="${companyList[0].ci_id}"/>';//homeController에 있는 모델 받아서 사용 0 넣지 안으면 에러
+
         //별점 등록
         $(".registerBtn0,.registerBtn1,.registerBtn2,.registerBtn3").on("click", function (e) {
-            var cr_index = $(".cr_index");
-
             var $div = $(this).closest('div');
 
             // var fudate = $tr.find('input[name="fdate"]').val();
@@ -179,26 +177,39 @@
             var forInsert = $div.find('input[class="forInsert"]').val();
             var cr_category = $div.find('input[class="cr_category"]').val();
             var user_id = $div.find('input[class="user_id"]').val();
-            $.ajax({
-                    type: "post",
-                    url: "${path}/companyReview/new",
-                    data: JSON.stringify({
-                        cr_comment: cr_comment,
-                        cr_starRt: cr_starRt,
-                        cr_category: cr_category,
-                        user_id: user_id,
-                        ci_id: forInsert
-                    }),
-                    contentType: "application/json; charset=utf-8",
-                    success: function (result) {
-                        alert("리뷰가 등록되었습니다.");
-                        // showList(1);
-                        location.reload();
+
+
+            if (!cr_comment|| !cr_starRt|| !forInsert || !cr_category || !user_id) {
+                alert("필수값이 입력되지 않았습니다.");
+            } else {
+                $.ajax({
+                        type: "post",
+                        url: "${path}/companyReview/new",
+                        data: JSON.stringify({
+                            cr_comment: cr_comment,
+                            cr_starRt: cr_starRt,
+                            cr_category: cr_category,
+                            user_id: user_id,
+                            ci_id: forInsert
+                        }),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                            alert("리뷰가 등록되었습니다.");
+                            // showList(1);
+                            location.reload();
+                        },
+                        error: function (request, status, error) {
+                            if (request.status === 403) {
+                                location.href = "logininterceptor";
+                            }
+                            if (request.status === 404) {
+                                location.href = "gradeceptor";
+                            }
+                        }
+
                     }
-
-                }
-            );
-
+                );
+            }
         });
 
         let starRating = "";//별 표현하기 위해
@@ -213,16 +224,16 @@
             let categoryAve = Number($(".categoryAve")[i].innerHTML); //카테고리별 평균 평점
             let floor = Math.floor(categoryAve);
             starRatingAveStar[i] = "";//undifind 제거용
-            if(floor !== 0){
+            if (floor !== 0) {
                 for (let j = 0; j < floor; j++) {
                     starRatingAveStar[i] += "<i class = 'fa fa-star'></i>";
                 }
-                for (let j = 0; j < 5-floor; j++) {
-                    starRatingAveStar[i] +="<i class = 'fa fa-star-o'></i>";
+                for (let j = 0; j < 5 - floor; j++) {
+                    starRatingAveStar[i] += "<i class = 'fa fa-star-o'></i>";
                 }
-            }else{
+            } else {
                 for (let j = 0; j < 5; j++) {
-                    starRatingAveStar[i] +="<i class = 'fa fa-star-o'></i>";
+                    starRatingAveStar[i] += "<i class = 'fa fa-star-o'></i>";
                 }
             }
         }
@@ -271,11 +282,11 @@
 
                         // 별처리 위해
                         for (let j = 0; j < companyReviewList[i].cr_starRt; j++) {
-                            starRating+="<i class='fa fa-star'></i>"
+                            starRating += "<i class='fa fa-star'></i>"
                         }
-                        if(companyReviewList[i].cr_starRt !== 5) {
+                        if (companyReviewList[i].cr_starRt !== 5) {
                             for (let j = 0; j < (5 - companyReviewList[i].cr_starRt); j++) {
-                            starRating+="<i class='fa fa-star-o'></i>"
+                                starRating += "<i class='fa fa-star-o'></i>"
                             }
                         }
 

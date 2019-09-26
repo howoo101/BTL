@@ -20,14 +20,14 @@
     </select>
 
     <select id="difficultyCnt" resultType="int">
-        select count(ir_id) from interviewreview where ci_id = (select ci_id from companyinfo where ci_companyName = #{ci_companyName}) and ir_difficulty = #{ir_difficulty}
+        select count(ir_id) from interviewreview where ci_id =  #{ci_id}  and ir_difficulty = #{ir_difficulty}
     </select>
 
     <select id="expCnt" resultType="int">
-        select count(ir_id) from interviewreview where ci_id = (select ci_id from companyinfo where ci_companyName = #{ci_companyName}) and ir_experience = #{ir_experience}
+        select count(ir_id) from interviewreview where ci_id =  #{ci_id} and ir_experience = #{ir_experience}
     </select>
 
     <select id="resultCnt" resultType="int">
-        select count(ir_id) from interviewreview where ci_id = (select ci_id from companyinfo where ci_companyName = #{ci_companyName}) and ir_result = #{ir_result}
+        select count(ir_id) from interviewreview where ci_id = #{ci_id} and ir_result = #{ir_result}
     </select>
 </mapper>

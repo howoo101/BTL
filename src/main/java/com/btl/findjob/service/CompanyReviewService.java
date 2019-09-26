@@ -16,16 +16,16 @@ public interface CompanyReviewService {
     CompanyReviewPageDTO getListWithPaging(CompanyReviewCriteria companyReviewCriteria,int cr_category ,int ci_id) throws Exception;
 
     //총 평점
-    double totalStarRtAve(String ci_companyName);
+    double totalStarRtAve(int ci_id);
 
     //카테고리별 평점
-    double categoryStarRtAve(String ci_companyName,int cr_category);
+    double categoryStarRtAve(int ci_id,int cr_category);
 
     //카테고리 이름 출력위해
     String categoryName(int cr_category);
 
     //카테고리별 카운트
-    int getCountByCategory(String ci_companyName, int cr_category);
+    int getCountCr(int ci_id, int cr_category);
 
-    int getStarCtn(String ci_companyName, int cr_starRt);
+    int getStarCtn(int ci_id, int cr_starRt);
 }

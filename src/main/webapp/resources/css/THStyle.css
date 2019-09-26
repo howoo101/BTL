@@ -37,8 +37,8 @@
 	font-family: 'Nanum Gothic Coding', monospace;
 }
 
-body {
-  font-family: "Lato", sans-serif;
+* {
+    font-family: 'Nanum Gothic Coding', monospace;
 }
 
 /* sidenav */

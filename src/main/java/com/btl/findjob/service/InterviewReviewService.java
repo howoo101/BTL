@@ -8,10 +8,10 @@ public interface InterviewReviewService {
 
     InterviewReviewPageDTO getListPage(InterviewReviewCriteria interviewReviewCriteria, int ci_id);
 
-    int difficultyCnt(String ci_companyName, String ir_difficulty);
+    int difficultyCnt(int ci_id, String ir_difficulty);
 
-    int expCnt(String ci_companyName, String ir_experience);
+    int expCnt(int ci_id, String ir_experience);
 
-    int resultCnt(String ci_companyName, String ir_result);
+    int resultCnt(int ci_id, String ir_result);
 
 }

@@ -25,13 +25,13 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
     }
 
     @Override
-    public double totalStarRtAve(String ci_companyName) {
-        return Math.ceil(companyReviewMapper.totalStarRtAve(ci_companyName)*10)/10;
+    public double totalStarRtAve(int ci_id) {
+        return Math.ceil(companyReviewMapper.totalStarRtAve(ci_id)*10)/10;
     }
 
     @Override
-    public double categoryStarRtAve(String ci_companyName, int cr_category) {
-        return Math.ceil(companyReviewMapper.categoryStarRtAve(ci_companyName, cr_category)*10)/10;
+    public double categoryStarRtAve(int ci_id, int cr_category) {
+        return Math.ceil(companyReviewMapper.categoryStarRtAve(ci_id, cr_category)*10)/10;
     }
 
     @Override
@@ -40,13 +40,13 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
     }
 
     @Override
-    public int getCountByCategory(String ci_companyName, int cr_category) {
-        return companyReviewMapper.getCountByCategory(ci_companyName, cr_category);
+    public int getCountCr(int ci_id, int cr_category) {
+        return companyReviewMapper.getCountCr(ci_id, cr_category);
     }
 
     @Override
-    public int getStarCtn(String ci_companyName, int cr_starRt) {
-        return companyReviewMapper.getStarCtn(ci_companyName, cr_starRt);
+    public int getStarCtn(int ci_id, int cr_starRt) {
+        return companyReviewMapper.getStarCtn(ci_id, cr_starRt);
     }
 
 }

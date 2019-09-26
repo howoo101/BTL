@@ -79,14 +79,14 @@ public class HomeController {
 
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public String info(@Param ("ci_companyName") String ci_companyName,
-			@Param ("ci_id") String ci_id,HttpServletResponse res,
+			@Param ("ci_id") int ci_id,HttpServletResponse res,
 			Model model,HttpServletRequest req) {
 		logger.info("기업 상세 페이지");
 		System.out.println(ci_id);
 		Cookie[] cookies = req.getCookies();
 		Cookie cookie = CookieUtils.getCookie(cookies, "ciId");
 		if(cookie != null) {
-			if(!cookie.getValue().contains(ci_id)) {
+			if(!cookie.getValue().contains(Integer.toString(ci_id))) {
 				String tmp = cookie.getValue();
 			//최근본기업 5개까지
 			if (tmp.split("/").length > 4) {
@@ -97,7 +97,7 @@ public class HomeController {
 			res.addCookie(cookie);
 			}
 		}else {
-			cookie = new Cookie("ciId",ci_id);
+			cookie = new Cookie("ciId",Integer.toString(ci_id));
 			cookie.setMaxAge(60*60);
 			res.addCookie(cookie);
 		}
@@ -121,7 +121,7 @@ public class HomeController {
 		model.addAttribute("ci_companyName", ci_companyName);
 
 		//ave
-		model.addAttribute("totalStarRt", companyReviewService.totalStarRtAve(ci_companyName));
+		model.addAttribute("totalStarRt", companyReviewService.totalStarRtAve(ci_id));
 
 		//model에 넘기기 위해서
 		List<Map<String,Object>> data = new ArrayList<>();
@@ -135,9 +135,9 @@ public class HomeController {
 
 		for (int i = 0; i < 4; i++) {
 
-			categoryAve.add(companyReviewService.categoryStarRtAve(ci_companyName, i));
+			categoryAve.add(companyReviewService.categoryStarRtAve(ci_id, i));
 			categoryName.add(companyReviewService.categoryName(i));
-			categoryCtn.add(companyReviewService.getCountByCategory(ci_companyName, i));
+			categoryCtn.add(companyReviewService.getCountCr(ci_id, i));
 			map.put("categoryCtn",categoryCtn);
 			map.put("categoryName",categoryName);
 			map.put("categoryAve", categoryAve);
@@ -147,14 +147,14 @@ public class HomeController {
 
 		//기업 리뷰 차트정보
 		for (int i = 1; i < 6; i++) {
-			getStarCtn.add(companyReviewService.getStarCtn(ci_companyName,i));
+			getStarCtn.add(companyReviewService.getStarCtn(ci_id,i));
 			model.addAttribute("starCtn", getStarCtn);
 		}
 		model.addAttribute("map", data);
 
 		// news
 		NaverSearchAPI api = new NaverSearchAPI();
-		List<String[]> list = api.result(ci_companyName);
+		List<String[]> list = api.result(Integer.toString(ci_id));
 		
 		model.addAttribute("news", list);
 		
@@ -167,7 +167,7 @@ public class HomeController {
 		List<Integer> difficultyList = new ArrayList<>();
 
 		for (String s : difficultyArr) {
-			difficultyList.add(interviewReviewService.difficultyCnt(ci_companyName, s));
+			difficultyList.add(interviewReviewService.difficultyCnt(ci_id, s));
 			model.addAttribute("difficultyList", difficultyList);
 		}
 
@@ -175,7 +175,7 @@ public class HomeController {
 		List<Integer> expList = new ArrayList<>();
 
 		for (String s : expArr) {
-			expList.add(interviewReviewService.expCnt(ci_companyName, s));
+			expList.add(interviewReviewService.expCnt(ci_id, s));
 			model.addAttribute("expList", expList);
 		}
 			log.info(expList);
@@ -183,7 +183,7 @@ public class HomeController {
 		String[] resultArr = {"합격", "대기중", "불합격"};
 		List<Integer> resultList = new ArrayList<>();
 		for(String s: resultArr){
-			resultList.add(interviewReviewService.resultCnt(ci_companyName,s));
+			resultList.add(interviewReviewService.resultCnt(ci_id,s));
 			model.addAttribute("resultList",resultList);
 		}
     return "info";

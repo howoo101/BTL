@@ -58,6 +58,9 @@
             <mapping path="/myPage_InterviewReview"/>
         	<mapping path="/myPage_ReviewComment"/> 
         	<mapping path="/myPage_Last"/> 
+        	<mapping path="/myPage_Last"/>
+        	<mapping path="/companyReview/new"/>
+        	<mapping path="/interviewReview/new"/>
             <beans:ref bean="authenticationInterceptor"/>
         </interceptor>
     </interceptors>
