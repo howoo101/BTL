@@ -30,24 +30,14 @@
                     </thead>
 
                     <tbody>
-                    <tr>
-                        <th scope="row">1
-                        <td>Ajay</td>
-                        <td>Patna</td>
-                        <td>20</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Rahul</td>
-                        <td>Chandigarh</td>
-                        <td>17</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Parush</td>
-                        <td>Kolkata</td>
-                        <td>22</td>
-                    </tr>
+                    <c:forEach items="${myInterviewList }" var="list">
+                        <tr>
+                            <th scope="row"><a class='move' href="${path}/info?ci_companyName=${list.ci_companyName}&ci_id=${list.ci_id}">${list.ci_companyName}</a></th>
+                            <td><c:out value="${list.ir_result}"/></td>
+                            <td><c:out value="${list.ir_interviewDate}"/></td>
+                            <td><a class='move' href='<c:out value="${list.ci_id }"/>'>수정</a> | <a class='move' href='<c:out value="${list.ci_id }"/>'>삭제</a></td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>

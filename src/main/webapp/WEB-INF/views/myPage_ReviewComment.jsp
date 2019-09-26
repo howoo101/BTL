@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ include file="includes/header.jsp" %>
 
 <%@ include file="includes/myPage_Menu.jsp" %>
@@ -18,40 +19,35 @@
             <h5 style="color:royalblue;">내 리뷰 코멘트</h5>
             <hr style="border:1px solid #c7d5f8; padding: 0px;">
             <!-- Bootstrap table class -->
-            <table class="table ">
+            <table class="table">
                 <thead>
-                <tr class="">
+                <tr>
                     <th scope="col">기업명</th>
-                    <th scope="col">면접결과</th>
+                    <th scope="col">평가 내용</th>
                     <th scope="col">작성일</th>
                     <th scope="col">수정 | 삭제</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr>
-                    <th scope="row">1
-                    <td>Ajay</td>
-                    <td>Patna</td>
-                    <td>20</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Rahul</td>
-                    <td>Chandigarh</td>
-                    <td>17</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Parush</td>
-                    <td>Kolkata</td>
-                    <td>22</td>
-                </tr>
+                <c:forEach items="${myReviewCommentList }" var="list">
+                    <tr>
+                        <th scope="row"><a class='move' href="${path}/info?ci_companyName=${list.ci_companyName}&ci_id=${list.ci_id}">${list.ci_companyName}</a></th>
+                        <td><c:out value="${list.cr_comment }"/></td>
+                        <td><c:out value="${list.cr_regDate }"/></td>
+                        <td><a class='move' href='<c:out value="${list.ci_id }"/>'>수정</a> | <a class='move' href='<c:out value="${list.ci_id }"/>'>삭제</a></td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+
+<script>
+
+</script>
 
 <%@ include file="includes/footer.jsp" %>
 

@@ -2,6 +2,8 @@ package com.btl.findjob.service;
 
 import java.util.List;
 
+import com.btl.findjob.model.CompanyReview;
+import com.btl.findjob.model.InterviewReviewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,16 @@ public class MypageServiceImpl implements MypageService {
 	public List<CompanyListVO> getRecentCompanyList(String userEmail, String[] recentArr) {
 		// TODO Auto-generated method stub
 		return mapper.getRecentCompanyList(userEmail, recentArr);
+	}
+
+	@Override
+	public List<CompanyReview> myReviewComment(int user_id) {
+		return mapper.myReviewComment(user_id);
+	}
+
+	@Override
+	public List<InterviewReviewDTO> myInterviewReview(int user_id) {
+		return mapper.myInterviewReview(user_id);
 	}
 
 }
