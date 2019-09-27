@@ -16,6 +16,8 @@ import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.java.Log;
 
+import javax.swing.text.html.parser.Parser;
+
 @Service
 @Log
 public class KakaoPay {
@@ -32,7 +34,7 @@ public class KakaoPay {
 
     private KakaoPayReadyVO kakaoPayReadyVO;
 
-    public String kakaoPayReady() {
+    public String kakaoPayReady(String user_id) {
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -46,8 +48,8 @@ public class KakaoPay {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("partner_order_id", "1012301");
-        params.add("partner_user_id", "123123");
-        params.add("item_name", "프리미엄권");
+        params.add("partner_user_id",  user_id);
+        params.add("item_name", ITEM_NAME);
         params.add("quantity", QUANTITY);
         params.add("total_amount", TOTAL_AMOUNT);
         params.add("tax_free_amount", TAX_FREE_AMOUNT);
@@ -75,7 +77,7 @@ public class KakaoPay {
 
     }
 
-    public KakaoPayApprovalVO kakaoPayInfo(String pg_token) {
+    public KakaoPayApprovalVO kakaoPayInfo(String pg_token, String user_id) {
 
         log.info("KakaoPayInfoVO............................................");
         log.info("-----------------------------");
@@ -93,7 +95,7 @@ public class KakaoPay {
         params.add("cid", "TC0ONETIME");
         params.add("tid", kakaoPayReadyVO.getTid());
         params.add("partner_order_id", "1012301");
-        params.add("partner_user_id", "123123");
+        params.add("partner_user_id", user_id);
         params.add("pg_token", pg_token);
         params.add("total_amount",TOTAL_AMOUNT);//금액
 

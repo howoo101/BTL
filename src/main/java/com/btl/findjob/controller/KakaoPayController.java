@@ -38,17 +38,18 @@ public class KakaoPayController {
         String user_id = (String) httpSession.getAttribute("user_id");
 
         log.info(user_id);
-        log.info(kakaopay.kakaoPayReady());
-        return "redirect:" + kakaopay.kakaoPayReady();
+        log.info(kakaopay.kakaoPayReady(user_id));
+        return "redirect:" + kakaopay.kakaoPayReady(user_id);
 
     }
 
     @GetMapping("kakaoPaySuccess")
-    public void kakaoPaySuccess(@RequestParam(value="pg_token") String pg_token, Model model) {
+    public void kakaoPaySuccess(@RequestParam(value="pg_token") String pg_token, Model model, HttpSession httpSession) {
+        String user_id = (String) httpSession.getAttribute("user_id");
         log.info("kakaoPaySuccess get............................................");
         log.info("kakaoPaySuccess pg_token : " + pg_token);
 
-        model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token));
+        model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token,user_id));
 
     }
 
