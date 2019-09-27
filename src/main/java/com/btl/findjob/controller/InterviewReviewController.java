@@ -39,4 +39,24 @@ public class InterviewReviewController {
         return new ResponseEntity<>(interviewReviewService.getListPage(interviewReviewCriteria, ci_id),HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{ir_id}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity<InterviewReviewDTO> get(@PathVariable("ir_id") int ir_id){
+
+        log.info("ir_id: "+ir_id);
+
+        return new ResponseEntity<>(interviewReviewService.get(ir_id), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
+            value="/{ir_id}", consumes = "application/json", produces= {MediaType.TEXT_PLAIN_VALUE,MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+    public ResponseEntity<String> interviewModify(@RequestBody InterviewReviewDTO interviewReviewDTO, @PathVariable("ir_id") int ir_id) {
+        interviewReviewDTO.setIr_id(ir_id);
+        log.info("reply_id..."+ir_id);
+        log.info("modify:"+interviewReviewDTO);
+        return interviewReviewService.interviewModify(interviewReviewDTO) ==1
+                ? new ResponseEntity<>("success",HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 }

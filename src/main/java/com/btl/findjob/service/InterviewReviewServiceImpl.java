@@ -36,4 +36,14 @@ public class InterviewReviewServiceImpl implements InterviewReviewService {
         return interviewReviewMapper.resultCnt(ci_id, ir_result);
     }
 
+    @Override
+    public InterviewReviewDTO get(int ir_id) {
+        return interviewReviewMapper.get(ir_id);
+    }
+
+    @Override
+    public int interviewModify(InterviewReviewDTO interviewReviewDTO) {
+        return interviewReviewMapper.interviewModify(interviewReviewDTO);
+    }
+
 }

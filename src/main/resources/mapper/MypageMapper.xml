@@ -110,7 +110,7 @@
                  LEFT JOIN companyinfo
                            ON interviewreview.ci_id = companyinfo.ci_id
         WHERE user_id = #{user_id}
-        ORDER BY ir_resultDate desc;
+        ORDER BY ir_interviewDate desc;
     </select>
 
 

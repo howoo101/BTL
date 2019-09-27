@@ -73,4 +73,18 @@
           and cr_starRt = #{cr_starRt}
     </select>
 
+    <select id="get" resultType="com.btl.findjob.model.CompanyReview">
+        select *
+        from companyreview
+        where cr_id = #{cr_id}
+    </select>
+
+    <update id="commentModify">
+        update companyreview
+        set cr_comment    = #{cr_comment},
+            cr_starRt = #{cr_starRt},
+            cr_category    = #{cr_category}
+        where cr_id = #{cr_id}
+    </update>
+
 </mapper>

@@ -49,4 +49,14 @@ public class CompanyReviewServiceImpl implements CompanyReviewService {
         return companyReviewMapper.getStarCtn(ci_id, cr_starRt);
     }
 
+    @Override
+    public CompanyReview get(int cr_id) {
+        return companyReviewMapper.get(cr_id);
+    }
+
+    @Override
+    public int commentModify(CompanyReview companyReview) {
+        return companyReviewMapper.commentModify(companyReview);
+    }
+
 }

@@ -28,4 +28,8 @@ public interface CompanyReviewService {
     int getCountCr(int ci_id, int cr_category);
 
     int getStarCtn(int ci_id, int cr_starRt);
+
+    CompanyReview get(int cr_id);
+
+    int commentModify(CompanyReview companyReview);
 }

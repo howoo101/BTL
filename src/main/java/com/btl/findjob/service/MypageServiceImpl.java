@@ -2,14 +2,11 @@ package com.btl.findjob.service;
 
 import java.util.List;
 
-import com.btl.findjob.model.CompanyReview;
-import com.btl.findjob.model.InterviewReviewDTO;
+import com.btl.findjob.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.btl.findjob.mapper.MypageMapper;
-import com.btl.findjob.model.CompanyListVO;
-import com.btl.findjob.model.MypageCriteria;
 
 import lombok.AllArgsConstructor;
 
@@ -47,5 +44,6 @@ public class MypageServiceImpl implements MypageService {
 	public List<InterviewReviewDTO> myInterviewReview(int user_id) {
 		return mapper.myInterviewReview(user_id);
 	}
+
 
 }

@@ -26,5 +26,9 @@ public interface CompanyReviewMapper {
     String categoryName(int cr_category);
 
     int getStarCtn(@Param("ci_id") int ci_id, @Param("cr_starRt") int starRt);
+
+    CompanyReview get(int cr_id);
+
+    int commentModify(CompanyReview companyReview);
 }
 

@@ -18,4 +18,8 @@ public interface InterviewReviewMapper {
     int expCnt(@Param("ci_id") int ci_id, @Param("ir_experience") String ir_experience);
 
     int resultCnt(@Param("ci_id") int ci_id, @Param("ir_result") String ir_result);
+
+    InterviewReviewDTO get(int ir_id);
+
+    int interviewModify(InterviewReviewDTO interviewReviewDTO);
 }

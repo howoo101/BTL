@@ -12,14 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-import com.btl.findjob.model.CompanyReview;
-import com.btl.findjob.model.MypageCriteria;
-import com.btl.findjob.model.MypagePageDTO;
+import com.btl.findjob.model.*;
 import com.btl.findjob.service.CompanyReviewService;
 import com.btl.findjob.service.InterviewReviewService;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.javassist.compiler.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -223,7 +222,7 @@ public class HomeController {
 		int user_id = Integer.parseInt((String)httpServletRequest.getSession().getAttribute("user_id"));
 		model.addAttribute("myReviewCommentList", mypageService.myReviewComment(user_id));
 	}
-	
+
 	@RequestMapping(value="/faq")
 	public String FAQ() {
 		return "/faq";

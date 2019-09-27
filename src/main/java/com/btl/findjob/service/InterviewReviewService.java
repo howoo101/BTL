@@ -14,4 +14,7 @@ public interface InterviewReviewService {
 
     int resultCnt(int ci_id, String ir_result);
 
+    InterviewReviewDTO get(int ir_id);
+
+    int interviewModify(InterviewReviewDTO interviewReviewDTO);
 }
