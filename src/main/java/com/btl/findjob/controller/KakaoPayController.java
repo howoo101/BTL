@@ -1,6 +1,8 @@
 package com.btl.findjob.controller;
 
+import com.btl.findjob.model.UserDTO;
 import com.btl.findjob.utils.KakaoPay;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.Setter;
-import lombok.extern.java.Log;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-@Log
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+@Log4j
 @Controller
+@SessionAttributes("user_id")
 public class KakaoPayController {
 
     @Setter(onMethod_ = @Autowired)
@@ -21,9 +27,12 @@ public class KakaoPayController {
 
 
     @GetMapping("kakaoPay")
-    public void kakaoPayGet() {
+    public void kakaoPayGet(HttpSession httpSession) {
+        String user_id = (String) httpSession.getAttribute("user_id");
+        log.info(user_id);
 
     }
+
 
     @PostMapping("kakaoPay")
     public String kakaoPay() {

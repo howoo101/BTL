@@ -22,6 +22,14 @@ public class KakaoPay {
 
     private static final String HOST = "https://kapi.kakao.com";
 
+    private static final String QUANTITY = "1";//주문수량 고정
+    private static final String TOTAL_AMOUNT = "1000000"; //가격 고정
+    private static final String TAX_FREE_AMOUNT = "10000";//제세
+    private static final String APPROVAL_URL ="http://localhost:8282/findjob/kakaoPaySuccess";//성공 URL
+    private static final String CANCEL_URL ="http://localhost:8282/findjob/kakaoPayCancel";//성공 URL
+    private static final String FAIL_URL ="http://localhost:8282/findjob/kakaoPaySuccessFail";//성공 URL
+    private static final String ITEM_NAME ="프리미엄회원권";//성공 URL
+
     private KakaoPayReadyVO kakaoPayReadyVO;
 
     public String kakaoPayReady() {
@@ -40,12 +48,12 @@ public class KakaoPay {
         params.add("partner_order_id", "1012301");
         params.add("partner_user_id", "123123");
         params.add("item_name", "프리미엄권");
-        params.add("quantity", "1");
-        params.add("total_amount", "10000");
-        params.add("tax_free_amount", "100");
-        params.add("approval_url", "http://localhost:8282/findjob/kakaoPaySuccess");
-        params.add("cancel_url", "http://localhost:8282/findjob/kakaoPayCancel");
-        params.add("fail_url", "http://localhost:8282/findjob/kakaoPaySuccessFail");
+        params.add("quantity", QUANTITY);
+        params.add("total_amount", TOTAL_AMOUNT);
+        params.add("tax_free_amount", TAX_FREE_AMOUNT);
+        params.add("approval_url",APPROVAL_URL);
+        params.add("cancel_url", CANCEL_URL);
+        params.add("fail_url", FAIL_URL);
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         System.out.println("body"+body);
@@ -87,7 +95,7 @@ public class KakaoPay {
         params.add("partner_order_id", "1012301");
         params.add("partner_user_id", "123123");
         params.add("pg_token", pg_token);
-        params.add("total_amount", "10000");//금액
+        params.add("total_amount",TOTAL_AMOUNT);//금액
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
