@@ -4,19 +4,21 @@
   
     
 <form id="signupform" class="form-pwfind">
-      <h2 class="form-signin-heading">비밀번호 찾기</h2>
+      <h3 class="form-signin-heading">비밀번호를 잊으셨습니까?</h3>
       		<br>
     	<h6>이메일</h6>
         <label for="inputEmail" class="sr-only">Email address</label>
 	        <input type="email" name="user_email" id="inputEmail" class="form-control" placeholder="이메일주소" required autofocus>
-	        <input type="button" id="check" value="체크" class="btn btn-info">
-        <p id="EmailCheck"></p>
-		<p>회원님의 비밀번호는 암호화되어 데이터베이스에 저장되므로 관리자도 알 수 없으므로 새로운 임시비밀번호를 생성하여 전달합니다.</p>
-		<p> 소셜 기능으로 가입된 회원님의 비밀번호 
-		 찾기기능은 이 홈페이지에서 제공하지 않습니다. 
-		  해당 플랫폼 홈페이지에서 이용해주세요.</p>
+	        <input type="button" id="check" value="체크" class="btn btn-dark mt-2">
+        <p id="EmailCheck" class="mt-2" style="font-size:small"></p>
+        <br>
+		<p style="font-size:small"><i class="material-icons">info</i>회원님의 비밀번호는 암호화되어 데이터베이스에 저장되므로  관리자도 알 수 없으므로 새로운 임시비밀번호를 생성하여 전달합니다.</p>
+		<p style="font-size:small"><i class="material-icons">info</i>소셜 기능으로 가입된 회원님의 비밀번호  찾기 기능은 이 홈페이지에서 제공하지 않습니다. 해당 플랫폼 홈페이지에서 이용해주세요.</p>
+	
+	
+		
   <div class="container text-center" id="loading-bar"><img class="img-responsive center-block" src="resources/img/ajax-loader.gif" /></div><br>
-  <input type="button" id="submit" value="전송" class="btn btn-lg btn-info btn-block">
+  <input type="button" id="submit" value="전송" class="btn btn-lg btn-dark btn-block">
 </form>
 		
  	  

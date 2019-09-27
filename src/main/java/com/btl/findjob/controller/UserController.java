@@ -64,34 +64,40 @@ public class UserController {
 	@ResponseBody
 	public String login_chk(@Param("user_email") String user_email,@Param("user_password") String user_password,HttpServletRequest request,Model model) {
 		
-		if(userservice.snschk(user_email)>=1) { //sns회원인지  판별 (아닐경우)
-			return userservice.snstype(user_email);  //snstype이 무엇인지 확인함 sns회원이므로 일반 로그인 실패 처리
-		} else {
-			 String memberSalt = userservice.getsalt(user_email); // 멤버의 salt 가져오기
-			 String inputpassword = user_password;  //입력된 암호 가져오기
-			 String newpassword = SHA256Util.getEncrypt(inputpassword, memberSalt); // 가져온 salt을 이용하여 sha 암호 get
-						  
-			  if(userservice.login(user_email, newpassword)==1)  {  //로그인 검증 
-				
-				HttpSession session = request.getSession(true);     //로그인 세션 추가
-		
-				     if(SessionListener.getInstance().isUsing(user_email)) {  // 중복로그인 검사
-				        	return "3";
-				        }
-				     else {
-					session.setAttribute("user", user_email); // 세션추가
-					session.setAttribute("name", userservice.getname(user_email)); //닉네임 겟 
-					session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
-					SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장
-					return "1"; //인증회원 로그인
+			
+		 if(userservice.emailchk(user_email)==1) { //해당 이메일이 존재 하는지 확인
+			 if(userservice.snschk(user_email)>=1) { //sns회원인지  판별 (아닐경우)
+					return userservice.snstype(user_email);  //snstype이 무엇인지 확인함 sns회원이므로 일반 로그인 실패 처리
+				} else {
+					 String memberSalt = userservice.getsalt(user_email); // 멤버의 salt 가져오기
+					 String inputpassword = user_password;  //입력된 암호 가져오기
+					 String newpassword = SHA256Util.getEncrypt(inputpassword, memberSalt); // 가져온 salt을 이용하여 sha 암호 get		  
+					  if(userservice.login(user_email, newpassword)==1)  {  //로그인 검증 
+						HttpSession session = request.getSession(true);     //로그인 세션 추가
+						     if(SessionListener.getInstance().isUsing(user_email)) {  // 로그인 중복시 로그인 실패처리
+						        	return "3";
+						        }
+						     else { //중복로그인이 아닐시  로그인처리
+								session.setAttribute("user", user_email); // 세션추가
+								session.setAttribute("name", userservice.getname(user_email)); //닉네임 겟 
+								session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+								SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장
+								return "1"; //인증회원 로그인
+						       }
+						  	  }  
+						 else if (userservice.login(user_email, newpassword)==0){
+							return "2"; // 로그인 실패 
+						  }
+						}
+		 		 }
+				 else {
+					 return "2";
 				     }
-				  }  
-				 else if(userservice.login(user_email, newpassword)==0){
-					return "2"; // 로그인 실패 
-				  }
-			}
-		return "4";
-	}
+		 return "2";
+}
+		
+		
+	
 	
 	//구글 sns
 	@RequestMapping(value = "google", method = {RequestMethod.POST})
@@ -406,9 +412,19 @@ public String pwfind() {
 		
 	}
 	
+	@RequestMapping(value = "/myPage_menu" , method = {RequestMethod.GET,RequestMethod.POST}) 
+	public String myPage_menu(HttpSession session,Model model){
+		
+		String user_email = (String) session.getAttribute("user");
+
+		model.addAttribute("Uinfo_list", userservice.user_info(user_email));
 	
 		
-	@RequestMapping(value = "user_info" , method = {RequestMethod.GET,RequestMethod.POST}) 
+		return "mypage/myPage_Following";
+	}
+	
+		
+	@RequestMapping(value = "/user_info" , method = {RequestMethod.GET,RequestMethod.POST}) 
 	public String user_info(HttpSession session,Model model){
 		
 		String user_email = (String) session.getAttribute("user");

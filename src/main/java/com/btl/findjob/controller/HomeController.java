@@ -195,14 +195,14 @@ public class HomeController {
 		model.addAttribute("companyList",mypageService.followCompanyGetList(userEmail,criteria));
 		int total = mypageService.getTotalFollowCount(userEmail);
 		model.addAttribute("pageMaker", new MypagePageDTO(criteria,total));
-		return "myPage_Following";
+		return "mypage/myPage_Following";
 	}
 
 	@RequestMapping(value = "/myPage_InterviewReview", method = RequestMethod.GET)
 	public String myPage_InterviewReview(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
-		return "myPage_InterviewReview";
+		return "mypage/myPage_InterviewReview";
 	}
 
 	@RequestMapping(value = "/myPage_Last", method = RequestMethod.GET)
@@ -213,14 +213,14 @@ public class HomeController {
 		
 		model.addAttribute("companyList",
 				mypageService.getRecentCompanyList(userEmail, arr));
-		return "myPage_Last";
+		return "mypage/myPage_Last";
 	}
 
 	@RequestMapping(value = "/myPage_ReviewComment", method = RequestMethod.GET)
 	public String myPage_ReviewComment(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
-		return "myPage_ReviewComment";
+		return "mypage/myPage_ReviewComment";
 	}
 	
 	@RequestMapping(value="/faq")

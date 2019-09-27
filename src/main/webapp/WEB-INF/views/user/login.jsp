@@ -14,12 +14,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <form class="form-login">
-	<h2 class="form-signin-heading">LOGIN</h2>
+	<h3 class="form-signin-heading">로그인</h3>
 	<br> <label for="inputEmail" class="sr-only">Email address</label>
 	<input type="email" name="user_email" id="inputEmail" class="form-control" placeholder="이메일주소" required autofocus> 
 	<label for="inputPassword" class="sr-only">Password</label> 
 	<input type="password" name="user_password" id="inputPassword"class="form-control" placeholder="비밀번호" required> <br> 
-	<input type="button" id="loginbtn" value="로그인"class="btn btn-lg btn-primary btn-block">
+	<input type="button" id="loginbtn" value="로그인" class="btn btn-dark btn-block">
 </form>
 <br>
 
@@ -46,6 +46,31 @@
 
 <script>
 // 네이버로그인 처리
+var Erchk = 0;
+
+$("#inputEmail").on("propertychange change click keyup input paste",function(){
+	  var email = $(this).val();
+	
+	  // if value is empty then exit
+	  if( email == '' || email == 'undefined' || email == null) 
+	  	return;
+	  if(! email_check(email) ) {
+		   Erchk = 0;
+		   return false;
+		}
+	  else 
+		  Erchk = 1;
+	}); 
+
+
+//이메일 정규표현식 통과시 true 반환		
+ function email_check( email ) {    
+    var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    return (email != '' && email != 'undefined' && regex.test(email)); 
+}
+
+
+
 
 
 var naver_id_login = new naver_id_login("qbkbZvOsyDOQedGRhs0e",
@@ -59,6 +84,21 @@ naver_id_login.init_naver_id_login();
 
 /* 로그인 */
 $('#loginbtn').click(function(){
+	if($.trim($('#inputEmail').val()) == ''){
+		alert("이메일 입력이 되지 않았습니다.");
+		$('#inputEmail').focus();
+		return;
+	}else if($.trim($('#inputPassword').val()) == ''){
+		alert("패스워드 입력이 되지 않았습니다.");
+		$('#inputPassword').focus();
+		return;
+	}
+	else if(Erchk == 0){
+		alert("이메일을 정확히 입력해주세요.");
+		$('#inputEmail').focus();
+		return;
+	}
+	else{
 	$.ajax({
 		url : "${pageContext.request.contextPath}/login_chk.do",
 		type : "POST",
@@ -92,6 +132,7 @@ $('#loginbtn').click(function(){
 			alert("서버에러");
 		}
 	});
+  }
 });
 
 /* 구글 로그인 */
