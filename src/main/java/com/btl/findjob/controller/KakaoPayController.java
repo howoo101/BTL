@@ -27,15 +27,17 @@ public class KakaoPayController {
 
 
     @GetMapping("kakaoPay")
-    public void kakaoPayGet(HttpSession httpSession) {
-        String user_id = (String) httpSession.getAttribute("user_id");
-        log.info(user_id);
+    public void kakaoPayGet() {
+
 
     }
 
 
     @PostMapping("kakaoPay")
-    public String kakaoPay() {
+    public String kakaoPay(HttpSession httpSession) {
+        String user_id = (String) httpSession.getAttribute("user_id");
+
+        log.info(user_id);
         log.info(kakaopay.kakaoPayReady());
         return "redirect:" + kakaopay.kakaoPayReady();
 
