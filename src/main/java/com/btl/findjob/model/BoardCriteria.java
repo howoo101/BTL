@@ -1,5 +1,7 @@
 package com.btl.findjob.model;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -68,5 +70,13 @@ public class BoardCriteria {
         this.pageStart = pageStart;
     }
     
-    
+    public String getListLink() {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+                .queryParam("pageNum", this.getPageNum()) //상태좀이상함 this.getPageNum() 이맞을듯
+                .queryParam("amount", this.getAmount())
+                .queryParam("type", this.getType())
+                .queryParam("keyword", this.getKeyword());
+        
+        return builder.toUriString();
+    }
 }

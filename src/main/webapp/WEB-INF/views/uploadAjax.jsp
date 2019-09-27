@@ -2,10 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="includes/header.jsp"%>
 
+<div class='bigPictureWrapper'>
+  <div class='bigPicture'>
+  </div>
+</div>
 
-
-
-<!-- 	<style>
+<style>
 .uploadResult {
 	width: 100%;
 	background-color: gray;
@@ -47,12 +49,8 @@
   justify-content: center;
   align-items: center;
 }
-</style> -->
+</style>
 
-<div class='bigPictureWrapper'>
-  <div class='bigPicture'>
-  </div>
-</div>
 
 
 	<div class='uploadDiv'>
@@ -68,6 +66,7 @@
 
 	<button id='uploadBtn'>Upload</button>
 	
+	<!-- script -->
 	<script>
 
 	function showImage(fileCallPath){
@@ -77,14 +76,14 @@
 	  $(".bigPictureWrapper").css("display","flex").show();
 	  
 	  $(".bigPicture")
-	  .html("<img src='/display?fileName="+fileCallPath+"'>")
+	  .html("<img src='${path}/display?fileName="+encodeURI(fileCallPath)+"'>")
 	  .animate({width:'100%', height: '100%'}, 1000);
 
 	}
 	
 	$(".bigPictureWrapper").on("click", function(e){
 	  $(".bigPicture").animate({width:'0%', height: '0%'}, 1000);
-	  setTimeout(() => {
+	  setTimeout(function(){
 	    $(this).hide();
 	  }, 1000);
 	});
@@ -186,7 +185,7 @@
        
        var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
        
-       str += "<li><div><a href='/download?fileName="+fileCallPath+"'>"+
+       str += "<li><div><a href='${path}/download?fileName="+fileCallPath+"'>"+
            "<img src='${path}/resources/img/attach.png'>"+obj.fileName+"</a>"+
            "<span data-file=\'"+fileCallPath+"\' data-type='file'> x </span>"+
            "<div></li>"

@@ -5,6 +5,67 @@
 
 <%@ include file="includes/header.jsp"%>
 
+
+
+<div class='bigPictureWrapper'>
+	<div class='bigPicture'></div>
+</div>
+
+<style>
+.uploadResult {
+	width: 100%;
+	background-color: #B6D9F1;
+}
+
+.uploadResult ul {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.uploadResult ul li {
+	list-style: none;
+	padding: 10px;
+	align-content: center;
+	text-align: center;
+}
+
+.uploadResult ul li img {
+	width: 100px;
+}
+
+.uploadResult ul li span {
+	color: white;
+}
+
+.bigPictureWrapper {
+	position: absolute;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: gray;
+	z-index: 100;
+	background: rgba(255, 255, 255, 0.5);
+}
+
+.bigPicture {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bigPicture img {
+	width: 600px;
+}
+</style>
+
+
+
 <div class="container center-block mt-4">
 	<div class="card border-primary">
 		<div class="row">
@@ -28,11 +89,6 @@
 
 							<div class="container">
 								<div class="form-group">
-									<label>글 번호 baord_id</label> <input class="form-control"
-										name='board_id' value='<c:out value="${board.board_id}" />'
-										readonly="readonly">
-								</div>
-								<div class="form-group">
 									<label>제목</label> <input class="form-control"
 										name='board_title'
 										value='<c:out value="${board.board_title}" />'
@@ -50,46 +106,78 @@
 										value='<c:out value="${board.board_writer}" />'
 										readonly="readonly">
 								</div>
+								<input class="form-control" name='board_id' type='hidden'
+									value='<c:out value="${board.board_id}" />' readonly="readonly">
 
-								<button data-oper='modify' class="btn btn-warning"
-									onclick="location.href='modify?board_id=<c:out value="${board.board_id }"/>'">수정</button>
+								<div class="container">
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="panel panel-default">
 
-								<button data-oper='list' class="btn btn-info"
-									onclick="location.href='list'">List</button>
-							</div>
-							<br>
+												<div class="panel-heading">
+													<i class="fa fa-comments fa-fw"></i>댓글
 
-							<%--댓글 목록처리 위한 div--%>
-							<%--각 li태그는 하나의 댓글을 의미한다. 수정이나 삭제시 이를 클릭하며 댓글번호가 필요하기에 data-reply_id속성을 이용한다.--%>
-							<div class="container">
-								<div class="row">
-									<div class="col-lg-12">
-
-										<%--/.panel--%>
-										<div class="penel penel-default">
-											<div class="panel-heading">
-												<i class="fa fa-comments fa-fw"></i>댓글
-												<button id='addReplyBtn'
-													class='btn btn-primary btn-xs pull-end'>New Reply</button>
-
-												<div class="container">
-													<%--/.pnel-heading--%>
+													<!-- /.panel-heading -->
 													<div class="panel-body">
-
-														<ul class="chat">
-
-														</ul>
-														<%--end ul--%>
+														<div class="card border-info">
+															<div>
+																<div class='replyCard'>
+																<div class='row ml-4 mt-3'>
+																	<textarea name='reply_content' id="need"
+																		style="width: 85%; height: 85%;"></textarea>
+																	<button id='addReplyBtn' class='btn btn-primary btn-xs'>New
+																		Reply</button>
+																	<br>
+																	</div>
+																	<div class='row ml-4 mt-3'>
+																	<ul class="chat" style="list-style: none;">
+																	</ul>
+																	<input name='reply_writer' type='hidden' id="need_writer"
+																		value="<%=name%>"> <input class="user_id"
+																		type="hidden" value="<%=user_id%>"> <input
+																		name='reply_date' type='hidden'>
+																	</div>
+																</div>
+															</div>
+															<!--  end panel-body -->
+														</div>
 													</div>
-													<%--panel .chat-panel--%>
-													<div class="panel-footer"></div>
+
+													<!--  end panel-body -->
 												</div>
-												<%--end row--%>
+												<!-- end panel -->
 											</div>
+											<!-- .row -->
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">첨부파일</div>
+														<!-- /.panel-heading -->
+														<div class="panel-body">
+															<div class="card border-info">
+																<div class='uploadResult'>
+																	<ul>
+																	</ul>
+																</div>
+															</div>
+															<!--  end panel-body -->
+														</div>
+													</div>
+													<!--  end panel-body -->
+												</div>
+												<!-- end panel -->
+											</div>
+											<!-- .row -->
 										</div>
 									</div>
-									<!-- End of Main Content -->
+									<br>
+									<button data-oper='modify' class="btn btn-warning"
+										onclick="location.href='modify?board_id=<c:out value="${board.board_id }"/>'">수정</button>
+
+									<button data-oper='list' class="btn btn-info"
+										onclick="location.href='list'">List</button>
 								</div>
+								<br>
 							</div>
 						</div>
 					</div>
@@ -144,20 +232,20 @@
 
 <!-- get 동작설정 -->
 <script type="text/javascript">
-$(document).ready(function() {
+	$(document).ready(function() {
 
-	var operForm = $("#operForm");
+		var operForm = $("#operForm");
 
-	$("button[data-oper='modify']").on("click", function(e) {
-		operForm.attr("action", "modify").submit();
+		$("button[data-oper='modify']").on("click", function(e) {
+			operForm.attr("action", "modify").submit();
+		});
+
+		$("button[data-oper='list']").on("click", function(e) {
+			operForm.find("#board_id").remove();
+			operForm.attr("action", "list");
+			operForm.submit();
+		});
 	});
-
-	$("button[data-oper='list']").on("click", function(e) {
-		operForm.find("#board_id").remove();
-		operForm.attr("action", "list");
-		operForm.submit();
-	});
-});
 </script>
 
 
@@ -166,66 +254,67 @@ $(document).ready(function() {
 <script type="text/javascript" src="resources/js/reply.js"></script>
 
 <script>
-	$(document).ready(function() {
-		var board_idValue = '<c:out value="${board.board_id}"/> ';
-		var replyUL = $(".chat");
+	$(document).ready(
+function() {
+	var board_idValue = '<c:out value="${board.board_id}"/> ';
+	var replyUL = $(".chat");
 
-		showList(1);
+showList(1);
 
-		//showList()는 페이지 번호를 파라미터로 받게 설계하며 파라미터가 없는경우 자동르로 1페이지가 되도록 설정
-		//브라우저에서 DOM 처리가 끝나면 자동적으로 showList()가 호출되며 <ul> 태그 내에 내용으로 처리
-		//만약 1페이지가 아니라면 <ul>에 <li>들이 추가되는 형태
+//showList()는 페이지 번호를 파라미터로 받게 설계하며 파라미터가 없는경우 자동르로 1페이지가 되도록 설정
+//브라우저에서 DOM 처리가 끝나면 자동적으로 showList()가 호출되며 <ul> 태그 내에 내용으로 처리
+//만약 1페이지가 아니라면 <ul>에 <li>들이 추가되는 형태
 		function showList(page) {
-			console.log("show list" + page);
+	console.log("show list" + page);
 
-			replyService.getList(
-				{
-					board_id : board_idValue,
-					page : page || 1
-				},
-				function(replyCnt, list) {
+replyService.getList(
+	{
+		board_id : board_idValue,
+		page : page || 1
+	},
+		function(replyCnt, list) {
 
-					console.log("replyCnt : "
-							+ replyCnt);
-					console.log("list: " + list);
-					console.log(list);
+			console.log("replyCnt : "
+					+ replyCnt);
+			console.log("list: " + list);
+			console.log(list);
 
-					if (page === -1) {
-						pageNum = Math
-								.ceil(replyCnt / 10.0);
-						showList(pageNum);
-						return;
-					}
+			if (page === -1) {
+				pageNum = Math
+						.ceil(replyCnt / 10.0);
+				showList(pageNum);
+				return;
+			}
 
-					var str = "";
-					if (list === null
-							|| list.length === 0) {
+			var str = "";
+			if (list === null
+					|| list.length === 0) {
 
-						replyUL.html("");
+				replyUL.html("");
 
-						return;
-					}
-					for (var i = 0, len = list.length || 0; i < len; i++) {
-						str += "<li class= 'clearfix' data-reply_id='" + list[i].reply_id + "'>";
-						str += "<div><div class='header'><strong class='primary-font'>"
-								+ list[i].reply_writer
-								+ "</strong>";
-						str += "<small class='text-muted'>"
-								+ replyService
-										.displayTime(list[i].reply_date)
-								+ "</small></div>";
-						str += "<p>"
-								+ list[i].reply_content
-								+ "</p></div></li>";
-					}
+				return;
+			}
+			for (var i = 0, len = list.length || 0; i < len; i++) {
+				str += "<li class= 'clearfix' data-reply_id='" + list[i].reply_id + "'>";
+				str += "<div><div class='header'><strong class='primary-font'>"
+						+ list[i].reply_writer
+						+ "</strong>";
+				str += "<small class='text-muted'>"
+						+ replyService
+								.displayTime(list[i].reply_date)
+						+ "</small></div>";
+				str += "<p>"
+						+ list[i].reply_content
+						+ "</p></div></li>";
+			}
 
-					replyUL.html(str);
+			replyUL.html(str);
 
-					showReplyPage(replyCnt);
-				});//end function
-		}//end showList
+			showReplyPage(replyCnt);
+		});//end function
+}//end showList
 
-		/* 페이지 번호를 출력하는 로직*/
+/* 페이지 번호를 출력하는 로직*/
 		var pageNum = 1;
 		var replyPageFooter = $(".panel-footer");
 
@@ -242,14 +331,14 @@ $(document).ready(function() {
 			if (endNum * 10 < replyCnt) {
 				next = true;
 			}
-			
-			var str = "<ul class='pagination pull-right'>";
+
+			var str = "<ul class='pagination pull-left'>";
 			if (prev) {
 				str += "<li class='page-item'><a class='page-link' href='"
 						+ (startNum - 1)
 						+ "'>Previous</a></li>";
 			}
-			
+
 			for (var i = startNum; i <= endNum; i++) {
 				var active = pageNum === i ? "active" : "";
 				str += "<li class='page-item "+active+"'><a class='page-link' href='"+i+"'>"
@@ -276,105 +365,242 @@ $(document).ready(function() {
 			showList(pageNum);
 		});
 
-		/* 모달창*/
-		var modal = $(".modal_r");
-		var modalInputReply = modal.find("input[name='reply_content']");
-		var modalInputReplyer = modal.find("input[name='reply_writer']");
-		var modalInputReplyDate = modal.find("input[name='reply_date']");
+						/* 모달창*/
+						var modal = $(".modal_r");
+						var replyCard = $(".replyCard");
+						var inputReply = replyCard
+								.find("textarea[name='reply_content']");
+						var inputReplyer = replyCard
+								.find("input[name='reply_writer']");
+						var inputReplyDate = replyCard
+								.find("input[name='reply_date']");
 
-		var modalModBtn = $("#modalModBtn");
-		var modalRemoveBtn = $("#modalRemoveBtn");
-		var modalRegisterBtn = $("#modalRegisterBtn");
+						var modalInputReply = modal
+								.find("input[name='reply_content']");
+						var modalInputReplyer = modal
+								.find("input[name='reply_writer']");
+						var modalInputReplyDate = modal
+								.find("input[name='reply_date']");
 
-		//추가 버튼 누를시 close빼고 hide이후 등록 버튼만 보이도록 수정
-		$("#addReplyBtn").on("click", function(e) {
+						var modalModBtn = $("#modalModBtn");
+						var modalRemoveBtn = $("#modalRemoveBtn");
+						var modalRegisterBtn = $("#modalRegisterBtn");
 
-			modal.find("input").val("");
-			modalInputReplyDate.closest("div").hide();
-			modal.find("button[id != 'modalCloseBtn']").hide();
+	//추가 버튼 누를시 close빼고 hide이후 등록 버튼만 보이도록 수정
+	$("#addReplyBtn")
+			.on("click",function(e) {
 
-			modalRegisterBtn.show();
+//modal.find("input").val("");
+//modalInputReplyDate.closest("div").hide();
+//	modal.find("button[id != 'modalCloseBtn']").hide();
 
-			$(".modal_r").modal("show");
-		});
+//		modalRegisterBtn.show();
 
-		//댓글이 정상적으로 추가되면 경고창을 이용해 성공
-		modalRegisterBtn.on("click", function(e) {
+//			$(".modal_r").modal("show");
+var need = $("#need")
+var need_writer = $("#need_writer")
+   		e.preventDefault();
 
-			var reply_content = {
-				reply_content : modalInputReply.val(),
-				reply_writer : modalInputReplyer.val(),
-				board_id : board_idValue
-			};
-			
-			replyService.add(reply_content, function(result) {
+   		/* 필수값입력하게하기 */
+		if (!need.val()||!need_writer.val()) {
+			alert("필수값이 입력되지 않았습니다.");
+			return;
+		}
+		else{
 
-				alert(result);
+	var reply_content = {
+		reply_content : inputReply
+				.val(),
+		reply_writer : inputReplyer
+				.val(),
+		board_id : board_idValue
+	};
 
-				modal.find("input").val("");
-				modal.modal("hide");
+		replyService.add(reply_content,
+				function(result) {
 
-				//작성후 새로고침을 통해 불러오기 위해서
-				// showList(1);
-				//page변수를 이용해서 원하는 댓글 페이지를 가져오게하며 page번호가 -1로 전달되면
-				//마지막 페이지를 찾아서 다시 호출하게 하게 한다.
-				showList(1);
+					alert(result);
 
-			});
-		});
+					replyCard.find("input")
+							.val("");
+					//replyCard.modal("hide");
 
-		//DOM에서 이벤트 리스너를 등록하는 것은 반드시 해당 DOM 요소가 존재해야만 가능.
-		//동적으로 Ajax를 통해 li태그들이 만들어지면 이후 이벤트를 등록해야 하기에 일방적인 방식이 아니라 이벤트 위임의 형태로 작성
-		//이벤트 위임은 이벤트를 동적으로 생성되는 요소가 아닌 이미 존재하는 요소에 이벤트를 걸어준후 나중에 이벤트의 대상을 변경 on()을 통해 처리한다.
-		//댓글조회는 별도조회 필요가 없지만 Ajax로 댓글을 조회한 후 수정/삭제 하는 것이 정상
-		//댓글을 가져온후 필요한 항목들을 채우고 수정과 삭제에 필요한 댓글 번호는 data-reply_id 속성을 만들어서 추가해둔다.
-		$(".chat").on("click", "li", function(e) {
+					//작성후 새로고침을 통해 불러오기 위해서
+					// showList(1);
+					//page변수를 이용해서 원하는 댓글 페이지를 가져오게하며 page번호가 -1로 전달되면
+					//마지막 페이지를 찾아서 다시 호출하게 하게 한다.
+					//showList(1);
+					location.reload();
+	});
+}
+})
+//댓글이 정상적으로 추가되면 경고창을 이용해 성공
+//	modalRegisterBtn.on("click", function(e) {
 
-			var reply_id = $(this).data("reply_id");
+//	var reply_content = {
+//	reply_content : modalInputReply.val(),
+//reply_writer : modalInputReplyer.val(),
+//board_id : board_idValue
+//};
 
-			replyService.get(reply_id,function(reply_content) {
+//	replyService.add(reply_content, function(result) {
 
-				modalInputReply.val(reply_content.reply_content);
-				modalInputReplyer.val(reply_content.reply_writer);
-				modalInputReplyDate
-					.val(replyService.displayTime(reply_content.reply_date))
-					.attr("readonly", "readonly");
-				modal.data("reply_id",reply_content.reply_id);
+//		alert(result);
 
-				modal.find("button[id != 'modalCloseBtn']").hide();
-				modalModBtn.show();
-				modalRemoveBtn.show();
+//	modal.find("input").val("");
+//modal.modal("hide");
 
-				$(".modal_r").modal("show");
+//작성후 새로고침을 통해 불러오기 위해서
+// showList(1);
+//page변수를 이용해서 원하는 댓글 페이지를 가져오게하며 page번호가 -1로 전달되면
+//마지막 페이지를 찾아서 다시 호출하게 하게 한다.
+//showList(1);
 
-			});
-		});
+//});
+//});
 
-		modalModBtn.on("click", function(e) {
+//DOM에서 이벤트 리스너를 등록하는 것은 반드시 해당 DOM 요소가 존재해야만 가능.
+//동적으로 Ajax를 통해 li태그들이 만들어지면 이후 이벤트를 등록해야 하기에 일방적인 방식이 아니라 이벤트 위임의 형태로 작성
+//이벤트 위임은 이벤트를 동적으로 생성되는 요소가 아닌 이미 존재하는 요소에 이벤트를 걸어준후 나중에 이벤트의 대상을 변경 on()을 통해 처리한다.
+//댓글조회는 별도조회 필요가 없지만 Ajax로 댓글을 조회한 후 수정/삭제 하는 것이 정상
+//댓글을 가져온후 필요한 항목들을 채우고 수정과 삭제에 필요한 댓글 번호는 data-reply_id 속성을 만들어서 추가해둔다.
+
+
+$(".chat").on("click","li",
+function(e) {
+var reply_id = $(this).data("reply_id");
+console.log("click");
+console.log(reply_id);
+replyService.get(reply_id,
+function(reply_content) {
+
+	modalInputReply.val(reply_content.reply_content);
+	modalInputReplyer.val(reply_content.reply_writer);
+	modalInputReplyDate.val(
+		replyService.displayTime(reply_content.reply_date))
+			.attr("readonly","readonly");
+	modal.data("reply_id",reply_content.reply_id);
+
+	modal.find("button[id != 'modalCloseBtn']").hide();
+	modalModBtn.show();
+	modalRemoveBtn.show();
+
+	$(".modal_r").modal("show");
+
+	});
+});
+
+	modalModBtn.on("click",
+		function(e) {
 			var reply_content = {
 				reply_id : modal.data("reply_id"),
 				reply_content : modalInputReply.val()
 			};
 
-			replyService.update(reply_content, function(result) {
-				alert(result);
-				modal.modal("hide");
-				showList(pageNum);
+	replyService.update(
+				reply_content,
+				function(result) {alert(result);
+					modal.modal("hide");
+					showList(pageNum);
 
-			});
+					});
 
-		});
+				});
 
-		modalRemoveBtn.on("click", function(e) {
+		modalRemoveBtn
+				.on("click", function(e) {
 			var reply_id = modal.data("reply_id");
-
-			replyService.remove(reply_id, function(result) {
-				alert(result);
-				modal.modal("hide");
-				showList(pageNum);
+						replyService.remove(reply_id,
+			function(
+						result) {
+						alert(result);
+						modal.modal("hide");
+						showList(pageNum);
 			});
 		});
+});
+</script>
+
+<!--첨부파일 게시물 조회화면처리  -->
+<script>
+	$(document).ready(function() {
+	var board_id = '<c:out value = "${board.board_id}"/>';
+	
+	$.getJSON("getAttachList", {
+						board_id : board_id
+						},
+function(arr) {
+	console.log(arr);
+
+	var str = "";
+
+	$(arr).each(function(i, attach) {
+
+			//image type
+			if (attach.fileType) {
+				var fileCallPath = encodeURIComponent(attach.uploadPath
+						+ "/s_"
+						+ attach.uuid
+						+ "_"
+						+ attach.fileName);
+
+				str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' ><div>";
+				str += "<img src='${path}/display?fileName="
+						+ fileCallPath
+						+ "'>";
+				str += "</div>";
+				str
+						+ "</li>";
+			} else {
+				str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' ><div>";
+				str += "<span> "
+						+ attach.fileName
+						+ "</span><br/>";
+				str += "<img src='${path}/resources/img/attach.png'></a>";
+				str += "</div>";
+				str
+						+ "</li>";
+			}
+		});
+
+	$(".uploadResult ul").html(str);
+
+});//end getjson
+
+	$(".uploadResult").on("click","li",	function(e) {
+				var liObj = $(this);
+				var path = encodeURIComponent(liObj.data("path")+ "/"+ liObj.data("uuid")+ "_"+ liObj.data("filename"));
+				
+				if (liObj.data("type")) {
+					showImage(path.replace(new RegExp(/\\/g), "/"));
+				} else {
+					console.log("ddddd"+path)
+					self.location = "download?fileName="+ path
+				}
 	});
+	function showImage(fileCallPath) {
+		//alert(fileCallPath);
+		$(".bigPictureWrapper").css("display", "flex").show();
+
+		$(".bigPicture").html(
+				"<img src='${path}/display?fileName="
+						+ fileCallPath + "'>").animate({
+			width : '100%',
+			height : '100%'
+		}, 1000);
+	}
+
+	$(".bigPictureWrapper").on("click", function(e) {
+		$(".bigPicture").animate({
+			width : '0%',
+			height : '0%'
+		}, 1000);
+		setTimeout(function() {
+			$('.bigPictureWrapper').hide();
+
+		}, 1000);
+	});
+});
 </script>
 
 <%@ include file="includes/footer.jsp"%>

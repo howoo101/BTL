@@ -1,6 +1,7 @@
 package com.btl.findjob.model;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 import lombok.Getter;
@@ -22,5 +23,6 @@ public class BoardDTO {
 	private int board_hit; //글 조회수
 	private int replyCnt;// 댓글갯수
 	
+	private List<BoardAttachDTO> attachList; //첨부파일
 	
 }

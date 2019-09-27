@@ -194,8 +194,11 @@ public class UploadController {
     @ResponseBody
     public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
 
+        log.info("downloadfile:" +fileName);
+        
         Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
-
+        
+        log.info(resource);
         if (resource.exists() == false) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

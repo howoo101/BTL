@@ -1,8 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
 <%@ include file="includes/header.jsp"%>
 <div class="container center-block mt-4">
 	<div class="card border-primary">
@@ -35,8 +33,7 @@
 										<label>작성자</label> <input class="form-control"
 											name='board_writer'>
 									</div>
-									<input type="button" class="btn btn-primary" onclick="check()"
-										value="등록">
+									<button id="registerBtn" class="btn btn-primary" onclick="check()">등록</button>
 									<button type="reset" class="btn btn-info">초기화</button>
 								</form>
 								<br>
@@ -76,30 +73,28 @@
 </div>
 
 
-<!--필수값 입력하게 하기  -->
-<script type="text/javascript">
-	function check() {
-		var need = document.need;
-		var board_title = need.board_title.value;
-		var board_content = need.board_content.value;
 
-		if (!board_title || !board_content) {
-			alert("필수값이 입력되지 않았습니다.");
-			return;
-		}
-		need.submit();
-	}
-</script>
 
 <script>
 
 $(document).ready(function(e){
   
   var formObj = $("form[role='form']");
-  
-  $("button[type='submit']").on("click", function(e){
-    
-    e.preventDefault();
+    //$("button[type='submit']").on("click", function(e)
+ 	$("#registerBtn").on("click", function(e){  
+ 		
+		var need = document.need;
+		var board_title = need.board_title.value;
+		var board_content = need.board_content.value;
+
+   		e.preventDefault();
+
+   		/* 필수값입력하게하기 */
+		if (!board_title || !board_content) {
+			alert("필수값이 입력되지 않았습니다.");
+			return;
+		}
+		else{
     
     console.log("submit clicked");
     
@@ -118,13 +113,12 @@ $(document).ready(function(e){
       str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
       str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
       str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
-      
     });
     
     console.log(str);
     
     formObj.append(str).submit();
-    
+	 }
   });
 
   

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.btl.findjob.mapper.BoardAttachMapper">
+
+<insert id ="insert">
+insert ignore into attach(uuid,uploadPath,fileName, fileType, board_id)
+values (#{uuid}, #{uploadPath}, #{fileName}, #{fileType},LAST_INSERT_ID())
+</insert>
+
+<insert id ="attachUpdate">
+insert ignore into attach(uuid,uploadPath,fileName, fileType, board_id)
+values (#{uuid}, #{uploadPath}, #{fileName}, #{fileType},#{board_id})
+</insert>
+
+
+<delete id="delete">
+delete from attach where uuid = #{uuid}
+</delete>
+
+<select id="findByBoard_id" resultType="com.btl.findjob.model.BoardAttachDTO">
+select * from attach where board_id = #{board_id}
+</select>
+
+<delete id="deleteAll">
+delete from attach where board_id = #{board_id}
+</delete>
+
+</mapper>
