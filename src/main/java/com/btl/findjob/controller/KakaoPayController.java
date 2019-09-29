@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 @Log4j
 @Controller
@@ -47,8 +45,10 @@ public class KakaoPayController {
         log.info("kakaoPaySuccess get............................................");
         log.info("kakaoPaySuccess pg_token : " + pg_token);
 
+        //db
         kakaoPayService.insert(kakaopay.kakaoPayInfo(pg_token, user_id));
 
+        //회원 등급
         kakaoPayService.update(user_id);
 
         model.addAttribute("info",kakaoPayService.get(user_id));
