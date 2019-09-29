@@ -31,10 +31,12 @@
     <!-- 카카오 init -->
     <script>Kakao.init('34800e916b17799e85bcefde72c06423')</script>
     <!-- 네이버 js -->
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-            charset="utf-8"></script>
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+  
     <%--구글 로그인 커스텀--%>
+ <script src="https://apis.google.com/js/api:client.js"></script>
 
+ 
     <!-- 구글 아이콘 -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%-- 아이콘--%>
@@ -96,33 +98,28 @@ if(user==null){
     	 </button>
 	 	</div>
 	 	
-	 	<div class="nav navbar-nav navbar-right collapse navbar-collapse" id="navbarNav2" > 
-	 		<div> <!-- 묶기 -->
-		 	 	<button type="button" class="btn btn-light navbar-btn mr-2" onclick="location.href='${path}/list'">
-		 	 	<i class="material-icons">create</i>취뽀게시판</button>
-		  		<button type="button" id="loginmd" class="btn btn-dark navbar-btn " data-toggle="modal" data-target="#loginModal" >
-				 <i class="material-icons ">account_circle</i> <b>Login</b></button>
-			   
-		
-				 	<div class="btn-group usermodal mr-2"><!--usermodal 시작 -->
-			           <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-			       		 <b id="ucon">${name} </b>
-			       		 <i class="material-icons" style="text:35px">face</i>
-			           </button>
-			           <ul class="dropdown-menu text-center" role="menu">
-			               <li><a href="#"><b>정회원 인증</b></a></li>
-			               <li><a href="myPage_menu"><b>마이페이지</b></a></li>
-			               <li><a href="logout"><b>로그아웃</b></a></li>
-			           </ul>
-			         </div><!--usermodal 끝 -->
-			</div> <!-- 묶기 끝 -->
-				
-		
-		</div>
-		
+<div class="nav navbar-nav navbar-right collapse navbar-collapse" id="navbarNav2" > 
+	<div> <!-- 묶기 -->
+	 	<button type="button" class="btn btn-light navbar-btn mr-2" onclick="location.href='${path}/list'">
+	 	<i class="material-icons">create</i>취뽀게시판</button>
+		<button type="button" id="loginmd" class="btn btn-dark navbar-btn " data-toggle="modal" data-target="#loginModal" >
+	 	<i class="material-icons ">account_circle</i> <b>Login</b></button>
+		  
 	
-	 
-        
+	 	<div class="btn-group usermodal mr-2"><!--usermodal 시작 -->
+        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    		 <b id="ucon">${name} </b>
+    		 <i class="material-icons" style="text:35px">face</i>
+        </button>
+        <ul class="dropdown-menu text-center" role="menu">
+            <li><a href="#"><b>정회원 인증</b></a></li>
+            <li><a href="myPage_menu"><b>마이페이지</b></a></li>
+            <li><a href="logout"><b>로그아웃</b></a></li>
+        </ul>
+	   </div><!--usermodal 끝 -->
+	</div> <!-- 묶기 끝 -->
+</div>
+
 	</div>
    </nav>
 </header> <!-- 헤더 고정 태그 끝 --> 
@@ -223,4 +220,7 @@ if(user==null){
         $("#signup").show();
         $("#pwfind").hide();
     });
+
+    
+    
 </script>

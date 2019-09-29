@@ -1,42 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<meta name="google-signin-client_id"
-	content="589581046105-skr2iee57c8j3o02lsl3g284ts0g0ks9.apps.googleusercontent.com">
-
-<!-- 네이버 js -->
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-
-<!-- 구글 login -->
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-
+<!-- 로그인 css -->
+<link rel="stylesheet" type="text/css" href="resources/css/login.css">
+<!-- 구글 로그인 -->
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+<script src="https://apis.google.com/js/api:client.js"></script>
 <!-- 카카오 로그인 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- 네이버 로그인 -->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
 
 <form class="form-login">
 	<h3 class="form-signin-heading">로그인</h3>
 	<br> <label for="inputEmail" class="sr-only">Email address</label>
 	<input type="email" name="user_email" id="inputEmail" class="form-control" placeholder="이메일주소" required autofocus> 
 	<label for="inputPassword" class="sr-only">Password</label> 
-	<input type="password" name="user_password" id="inputPassword"class="form-control" placeholder="비밀번호" required> <br> 
+	<input type="password" name="user_password" id="inputPassword"class="form-control mt-2" placeholder="비밀번호" required> <br> 
 	<input type="button" id="loginbtn" value="로그인" class="btn btn-dark btn-block">
 </form>
 <br>
 
 
 <!-- 소셜 로그인 패널 -->
-<div id="sns_nav">
-	<button>
-		<div class="g-signin2 div-inline" data-onsuccess="onSignIn"></div>
-	</button>
-	<button>
-		<a id="custom-login-btn" href="javascript:loginWithKakao()"><img
-			src="resources/img/kakao_login_btn_medium.png" height="42px"></a>
-	</button>
-	<button>
-		<div id="naver_id_login"></div>
-	</button>
+<div id="sns_nav"><!-- sns nav -->
+<div id="gSignInWrapper">
+   <div id="customBtn">
+	   <span id="cbicon" class="icon"></span> 
+	   <span id="cblogin" class="customGPlusSignIn ml-3">Google</span>
+   </div>
 </div>
+	
+<div id="kSignInWrapper" class="ml-2 mr-2 mt-2">
+   <div id="kakaoBtn">
+   <span id="kbicon" class="kicon" ></span>
+   <span id="custom-login-btn" class="ml-3" ><b>Kakao</b> </span>
+   </div>
+</div>
+
+<div id="NSignInWrapper" class="mt-2">
+   <div id="naverBtn" onclick="document.getElementById('naver_id_login_anchor').click();">
+   <span id="nbicon" class="nicon" ></span>
+   <span id="custom-login-btn" class="ml-3"><b>Naver</b><div id="naver_id_login" style="display:none;"></div></span> 
+   </div>
+</div>
+
+</div><!-- // sns nav -->
 
 <!-- 네이버 이메일 콜백리턴 -->
 <input id="naver_email" type="hidden" value="">
@@ -45,6 +55,71 @@
 
 
 <script>
+
+$("#kakaoBtn").click(function(){
+	loginWithKakao();
+});
+
+
+/* 구글 로그인  */
+var googleUser = {};
+var startApp = function() {
+  gapi.load('auth2', function(){
+    // Retrieve the singleton for the GoogleAuth library and set up the client.
+    auth2 = gapi.auth2.init({
+      client_id: '589581046105-skr2iee57c8j3o02lsl3g284ts0g0ks9.apps.googleusercontent.com',
+      cookiepolicy: 'single_host_origin',
+    
+      // Request scopes in addition to 'profile' and 'email'
+      //scope: 'additional_scope'
+    });
+    attachSignin(document.getElementById('customBtn'));
+  });
+};
+
+function attachSignin(element) {
+ auth2.attachClickHandler(element, {},
+   function(googleUser) {
+		 var id_token = googleUser.getAuthResponse().id_token; //id 토큰 획득 (id토큰에 사용자 정보가 모여있다 아이디번호,닉네임,이메일,프로필사진)
+			$.ajax({
+					url : "${pageContext.request.contextPath}/google",
+					type : "post",
+					contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+					data : {
+						"idtoken" : id_token
+					},
+			success : function(data) {
+				if (data == '1') {
+					$('.close').trigger('click');
+					location.reload();
+				} else if (data == '2') {
+					alert("로그인에 실패하였습니다 해당 이메일은 이미 다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다.")
+					$('.close').trigger('click');
+					location.reload();
+				} else if (data == '3') {
+					alert("sns회원 자동가입이 완료되었습니다.")
+					$('.close').trigger('click');
+					location.reload();
+				}
+			},
+			error : function() {
+				alert("서버에러");
+			}
+			});
+
+ },function(error) {
+	
+   });
+}
+
+
+startApp();
+
+
+
+
+
+
 // 네이버로그인 처리
 var Erchk = 0;
 
@@ -76,11 +151,12 @@ $("#inputEmail").on("propertychange change click keyup input paste",function(){
 var naver_id_login = new naver_id_login("qbkbZvOsyDOQedGRhs0e",
 		"http://localhost:8282/findjob/callback");
 var state = naver_id_login.getUniqState();
-naver_id_login.setButton("white", 2, 40);
 naver_id_login.setDomain("http://localhost:8282/");
 naver_id_login.setState(state);
 naver_id_login.setPopup();
 naver_id_login.init_naver_id_login();
+
+
 
 /* 로그인 */
 $('#loginbtn').click(function(){
@@ -136,46 +212,9 @@ $('#loginbtn').click(function(){
 });
 
 /* 구글 로그인 */
+
+
  
-
-function onSignIn(googleUser) {
-	var id_token = googleUser.getAuthResponse().id_token; //id 토큰 획득 (id토큰에 사용자 정보가 모여있다 아이디번호,닉네임,이메일,프로필사진)
-
-	$.ajax({
-		url : "${pageContext.request.contextPath}/google",
-		type : "post",
-		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			"idtoken" : id_token
-		},
-		success : function(data) {
-			if (data == '1') {
-				$('.close').trigger('click');
-				location.reload();
-			} else if (data == '2') {
-				alert("로그인에 실패하였습니다 해당 이메일은 이미 다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다.")
-				$('.close').trigger('click');
-				location.reload();
-			} else if (data == '3') {
-				alert("sns회원 자동가입이 완료되었습니다.")
-				$('.close').trigger('click');
-				location.reload();
-			}
-		},
-		error : function() {
-			alert("서버에러");
-		}
-	});
-}
-
-function signOut() {
-	var auth2 = gapi.auth2.getAuthInstance();
-	auth2.signOut().then(function() {
-		console.log('User signed out.');
-	});
-}
-
-
 /* 카카오 로그인  */
 function loginWithKakao() {
 	// 로그인 창을 띄웁니다.

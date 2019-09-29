@@ -33,7 +33,7 @@
 	<h6>비밀번호</h6>
 	<label for="inputPassword" class="sr-only">Password</label>
 		<input type="password" name="user_password" id="inputPassword" class="form-control" placeholder="비밀번호" required>	      
-		<input type="password" name="user_passwordchk" id="inputPasswordchk" class="form-control" placeholder="비밀번호 확인" required>	      
+		<input type="password" name="user_passwordchk" id="inputPasswordchk" class="form-control mt-1" placeholder="비밀번호 확인" required>	      
 	<p id="pwchk" class="mt-2" style="font-size:small">비밀번호는 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.</p>		
 	<div class="container text-center" id="loading-bar2">
 		<img class="img-responsive center-block" src="resources/img/ajax-loader.gif" />

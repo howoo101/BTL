@@ -463,5 +463,13 @@ public String pwfind() {
 		return "1";
 	}
 	
+	
+	@RequestMapping(value = "test" , method = {RequestMethod.GET}) 
+	public String test(){
 		
+		
+		
+		return "user/test";
+	}
+	
 }
