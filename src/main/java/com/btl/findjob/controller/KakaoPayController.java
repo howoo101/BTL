@@ -1,37 +1,35 @@
 package com.btl.findjob.controller;
 
-import com.btl.findjob.model.UserDTO;
+import com.btl.findjob.model.KakaoPayApprovalVO;
+import com.btl.findjob.service.KakaoPayService;
 import com.btl.findjob.utils.KakaoPay;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import lombok.Setter;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Log4j
 @Controller
 @SessionAttributes("user_id")
+@AllArgsConstructor
 public class KakaoPayController {
 
-    @Setter(onMethod_ = @Autowired)
     private KakaoPay kakaopay;
 
-
+    private KakaoPayService kakaoPayService;
 
     @GetMapping("kakaoPay")
     public void kakaoPayGet() {
-
-
     }
-
 
     @PostMapping("kakaoPay")
     public String kakaoPay(HttpSession httpSession) {
@@ -49,7 +47,13 @@ public class KakaoPayController {
         log.info("kakaoPaySuccess get............................................");
         log.info("kakaoPaySuccess pg_token : " + pg_token);
 
-        model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token,user_id));
+        kakaoPayService.insert(kakaopay.kakaoPayInfo(pg_token, user_id));
+
+        model.addAttribute("info",kakaoPayService.get(user_id));
+//        model.addAttribute("info", kakaoPayService.get(user_id));
+//        log.info(model);
+        //메서드 실행후 사라져서 객체 생성해야하는데 Map List 안되네
+        //model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token,user_id));
 
     }
 

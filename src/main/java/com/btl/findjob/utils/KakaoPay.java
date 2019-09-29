@@ -16,8 +16,6 @@ import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.java.Log;
 
-import javax.swing.text.html.parser.Parser;
-
 @Service
 @Log
 public class KakaoPay {
@@ -64,6 +62,7 @@ public class KakaoPay {
             log.info("" + kakaoPayReadyVO);
 
             return kakaoPayReadyVO.getNext_redirect_pc_url();
+            //t성공시
 
         } catch (RestClientException e) {
             // TODO Auto-generated catch block
@@ -74,13 +73,11 @@ public class KakaoPay {
         }
 
         return "pay";
+        //실패시
 
     }
 
     public KakaoPayApprovalVO kakaoPayInfo(String pg_token, String user_id) {
-
-        log.info("KakaoPayInfoVO............................................");
-        log.info("-----------------------------");
 
         RestTemplate restTemplate = new RestTemplate();
 
