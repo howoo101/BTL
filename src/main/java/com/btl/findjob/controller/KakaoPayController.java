@@ -1,6 +1,5 @@
 package com.btl.findjob.controller;
 
-import com.btl.findjob.model.KakaoPayApprovalVO;
 import com.btl.findjob.service.KakaoPayService;
 import com.btl.findjob.utils.KakaoPay;
 import lombok.AllArgsConstructor;
