@@ -10,5 +10,5 @@ public interface KakaoPayService {
 
     KakaoPayApprovalVO get(String user_id);
 
-
+    void update(String user_id);
 }

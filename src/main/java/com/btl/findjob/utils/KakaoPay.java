@@ -2,9 +2,11 @@ package com.btl.findjob.utils;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.UUID;
 
 import com.btl.findjob.model.KakaoPayApprovalVO;
 import com.btl.findjob.model.KakaoPayReadyVO;
+import lombok.extern.log4j.Log4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,10 +16,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import lombok.extern.java.Log;
-
 @Service
-@Log
+@Log4j
 public class KakaoPay {
 
     private static final String HOST = "https://kapi.kakao.com";
@@ -29,6 +29,7 @@ public class KakaoPay {
     private static final String CANCEL_URL ="http://localhost:8282/findjob/kakaoPayCancel";//성공 URL
     private static final String FAIL_URL ="http://localhost:8282/findjob/kakaoPaySuccessFail";//성공 URL
     private static final String ITEM_NAME ="프리미엄회원권";//성공 URL
+    private String partner_order_id = UUID.randomUUID().toString();//주문 고유번호 생성 위해서
 
     private KakaoPayReadyVO kakaoPayReadyVO;
 
@@ -45,7 +46,7 @@ public class KakaoPay {
         // 서버로 요청할 Body
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
-        params.add("partner_order_id", "1012301");
+        params.add("partner_order_id", partner_order_id);
         params.add("partner_user_id",  user_id);
         params.add("item_name", ITEM_NAME);
         params.add("quantity", QUANTITY);
@@ -91,7 +92,7 @@ public class KakaoPay {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("tid", kakaoPayReadyVO.getTid());
-        params.add("partner_order_id", "1012301");
+        params.add("partner_order_id", partner_order_id);
         params.add("partner_user_id", user_id);
         params.add("pg_token", pg_token);
         params.add("total_amount",TOTAL_AMOUNT);//금액

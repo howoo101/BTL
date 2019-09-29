@@ -15,6 +15,8 @@ public class KakaoPayApprovalVO {
     private String item_name, item_code, payload;//상품이름, 상품코드, 해당 request와 저장해서 매핑하고 싶은 값?
     private Integer quantity, tax_free_amount, vat_amount;//수랑, 비과세금액, 부과세금액   로 수정, vat_amount가 null 받아와서 total_amount 수정
     private Date created_at, approved_at;//결제 준비요청시간, 결제 승인시각
+
+    private int total;//총점 정보 불러오기 위해서 추가
     
     
 }

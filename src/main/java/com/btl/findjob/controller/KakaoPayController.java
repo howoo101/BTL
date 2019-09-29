@@ -49,11 +49,11 @@ public class KakaoPayController {
 
         kakaoPayService.insert(kakaopay.kakaoPayInfo(pg_token, user_id));
 
+        kakaoPayService.update(user_id);
+
         model.addAttribute("info",kakaoPayService.get(user_id));
-//        model.addAttribute("info", kakaoPayService.get(user_id));
-//        log.info(model);
-        //메서드 실행후 사라져서 객체 생성해야하는데 Map List 안되네
-        //model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token,user_id));
+
+        log.info(model);
 
     }
 

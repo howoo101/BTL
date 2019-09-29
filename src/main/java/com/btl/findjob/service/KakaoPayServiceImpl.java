@@ -23,4 +23,9 @@ public class KakaoPayServiceImpl implements KakaoPayService {
         return kakaoPayMapper.get(user_id);
     }
 
+    @Override
+    public void update(String user_id) {
+    kakaoPayMapper.update(user_id);
+    }
+
 }

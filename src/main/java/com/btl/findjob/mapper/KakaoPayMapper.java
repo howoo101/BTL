@@ -10,4 +10,7 @@ public interface KakaoPayMapper {
 
     KakaoPayApprovalVO get(String user_id);
 
+    //등급수정
+    void update(String user_id);
+
 }
