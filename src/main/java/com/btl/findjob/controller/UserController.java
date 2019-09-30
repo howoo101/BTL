@@ -81,6 +81,7 @@ public class UserController {
 								session.setAttribute("user", user_email); // 세션추가
 								session.setAttribute("name", userservice.getname(user_email)); //닉네임 겟 
 								session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+								session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
 								SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장
 								return "1"; //인증회원 로그인
 						       }
@@ -125,6 +126,7 @@ public class UserController {
 				   session.setAttribute("user", user_email);
 				   session.setAttribute("name", userservice.getname(user_email));
 				   session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+				   session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
 				   SessionListener.getInstance().setSession(session, user_email);
 				   return "1";
 			  		}
@@ -146,6 +148,7 @@ public class UserController {
 				session.setAttribute("user", user_email);
 				session.setAttribute("name", userservice.getname(user_email));
 				session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+				session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
 				SessionListener.getInstance().setSession(session, user_email);
 			 return "3";
 			 }
@@ -173,6 +176,7 @@ HttpSession session = request.getSession();
    session.setAttribute("user", user_email);
    session.setAttribute("name", userservice.getname(user_email));
    session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+   session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
    SessionListener.getInstance().setSession(session, user_email);
    return "1";
   }
@@ -196,6 +200,7 @@ HttpSession session = request.getSession();
 	session.setAttribute("user", user_email);
 	session.setAttribute("name", userservice.getname(user_email));
 	session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+	session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
 	SessionListener.getInstance().setSession(session, user_email);
 
  return "3";
@@ -218,6 +223,7 @@ HttpSession session = request.getSession();
    session.setAttribute("user", user_email);
    session.setAttribute("name", userservice.getname(user_email));
    session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+   session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
    SessionListener.getInstance().setSession(session, user_email);
    return "1";
   }
@@ -238,6 +244,7 @@ HttpSession session = request.getSession();
 	session.setAttribute("user", user_email);
 	session.setAttribute("name", userservice.getname(user_email));
 	session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+	session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
 	SessionListener.getInstance().setSession(session, user_email);
 	 return "3";		
 	 }

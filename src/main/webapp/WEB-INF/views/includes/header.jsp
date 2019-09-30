@@ -58,6 +58,11 @@
 <!-- 세션받아오기 -->
     <% String user = (String) session.getAttribute("user");%>
     <% String name = (String) session.getAttribute("name");%>
+	<% String grade = (String) session.getAttribute("grade");%>
+	
+<input id="session" type="hidden" value="<%=user%>">  <!-- 로그인 세션파라미터 -->
+<input id="name" type="hidden" value="<%=name%>">  <!-- 유저 이름 세션파라미터 -->
+<input id="grade" type="hidden" value="<%=grade%>">  <!-- 유저 등급 세션파라미터 -->
 
 <!-- 로그인 인터셉터 (로그인창을 띄어주는 스크립트 임시호출)-->
     <% String ltr = (String) request.getAttribute("ltr");
@@ -69,9 +74,6 @@ if(user==null){
 	}
 }
 %>
-
-<input id="session" type="hidden" value="<%=user%>">  <!-- 로그인 세션파라미터 -->
-<input id="name" type="hidden" value="<%=name%>">  <!-- 유저 이름 세션파라미터 -->
 
 
   
@@ -112,7 +114,8 @@ if(user==null){
     		 <i class="material-icons" style="text:35px">face</i>
         </button>
         <ul class="dropdown-menu text-center" role="menu">
-            <li><a href="#"><b>정회원 인증</b></a></li>
+            <li id="preauth"><a href="#"><b>정회원 인증</b></a></li>
+            <li id="admauth"><a href="#"><b>관리모드</b></a></li>
             <li><a href="myPage_menu"><b>마이페이지</b></a></li>
             <li><a href="logout"><b>로그아웃</b></a></li>
         </ul>
@@ -124,6 +127,7 @@ if(user==null){
    </nav>
 </header> <!-- 헤더 고정 태그 끝 --> 
 
+	
 
 
 
@@ -153,6 +157,18 @@ if(user==null){
 <br/>
 
 <script>
+
+var grade = $('#grade').val(); 
+$('#preauth').css("display", "block");  
+ $('#admauth').css("display", "none");  
+ 	if(grade==1){
+ 	$('#preauth').css("display", "none");  
+	 $('#admauth').css("display", "block");  
+	}
+
+	
+
+
     $("#loading-bar").hide(); // 평상시 감춤
 
 
