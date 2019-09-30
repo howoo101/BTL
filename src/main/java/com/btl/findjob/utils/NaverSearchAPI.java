@@ -19,16 +19,6 @@ import org.json.simple.parser.JSONParser;
 
 public class NaverSearchAPI {
 	
-	public static void main(String[] args) throws ParseException {
-		String from = "Fri, 20 Sep 2019 10:46:00 +0900";
-		
-		SimpleDateFormat transFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-		Date to = transFormat.parse(from);
-		SimpleDateFormat transFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-		String date = transFormat2.format(to);
-		
-		
-	}
 	public ArrayList<String[]> result(String query) {
 		System.out.println("==== 검색 API 호출====");
 		String clientId = "AbMD7xQTQfGv8ZbT3FbP";
@@ -36,6 +26,7 @@ public class NaverSearchAPI {
 		ArrayList<String[]> list = new ArrayList<>();
 		
 		try {
+			
 			String text = URLEncoder.encode(query, "UTF-8");
 			String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&start=1&display=20";
 			URL url = new URL(apiURL);

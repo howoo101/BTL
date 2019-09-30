@@ -11,11 +11,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import com.btl.findjob.mapper.CompanyMapper;
+import com.btl.findjob.model.CompanyListVO;
 import com.btl.findjob.model.CompanyReview;
 import com.btl.findjob.model.MypageCriteria;
 import com.btl.findjob.model.MypagePageDTO;
 import com.btl.findjob.service.CompanyReviewService;
+import com.btl.findjob.service.CompanyService;
 import com.btl.findjob.service.InterviewReviewService;
 import lombok.extern.log4j.Log4j;
 
@@ -47,7 +49,10 @@ public class HomeController {
 	
 	@Autowired
 	EnterpriseService enterService;
-
+	@Autowired
+	CompanyService companyService;
+	
+	
 	private CompanyReviewService companyReviewService;
 
 	@Autowired
@@ -71,9 +76,24 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String home (Model model) {
+		// 코드 더러움 개선이 필요해
+		Map<String,List<CompanyListVO>> map1 = new HashMap<>();
+		Map<String,Map<String,List<CompanyListVO>>> map2 = new HashMap<>();
+		Map<String,List<CompanyListVO>> tmpMap1 = new HashMap<>();
+		Map<String,List<CompanyListVO>> tmpMap2 = new HashMap<>();
+		map1.put("follow 많은 기업", companyService.getManyFollowOrdersList());
+		map1.put("면접리뷰 많은 기업", companyService.getManyInterviewReviewOrdersList());
 		
+		tmpMap1.put("승진 기회 및 가능성", companyService.getMostCt0OrdersList());
+		tmpMap1.put("복지 및 급여", companyService.getMostCt1OrdersList());
+		map2.put("1",tmpMap1);
+		tmpMap2.put("워라벨", companyService.getMostCt2OrdersList());
+		tmpMap2.put("사내문화", companyService.getMostCt3OrdersList());
+		map2.put("2",tmpMap2);
+		
+		model.addAttribute("map1", map1);
+		model.addAttribute("map2", map2);
 		return "index";
 	}
 

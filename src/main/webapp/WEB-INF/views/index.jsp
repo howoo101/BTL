@@ -40,122 +40,44 @@
                     <li data-target="#infoCarousel" data-slide-to="1"></li>
                     <li data-target="#infoCarousel" data-slide-to="2"></li>
                 </ol>
-
                 <!-- Carousel items -->
                 <div class="carousel-inner">
 
                     <div class="carousel-item active">
                         <div class="row">
+                        	<c:forEach items="${map1}" var="map1" >
                             <div class="col-md-6 text-center">
-                                <h5>테스트</h5>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
+                                <h5>${map1.key }</h5>
+                                <c:forEach items="${map1.value }" var="item">
+                                <a href="${path}/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">
+                                    <p>${item.ci_companyName }</p>
                                 </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-
+                                </c:forEach>
                             </div>
-                            <div class="col-md-6 text-center">
-                                <h5>비추</h5>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-
-                            </div>
+                            </c:forEach>
+                            
                         </div>
                         <!--.row-->
                     </div>
                     <!--.item-->
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-md-6 text-center">
-                                <h5>팀 장 추 천</h5>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-
-                            </div>
-                            <div class="col-md-6 text-center"><h5>추 천 기 업</h5>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-
-                            </div>
-                        </div>
-                        <!--.row-->
-                    </div>
-                    <!--.item-->
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-md-6 text-center">
-                                <h5>순위별</h5>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-
-                            </div>
-                            <div class="col-md-6 text-center">
-                                <h5>랜덤</h5>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                                <a href="#">
-                                    <p>채용정보1 페이지2</p>
-                                </a>
-                            </div>
-                        </div>
-                        <!--.row-->
-                    </div>
-                    <!--.item-->
+                    <c:forEach items="${map2 }" var="map">
+	                   	<div class="carousel-item">
+	                        <div class="row">
+	                        	<c:forEach items="${map.value }" var="innerMap">
+		                            <div class="col-md-6 text-center">
+		                                <h5>${innerMap.key }</h5>
+		                                <c:forEach items="${innerMap.value }" var="item">
+			                                <a href="#">
+			                                    <p>${item.ci_companyName }</p>
+			                                </a>
+		                                </c:forEach>
+		                            </div>
+	                            </c:forEach>
+	                        </div>
+	                        <!--.row-->
+	                    </div>
+                    </c:forEach>
+                   
                 </div>
                 <!--.carousel-inner-->
 
