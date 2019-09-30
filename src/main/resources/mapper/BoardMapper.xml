@@ -11,7 +11,7 @@
 		insert into board(board_id, user_id,
 		board_title, board_content,
 		board_writer)
-		values(#{board_id}, 1,
+		values(#{board_id}, #{user_id},
 		#{board_title}, #{board_content}, #{board_writer})
 	</insert>
 
@@ -20,7 +20,7 @@
 		board_title,
 		board_content,board_regdate,board_updateDate,
 		board_writer)
-		values (#{board_id}, 1, #{board_title},
+		values (#{board_id}, #{user_id}, #{board_title},
 		#{board_content},now(),now(),
 		#{board_writer})
 	</insert>

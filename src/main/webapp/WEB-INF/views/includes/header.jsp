@@ -56,7 +56,8 @@
 <!-- 세션받아오기 -->
     <% String user = (String) session.getAttribute("user");%>
     <% String name = (String) session.getAttribute("name");%>
-    <% String user_id = (String) session.getAttribute("user_id");%>
+
+ <% String user_id = (String) session.getAttribute("user_id");%>
 
 <!-- 로그인 인터셉터 (로그인창을 띄어주는 스크립트 임시호출)-->
     <% String ltr = (String) request.getAttribute("ltr");
@@ -100,9 +101,7 @@ if(user==null){
                         <!-- login modal -->
 
                         <button type="button" id="loginmd" class="btn btn-primary" data-toggle="modal"
-                                data-target="#loginModal" data-backdrop="false">
-                            로그인
-                        </button>
+                                data-target="#loginModal" data-backdrop="false">로그인</button>
 
                         <!-- 로그인했을시 보이는 user dropmenu -->
                         <div class="btn-group" id="usermodal">

@@ -58,16 +58,19 @@
             <mapping path="/myPage_InterviewReview"/>
         	<mapping path="/myPage_ReviewComment"/> 
         	<mapping path="/myPage_Last"/> 
+        	<mapping path="/replies/new"/> 
         	<mapping path="/myPage_Last"/>
         	<mapping path="/companyReview/new"/>
         	<mapping path="/interviewReview/new"/>
         	<mapping path="/kakaoPay"/>
+
             <beans:ref bean="authenticationInterceptor"/>
         </interceptor>
     </interceptors>
  
 
-	
+	<beans:bean id="multipartResolver"
+	class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
 	
 	
 </beans:beans>

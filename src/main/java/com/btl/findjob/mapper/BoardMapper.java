@@ -15,7 +15,7 @@ public interface BoardMapper {
 
     public void insertSelectKey(BoardDTO board);
 
-    public int delete(int board);
+    public int delete(int board_id);
 
     public int modify(BoardDTO board);
     //페이징
@@ -31,4 +31,5 @@ public interface BoardMapper {
 
     // 조회수 카운트
     public void updateBoardHit(int board_id);
+
 }
