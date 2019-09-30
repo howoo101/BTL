@@ -61,6 +61,7 @@
         	<mapping path="/myPage_Last"/>
         	<mapping path="/companyReview/new"/>
         	<mapping path="/interviewReview/new"/>
+        	<mapping path="/kakaoPay"/>
             <beans:ref bean="authenticationInterceptor"/>
         </interceptor>
     </interceptors>

@@ -1,6 +1,7 @@
 package com.btl.findjob.controller;
 
 import com.btl.findjob.service.KakaoPayService;
+import com.btl.findjob.service.UserService;
 import com.btl.findjob.utils.KakaoPay;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -24,8 +25,25 @@ public class KakaoPayController {
 
     private KakaoPayService kakaoPayService;
 
+    private UserService userService;
+
     @GetMapping("kakaoPay")
-    public void kakaoPayGet() {
+    public String kakaoPayGet(HttpSession httpSession) {
+        String user_email = (String) httpSession.getAttribute("user");
+        ;
+        int check_user = userService.gradechk(user_email);
+        log.info(user_email);
+
+        if (check_user < 4) {
+            return "redirect:membership";
+        } else {
+            return "kakaoPay";
+        }
+    }
+
+    @GetMapping("membership")
+    public void premiumGet() {
+
     }
 
     @PostMapping("kakaoPay")
@@ -39,7 +57,7 @@ public class KakaoPayController {
     }
 
     @GetMapping("kakaoPaySuccess")
-    public void kakaoPaySuccess(@RequestParam(value="pg_token") String pg_token, Model model, HttpSession httpSession) {
+    public void kakaoPaySuccess(@RequestParam(value = "pg_token") String pg_token, Model model, HttpSession httpSession) {
         String user_id = (String) httpSession.getAttribute("user_id");
         log.info("kakaoPaySuccess get............................................");
         log.info("kakaoPaySuccess pg_token : " + pg_token);
@@ -50,7 +68,7 @@ public class KakaoPayController {
         //회원 등급
         kakaoPayService.update(user_id);
 
-        model.addAttribute("info",kakaoPayService.get(user_id));
+        model.addAttribute("info", kakaoPayService.get(user_id));
 
         log.info(model);
 
