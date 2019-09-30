@@ -11,17 +11,18 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+import com.btl.findjob.model.*;
+
 import com.btl.findjob.mapper.CompanyMapper;
-import com.btl.findjob.model.CompanyListVO;
-import com.btl.findjob.model.CompanyReview;
-import com.btl.findjob.model.MypageCriteria;
-import com.btl.findjob.model.MypagePageDTO;
+
 import com.btl.findjob.service.CompanyReviewService;
 import com.btl.findjob.service.CompanyService;
 import com.btl.findjob.service.InterviewReviewService;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.javassist.compiler.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,7 +142,7 @@ public class HomeController {
 		model.addAttribute("ci_companyName", ci_companyName);
 
 		//ave
-		model.addAttribute("totalStarRt", companyReviewService.totalStarRtAve(ci_companyName));
+		model.addAttribute("totalStarRt", companyReviewService.totalStarRtAve(Integer.parseInt(ci_id)));
 
 		//model에 넘기기 위해서
 		List<Map<String,Object>> data = new ArrayList<>();
@@ -155,9 +156,9 @@ public class HomeController {
 
 		for (int i = 0; i < 4; i++) {
 
-			categoryAve.add(companyReviewService.categoryStarRtAve(ci_companyName, i));
+			categoryAve.add(companyReviewService.categoryStarRtAve(Integer.parseInt(ci_id), i));
 			categoryName.add(companyReviewService.categoryName(i));
-			categoryCtn.add(companyReviewService.getCountByCategory(ci_companyName, i));
+			categoryCtn.add(companyReviewService.getCountCr(Integer.parseInt(ci_id), i));
 			map.put("categoryCtn",categoryCtn);
 			map.put("categoryName",categoryName);
 			map.put("categoryAve", categoryAve);
@@ -167,14 +168,14 @@ public class HomeController {
 
 		//기업 리뷰 차트정보
 		for (int i = 1; i < 6; i++) {
-			getStarCtn.add(companyReviewService.getStarCtn(ci_companyName,i));
+			getStarCtn.add(companyReviewService.getStarCtn(Integer.parseInt(ci_id),i));
 			model.addAttribute("starCtn", getStarCtn);
 		}
 		model.addAttribute("map", data);
 
 		// news
 		NaverSearchAPI api = new NaverSearchAPI();
-		List<String[]> list = api.result(ci_companyName);
+		List<String[]> list = api.result(ci_id);
 		
 		model.addAttribute("news", list);
 		
@@ -187,22 +188,23 @@ public class HomeController {
 		List<Integer> difficultyList = new ArrayList<>();
 
 		for (String s : difficultyArr) {
-			difficultyList.add(interviewReviewService.difficultyCnt(ci_companyName, s));
+			difficultyList.add(interviewReviewService.difficultyCnt(Integer.parseInt(ci_id), s));
 			model.addAttribute("difficultyList", difficultyList);
 		}
 
-		String[] expArr = {"부정적","보통","긍정적"};
+		String[] expArr = {"긍정적","보통","부정적"};
 		List<Integer> expList = new ArrayList<>();
 
 		for (String s : expArr) {
-			expList.add(interviewReviewService.expCnt(ci_companyName, s));
+			expList.add(interviewReviewService.expCnt(Integer.parseInt(ci_id), s));
 			model.addAttribute("expList", expList);
 		}
+			log.info(expList);
 
-		String[] resultArr = {"합격", "불합격", "대기중"};
+		String[] resultArr = {"합격", "대기중", "불합격"};
 		List<Integer> resultList = new ArrayList<>();
 		for(String s: resultArr){
-			resultList.add(interviewReviewService.resultCnt(ci_companyName,s));
+			resultList.add(interviewReviewService.resultCnt(Integer.parseInt(ci_id),s));
 			model.addAttribute("resultList",resultList);
 		}
     return "info";
@@ -219,10 +221,10 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/myPage_InterviewReview", method = RequestMethod.GET)
-	public String myPage_InterviewReview(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public void myPage_InterviewReview(HttpServletRequest httpServletRequest, Model model) {
 
-		return "myPage_InterviewReview";
+		int user_id = Integer.parseInt((String)httpServletRequest.getSession().getAttribute("user_id"));
+		model.addAttribute("myInterviewList", mypageService.myInterviewReview(user_id));
 	}
 
 	@RequestMapping(value = "/myPage_Last", method = RequestMethod.GET)
@@ -237,12 +239,12 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/myPage_ReviewComment", method = RequestMethod.GET)
-	public String myPage_ReviewComment(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public void myPage_ReviewComment(HttpServletRequest httpServletRequest, Model model) {
 
-		return "myPage_ReviewComment";
+		int user_id = Integer.parseInt((String)httpServletRequest.getSession().getAttribute("user_id"));
+		model.addAttribute("myReviewCommentList", mypageService.myReviewComment(user_id));
 	}
-	
+
 	@RequestMapping(value="/faq")
 	public String FAQ() {
 		return "/faq";

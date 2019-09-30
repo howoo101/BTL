@@ -13,9 +13,13 @@ public interface InterviewReviewMapper {
 
     int getCount(int ci_id);
 
-    int difficultyCnt(@Param("ci_companyName") String ci_companyName, @Param("ir_difficulty") String ir_difficulty);
+    int difficultyCnt(@Param("ci_id") int ci_id, @Param("ir_difficulty") String ir_difficulty);
 
-    int expCnt(@Param("ci_companyName") String ci_companyName, @Param("ir_experience") String ir_experience);
+    int expCnt(@Param("ci_id") int ci_id, @Param("ir_experience") String ir_experience);
 
-    int resultCnt(@Param("ci_companyName") String ci_companyName, @Param("ir_result") String ir_result);
+    int resultCnt(@Param("ci_id") int ci_id, @Param("ir_result") String ir_result);
+
+    InterviewReviewDTO get(int ir_id);
+
+    int interviewModify(InterviewReviewDTO interviewReviewDTO);
 }

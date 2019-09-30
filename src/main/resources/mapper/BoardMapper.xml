@@ -8,7 +8,7 @@
 	]]>
 	</select>
 	<insert id="insert">
-		insert into board(board_id, board_userid,
+		insert into board(board_id, user_id,
 		board_title, board_content,
 		board_writer)
 		values(#{board_id}, 1,
@@ -16,7 +16,7 @@
 	</insert>
 
 	<insert id="insertSelectKey">
-		insert into board(board_id, board_userid,
+		insert into board(board_id, user_id,
 		board_title,
 		board_content,board_regdate,board_updateDate,
 		board_writer)

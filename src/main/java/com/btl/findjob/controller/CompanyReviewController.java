@@ -52,4 +52,26 @@ public class CompanyReviewController {
 
         return new ResponseEntity<>(companyReviewService.getListWithPaging(companyReviewCriteria,cr_category, ci_id),HttpStatus.OK);
     }
+
+    @GetMapping(value = "/{cr_id}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity<CompanyReview> get(@PathVariable("cr_id") int cr_id){
+
+        log.info("cr_id: "+cr_id);
+
+        return new ResponseEntity<>(companyReviewService.get(cr_id), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
+            value="/{cr_id}", consumes = "application/json", produces= {MediaType.TEXT_PLAIN_VALUE,MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+    public ResponseEntity<String> interviewModify(@RequestBody CompanyReview companyReview, @PathVariable("cr_id") int cr_id) {
+        companyReview.setCr_id(cr_id);
+        log.info("reply_id..."+cr_id);
+        log.info("modify:"+companyReview);
+        return companyReviewService.commentModify(companyReview) ==1
+                ? new ResponseEntity<>("success",HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+
 }

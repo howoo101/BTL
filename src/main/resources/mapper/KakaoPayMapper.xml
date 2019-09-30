@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.btl.findjob.mapper.KakaoPayMapper">
+
+    <insert id="insert">
+        insert into kakaopay(partner_order_id, partner_user_id, payment_method_type, item_name, quantity, tid,
+                             approved_at, total,tax_free)
+        values (#{partner_order_id}, #{partner_user_id}, #{payment_method_type}, #{item_name}, #{quantity}, #{tid},
+                #{approved_at}, #{amount.total}, #{amount.tax_free})
+    </insert>
+
+    <select id="get" resultType="com.btl.findjob.model.KakaoPayApprovalVO">
+        select partner_order_id, partner_user_id, payment_method_type, item_name, quantity, tid, approved_at, total, tax_free
+        from kakaopay
+        where partner_user_id = #{partner_user_id}
+    </select>
+
+    <update id="update">
+        update user set authorization_id = 3 where user_id = #{user_id}
+    </update>
+
+</mapper>

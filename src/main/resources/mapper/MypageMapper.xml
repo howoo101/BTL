@@ -1,83 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.btl.findjob.mapper.MypageMapper">
-	<!--마이페이지 팔로잉한기업   -->
-	<select id="followCompanyGetList" resultType="com.btl.findjob.model.CompanyListVO">
-		select follow_id as followId,ifnull(total,0.0) as companyReviewAvg,ifnull(inreviewcnt,0) as interviewReviewCnt,ifnull(comreviewcnt,0) as companyReviewCnt ,ci.* 
-		from follow
-		left join (select cr.ci_id,round(avg(cr_starRt),1) as total
-		from companyreview cr
-		group by cr.ci_id) cr on cr.ci_id = follow.ci_id
-		left join (select ci.ci_id,ci.ci_companyName,count(ci.ci_companyName) comreviewcnt
-		from companyinfo ci, companyreview cr
-		where ci.ci_id = cr.ci_id
-		group by ci.ci_companyName
-		) cc on follow.ci_id = cc.ci_id
-		left join (select ci.ci_id,ci.ci_companyName,count(ci.ci_companyName) inreviewcnt
-		from companyinfo ci, interviewreview ir
-		where ci.ci_id = ir.ci_id
-		group by ci.ci_companyName
-		) ic on follow.ci_id = ic.ci_id
-		left join (select * from companyinfo) ci
-		on follow.ci_id = ci.ci_id
-		where user_id = (select user_id from user 
-			  where user_email = #{userEmail})
-		limit 10
-	</select>
-	
-	<select id="followCompanyGetListWithPage"
-	resultType="com.btl.findjob.model.CompanyListVO">
-		select follow_id as followId,ifnull(total,0.0) as companyReviewAvg, ifnull(inreviewcnt,0) as interviewReviewCnt,ifnull(comreviewcnt,0) as companyReviewCnt ,ci.* 
-		from follow
-		left join (select cr.ci_id,round(avg(cr_starRt),1) as total
-		from companyreview cr
-		group by cr.ci_id) cr on cr.ci_id = follow.ci_id
-		left join (select ci.ci_id,ci.ci_companyName,count(ci.ci_companyName) comreviewcnt
-		from companyinfo ci, companyreview cr
-		where ci.ci_id = cr.ci_id
-		group by ci.ci_companyName
-		) cc on follow.ci_id = cc.ci_id
-		left join (select ci.ci_id,ci.ci_companyName,count(ci.ci_companyName) inreviewcnt
-		from companyinfo ci, interviewreview ir
-		where ci.ci_id = ir.ci_id
-		group by ci.ci_companyName
-		) ic on follow.ci_id = ic.ci_id
-		left join (select * from companyinfo) ci
-		on follow.ci_id = ci.ci_id
-		where user_id = (select user_id from user 
-			  where user_email = #{userEmail})
-		limit #{criteria.startNum},#{criteria.amount}
-	</select>
-	
-	<select id="getTotalFollowCount" resultType="int">
-		select count(*) from follow
-		where user_id = (select user_id from user 
-			  where user_email = #{userEmail})
-	
-	</select>
-	
-	<select id="getRecentCompanyList" resultType = "com.btl.findjob.model.CompanyListVO">
-		select companyinfo.*,ifnull(total,0.0) as companyReviewAvg,ifnull(follow.follow_id,0) as followId 
-		from  companyinfo
-		left join (select cr.ci_id,round(avg(cr_starRt),1) as total
-		from companyreview cr
-		group by cr.ci_id) cr on cr.ci_id = companyinfo.ci_id
-		left join (select * from follow 
-		where follow.user_id = (SELECT user_id FROM user
-		where user_email = #{userEmail})
-		) follow on  follow.ci_id = companyinfo.ci_id
-		where companyinfo.ci_id in 
-		<if test="recentArr != null">
-		<foreach collection="recentArr" item = "item" index="index"  open="(" close=")" separator=",">
-            #{item}
-        </foreach>
-        	ORDER BY FIELD(companyinfo.ci_id,
-         	<foreach collection="recentArr" item="item"  separator=",">#{item}</foreach>)
+    <!--마이페이지 팔로잉한기업   -->
+    <select id="followCompanyGetList" resultType="com.btl.findjob.model.CompanyListVO">
+        select follow_id               as followId,
+               ifnull(total, 0.0)      as companyReviewAvg,
+               ifnull(inreviewcnt, 0)  as interviewReviewCnt,
+               ifnull(comreviewcnt, 0) as companyReviewCnt,
+               ci.*
+        from follow
+                 left join (select cr.ci_id, round(avg(cr_starRt), 1) as total
+                            from companyreview cr
+                            group by cr.ci_id) cr on cr.ci_id = follow.ci_id
+                 left join (select ci.ci_id, ci.ci_companyName, count(ci.ci_companyName) comreviewcnt
+                            from companyinfo ci,
+                                 companyreview cr
+                            where ci.ci_id = cr.ci_id
+                            group by ci.ci_companyName
+        ) cc on follow.ci_id = cc.ci_id
+                 left join (select ci.ci_id, ci.ci_companyName, count(ci.ci_companyName) inreviewcnt
+                            from companyinfo ci,
+                                 interviewreview ir
+                            where ci.ci_id = ir.ci_id
+                            group by ci.ci_companyName
+        ) ic on follow.ci_id = ic.ci_id
+                 left join (select * from companyinfo) ci
+                           on follow.ci_id = ci.ci_id
+        where user_id = (select user_id
+                         from user
+                         where user_email = #{userEmail})
+        limit 10
+    </select>
+
+    <select id="followCompanyGetListWithPage"
+            resultType="com.btl.findjob.model.CompanyListVO">
+        select follow_id               as followId,
+               ifnull(total, 0.0)      as companyReviewAvg,
+               ifnull(inreviewcnt, 0)  as interviewReviewCnt,
+               ifnull(comreviewcnt, 0) as companyReviewCnt,
+               ci.*
+        from follow
+                 left join (select cr.ci_id, round(avg(cr_starRt), 1) as total
+                            from companyreview cr
+                            group by cr.ci_id) cr on cr.ci_id = follow.ci_id
+                 left join (select ci.ci_id, ci.ci_companyName, count(ci.ci_companyName) comreviewcnt
+                            from companyinfo ci,
+                                 companyreview cr
+                            where ci.ci_id = cr.ci_id
+                            group by ci.ci_companyName
+        ) cc on follow.ci_id = cc.ci_id
+                 left join (select ci.ci_id, ci.ci_companyName, count(ci.ci_companyName) inreviewcnt
+                            from companyinfo ci,
+                                 interviewreview ir
+                            where ci.ci_id = ir.ci_id
+                            group by ci.ci_companyName
+        ) ic on follow.ci_id = ic.ci_id
+                 left join (select * from companyinfo) ci
+                           on follow.ci_id = ci.ci_id
+        where user_id = (select user_id
+                         from user
+                         where user_email = #{userEmail})
+        limit #{criteria.startNum},#{criteria.amount}
+    </select>
+
+    <select id="getTotalFollowCount" resultType="int">
+        select count(*)
+        from follow
+        where user_id = (select user_id
+                         from user
+                         where user_email = #{userEmail})
+
+    </select>
+
+    <select id="getRecentCompanyList" resultType="com.btl.findjob.model.CompanyListVO">
+        select companyinfo.*,ifnull(total,0.0) as companyReviewAvg,ifnull(follow.follow_id,0) as followId
+        from companyinfo
+        left join (select cr.ci_id,round(avg(cr_starRt),1) as total
+        from companyreview cr
+        group by cr.ci_id) cr on cr.ci_id = companyinfo.ci_id
+        left join (select * from follow
+        where follow.user_id = (SELECT user_id FROM user
+        where user_email = #{userEmail})
+        ) follow on follow.ci_id = companyinfo.ci_id
+        where companyinfo.ci_id in
+        <if test="recentArr != null">
+            <foreach collection="recentArr" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+            ORDER BY FIELD(companyinfo.ci_id,
+            <foreach collection="recentArr" item="item" separator=",">#{item}</foreach>)
         </if>
         <if test="recentArr == null">
-        (0)
+            (0)
         </if>
-	</select>
-	
-	
+    </select>
+
+    <select id="myReviewComment" resultType="com.btl.findjob.model.CompanyReview">
+                        SELECT companyreview.*, companyinfo.ci_companyName
+                FROM companyreview
+                         LEFT JOIN companyinfo
+                                   ON companyreview.ci_id = companyinfo.ci_id
+                WHERE user_id = #{user_id}
+                ORDER BY cr_regDate desc;
+    </select>
+
+    <select id="myInterviewReview" resultType="com.btl.findjob.model.InterviewReviewDTO">
+        SELECT interviewreview.*, companyinfo.ci_companyName
+        FROM interviewreview
+                 LEFT JOIN companyinfo
+                           ON interviewreview.ci_id = companyinfo.ci_id
+        WHERE user_id = #{user_id}
+        ORDER BY ir_interviewDate desc;
+    </select>
+
+
 </mapper>

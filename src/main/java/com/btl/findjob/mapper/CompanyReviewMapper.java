@@ -19,14 +19,16 @@ public interface CompanyReviewMapper {
     //숫자 파악위해서 사용N
     int getCountCr(@Param("ci_id") int ci_id, @Param("cr_category") int cr_category);
 
-    double totalStarRtAve(String ci_companyName);
+    double totalStarRtAve(int ci_id);
 
-    double categoryStarRtAve(@Param("ci_companyName") String ci_companyName, @Param("cr_category") int cr_category);
+    double categoryStarRtAve(@Param("ci_id") int ci_id, @Param("cr_category") int cr_category);
 
     String categoryName(int cr_category);
 
-    int getCountByCategory(@Param("ci_companyName") String ci_companyName, @Param("cr_category") int cr_category);
+    int getStarCtn(@Param("ci_id") int ci_id, @Param("cr_starRt") int starRt);
 
-    int getStarCtn(@Param("ci_companyName") String ci_companyName, @Param("cr_starRt") int starRt);
+    CompanyReview get(int cr_id);
+
+    int commentModify(CompanyReview companyReview);
 }
 

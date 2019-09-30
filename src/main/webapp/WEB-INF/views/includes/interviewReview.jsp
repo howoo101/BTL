@@ -67,7 +67,7 @@
                     </button>
                     <h4 class="modal-title"></h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" name="need">
 
                     <div class="form-group row">
                         <div class="col-sm-3">
@@ -165,8 +165,8 @@
                         <div class="col-sm-9">
                             <label>
                                 <select class="form-control custom-select" name="ir_result">
-                                    <option>대기중</option>
                                     <option>합격</option>
+                                    <option>대기중</option>
                                     <option>불합격</option>
                                 </select>
                             </label>
@@ -179,6 +179,7 @@
                         <div class="col-sm-9">
                             <label>
                                 <input class="form-control" type="date" name='ir_resultDate' value=''>
+                                <input class="user_id" type="hidden" value="<%=user_id%>">
                             </label>
                         </div>
                     </div>
@@ -250,19 +251,8 @@
         let interviewAnswerModal = interviewModal.find("textarea[name='ir_answer']");
         let interviewResultModal = interviewModal.find("select[name='ir_result']");
         let interviewResultDateModal = interviewModal.find("input[name='ir_resultDate']");
+        const user_id = interviewModal.find('input[class="user_id"]');
 
-        const interviewReview = {
-            ir_difficulty: difficultyModal.val(),
-            ir_interviewDate: interviewDateModal.val(),
-            ir_experience: interviewExperienceModal.val(),
-            ir_route: interviewRouteModal.val(),
-            ir_title: interviewTitleModal.val(),
-            ir_question: interviewQuestionModal.val(),
-            ir_answer: interviewAnswerModal.val(),
-            ir_result: interviewResultModal.val(),
-            ir_resultDate: interviewResultDateModal.val(),
-            ci_id: ci_idValue
-        };
 
         $("#interviewReviewRegister").on("click", function (e) {
             $(".interviewModal").modal("show");
@@ -278,6 +268,7 @@
                 ir_interviewDate: interviewDateModal.val(),
                 ir_experience: interviewExperienceModal.val(),
                 ir_route: interviewRouteModal.val(),
+                user_id: user_id.val(),
                 ir_title: interviewTitleModal.val(),
                 ir_question: interviewQuestionModal.val(),
                 ir_answer: interviewAnswerModal.val(),
@@ -286,14 +277,19 @@
                 ci_id: ci_idValue
             };
 
-            add(interviewReview, function (result) {
-                alert(result);
+            if (!interviewReview.ir_interviewDate || !interviewReview.ir_difficulty || !interviewReview.ir_experience || !interviewReview.ir_route || !interviewReview.user_id || !interviewReview.ir_title || !interviewReview.ir_question || !interviewReview.ir_answer || !interviewReview.ir_result || !interviewReview.ir_resultDate) {
+                alert("필수값이 입력되지 않았습니다.");
+            } else {
+                add(interviewReview, function (result) {
+                    alert("등록에 성공하였습니다.");
 
-                interviewModal.find("input").val("");
-                interviewModal.modal("hide");
+                    interviewModal.find("input").val("");
+                    interviewModal.modal("hide");
 
-                showList(1);
-            });
+                    // showList(1);
+                    location.reload();
+                });
+            }
         });
 
         function add(interviewReview, callback, error) {
@@ -307,9 +303,12 @@
                         callback(result);
                     }
                 },
-                error: function (xhr, status, er) {
-                    if (error) {
-                        error(er);
+                error: function (request, status, error) {
+                    if (request.status === 403) {
+                        location.href = "logininterceptor";
+                    }
+                    if (request.status === 404) {
+                        location.href = "gradeceptor";
                     }
                 }
             });
@@ -352,7 +351,7 @@
                     str += "                <div class='col-lg-3'>";
                     str += "                   <div class='container-fluid'>";
                     str += "                     <small class='font-weight-bold'>면접 난이도</small><br>";
-                    str += "                       <small class='difficultyColor font-weight-bold'>" +interviewReviewDTOList[i].ir_difficulty + "</small><br><br>";
+                    str += "                       <small class='difficultyColor font-weight-bold'>" + interviewReviewDTOList[i].ir_difficulty + "</small><br><br>";
                     str += "                           <small class='font-weight-bold'>면접 일자</small><br>";
                     str += "                             <small>" + interviewReviewService.displayTime(interviewReviewDTOList[i].ir_interviewDate) + "</small> <br><br>";
                     str += "                               <small class='font-weight-bold'>면접 경로</small><br>";
@@ -411,7 +410,7 @@
                     aveResult += difficultyAve[i] * (i + 1);
                     difCtn += difficultyAve[i];
                 }
-                aveResult /= difCtn;
+                aveResult = Math.round(aveResult / difCtn * 10.0) / 10;
                 if (aveResult !== 0) {
                     difAveUL.html(aveResult);
                 }
@@ -521,22 +520,22 @@
 
         var data2 = {
             labels: [
-                "부정적",
                 "긍정적",
-                "보통"
+                "보통",
+                "부정적"
             ],
             datasets: [
                 {
                     data: [...${expList}],
                     backgroundColor: [
-                        "#FF6384",
                         "#36A2EB",
-                        "#FFCE56"
+                        "#FFCE56",
+                        "#FF6384",
                     ],
                     hoverBackgroundColor: [
-                        "#FF6384",
                         "#36A2EB",
-                        "#FFCE56"
+                        "#FFCE56",
+                        "#FF6384",
                     ]
                 }]
         };
@@ -569,22 +568,22 @@
 //     두번째 도넛
         var data3 = {
             labels: [
-                "불합격",
                 "합격",
-                "대기중"
+                "대기중",
+                "불합격"
             ],
             datasets: [
                 {
                     data: [...${resultList}],
                     backgroundColor: [
-                        "#FF6384",
                         "#36A2EB",
-                        "#FFCE56"
+                        "#FFCE56",
+                        "#FF6384"
                     ],
                     hoverBackgroundColor: [
-                        "#FF6384",
                         "#36A2EB",
-                        "#FFCE56"
+                        "#FFCE56",
+                        "#FF6384"
                     ]
                 }]
         };

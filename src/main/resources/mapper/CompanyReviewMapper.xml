@@ -5,7 +5,7 @@
     <!--insert-->
     <insert id="insertCompanyReview">
         insert into companyreview (cr_comment, cr_starRt, cr_regDate, cr_category, user_id, ci_id)
-        values (#{cr_comment}, #{cr_starRt}, now(), #{cr_category}, 31, #{ci_id})
+        values (#{cr_comment}, #{cr_starRt}, now(), #{cr_category}, #{user_id}, #{ci_id})
     </insert>
 
     <!--페이징-->
@@ -26,20 +26,12 @@
         where ci_id = #{ci_id}
     </select>
 
-    <!--    카테고리별 카운트 이름 이용-->
-    <select id="getCountByCategory" resultType="int">
-        select count(ci_id)
-        from companyreview
-        where ci_id = (select ci_id from companyinfo where ci_companyName = #{ci_companyName})
-          and cr_category = #{cr_category};
-    </select>
-
     <!--    카테고리별 카운트 아이디 이용-->
     <select id="getCountCr" resultType="int">
         select count(ci_id)
         from companyreview
         where ci_id = #{ci_id}
-          and cr_category = #{cr_category}
+          and cr_category = #{cr_category};
     </select>
 
 
@@ -49,7 +41,7 @@
         from (select cr_starRt
               from companyreview
               where companyreview.ci_id =
-                    (select ci_id from companyinfo where ci_companyName = #{ci_companyName})) starRt
+                    #{ci_id}) starRt
     </select>
 
     <!--    카테고리별 평점-->
@@ -57,11 +49,7 @@
         select ifnull(avg(cr_starRt), 0.0)
         from (select cr_starRt
               from companyreview
-              where companyreview.ci_id =
-                    (select ci_id
-                     from companyinfo
-                     where ci_companyName = #{ci_companyName}
-                       and cr_category = #{cr_category})) starRt
+              where ci_id = #{ci_id}) starRt
     </select>
 
     <!--카테고리 코드에 대한 내용-->
@@ -81,8 +69,22 @@
     <select id="getStarCtn" resultType="int">
         select count(cr_starRt)
         from companyreview
-        where ci_id = (select ci_id from companyinfo where ci_companyName = #{ci_companyName})
+        where ci_id = #{ci_id}
           and cr_starRt = #{cr_starRt}
     </select>
+
+    <select id="get" resultType="com.btl.findjob.model.CompanyReview">
+        select *
+        from companyreview
+        where cr_id = #{cr_id}
+    </select>
+
+    <update id="commentModify">
+        update companyreview
+        set cr_comment    = #{cr_comment},
+            cr_starRt = #{cr_starRt},
+            cr_category    = #{cr_category}
+        where cr_id = #{cr_id}
+    </update>
 
 </mapper>
