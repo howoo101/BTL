@@ -3,47 +3,55 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../includes/header.jsp" %>
 
-<style>
-.col-xs-12 { margin: 10px; padding: 20px; }
-</style>
+
 <section>
 
 <% String snschk = (String) request.getAttribute("snschk"); %>
 <input type="hidden" id="snschk" value="<%=snschk%>">
 
 <!-- 닉네임 수정 -->
-<c:forEach var="ul" items="${Uinfo_list}">
-<div class="container">
-	 <form id="name_modify_form">
-	        <h2 class="userinfo_modify">회원 정보</h2>
-	       		<br>
-		    	<h6>이메일</h6>
-		        <label for="inputEmail" class="sr-only">Email address</label>
-			        <input type="email" value=${ul.user_email} name="user_email" id="inputEmail" class="form-control" placeholder="이메일주소" required autofocus>
-		    	<br>
-		    	<h6>닉네임</h6>
-		        <label for="inputName" class="sr-only">Name</label>
-		 		 <input type="text" value=${ul.user_name} name="user_name" id="inputName"  class="form-control" placeholder="닉네임" required>
-				<p id="nick">닉네임은 2~10글자로 작성해주세요.</p>	
-		 		<input type="button" id="name_modify" value="닉네임 수정" class="btn btn-lg btn-info btn-block">
-		        
-	 	</form>
- </div>	
-</c:forEach>
+
+
+<div class="container col-lg-12 mt-4" id="user_info_modal">
+
+ <c:forEach var="ul" items="${Uinfo_list}">
+		<i class="material-icons mt-1" style="font-size:35px;">settings_applications</i><h3>회원 정보</h3>
+       
+      	<br>
+    	<h6>이메일</h6>
+        <label for="inputEmail" class="sr-only">Email address</label>
+	        <input type="email" value=${ul.user_email} name="user_email" id="inputEmail" class="form-control" placeholder="이메일주소" required autofocus>
+    	<br>
+    	<h6>닉네임</h6>
+        <label for="inputName" class="sr-only">Name</label>
+ 		 <input type="text" value=${ul.user_name} name="user_name" id="inputName"  class="form-control" placeholder="닉네임" required>
+		<p id="nick" class="mt-2" style="font-size:small">닉네임은 2~10글자로 작성해주세요.</p>		
+ 		<input type="button" id="name_modify" value="닉네임 수정" class="btn btn-lg btn-dark btn-block">
+ </c:forEach>
+
 <br>
 <!-- 비밀번호  수정 -->
-<div class="container">
-	 <form id="pw_modify_form">
-			<h6>비밀번호</h6>	
-	        <label for="inputPassword" class="sr-only">Password</label>
-			 <input type="password" name="user_password" id="inputPassword" class="form-control" placeholder="비밀번호" required>	      
-	    	 <input type="password" name="user_passwordchk" id="inputPasswordchk" class="form-control" placeholder="비밀번호 확인" required>	      
-	 		 <p id="pwchk">비밀번호를 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.</p>
-	    	<input type="button" id="pw_modify" value="비밀번호 수정" class="btn btn-lg btn-info btn-block">
-		</form>
-</div>	
 
- 	
+	<div id="pw_modify">
+	<h6>비밀번호</h6>	
+       <label for="inputPassword" class="sr-only">Password</label>
+	 <input type="password" name="user_password" id="inputPassword" class="form-control" placeholder="비밀번호" required>	      
+   	 <input type="password" name="user_passwordchk" id="inputPasswordchk" class="form-control" placeholder="비밀번호 확인" required>	      
+	<p id="pwchk" class="mt-2" style="font-size:small">비밀번호는 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.</p>		
+   	<input type="button" id="pw_modify" value="비밀번호 수정" class="btn btn-lg btn-dark btn-block">
+   	</div>
+   	<br>
+
+<div id="uim_back">
+   	<button id="uim_back_btn" class="btn btn-light">
+		<i class="material-icons" style="size:35px">
+		meeting_room
+		</i>
+    </button>
+</div>
+
+</div>
+
 <script>
 $(document).ready(function(e){
 	
@@ -53,7 +61,7 @@ var snschk = $("#snschk").val();
 
 
 if(snschk==1){
-$('#pw_modify_form').hide();
+$('#pw_modify').hide();
 }
 
 
@@ -188,12 +196,16 @@ if(result){
 	}else{}
 });
 	
-	
-	
-	
-	
-	
-	
+$('#uim_back_btn').click(function(){
+	var result = confirm('현재 입력을 취소하고 뒤로 가시겠습니까?');
+	if(result){ 
+	history.back(-1);
+	}
+	else{	
+	}
+});
+
+
 });
 
 </script>

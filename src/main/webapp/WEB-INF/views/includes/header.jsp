@@ -4,6 +4,7 @@
 
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,24 +18,25 @@
     <%--부트스트랩 CSS--%>
     <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
     <%-- index css 커스텀--%>
-    <link rel="stylesheet" type="text/css" href="resources/css/indexStyle.css">
+     <link rel="stylesheet" type="text/css" href="resources/css/indexStyle.css">
     <%-- TH css 커스텀--%>
     <link rel="stylesheet" type="text/css" href="resources/css/THStyle.css">
+    <%-- ssh css 커스텀--%>
+    <link rel="stylesheet" type="text/css" href="resources/css/sshStyle.css">
 
     <!--부트스트랩 와치-->
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
-
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet" integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
     <!-- 카카오 js -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <!-- 카카오 init -->
-
     <script>Kakao.init('34800e916b17799e85bcefde72c06423')</script>
     <!-- 네이버 js -->
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-            charset="utf-8"></script>
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+  
     <%--구글 로그인 커스텀--%>
+ <script src="https://apis.google.com/js/api:client.js"></script>
 
+ 
     <!-- 구글 아이콘 -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%-- 아이콘--%>
@@ -56,6 +58,11 @@
 <!-- 세션받아오기 -->
     <% String user = (String) session.getAttribute("user");%>
     <% String name = (String) session.getAttribute("name");%>
+	<% String grade = (String) session.getAttribute("grade");%>
+	
+<input id="session" type="hidden" value="<%=user%>">  <!-- 로그인 세션파라미터 -->
+<input id="name" type="hidden" value="<%=name%>">  <!-- 유저 이름 세션파라미터 -->
+<input id="grade" type="hidden" value="<%=grade%>">  <!-- 유저 등급 세션파라미터 -->
 
  <% String user_id = (String) session.getAttribute("user_id");%>
 
@@ -70,8 +77,6 @@ if(user==null){
 }
 %>
 
-<input id="session" type="hidden" value="<%=user%>">  <!-- 로그인 세션파라미터 -->
-<input id="name" type="hidden" value="<%=name%>">  <!-- 유저 이름 세션파라미터 -->
 
 <header class="header-fixed">
 
@@ -123,7 +128,9 @@ if(user==null){
             </div>
         </nav>
     </div>
-</header>
+</div>
+<!-- 모달 div 끝 -->
+
 <br/>
 <br/>
 <!-- 모달 div -->
@@ -151,6 +158,18 @@ if(user==null){
 <!-- 모달 div 끝 -->
 
 <script>
+
+var grade = $('#grade').val(); 
+$('#preauth').css("display", "block");  
+ $('#admauth').css("display", "none");  
+ 	if(grade==1){
+ 	$('#preauth').css("display", "none");  
+	 $('#admauth').css("display", "block");  
+	}
+
+	
+
+
     $("#loading-bar").hide(); // 평상시 감춤
 
 
@@ -164,17 +183,18 @@ if(user==null){
 
     // 세션이 있을시 로그인 메뉴를 감추고 회원메뉴를 show
     if ($('#session').val() == 'null') {
-        $("#usermodal").hide();
+        $(".usermodal").hide();
         $("#loginmd").show();
     }
     if ($('#session').val() != 'null') {
-        $("#usermodal").show();
+        $(".usermodal").show();
         $("#loginmd").hide();
     }
 
     //최초 modal-body에 로드되는 로그인 페이지
     $("#loginModal").on("show.bs.modal", function () {
         $(".loginmodal-body").load("login");
+        $('.loginmodal-title').html('<i class="material-icons mt-1">account_circle</i>&nbsp Login');
         $("#login").hide();
         $("#signup").show();
         $("#pwfind").show();
@@ -182,17 +202,23 @@ if(user==null){
 
     //클릭시 modal-body에 해당 url로드
     $("#login").click(function () {
+    	$('.loginmodal-title').empty();
+		$('.loginmodal-title').html('<i class="material-icons mt-1">account_circle</i>&nbsp Login');
         $(".loginmodal-body").load("login");
     });
 
     $("#signup").click(function () {
+    	$('.loginmodal-title').empty();
+		$('.loginmodal-title').html('<i class="material-icons mt-1">how_to_reg</i>&nbsp Sign-Up');
         $(".loginmodal-body").load("signup");
     });
 
     $("#pwfind").click(function () {
+      	$('.loginmodal-title').empty();
+		$('.loginmodal-title').html('<i class="material-icons mt-1">help</i>&nbsp Forgot Your Password?');
         $(".loginmodal-body").load("pwfind");
     });
-
+  
     // modal-footer
     $("#login").click(function () {
         $("#login").hide();
@@ -211,4 +237,7 @@ if(user==null){
         $("#signup").show();
         $("#pwfind").hide();
     });
+
+    
+    
 </script>

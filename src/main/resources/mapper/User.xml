@@ -10,7 +10,7 @@
 	
 	<!-- 닉네임 수정  -->
 	<update id="name_modify" parameterType="com.btl.findjob.model.UserDTO" >
- update user set user_name = #{user_name} , user_modify_date = CURRENT_DATE() where user_email = #{user_email}
+ update user set user_name = #{user_name} , user_modify_date = NOW() where user_email = #{user_email}
 	</update>
 	
 	<!-- 이메일 중복 체크-->
@@ -32,14 +32,14 @@
 	<!-- 일반 회원가입 -->
 	<insert id="join_insert" parameterType="com.btl.findjob.model.UserDTO">
 	insert into user (authorization_id,user_email,user_name,user_password,user_create_date,user_modify_date,salt)
-values (#{authorization},#{user_email},#{user_name},#{user_password},CURRENT_DATE(),CURRENT_DATE(),#{salt})
+values (#{authorization},#{user_email},#{user_name},#{user_password},NOW(),NOW(),#{salt})
 	</insert>
 	
 	
 	<!-- sns 회원가입 -->
 	<insert id="snsjoin_insert" parameterType="com.btl.findjob.model.UserDTO">
 	insert into user (authorization_id,user_email,user_name,user_password,user_create_date,user_modify_date,user_emailauthkey,salt,sns_key,sns_type)
-values (#{authorization},#{user_email},#{user_name},#{user_password},CURRENT_DATE(),CURRENT_DATE(),'','',#{sns_key},#{sns_type})
+values (#{authorization},#{user_email},#{user_name},#{user_password},NOW(),NOW(),'','',#{sns_key},#{sns_type})
 	</insert>
 	
 	<!-- sns으로 가입한 회원인지 확인  -->

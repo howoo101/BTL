@@ -8,10 +8,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<%@ include file="includes/header.jsp" %>
 
-<%@ include file="includes/myPage_Menu.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+
+<%@ include file="../includes/header.jsp" %>
+
+<%@ include file="myPage_Menu.jsp" %>
 
 <div class="container mt-4">
     <div class="card border-primary">
@@ -203,6 +205,7 @@
 
 </script>
 
-<%@ include file="includes/footer.jsp" %>
+<%@ include file="../includes/footer.jsp" %>
+
 
 <script type="text/javascript" src="${path}/resources/js/star.js"></script>

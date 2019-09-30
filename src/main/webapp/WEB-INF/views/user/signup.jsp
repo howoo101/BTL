@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
-
 <form id="signupform">
-	<h2 class="form-signin-heading">회원가입</h2>
+	<h3 class="form-signin-heading">회원가입</h3>
     <br>
    	<h6>이메일</h6>
     <label for="inputEmail" class="sr-only">Email address</label>
 	<input type="email" name="user_email" id="inputEmail" class="form-control" placeholder="이메일주소" required autofocus>
-	<input type="button" id="check" value="중복체크" class="btn btn-info">
-    <p id="EmailCheck"></p>
+	<input type="button" id="check" value="중복체크" class="btn btn-dark mt-2">
+    <p id="EmailCheck" class="mt-2" style="font-size:small"></p>
     
     <div class="container text-center" id="loading-bar1">
 		<img class="img-responsive center-block" src="resources/img/ajax-loader.gif" />
@@ -20,28 +19,27 @@
    	<br>
    	<h6>이메일 인증</h6>
     <label for="inputAuthNum" class="sr-only">이메일 인증번호</label>
-	<input type="text" name="auth_key" id="inputAuthNum" class="form-control" placeholder="이메일로 발송된 인증번호를 입력해주세요." required>
-	<p id="EmailAuth">이메일 중복체크를 먼저 해주세요.</p>
-	<input type="button" id="authsubmit" value="이메일 인증번호 발송" class="btn btn-info">
-	<input type="button" id="authcheck" value="이메일 인증번호 확인" class="btn btn-info">
+	<input type="text" name="auth_key" id="inputAuthNum" class="form-control " placeholder="이메일로 발송된 인증번호를 입력해주세요." required>
+	<p id="EmailAuth" class="mt-2" style="font-size:small">이메일 중복체크를 먼저 해주세요.</p>
+	<input type="button" id="authsubmit" value="이메일 인증번호 발송" class="btn btn-dark mt-2">
+	<input type="button" id="authcheck" value="이메일 인증번호 확인" class="btn btn-dark mt-2">
 	<br>
 	</div>
-	<br>
-   	<h6>닉네임</h6>
+   	<h6 class="mt-3">닉네임</h6>
     <label for="inputName" class="sr-only">Name</label>
-		<input type="text" name="user_name" id="inputName" class="form-control" placeholder="닉네임" required>
-	<p id="nick">닉네임은 2~10글자로 작성해주세요.</p>	
+	<input type="text" name="user_name" id="inputName" class="form-control" placeholder="닉네임" required>
+	<p id="nick" class="mt-2" style="font-size:small">닉네임은 2~10글자로 작성해주세요.</p>	
 	<br>	
 	<h6>비밀번호</h6>
 	<label for="inputPassword" class="sr-only">Password</label>
 		<input type="password" name="user_password" id="inputPassword" class="form-control" placeholder="비밀번호" required>	      
-		<input type="password" name="user_passwordchk" id="inputPasswordchk" class="form-control" placeholder="비밀번호 확인" required>	      
-	<p id="pwchk">비밀번호는 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.</p>		
+		<input type="password" name="user_passwordchk" id="inputPasswordchk" class="form-control mt-1" placeholder="비밀번호 확인" required>	      
+	<p id="pwchk" class="mt-2" style="font-size:small">비밀번호는 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.</p>		
 	<div class="container text-center" id="loading-bar2">
 		<img class="img-responsive center-block" src="resources/img/ajax-loader.gif" />
 	</div>
 	<br>
-		<input type="button" id="signUp" value="가입" class="btn btn-lg btn-info btn-block">
+		<input type="button" id="signUp" value="가입" class="btn btn-lg btn-dark btn-block">
 </form>
  	
 <script>

@@ -217,14 +217,18 @@ public class HomeController {
 		model.addAttribute("companyList",mypageService.followCompanyGetList(userEmail,criteria));
 		int total = mypageService.getTotalFollowCount(userEmail);
 		model.addAttribute("pageMaker", new MypagePageDTO(criteria,total));
-		return "myPage_Following";
+		return "mypage/myPage_Following";
 	}
 
 	@RequestMapping(value = "/myPage_InterviewReview", method = RequestMethod.GET)
 	public void myPage_InterviewReview(HttpServletRequest httpServletRequest, Model model) {
 
+
 		int user_id = Integer.parseInt((String)httpServletRequest.getSession().getAttribute("user_id"));
 		model.addAttribute("myInterviewList", mypageService.myInterviewReview(user_id));
+
+		return "mypage/myPage_InterviewReview";
+
 	}
 
 	@RequestMapping(value = "/myPage_Last", method = RequestMethod.GET)
@@ -235,14 +239,18 @@ public class HomeController {
 		
 		model.addAttribute("companyList",
 				mypageService.getRecentCompanyList(userEmail, arr));
-		return "myPage_Last";
+		return "mypage/myPage_Last";
 	}
 
 	@RequestMapping(value = "/myPage_ReviewComment", method = RequestMethod.GET)
 	public void myPage_ReviewComment(HttpServletRequest httpServletRequest, Model model) {
 
+
 		int user_id = Integer.parseInt((String)httpServletRequest.getSession().getAttribute("user_id"));
 		model.addAttribute("myReviewCommentList", mypageService.myReviewComment(user_id));
+
+		return "mypage/myPage_ReviewComment";
+
 	}
 
 	@RequestMapping(value="/faq")
