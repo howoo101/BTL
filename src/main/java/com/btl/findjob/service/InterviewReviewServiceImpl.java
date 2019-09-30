@@ -22,18 +22,28 @@ public class InterviewReviewServiceImpl implements InterviewReviewService {
     }
 
     @Override
-    public int difficultyCnt(String ci_companyName, String ir_difficulty) {
-        return interviewReviewMapper.difficultyCnt(ci_companyName, ir_difficulty);
+    public int difficultyCnt(int ci_id, String ir_difficulty) {
+        return interviewReviewMapper.difficultyCnt(ci_id, ir_difficulty);
     }
 
     @Override
-    public int expCnt(String ci_companyName, String ir_experience) {
-        return interviewReviewMapper.expCnt(ci_companyName, ir_experience);
+    public int expCnt(int ci_id, String ir_experience) {
+        return interviewReviewMapper.expCnt(ci_id, ir_experience);
     }
 
     @Override
-    public int resultCnt(String ci_companyName, String ir_result) {
-        return interviewReviewMapper.resultCnt(ci_companyName, ir_result);
+    public int resultCnt(int ci_id, String ir_result) {
+        return interviewReviewMapper.resultCnt(ci_id, ir_result);
+    }
+
+    @Override
+    public InterviewReviewDTO get(int ir_id) {
+        return interviewReviewMapper.get(ir_id);
+    }
+
+    @Override
+    public int interviewModify(InterviewReviewDTO interviewReviewDTO) {
+        return interviewReviewMapper.interviewModify(interviewReviewDTO);
     }
 
 }

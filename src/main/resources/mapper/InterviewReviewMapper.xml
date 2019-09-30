@@ -3,12 +3,24 @@
 <mapper namespace="com.btl.findjob.mapper.InterviewReviewMapper">
 
     <insert id="interviewReviewRegister">
-        insert into interviewreview (ir_difficulty, ir_interviewDate, ir_experience, ir_route, ir_title, ir_question, ir_answer, ir_result, ir_resultDate, user_id, ci_id)
-        VALUES (#{ir_difficulty}, #{ir_interviewDate},#{ir_experience}, #{ir_route}, #{ir_title}, #{ir_question}, #{ir_answer}, #{ir_result}, #{ir_resultDate}, 31, #{ci_id})
+        insert into interviewreview (ir_difficulty, ir_interviewDate, ir_experience, ir_route, ir_title, ir_question,
+                                     ir_answer, ir_result, ir_resultDate, user_id, ci_id)
+        VALUES (#{ir_difficulty}, #{ir_interviewDate}, #{ir_experience}, #{ir_route}, #{ir_title}, #{ir_question},
+                #{ir_answer}, #{ir_result}, #{ir_resultDate}, #{user_id}, #{ci_id})
     </insert>
 
     <select id="getListWithPaging" resultType="com.btl.findjob.model.InterviewReviewDTO">
-        select ir_difficulty, ir_interviewDate, ir_experience, ir_route, ir_title, ir_question, ir_answer, ir_result, ir_resultDate, user_id, ci_id
+        select ir_difficulty,
+               ir_interviewDate,
+               ir_experience,
+               ir_route,
+               ir_title,
+               ir_question,
+               ir_answer,
+               ir_result,
+               ir_resultDate,
+               user_id,
+               ci_id
         from interviewreview
         where ci_id = #{ci_id}
         order by ir_id desc
@@ -16,18 +28,50 @@
     </select>
 
     <select id="getCount" resultType="int">
-       select count(ir_id) from interviewreview where ci_id = #{ci_id}
+        select count(ir_id)
+        from interviewreview
+        where ci_id = #{ci_id}
     </select>
 
     <select id="difficultyCnt" resultType="int">
-        select count(ir_id) from interviewreview where ci_id = (select ci_id from companyinfo where ci_companyName = #{ci_companyName}) and ir_difficulty = #{ir_difficulty}
+        select count(ir_id)
+        from interviewreview
+        where ci_id = #{ci_id}
+          and ir_difficulty = #{ir_difficulty}
     </select>
 
     <select id="expCnt" resultType="int">
-        select count(ir_id) from interviewreview where ci_id = (select ci_id from companyinfo where ci_companyName = #{ci_companyName}) and ir_experience = #{ir_experience}
+        select count(ir_id)
+        from interviewreview
+        where ci_id = #{ci_id}
+          and ir_experience = #{ir_experience}
     </select>
 
     <select id="resultCnt" resultType="int">
-        select count(ir_id) from interviewreview where ci_id = (select ci_id from companyinfo where ci_companyName = #{ci_companyName}) and ir_result = #{ir_result}
+        select count(ir_id)
+        from interviewreview
+        where ci_id = #{ci_id}
+          and ir_result = #{ir_result}
     </select>
+
+    <select id="get" resultType="com.btl.findjob.model.InterviewReviewDTO">
+        select *
+        from interviewreview
+        where ir_id = #{ir_id}
+    </select>
+
+    <update id="interviewModify">
+        update interviewreview
+        set ir_difficulty    = #{ir_difficulty},
+            ir_interviewDate = #{ir_interviewDate},
+            ir_experience    = #{ir_experience},
+            ir_route         = #{ir_route},
+            ir_title         = #{ir_title},
+            ir_question      = #{ir_question},
+            ir_answer        = #{ir_answer},
+            ir_result        = #{ir_result},
+            ir_resultDate    = #{ir_resultDate}
+        where ir_id = #{ir_id}
+    </update>
+
 </mapper>

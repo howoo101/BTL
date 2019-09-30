@@ -18,4 +18,6 @@ public class InterviewReviewDTO {
     private Date ir_resultDate; //결과 날짜
     private int user_id; //유저 아이디
     private int ci_id; // 회사 아이디
+
+    private String ci_companyName;
 }

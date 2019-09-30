@@ -56,8 +56,9 @@
 <!-- 세션받아오기 -->
     <% String user = (String) session.getAttribute("user");%>
     <% String name = (String) session.getAttribute("name");%>
+
  <% String user_id = (String) session.getAttribute("user_id");%>
- 
+
 <!-- 로그인 인터셉터 (로그인창을 띄어주는 스크립트 임시호출)-->
     <% String ltr = (String) request.getAttribute("ltr");
 if(user==null){
@@ -120,38 +121,34 @@ if(user==null){
                     </div>
                 </div>
             </div>
-
-
-            <!-- 모달 div -->
-
-            <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 2000">
-                <div class="modal-dialog loginmodal-dialog">
-                    <div class="modal-content loginmodal-content">
-                        <div class="modal-header loginmodal-header">
-                            <h5 class="modal-title loginmodal-title">LOGIN</h5>
-                            <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">×
-                            </button>
-                        </div>
-                        <div class="modal-body loginmodal-body">
-
-                        </div>
-                        <div class="modal-footer loginmodal-footer">
-
-                            <button id="login" class="btn btn-primary">로그인</button>
-                            <button id="signup" class="btn btn-primary">회원가입</button>
-                            <button id="pwfind" class="btn btn-primary">비밀번호찾기</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 모달 div 끝 -->
-
-
         </nav>
     </div>
 </header>
 <br/>
 <br/>
+<!-- 모달 div -->
+
+<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 2000">
+    <div class="modal-dialog loginmodal-dialog">
+        <div class="modal-content loginmodal-content">
+            <div class="modal-header loginmodal-header">
+                <h5 class="modal-title loginmodal-title">LOGIN</h5>
+                <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">×
+                </button>
+            </div>
+            <div class="modal-body loginmodal-body">
+
+            </div>
+            <div class="modal-footer loginmodal-footer">
+
+                <button id="login" class="btn btn-primary">로그인</button>
+                <button id="signup" class="btn btn-primary">회원가입</button>
+                <button id="pwfind" class="btn btn-primary">비밀번호찾기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 모달 div 끝 -->
 
 <script>
     $("#loading-bar").hide(); // 평상시 감춤
