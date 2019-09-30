@@ -26,8 +26,8 @@ public class KakaoPay {
     private static final String TOTAL_AMOUNT = "1000000"; //가격 고정
     private static final String TAX_FREE_AMOUNT = "10000";//제세
     private static final String APPROVAL_URL ="http://localhost:8282/findjob/kakaoPaySuccess";//성공 URL
-    private static final String CANCEL_URL ="http://localhost:8282/findjob/kakaoPayCancel";//성공 URL
-    private static final String FAIL_URL ="http://localhost:8282/findjob/kakaoPaySuccessFail";//성공 URL
+    private static final String CANCEL_URL ="http://localhost:8282/findjob/kakaoPayCancel";//취소 URL
+    private static final String FAIL_URL ="http://localhost:8282/findjob/kakaoPaySuccessFail";//실패 URL
     private static final String ITEM_NAME ="프리미엄회원권";//성공 URL
     private static final String partner_order_id = UUID.randomUUID().toString();//주문 고유번호 생성 위해서 or random?
 
