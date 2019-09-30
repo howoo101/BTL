@@ -32,10 +32,7 @@
 		<property name="mapperLocations" value="classpath:/mapper/*.xml"/>
 	</bean> 
 	
-	<!-- <context:annotation-config></context:annotation-config> -->
-	<!-- aop 설정 -->
-	<context:component-scan base-package="com.btl.findjob.aop"></context:component-scan>
-		
+	<!-- <context:annotation-config></context:annotation-config> -->		
 	<mybatis-spring:scan base-package="com.btl.findjob.mapper"/>
 	
 	<!--  트렌젝션 설정-->
