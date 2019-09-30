@@ -221,7 +221,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/myPage_InterviewReview", method = RequestMethod.GET)
-	public void myPage_InterviewReview(HttpServletRequest httpServletRequest, Model model) {
+	public String myPage_InterviewReview(HttpServletRequest httpServletRequest, Model model) {
 
 
 		int user_id = Integer.parseInt((String)httpServletRequest.getSession().getAttribute("user_id"));
@@ -243,7 +243,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/myPage_ReviewComment", method = RequestMethod.GET)
-	public void myPage_ReviewComment(HttpServletRequest httpServletRequest, Model model) {
+	public String myPage_ReviewComment(HttpServletRequest httpServletRequest, Model model) {
 
 
 		int user_id = Integer.parseInt((String)httpServletRequest.getSession().getAttribute("user_id"));
