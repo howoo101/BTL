@@ -7,7 +7,11 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-         
+ 
+<!--  <style>
+/*  #menu_nav {width:100%;  text-align: center;}
+  #mprc { border: 3px solid #F2F2F2;height:80px; vertical-align: middle;} */
+ </style>     -->  
 <div class="col-lg-12 mt-4" id="user_status"> 
 	<c:forEach var="ul" items="${Uinfo_list}">
 	
@@ -36,22 +40,21 @@
 
 
 
-    <div class="col-lg-12 mt-4">
+    <div class="col-lg-12 mt-4" id="menu_nav">
         <div class="row text-primary text-center">
 
-            <div class="col-lg-3">
+            <div class="col-lg-3" id="mprc">
                 <h4><a href="${pageContext.request.contextPath}/myPage_ReviewComment">내 리뷰 코멘트</a></h4>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3" id="mpir">
                 <h4><a href="${pageContext.request.contextPath}/myPage_InterviewReview">내 면접후기</a></h4>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3" id="mpf">
                 <h4><a href="${pageContext.request.contextPath}/myPage_Following">팔로잉 기업</a></h4>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3" id="mpl">
                 <h4><a href="${pageContext.request.contextPath}/myPage_Last">최근 본 기업</a></h4>
             </div>
         </div>
     </div>
-</div>
 
