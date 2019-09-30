@@ -17,4 +17,12 @@ public interface CompanyMapper {
 	//follow
 	public void companyInsertFollow(@Param("userEmail") String userEmail,@Param("ci_id") int ciId);
 	public void companyDeleteFollow(@Param("followId") String followId);
+	
+	//index 리스트
+	public List<CompanyListVO> getManyFollowOrdersList();
+	public List<CompanyListVO> getManyInterviewReviewOrdersList();
+	public List<CompanyListVO> getMostCt0OrdersList();
+	public List<CompanyListVO> getMostCt1OrdersList();
+	public List<CompanyListVO> getMostCt2OrdersList();
+	public List<CompanyListVO> getMostCt3OrdersList();
 }

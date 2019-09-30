@@ -14,4 +14,13 @@ public interface CompanyService {
 	
 	public void companyInsertFollow(String userEmail,int ciId);
 	public void companyDeleteFollow(String followId);
+	
+	//index
+	public List<CompanyListVO> getManyFollowOrdersList();
+	public List<CompanyListVO> getManyInterviewReviewOrdersList();
+	public List<CompanyListVO> getMostCt0OrdersList();
+	public List<CompanyListVO> getMostCt1OrdersList();
+	public List<CompanyListVO> getMostCt2OrdersList();
+	public List<CompanyListVO> getMostCt3OrdersList();
+	
 }

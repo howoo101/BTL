@@ -67,4 +67,57 @@
 		delete from follow where follow_id = #{followId}
 	</delete>
 	
+	
+	<!-- 팔로우 많은순 기업리스트 -->
+	<select id="getManyFollowOrdersList" resultType="com.btl.findjob.model.CompanyListVO">
+		select fo.ci_id,ci.ci_companyName  
+		from follow fo,companyinfo ci
+		where fo.ci_id = ci.ci_id
+		group by fo.ci_id
+		order by count(fo.ci_id) desc
+		limit 4;
+	</select>
+	<!-- 면접 리뷰 많은순  -->
+	<select id="getManyInterviewReviewOrdersList" resultType="com.btl.findjob.model.CompanyListVO">
+		select count(ir.ci_id),ir.ci_id,ci.ci_companyName 
+		from interviewreview ir, companyinfo ci
+		where ir.ci_id = ci.ci_id
+		group by ci_id
+		order by count(ir.ci_id) desc
+		limit 4;
+	</select>
+	<!-- 승진및기회가능성 높은순  -->
+	<select id="getMostCt0OrdersList" resultType="com.btl.findjob.model.CompanyListVO">
+		select ci.ci_companyName, cr.ci_id
+		from companyreview cr, category c, companyinfo ci
+		where ci.ci_id = cr.ci_id and cr.cr_category = c.cr_category and cr.cr_category = 0
+		group by cr.ci_id
+		order by avg(cr_starRt) desc
+		limit 4;
+	</select>
+	<select id="getMostCt1OrdersList" resultType="com.btl.findjob.model.CompanyListVO">
+		select ci.ci_companyName, cr.ci_id
+		from companyreview cr, category c, companyinfo ci
+		where ci.ci_id = cr.ci_id and cr.cr_category = c.cr_category and cr.cr_category = 1
+		group by cr.ci_id
+		order by avg(cr_starRt) desc
+		limit 4;
+	</select>
+	<select id="getMostCt2OrdersList" resultType="com.btl.findjob.model.CompanyListVO">
+		select ci.ci_companyName, cr.ci_id
+		from companyreview cr, category c, companyinfo ci
+		where ci.ci_id = cr.ci_id and cr.cr_category = c.cr_category and cr.cr_category = 2
+		group by cr.ci_id
+		order by avg(cr_starRt) desc
+		limit 4;
+	</select>
+	<select id="getMostCt3OrdersList" resultType="com.btl.findjob.model.CompanyListVO">
+		select ci.ci_companyName, cr.ci_id
+		from companyreview cr, category c, companyinfo ci
+		where ci.ci_id = cr.ci_id and cr.cr_category = c.cr_category and cr.cr_category = 3
+		group by cr.ci_id
+		order by avg(cr_starRt) desc
+		limit 4;
+	</select>
+	
 </mapper>
