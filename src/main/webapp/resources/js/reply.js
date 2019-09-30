@@ -15,10 +15,13 @@ var replyService = (function() {
 					callback(result);
 				}
 			},
-			error : function(xhr, status, er) {
-				if (error) {
-					error(er);
-				}
+		error : function(request ,xhr, status, er) {
+			    if (request.status === 403) {
+			         location.href = "logininterceptor";
+			     }
+			     if (request.status === 404) {
+			         location.href = "gradeceptor";
+			     }
 			}
 		});
 	}

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Data
 public class BoardDTO {
 	
-    private int board_userid; //유저 식별자 
+    private int user_id; //유저 식별자 
 	private int board_id; //글번호 
 	private String board_writer;
 	private String board_title; //글제목

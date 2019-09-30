@@ -90,25 +90,29 @@
 							<div class="container">
 								<div class="form-group">
 									<label>제목</label> <input class="form-control"
-										name='board_title'
+										name='board_title' style="background-color:white;" 
 										value='<c:out value="${board.board_title}" />'
 										readonly="readonly">
 								</div>
 								<div class="form-group">
-									<label>내용</label>
-									<textarea class="form-control" rows="3" name='board_content'
-										readonly="readonly"><c:out
-											value="${board.board_content}" /></textarea>
-								</div>
-								<div class="form-group">
 									<label>작성자</label> <input class="form-control" rows="3"
-										name='board_writer'
+										name='board_writer' style="background-color:white;"
 										value='<c:out value="${board.board_writer}" />'
 										readonly="readonly">
+								</div>
+								<div class="form-group">
+									<label>내용</label>
+									<textarea class="form-control" rows="3" style="background-color:white;" name='board_content'
+										readonly="readonly"><c:out
+											value="${board.board_content}" /></textarea>
 								</div>
 								<input class="form-control" name='board_id' type='hidden'
 									value='<c:out value="${board.board_id}" />' readonly="readonly">
 
+								<div id="container_board">
+								<input class="form-control" name='board_userid' type='hidden'
+									value='<c:out value="${board.user_id}" />' readonly="readonly">
+								</div>
 								<div class="container">
 									<div class="row">
 										<div class="col-lg-12">
@@ -133,9 +137,10 @@
 																	<ul class="chat" style="list-style: none;">
 																	</ul>
 																	<input name='reply_writer' type='hidden' id="need_writer"
-																		value="<%=name%>"> <input class="user_id"
-																		type="hidden" value="<%=user_id%>"> <input
-																		name='reply_date' type='hidden'>
+																		value="<%=name%>"> 
+																		<input class="user_id"
+																		type="hidden" value="<%=user_id%>"> 
+																		<input name='reply_date' type='hidden'>
 																	</div>
 																</div>
 															</div>
@@ -218,6 +223,7 @@
 				<div class="form-group">
 					<label>Reply Date</label> <input class="form-control"
 						name=reply_date value=''>
+						
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -235,9 +241,23 @@
 	$(document).ready(function() {
 
 		var operForm = $("#operForm");
-
+		
+		var container_board = $("#container_board");
+		var checkUser = container_board.find("input[name='board_userid']").val();
+		var user_id = <%=user_id%>;					
+			console.log(typeof user_id);
+			console.log(user_id +"ssss"+ checkUser)
+			console.log(typeof Number(checkUser) )
+		
 		$("button[data-oper='modify']").on("click", function(e) {
+			if(user_id === Number(checkUser)) {
 			operForm.attr("action", "modify").submit();
+			
+			} else {
+				alert("작성자가 아닙니다.");
+				location.reload();
+			}
+			
 		});
 
 		$("button[data-oper='list']").on("click", function(e) {

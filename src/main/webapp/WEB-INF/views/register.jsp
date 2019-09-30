@@ -31,7 +31,8 @@
 									</div>
 									<div class="form-group">
 										<label>작성자</label> <input class="form-control"
-											name='board_writer'>
+											name='board_writer' value="<%=name %>" readonly="readonly">
+										<input class="form-control" name="user_id" type="hidden" value="<%=user_id%>"> 
 									</div>
 									<button id="registerBtn" class="btn btn-primary" onclick="check()">등록</button>
 									<button type="reset" class="btn btn-info">초기화</button>
@@ -86,7 +87,7 @@ $(document).ready(function(e){
 		var need = document.need;
 		var board_title = need.board_title.value;
 		var board_content = need.board_content.value;
-
+		
    		e.preventDefault();
 
    		/* 필수값입력하게하기 */
