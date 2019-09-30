@@ -118,11 +118,6 @@
         <div class='fc-event interview'>면접</div>
         <div class='fc-event announcement'>채용 발표</div>
       </div>
-
-      <h4>채용공고</h4>
-      <div id='external-events-list2'>
-          <div class='fc-event hire'>채용공고</div>
-      </div>  
     </div>
 
     <!-- 캘린더 생성 -->
@@ -132,57 +127,7 @@
   </div>
     
 <script>
-//사람인 데이터 받아오기
-var data = ${saraminData};
-var currentDate = new Date();
 
-// 사람인 배열
-var saramArr = new Array();
-
-// 검색된 회사만큼 반복
-for(var i = 0; i < data['jobs']['count']; i++){
-	// 접수 시작일
-	//1569200400 이거라면 채용시까지.
-	var openingTime = data['jobs']['job'][i]['opening-timestamp']
-	var hiDate = new Date(openingTime*1000);
-	
-	var hireDate = "";
-	if (openingTime == 1569200400){
-		hireDate = currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate();
-	} else {
-		hireDate = (hiDate.getFullYear())+"-"+(hiDate.getMonth()+1) + "-" + hiDate.getDate();
-	}
-	
-	// 접수 마감일 (연-월-일)
-	//1988118000000 이거라면 채용시까지
-	var exprieationTime = data['jobs']['job'][i]['expiration-timestamp'];
-	var exDate = new Date(exprieationTime*1000);
-	
-	var expireDate = "";
-	if (exprieationTime == 1988118000){
-		expireDate = currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate();
-	} else {
-		expireDate = (exDate.getFullYear())+"-"+(exDate.getMonth()+1) + "-" + exDate.getDate();
-	}
-	
-	// 회사 이름
-	var companyName = data['jobs']['job'][i]['company']['detail']['name'];
-	
-	// 직무
-	var positionTitle = data['jobs']['job'][i]['position']['title'];
-	var positionTitleUrl = data['jobs']['job'][i]['url'];
-	
-	// 사람인 객체
-    var saramObj = {};
-	
-	saramObj.title = companyName;
-	saramObj.start = hireDate;
-	saramObj.end = expireDate;
-	
-	saramArr.push(saramObj);
-	
-} // end of for
-	
 	// 달력 시작
 	document.addEventListener('DOMContentLoaded', function() {
       var Calendar = FullCalendar.Calendar;
@@ -240,20 +185,7 @@ for(var i = 0; i < data['jobs']['count']; i++){
           }
         },
       });
-      
-      // '채용공고' 이벤트
-      new Draggable(containerEl2, {
-        itemSelector: '.hire',
-        eventData: function(eventEl) {
-          return {
-            title: eventEl.innerText.trim(),
-            color: '#4a69bd',
-            textColor: '#ffffff'
-          }
-        },
-      });
   		
-	      console.log(saramArr);
       // 캘린더 관련
       var calendarEl = document.getElementById('calendar');
       var calendar = new Calendar(calendarEl, {
@@ -299,11 +231,15 @@ for(var i = 0; i < data['jobs']['count']; i++){
         eventLimit: true, // for all non-TimeGrid views
         
         events: [
-        	{
-        		title:'hiih',
-        		start:'2019-09-09'
-        	}
-        	
+        	<c:forEach items="${jdata}" var="cal">
+			{
+        		title:'${cal.title}',
+        		start:'${cal.start}',
+        		end:'${cal.end}',
+        		textColor: '#ffffff',
+        		color: '#7ed6df',
+        	},
+    		</c:forEach>
         ]
         
       });
