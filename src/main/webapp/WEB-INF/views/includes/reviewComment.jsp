@@ -139,7 +139,8 @@
 
         // Configuration options go here
         options: {
-            scales: {
+            maintainAspectRatio: false,
+        	scales: {
                 xAxes: [{
                     display: true,
                     ticks: {
@@ -159,7 +160,7 @@
 
         }
     });
-
+    
 </script>
 
 <%--별점과 리뷰 db에 등록--%>

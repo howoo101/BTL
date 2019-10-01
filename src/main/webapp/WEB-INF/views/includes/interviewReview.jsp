@@ -32,7 +32,7 @@
                         <canvas id="interviewResult"></canvas>
                     </div>
                 </div>
-
+				
                 <div class="interviewChat">
                     <%-- 내용--%>
                 </div>
@@ -338,10 +338,11 @@
                 if (interviewReviewDTOList.length === 0) {
 
                     interviewReviewUL.html("");
-
                     return;
                 }
-
+                // 등급별 블러처리
+                if(${grade} > 3)
+					interviewReviewUL.css('filter','blur(5px)')
                 for (let i = 0, len = interviewReviewDTOList.length || 0; i < len; i++) {
 
                     str += "<div class='card border-info mb-3'>";
@@ -371,7 +372,7 @@
                     str += "                                               <div class = 'col-lg-4' style = 'border-left: 2px solid #ddd'><span class='font-weight-bold'>면접 경험</span><br>" + interviewReviewDTOList[i].ir_experience + "</div>";
                     str += "</div></div></div></div></div>";
                 }
-
+				
                 interviewReviewUL.html(str);
 
                 showInterviewReviewPage(interviewReviewCnt);
