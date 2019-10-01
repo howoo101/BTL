@@ -45,8 +45,8 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-auto ">
-                                <div class="row ">
+                            <div class="col-lg-2 ml-2 align-middle ">
+                                <div class="row justify-content-center">
                                    	<div class="text-warning">
                                        <c:forEach begin="1" end="${item.companyReviewAvg}" step="1">
                                            <i class="fa fa-star"></i>
@@ -56,18 +56,10 @@
                                        </c:forEach>
                                    	</div>
                                 </div>
-                                <div class="row " style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">
-                                    <div class="col-sm-12 text-center">23</div>
-                                    <div class="col-sm-12 text-center"><a href="">리뷰 코멘트</a></div>
-                                </div>
                             </div>
                             <div class="col-lg-auto">
-                                <div class="row">
+                                <div class="row justify-content-center">
                                     <h5>${item.companyReviewAvg }</h5>
-                                </div>
-                                <div class="row " style="">
-                                    <div class="col-sm-12 text-center">23</div>
-                                    <div class="col-sm-12 text-center"><a href="">면접정보</a></div>
                                 </div>
                             </div>
                         </div>

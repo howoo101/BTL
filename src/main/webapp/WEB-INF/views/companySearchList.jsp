@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>검색 화면</title>
 	
 </head>
 <body>
@@ -53,7 +53,7 @@
 										style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">
 										<div class="col-sm-12 text-center">${item.companyReviewCnt }</div>
 										<div class="col-sm-12 text-center">
-											<a href="">리뷰 코멘트</a>
+											<a href="${path}/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}#locCr">리뷰 코멘트</a>
 										</div>
 									</div>
 								</div>
@@ -64,7 +64,7 @@
 									<div class="row " style="">
 										<div class="col-sm-12 text-center">${item.interviewReviewCnt }</div>
 										<div class="col-sm-12 text-center">
-											<a href="">면접정보</a>
+											<a href="${path}/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}#locIr">면접정보</a>
 										</div>
 									</div>
 								</div>

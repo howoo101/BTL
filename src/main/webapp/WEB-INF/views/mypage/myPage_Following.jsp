@@ -26,7 +26,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-lg-6 ml-5">
-                                    <div class="row">
+                                    <div class="row justify-content-center">
                                         <h4>
                                             <a href="${path }/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">
                                             ${item.ci_companyName}</a>
@@ -38,16 +38,16 @@
 											</c:if>
                                         </h4>
                                     </div>
-                                    <div class="row">
+                                    <div class="row justify-content-center">
                                         ${item.ci_industry } | ${item.ci_address }
                                     </div>
-                                    <div class="row">
+                                    <div class="row justify-content-center">
                                        	 평균연봉 ${item.ci_avgsalary } 만원
                                     </div>
                                 </div>
 
                                 <div class="col-lg-auto">
-                                    <div class="row ">
+                                    <div class="row justify-content-center ">
 										<div class="text-warning">
 											<c:forEach begin="1" end="${item.companyReviewAvg}" step="1">
 												<i class="fa fa-star"></i>
@@ -59,16 +59,16 @@
 									</div>
                                     <div class="row " style="border-right: 2px solid #ddd; border-left: 2px solid #ddd">
                                         <div class="col-sm-12 text-center">${item.companyReviewCnt }</div>
-                                        <div class="col-sm-12 text-center"><a href="">리뷰 코멘트</a></div>
+                                        <div class="col-sm-12 text-center"><a href="${path}/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}#locCr">리뷰 코멘트</a></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-auto text-center">
-                                    <div class="row">
+                                    <div class="row row justify-content-center">
                                         <h5>${item.companyReviewAvg }</h5>
                                     </div>
                                     <div class="row " style="">
                                         <div class="col-sm-12 text-center">${item.interviewReviewCnt }</div>
-                                        <div class="col-sm-12 text-center"><a href="">면접정보</a></div>
+                                        <div class="col-sm-12 text-center"><a href="${path}/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}#locIr">면접정보</a></div>
                                     </div>
                                 </div>
                             </div>

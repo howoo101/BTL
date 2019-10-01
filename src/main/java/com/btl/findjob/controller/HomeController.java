@@ -89,7 +89,7 @@ public class HomeController {
 		tmpMap1.put("승진 기회 및 가능성", companyService.getMostCt0OrdersList());
 		tmpMap1.put("복지 및 급여", companyService.getMostCt1OrdersList());
 		map2.put("1",tmpMap1);
-		tmpMap2.put("워라벨", companyService.getMostCt2OrdersList());
+		tmpMap2.put("일과 삶의 균형", companyService.getMostCt2OrdersList());
 		tmpMap2.put("사내문화", companyService.getMostCt3OrdersList());
 		map2.put("2",tmpMap2);
 		
@@ -127,6 +127,7 @@ public class HomeController {
 		String userEmail = (String)req.getSession().getAttribute("user");
 		if(userEmail == null) userEmail = "";
 		//Enterpise 영역 (송현)
+		
 		model.addAttribute("companyList", enterService.companyList(userEmail,ci_companyName)); //기업정보 리스트
 		model.addAttribute("cptotal", enterService.cptotal(ci_companyName)); //인원 구하기 쿼리
 		model.addAttribute("cpsince", enterService.cpSince(ci_companyName)); //업력 구하기 쿼리
@@ -175,7 +176,7 @@ public class HomeController {
 
 		// news
 		NaverSearchAPI api = new NaverSearchAPI();
-		List<String[]> list = api.result(ci_id);
+		List<String[]> list = api.result(ci_companyName);
 		
 		model.addAttribute("news", list);
 		

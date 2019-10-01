@@ -9,7 +9,7 @@
          pageEncoding="UTF-8" %>
 <div id="section5" class="mt-3">
     <!--면접후기-->
-    <div class="container center-block">
+    <div class="container center-block" id="locIr">
         <div class="card border-primary">
             <div class="card-body">
                 <div class="text-primary font-weight-bold card-title"><h5 class="mt4">면접후기</h5></div>

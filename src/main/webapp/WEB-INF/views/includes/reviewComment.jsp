@@ -9,7 +9,7 @@
          pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="mt-3" id="section4">
-    <div class="container center-block">
+    <div class="container center-block" id="locCr">
         <div class="card border-primary">
             <div class="card-body">
                 <div class="text-primary font-weight-bold card-title"><h5>리뷰 코멘트</h5></div>
