@@ -2,6 +2,7 @@ package com.btl.findjob.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +19,8 @@ import com.btl.findjob.model.CalendarDTO;
 public class CalendarServicelmpl implements CalendarService {
 
 	@Override
-public List<CalendarDTO> JData (String ci_companyName) {
-		
+	public List<CalendarDTO> JData (String ci_companyName) {
+			
 		GraphController saraminData = new GraphController();
 		String json = saraminData.saraminData(ci_companyName);
 		
@@ -57,10 +58,13 @@ public List<CalendarDTO> JData (String ci_companyName) {
 				Long expireStamp = Long.parseLong((String)indexObj.get("expiration-timestamp")) * 1000;
 				Date eDate = new Date(expireStamp);
 				
+				String tt = sf.format(eDate);
 				//채용시 까지일때
-				if(sf.format(eDate).equals("2033-01-01")) {
+				if(tt.equals("2033-01-01")) {
 					cDto.setStart(sf.format(new Date()));
-					cDto.setEnd(sf.format(new Date()));
+					Calendar c = Calendar.getInstance();
+					c.add(Calendar.DATE, 1);
+					cDto.setEnd(sf.format(c.getTime()));
 				} else {
 					cDto.setStart(sf.format(hDate));
 					cDto.setEnd(sf.format(eDate));
@@ -75,4 +79,8 @@ public List<CalendarDTO> JData (String ci_companyName) {
 		
 		return cList;
 	}// end of JData
+	
+	public void insertCalendar(List<CalendarDTO> calArr) {
+		
+	}
 }

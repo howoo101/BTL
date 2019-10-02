@@ -99,7 +99,7 @@
                                                 <input class="count" type="hidden">
                                                 <input class="cr_category" type="hidden"
                                                        value="${status.index}">
-                                                <input class="user_id" type="hidden" value="<%=user_id%>">
+                                                <input class="user_id" type="hidden" value="${user_id }">
                                                     <%--회사정보 집어넣기 위해서 id--%>
                                                 <input class="forInsert" type="hidden"
                                                        value="${companyList[0].ci_id}">

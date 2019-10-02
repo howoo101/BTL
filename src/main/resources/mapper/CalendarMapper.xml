@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.btl.findjob.mapper.CalendarMapper">
+
+	<insert id ="insertCalendar">
+		insert into calendartable (title, start, end, useremail, companyname)
+		values
+		<foreach collection="list" item="item" separator=",">
+			 (#{item.title}, #{item.start}, #{item.end}, #{item.useremail}, #{item.companyname})
+        </foreach>
+	</insert>
+	
+	<!-- 유저 아이디랑, 회사 이름이 같을때 그 로우들을 삭제하기. -->
+	<delete id="deleteTable">
+		delete from calendartable where useremail = #{useremail} and companyname = #{companyname}
+	</delete>
+	
+	<select id="selectTable" resultType="com.btl.findjob.model.CalendarDTO">
+		select title, start, end, useremail, companyname from calendartable where useremail=#{userEmail};
+	</select>
+
+</mapper>
