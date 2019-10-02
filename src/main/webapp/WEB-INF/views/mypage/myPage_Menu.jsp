@@ -7,14 +7,24 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!--  <style>
-/*  #menu_nav {width:100%;  text-align: center;}
-  #mprc { border: 3px solid #F2F2F2;height:80px; vertical-align: middle;} */
- </style>     -->  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ include file="../includes/header.jsp" %>
+<style>
+
+
+
+#mprc:hover {cursor:pointer;}
+#mpir:hover {cursor:pointer;}
+#mpf:hover {cursor:pointer;}
+#mpl:hover {cursor:pointer;} 
+
+</style>
+
 <div class="col-lg-12 mt-4" id="user_status"> 
 	<c:forEach var="ul" items="${Uinfo_list}">
-	
+
+  
 	<script> 
 	var authorization = ${ul.authorization_id}; 
 	if(authorization==4){var grade = "<b>일반회원</b>";}
@@ -39,22 +49,41 @@
 </div>
 
 
+<div class="row col-lg-12 mt-3 text-center" id="menu_nav">
 
-    <div class="col-lg-12 mt-4" id="menu_nav">
-        <div class="row text-primary text-center">
-
-            <div class="col-lg-3" id="mprc">
-                <h4><a href="${pageContext.request.contextPath}/myPage_ReviewComment">내 리뷰 코멘트</a></h4>
-            </div>
-            <div class="col-lg-3" id="mpir">
-                <h4><a href="${pageContext.request.contextPath}/myPage_InterviewReview">내 면접후기</a></h4>
-            </div>
-            <div class="col-lg-3" id="mpf">
-                <h4><a href="${pageContext.request.contextPath}/myPage_Following">팔로잉 기업</a></h4>
-            </div>
-            <div class="col-lg-3" id="mpl">
-                <h4><a href="${pageContext.request.contextPath}/myPage_Last">최근 본 기업</a></h4>
-            </div>
+        <div class="col-lg-3 text-primary" id="mprc" >
+        <h4>내 리뷰 코멘트</h4>
         </div>
-    </div>
+        <div class="col-lg-3 text-primary" id="mpir" >
+        <h4>내 면접 후기</h4>
+        </div>
+        <div class="col-lg-3 text-primary" id="mpf" >
+        <h4>팔로잉 기업</h4>
+        </div>
+        <btn class="col-lg-3 text-primary" id="mpl" >
+        <h4>최근 본 기업</h4>
+        </btn>      
+</div>
+<div id="mp_body">
+    
+</div> 
 
+<!-- mypage js들 -->
+<script>
+$('#mprc').click(function(){
+$("#mp_body").load("${pageContext.request.contextPath}/myPage_ReviewComment");
+});
+$('#mpir').click(function(){
+$("#mp_body").load("${pageContext.request.contextPath}/myPage_InterviewReview");
+});
+$('#mpf').click(function(){
+$("#mp_body").load("${pageContext.request.contextPath}/myPage_Following");
+});
+$('#mpl').click(function(){
+$("#mp_body").load("${pageContext.request.contextPath}/myPage_Last");
+});
+
+</script>
+
+  <%@ include file="../includes/footer.jsp" %>
+  
