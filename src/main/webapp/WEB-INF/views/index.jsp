@@ -14,7 +14,11 @@
         <div class="container h-100">
             <div class="d-flex h-100 text-center align-items-center">
                 <div class="w-100 text-white">
-                    <h1 class="display-3">Find Job </h1>
+                    <div class="row justify-content-center"><i class="material-icons" style="font-size: 100px;">
+                        search
+                    </i>
+                        <h1 class="display-3">Find Job </h1>
+                    </div>
                     <article class="center">
                         <form action="search" class="form-inline row" id="main-search-form" novalidate="novalidate">
                             <div class="form-group">
@@ -45,39 +49,39 @@
 
                     <div class="carousel-item active">
                         <div class="row">
-                        	<c:forEach items="${map1}" var="map1" >
-                            <div class="col-md-6 text-center">
-                                <h5>${map1.key }</h5>
-                                <c:forEach items="${map1.value }" var="item">
-                                <a href="${path}/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">
-                                    <p>${item.ci_companyName }</p>
-                                </a>
-                                </c:forEach>
-                            </div>
+                            <c:forEach items="${map1}" var="map1">
+                                <div class="col-md-6 text-center">
+                                    <h5>${map1.key }</h5>
+                                    <c:forEach items="${map1.value }" var="item">
+                                        <a href="${path}/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">
+                                            <p>${item.ci_companyName }</p>
+                                        </a>
+                                    </c:forEach>
+                                </div>
                             </c:forEach>
-                            
+
                         </div>
                         <!--.row-->
                     </div>
                     <!--.item-->
                     <c:forEach items="${map2 }" var="map">
-	                   	<div class="carousel-item">
-	                        <div class="row">
-	                        	<c:forEach items="${map.value }" var="innerMap">
-		                            <div class="col-md-6 text-center">
-		                                <h5>${innerMap.key }</h5>
-		                                <c:forEach items="${innerMap.value }" var="item">
-			                                <a href="#">
-			                                    <p>${item.ci_companyName }</p>
-			                                </a>
-		                                </c:forEach>
-		                            </div>
-	                            </c:forEach>
-	                        </div>
-	                        <!--.row-->
-	                    </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <c:forEach items="${map.value }" var="innerMap">
+                                    <div class="col-md-6 text-center">
+                                        <h5>${innerMap.key }</h5>
+                                        <c:forEach items="${innerMap.value }" var="item">
+                                            <a href="#">
+                                                <p>${item.ci_companyName }</p>
+                                            </a>
+                                        </c:forEach>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                            <!--.row-->
+                        </div>
                     </c:forEach>
-                   
+
                 </div>
                 <!--.carousel-inner-->
 

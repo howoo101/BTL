@@ -13,7 +13,9 @@
 			<div class="card-body">
 				<div class="text-primary font-weight-bold card-title">
 					<h5 style="float:left;padding-right: 20px;'">채용정보</h5> 
-					<h5 style="float:left"><a href="${path}/calendar?ci_companyName=${ci_companyName}" style="text-decoration: none">달력으로 보기</a></h5>
+					<h5 style="float:left"><a href="${path}/calendar?ci_companyName=${ci_companyName}" style="text-decoration: none"><i class="material-icons">
+						calendar_today
+					</i></a></h5>
 				</div>
 				<div style="clear:both"></div>
 

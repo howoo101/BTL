@@ -74,4 +74,9 @@ public class KakaoPayController {
 
     }
 
+    @GetMapping("kakaoPayCancel")
+    public void kakaoPayCancel(){
+
+    }
+
 }
