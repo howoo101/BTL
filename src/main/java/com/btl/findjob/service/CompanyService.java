@@ -14,6 +14,7 @@ public interface CompanyService {
 	
 	public void companyInsertFollow(String userEmail,int ciId);
 	public void companyDeleteFollow(String followId);
+	public int getFollowId(String userEmail, String ciId);
 	
 	//index
 	public List<CompanyListVO> getManyFollowOrdersList();

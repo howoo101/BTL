@@ -83,6 +83,12 @@ public class CompanyServiceImpl implements CompanyService {
 		// TODO Auto-generated method stub
 		return mapper.getMostCt3OrdersList();
 	}
+
+	@Override
+	public int getFollowId(String userEmail, String ciId) {
+		// TODO Auto-generated method stub
+		return mapper.getFollowId(userEmail,ciId);
+	}
 	
 	
 

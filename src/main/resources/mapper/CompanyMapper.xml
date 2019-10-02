@@ -56,12 +56,15 @@
 	</select>
 	<!-- 검색시 리스트에서 follow -->
 	<insert id="companyInsertFollow">
-		<selectKey keyProperty="user_id" order="BEFORE" resultType="int">
-			select user_id from user where user_email=#{userEmail}
-		</selectKey>
-		
-		insert into follow (user_id,ci_id) values (#{user_id},#{ci_id})
+		insert into follow (user_id,ci_id) values (
+		(select user_id from user 
+		where user_email=#{userEmail}),#{ci_id})
 	</insert>
+	<select id="getFollowId" resultType="int">
+		select follow_id from follow
+		where user_id = (select user_id from user 
+						where user_email=#{userEmail}) and ci_id=#{ci_id}
+	</select>
 	
 	<delete id="companyDeleteFollow">
 		delete from follow where follow_id = #{followId}

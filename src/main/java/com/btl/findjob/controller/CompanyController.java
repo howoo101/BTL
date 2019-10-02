@@ -1,5 +1,6 @@
 package com.btl.findjob.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,7 +74,11 @@ public class CompanyController {
 		 String ciId = (String)params.get("id");
 		 logger.info("follow  insert " + ciId);
 		 service.companyInsertFollow(userEmail,Integer.parseInt(ciId));
-		 return Integer.parseInt(ciId);
+		 int followId = service.getFollowId(userEmail,ciId);
+		/*
+		 * Map<String,Object> map = new HashMap<>(); map.put("followId",followId);
+		 */
+		 return followId;
 	 }
 	 
 	 @DeleteMapping("/follow/{id}")

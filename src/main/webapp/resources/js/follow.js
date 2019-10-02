@@ -27,6 +27,7 @@ let follow = function(path,btn) {
 						$.ajax({
 							type : type,
 							url : url,
+							dataType : 'json',
 							contentType : 'application/json;',
 							data : JSON.stringify({
 								id: id
