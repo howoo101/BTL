@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="small">평균연봉</div>
-                        <div class="h2">2435만원</div>
+                        <div class="h2">${companySalary}만원</div>
                         <div class="small text-danger">*국민연금 납부 기준</div>
                     </div>
                 </div>

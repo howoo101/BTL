@@ -123,7 +123,9 @@
 	
 	
 	
-	
+		<select id = "getSalary" resultType = "int">
+		select ci_avgsalary from companyinfo where ci_companyName = #{ci_companyName}
+		</select>
 
 	
 		

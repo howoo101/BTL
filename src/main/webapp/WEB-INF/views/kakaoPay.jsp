@@ -3,6 +3,12 @@
 
 <%@ include file="includes/header.jsp"%>
 
+
+<br>
+<br>
+<br>
+<br>
+
 <h1> kakaoPay api 이용하기 </h1>
 
 <form method="post" action="kakaoPay" target="_blank">

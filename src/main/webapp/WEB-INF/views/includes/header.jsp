@@ -83,7 +83,7 @@ if(user==null){
  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
     <div class="container-fluid" >
        <div class="navbar-header">
-         <a class="navbar-brand" href="${path}/"> <img src="${path}/resources/img/logo.png" height="36" width="69" alt=""> </a>      
+         <a class="navbar-brand" href="${path}/"> <img src="${path}/resources/img/55.png" height="50" width="100" alt=""> </a>      
          <button type="button" class="navbar-toggler" aria-expanded="false" data-toggle="collapse" data-target="#navbarNav">
           <i class="material-icons" style="size:24px">search</i>
          </button>

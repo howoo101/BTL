@@ -5,9 +5,10 @@
 
 <%@ include file="includes/header.jsp"%>
 
-
-
-
+<br>
+<br>
+<br>
+<br>
 
 
 <h1>멤버쉽 회원입니다.</h1>
