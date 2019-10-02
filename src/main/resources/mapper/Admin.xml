@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btl.findjob.mapper.AdminMapper">
+	
+	<!-- 유저 리스트  -->
+	<select id="get_userlist" resultType="com.btl.findjob.model.UserDTO" >
+		select * from user
+	</select>
+	
+	 <select id="myReviewComment" resultType="com.btl.findjob.model.CompanyReview">
+                        SELECT companyreview.*, companyinfo.ci_companyName
+                FROM companyreview
+                         LEFT JOIN companyinfo
+                                   ON companyreview.ci_id = companyinfo.ci_id
+                WHERE user_id = #{user_id}
+                ORDER BY cr_regDate desc;
+    </select>
+
+    <select id="myInterviewReview" resultType="com.btl.findjob.model.InterviewReviewDTO">
+        SELECT interviewreview.*, companyinfo.ci_companyName
+        FROM interviewreview
+                 LEFT JOIN companyinfo
+                           ON interviewreview.ci_id = companyinfo.ci_id
+        WHERE user_id = #{user_id}
+        ORDER BY ir_interviewDate desc;
+    </select>
+    
+
+	
+    
+</mapper>
+

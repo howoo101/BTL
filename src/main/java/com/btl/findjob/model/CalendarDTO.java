@@ -7,4 +7,6 @@ public class CalendarDTO {
 	private String title;
 	private String start;
 	private String end;
+	private String useremail;
+	private String companyname;
 }

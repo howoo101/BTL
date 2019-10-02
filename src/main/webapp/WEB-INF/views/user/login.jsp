@@ -217,47 +217,47 @@ $('#loginbtn').click(function(){
  
 /* 카카오 로그인  */
 function loginWithKakao() {
-	// 로그인 창을 띄웁니다.
-	Kakao.Auth.login({
-		success : function(authObj) {
-			Kakao.API.request({
-				url : '/v1/user/me',
-				success : function(res) {
-					var user_email = res.kaccount_email;
-					var user_name = res.properties['nickname'];
-					$.ajax({
-							url : "${pageContext.request.contextPath}/kakao",
-							type : "post",
-							contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-							data : {
-								"user_email" : user_email,
-								"user_name" : user_name
-							},
-							success : function(data) {
-								if (data == '1') {
-									$('.close').trigger('click');
-									location.reload();
-								} else if (data == '2') {
-									alert("로그인에 실패하였습니다 해당 이메일은 이미 다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다.")
-									$('.close').trigger('click');
-									location.reload();
-								} else if (data == '3') {
-									alert("sns회원 자동가입이 완료되었습니다.")
-									$('.close').trigger('click');
-									location.reload();
-								}
-							},
-							error : function() {
-								alert("서버에러");
+// 로그인 창을 띄웁니다.
+Kakao.Auth.login({
+	success : function(authObj) {
+		Kakao.API.request({
+			url : '/v1/user/me',
+			success : function(res) {
+				var user_email = res.kaccount_email;
+				var user_name = res.properties['nickname'];
+				$.ajax({
+						url : "${pageContext.request.contextPath}/kakao",
+						type : "post",
+						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+						data : {
+							"user_email" : user_email,
+							"user_name" : user_name
+						},
+						success : function(data) {
+							if (data == '1') {
+								$('.close').trigger('click');
+								location.reload();
+							} else if (data == '2') {
+								alert("로그인에 실패하였습니다 해당 이메일은 이미 다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다.")
+								$('.close').trigger('click');
+								location.reload();
+							} else if (data == '3') {
+								alert("sns회원 자동가입이 완료되었습니다.")
+								$('.close').trigger('click');
+								location.reload();
 							}
-						});
-				}
-			});
-		},
-		fail : function(err) {
-			alert(JSON.stringify(err));
-		}
-	});
+						},
+						error : function() {
+							alert("서버에러");
+						}
+					});
+			}
+		});
+	},
+	fail : function(err) {
+		alert(JSON.stringify(err));
+	}
+ });
 };
 
 //네이버 로그인 		     

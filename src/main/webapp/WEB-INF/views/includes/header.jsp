@@ -38,20 +38,21 @@
  <script src="https://apis.google.com/js/api:client.js"></script>
 
  
-    <!-- 구글 아이콘 -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <%-- 아이콘--%>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<!-- 구글 아이콘 -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<%-- 아이콘--%>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    <!-- 카카오 지도 -->
-    <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c3c4fdcbe2ae096fbd9562312c53b316&libraries=services,clusterer,drawing"></script>
+<!-- 카카오 지도 -->
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c3c4fdcbe2ae096fbd9562312c53b316&libraries=services,clusterer,drawing"></script>
 
-    <%-- chart 생성 위한 Chart.js --%>
-    <script type="text/javascript" src="resources/js/Chart.js"></script>
-    <script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
-    <title>홈</title>
+<%-- chart 생성 위한 Chart.js --%>
+<script type="text/javascript" src="resources/js/Chart.js"></script>
+<script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
+<title>홈</title>
+    
 </head>
 
 <body>
@@ -66,6 +67,7 @@
 <input id="grade" type="hidden" value="<%=grade%>">  <!-- 유저 등급 세션파라미터 -->
 
  <% String user_id = (String) session.getAttribute("user_id");%>
+  
 <!-- 로그인 인터셉터 (로그인창을 띄어주는 스크립트 임시호출)-->
     <% String ltr = (String) request.getAttribute("ltr");
 if(user==null){
@@ -83,7 +85,7 @@ if(user==null){
  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
     <div class="container-fluid" >
        <div class="navbar-header">
-         <a class="navbar-brand" href="${path}/"> <img src="${path}/resources/img/logo.png" height="36" width="69" alt=""> </a>      
+         <a class="navbar-brand" href="${path}/"> <img src="${path}/resources/img/55.png" height="50" width="100" alt=""> </a>      
          <button type="button" class="navbar-toggler" aria-expanded="false" data-toggle="collapse" data-target="#navbarNav">
           <i class="material-icons" style="size:24px">search</i>
          </button>
@@ -116,8 +118,8 @@ if(user==null){
            <i class="material-icons" style="text:35px">face</i>
         </button>
         <ul class="dropdown-menu text-center" role="menu">
-            <li id="preauth"><a href="#"><b>정회원 인증</b></a></li>
-            <li id="admauth"><a href="#"><b>관리모드</b></a></li>
+            <li id="preauth"><a href="kakaoPay"><b>정회원 인증</b></a></li>
+            <li id="admauth"><a href="admin_page"><b>관리모드</b></a></li>
             <li><a href="myPage_menu"><b>마이페이지</b></a></li>
             <li><a href="logout"><b>로그아웃</b></a></li>
         </ul>

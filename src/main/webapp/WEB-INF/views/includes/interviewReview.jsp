@@ -179,7 +179,7 @@
                         <div class="col-sm-9">
                             <label>
                                 <input class="form-control" type="date" name='ir_resultDate' value=''>
-                                <input class="user_id" type="hidden" value="<%=user_id%>">
+                                <input class="user_id" type="hidden" value="${user_id }">
                             </label>
                         </div>
                     </div>

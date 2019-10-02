@@ -53,12 +53,7 @@
            <mapping path="/register"/> 
      		<mapping path="/follow/*"/>
      		<mapping path="/mypage/*"/> 
-
-			<mapping path="/myPage_Menu"/> 
-        	<mapping path="/myPage_Following"/> 
-            <mapping path="/myPage_InterviewReview"/>
-        	<mapping path="/myPage_ReviewComment"/> 
-        	<mapping path="/myPage_Last"/> 
+			<mapping path="/admin/*"/> 
         	<mapping path="/replies/new"/> 
         	<mapping path="/myPage_Last"/>
         	<mapping path="/companyReview/new"/>

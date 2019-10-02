@@ -9,6 +9,11 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<% 	int user_id = (int) request.getAttribute("user_id");   %>
+
+
+
+
 <div class="container mt-4">
     <div class="card border-primary">
         <div class="card-body">
@@ -21,7 +26,6 @@
                     <th scope="col">기업명</th>
                     <th scope="col">면접결과</th>
                     <th scope="col">면접날짜</th>
-                    <th scope="col">수정</th>
                 </tr>
                 </thead>
 
@@ -32,9 +36,6 @@
                         </th>
                         <td><c:out value="${list.ir_result}"/></td>
                         <td><c:out value="${list.ir_interviewDate}"/></td>
-                        <td>
-                            <button class="callmodify btn btn-light" value="<c:out value='${list.ir_id }'/>">수정</button>
-                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -164,8 +165,8 @@
                     <div class="col-sm-9">
                         <label>
                             <input class="form-control" type="date" name='ir_resultDate'>                         
-                        	<script> var user_id = Number(${user_id})</script>
-                         	<input class="user_id" type="hidden" value=user_id> 
+                     
+                         	<input class="user_id" type="hidden" value="<%=user_id%>"> 
                             <input class="ir_id" type="hidden" name="ir_id">
                         </label>
                     </div>
@@ -182,122 +183,5 @@
 </div>
 
 
-<script>
-// modifyService ->  interviewmodifyService, 상수->변수
-var interviewmodifyService = (function () {
-
-    function interviewModify(interviewReview, callback, error) {
-        $.ajax({
-            type: 'put',
-            url: '${pageContext.request.contextPath}/interviewReview/' + interviewReview.ir_id,
-            data: JSON.stringify(interviewReview),
-            contentType: "application/json; charset=utf-8",
-            success: function (result, status, xhr) {
-                if (callback) {
-                    callback(result);
-                }
-            },
-
-            error: function (xhr, status, er) {
-                if (error) {
-                    error(er);
-                }
-            }
-        });
-    }
-
-    function get(ir_id, callback, error) {
-        $.get("${pageContext.request.contextPath}/interviewReview/" + ir_id + ".json", function (result) {
-
-            if (callback) {
-                console.log(result);
-                callback(result);
-            }
-
-        }).fail(function (xhr, status, err) {
-            if (error) {
-                error();
-            }
-        });
-    }
-
-    return {
-        interviewModify: interviewModify,
-        get: get
-    };
-})();
-
-    $(document).ready(function () {
-
-        $(".callmodify").on("click", function (e) {
-            var ir_id = $(this).closest('button').val();
-
-            /* 모달창*/
-            var modal = $(".modifyInterview");
-
-            let difficultyModal = modal.find("select[name='ir_difficulty']");
-            let interviewDateModal = modal.find("input[name='ir_interviewDate']");
-            let interviewExperienceModal = modal.find("select[name='ir_experience']");
-            let interviewRouteModal = modal.find("select[name='ir_route']");
-            let interviewTitleModal = modal.find("textarea[name='ir_title']");
-            let interviewQuestionModal = modal.find("textarea[name='ir_question']");
-            let interviewAnswerModal = modal.find("textarea[name='ir_answer']");
-            let interviewResultModal = modal.find("select[name='ir_result']");
-            let interviewResultDateModal = modal.find("input[name='ir_resultDate']");
-            let interviewIrIdModal = modal.find("input[name='ir_id']");
-            const user_id = modal.find('input[class="user_id"]');
-
-            interviewmodifyService.get(ir_id, function (interviewReview) {
-
-                difficultyModal.val(interviewReview.ir_difficulty);
-                interviewDateModal.val(interviewReview.ir_interviewDate);
-                interviewExperienceModal.val(interviewReview.ir_experience);
-                interviewRouteModal.val(interviewReview.ir_route);
-                user_id.val(interviewReview.user_id);
-                interviewTitleModal.val(interviewReview.ir_title);
-                interviewQuestionModal.val(interviewReview.ir_question);
-                interviewAnswerModal.val(interviewReview.ir_answer);
-                interviewResultModal.val(interviewReview.ir_result);
-                interviewResultDateModal.val(interviewReview.ir_resultDate);
-                interviewIrIdModal.val(interviewReview.ir_id);
-
-                $(".modifyInterview").modal("show");
-
-            });
-
-
-            $("#interviewModifyBtn").on("click", function (e) {
-                console.log(modal.find("input[name='ir_id']").val());
-                const interviewReview = {
-                    ir_id: interviewIrIdModal.val(),
-                    ir_difficulty: difficultyModal.val(),
-                    ir_interviewDate: interviewDateModal.val(),
-                    ir_experience: interviewExperienceModal.val(),
-                    ir_route: interviewRouteModal.val(),
-                    user_id: user_id.val(),
-                    ir_title: interviewTitleModal.val(),
-                    ir_question: interviewQuestionModal.val(),
-                    ir_answer: interviewAnswerModal.val(),
-                    ir_result: interviewResultModal.val(),
-                    ir_resultDate: interviewResultDateModal.val(),
-                };
-                if (!interviewReview.ir_interviewDate || !interviewReview.ir_difficulty || !interviewReview.ir_experience || !interviewReview.ir_route || !interviewReview.user_id || !interviewReview.ir_title || !interviewReview.ir_question || !interviewReview.ir_answer || !interviewReview.ir_result || !interviewReview.ir_resultDate) {
-                    alert("필수값이 입력되지 않았습니다.");
-                } else {
-                	interviewmodifyService.interviewModify(interviewReview, function (result) {
-                        alert("성공적으로 변경되었습니다.");
-                        modal.modal("hide");
-                        location.reload()
-                    });
-                }
-            });
-
-
-        });
-
-    });
-
-
-</script>
 
 

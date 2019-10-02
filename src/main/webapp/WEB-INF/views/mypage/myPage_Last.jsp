@@ -8,11 +8,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="../includes/header.jsp" %>
 
 <div class="mySection">
 
-    <%@ include file="myPage_Menu.jsp" %>
+
 
 
     <div class="container mt-4">
@@ -28,7 +27,7 @@
                             <div class="col-lg-6 ml-5">
                                 <div class="row">
                                     <h4>
-                                        <a href="${path }/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">${item.ci_companyName}</a>
+                                        <a href="${pageContext.request.contextPath}/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">${item.ci_companyName}</a>
 										<c:if test="${item.followId eq 0}">
 											<button id="unfollow" class="follow btn btn-outline-danger" data-ciId=${item.ci_id }>♡</button>
 										</c:if>
@@ -71,5 +70,3 @@
         </div>
     </div>
 </div>
-    <%@ include file="../includes/footer.jsp" %>
-	<script src="resources/js/follow.js"></script>

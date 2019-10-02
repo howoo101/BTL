@@ -27,6 +27,8 @@ UserService userservice;
 			System.out.println("XMLHttpRequest".equals(request.getHeader("x-requested-with")));
 			HttpSession session = request.getSession();
 			Object obj = session.getAttribute("user");
+			String grade = (String) session.getAttribute("grade");
+			
 			
 			RequestDispatcher logininterceptor = request.getRequestDispatcher("/logininterceptor");
 			RequestDispatcher gradeceptor = request.getRequestDispatcher("/gradeceptor");
@@ -36,11 +38,10 @@ UserService userservice;
 					response.sendError(403);
 					return false;
 				}
-		
 				logininterceptor.forward(request,response);
 				return false; // 컨트롤러 uri로의 요청으로 가지않도록 false
-			
 			}
+		  
 			return true; // 요청 true
 	}
 

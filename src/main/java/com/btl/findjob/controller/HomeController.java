@@ -139,6 +139,9 @@ public class HomeController {
 		model.addAttribute("alltmoutrank", Math.round((double)enterService.alltmoutrank(ci_companyName) * 100 / enterService.latestallcp(ci_companyName)*100)/100.0); // 동종업계 이번달 퇴사자 % 순위 (최신 달)
 		//Enterprise End
 		
+		model.addAttribute("companySalary", enterService.getSalary(ci_companyName));
+		
+		
 		//info model
 		model.addAttribute("ci_companyName", ci_companyName);
 
@@ -223,7 +226,6 @@ public class HomeController {
 
 	@RequestMapping(value = "/myPage_InterviewReview", method = RequestMethod.GET)
 	public String myPage_InterviewReview(HttpServletRequest httpServletRequest, Model model) {
-
 
 		int user_id = Integer.parseInt((String)httpServletRequest.getSession().getAttribute("user_id"));
 		model.addAttribute("myInterviewList", mypageService.myInterviewReview(user_id));

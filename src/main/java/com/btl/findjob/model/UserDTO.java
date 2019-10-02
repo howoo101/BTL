@@ -12,6 +12,8 @@ public class UserDTO {
 	private String user_create_date; //가입 날짜
 	private String user_modify_date; //수정 날짜
 	private String user_emailauthkey; //이메일 인증키  
+	private String sns_key; // snskey
+	private String sns_type; //snstype  
 	private String salt; //패스워드 암호화를 돕는 컬럼 
 	
 }

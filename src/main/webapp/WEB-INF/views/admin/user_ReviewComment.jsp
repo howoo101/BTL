@@ -24,7 +24,6 @@
     <th scope="col">기업명</th>
     <th scope="col">평가 내용</th>
     <th scope="col">작성일</th>
-    <th scope="col">수정</th>
 </tr>
 </thead>
 	
@@ -104,105 +103,5 @@
 
 
 
-<script>
-// 상수->변수
-var modifyService = (function () {
-	function commentModify(reviewComment, callback, error) {
-	    console.log(reviewComment)
-	    $.ajax({
-	        type: 'put',
-	        url: '${pageContext.request.contextPath}/companyReview/' + reviewComment.cr_id,
-	        data: JSON.stringify(reviewComment),
-	        contentType: "application/json; charset=utf-8",
-	        success: function (result, status, xhr) {
-	            if (callback) {
-	                callback(result);
-	            }
-	        },
-
-	        error: function (xhr, status, er) {
-	            if (error) {
-	                error(er);
-	            }
-	        }
-	    });
-	}
-
-	function get(cr_id, callback, error) {
-
-	    $.get("${pageContext.request.contextPath}/companyReview/" + cr_id + ".json", function (result) {
-
-	        if (callback) {
-	            console.log(result);
-	            callback(result);
-	        }
-
-	    }).fail(function (xhr, status, err) {
-	        if (error) {
-	            error();
-	        }
-	    });
-	}
-
-	return {
-	    commentModify: commentModify,
-	    get: get
-	};
-	})();
-
-
-
-$(document).ready(function () {
-
-$(".callmodify").on("click", function (e) {
-    var cr_id = $(this).closest('button').val();
-
-    /* 모달창*/
-    var modal = $(".modifyComment");
-
-    let cr_CommentModal = modal.find("textarea[name='cr_comment']");
-    let cr_categoryModal = modal.find("select[name='cr_category']");
-    let cr_starRtModal = modal.find("span[class='count']");
-    const cr_idModal = modal.find("input[name='cr_id']");
-    const user_id = modal.find('input[class="user_id"]');
-
-    modifyService.get(cr_id, function (reviewComment) {
-        cr_CommentModal.val(reviewComment.cr_comment);
-        cr_categoryModal.val(reviewComment.cr_category);
-        cr_idModal.val(reviewComment.cr_id);
-       cr_starRtModal.text(reviewComment.cr_starRt);
-        user_id.val(reviewComment.user_id);
-
-        $(".modifyComment").modal("show");
-    });
-
-
-    $("#reviewCommentModifyBtn").on("click", function (e) {
-        const reviewComment = {
-            cr_id: cr_idModal.val(),
-            cr_comment : cr_CommentModal.val(),
-            cr_category : cr_categoryModal.val(),
-            cr_starRt : cr_starRtModal.text(),
-            user_id: user_id.val()
-        };
-        if (!reviewComment.cr_starRt || !reviewComment.cr_category|| !reviewComment.cr_comment) {
-            alert("필수값이 입력되지 않았습니다.");
-        } else {
-            modifyService.commentModify(reviewComment, function (result) {
-                alert("성공적으로 변경되었습니다.");
-                modal.modal("hide");
-              /*   location.reload() */
-            });
-        }
-    });
-
-
-});
-
-});
-
-
-
-</script>
 
 

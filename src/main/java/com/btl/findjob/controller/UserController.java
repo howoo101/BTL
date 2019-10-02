@@ -265,6 +265,9 @@ public String callback()throws Exception {
 	
  @RequestMapping(value="/logout")
     public String logout(HttpSession session) {
+	 if(SessionListener.getInstance().getUserID(session)==null){
+		 session.invalidate();
+	 }
 	   SessionListener.getInstance().removeSession(SessionListener.getInstance().getUserID(session));
         return "redirect:/"; 
 
@@ -427,7 +430,7 @@ public String pwfind() {
 		model.addAttribute("Uinfo_list", userservice.user_info(user_email));
 	
 		
-		return "mypage/myPage_Following";
+		return "mypage/myPage_Menu";
 	}
 	
 		
@@ -469,14 +472,6 @@ public String pwfind() {
 		
 		return "1";
 	}
-	
-	
-	@RequestMapping(value = "test" , method = {RequestMethod.GET}) 
-	public String test(){
-		
-		
-		
-		return "user/test";
-	}
+
 	
 }
