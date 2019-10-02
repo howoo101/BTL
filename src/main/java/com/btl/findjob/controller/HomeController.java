@@ -226,7 +226,6 @@ public class HomeController {
 	@RequestMapping(value = "/myPage_InterviewReview", method = RequestMethod.GET)
 	public String myPage_InterviewReview(HttpServletRequest httpServletRequest, Model model) {
 
-
 		int user_id = Integer.parseInt((String)httpServletRequest.getSession().getAttribute("user_id"));
 		model.addAttribute("myInterviewList", mypageService.myInterviewReview(user_id));
 
