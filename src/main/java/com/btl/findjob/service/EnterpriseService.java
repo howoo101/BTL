@@ -40,4 +40,6 @@ public interface EnterpriseService {
 	
 	// 서송현 코딩 끝 ===================================================
 	
+	   
+    public int getSalary(String ci_companyName);
 }

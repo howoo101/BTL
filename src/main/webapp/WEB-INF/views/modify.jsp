@@ -64,14 +64,14 @@
 </style>
 
 
-
+<br>
 <div class="container center-block mt-4">
 	<div class="card border-primary">
 		<div class="row">
-			<div class="col-lg-12 mt-2 ml-2">
+			<div class="col-lg-12 mt-2 ml-4">
 				<h4 class='page-header text-primary font-weight-bold card-title'>작성글
 					수정</h4>
-				<hr>
+				<hr style="width : 95%;">
 			</div>
 			<!-- /.col-lg-12 -->
 		</div>
@@ -95,40 +95,34 @@
 										type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 									<input type='hidden' name='keyword'
 										value='<c:out value="${cri.keyword}"/>'>
-
-									<div class="form-group">
+									
+									<div class="row">
+									<div class="form-group col-lg-8">
 										<label>제목</label> <input class="form-control"
 											name='board_title'
 											value='<c:out value="${board.board_title}" />'>
 									</div>
 
-									<div class="form-group">
-										<label>내용</label>
-										<textarea class="form-control" rows="3" name='board_content'><c:out
-												value="${board.board_content}" /></textarea>
-									</div>
-
-									<div class="form-group">
+									<div class="form-group col-lg-4">
 										<label>작성자</label> <input class="form-control"
 											name='board_writer'
 											value='<c:out value="${board.board_writer }"/>'
-											readonly="readonly">
+											readonly="readonly" style="background-color: white;">
 									</div>
-
+									</div>
 									<div class="form-group">
-										<label>등록일</label> <input class="form-control"
-											name='board_regdate'
-											value='<fmt:formatDate pattern="yyyy/MM/dd" value = "${board.board_regdate}" />'
-											readonly="readonly">
+										<label>내용</label>
+										<textarea class="form-control" rows="10" name='board_content'><c:out
+												value="${board.board_content}" /></textarea>
 									</div>
-
+									
 									<div class="form-group">
 										<label>수정일</label> <input class="form-control"
 											name='board_updateDate'
 											value='<fmt:formatDate pattern="yyyy/MM/dd" value = "${board.board_updateDate}" />'
 											readonly="readonly">
 									</div>
-									
+
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="panel panel-default">

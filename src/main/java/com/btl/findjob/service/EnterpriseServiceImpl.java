@@ -118,6 +118,12 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 		return mapper.companyList(userEmail, ci_companyName);
 	}
 
+    @Override
+    public int getSalary(String ci_companyName) {
+        // TODO Auto-generated method stub
+        return mapper.getSalary(ci_companyName);
+    }
+
 	// 서송현 코딩 끝 ===================================================
 
 }

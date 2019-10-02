@@ -4,13 +4,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@ include file="includes/header.jsp"%>
-
+<br>
 <div class="container center-block mt-4">
 	<div class="card border-primary">
 		<div class="row">
 			<div class="col-lg-12">
 				<h3 class="page-header text-primary font-weight-bold card-title mt-3 ml-4">
-					<a href ="${path}/list" style='text-decoration: none'>취뽀게시판</a>
+					<a href ="${path}/list" style='text-decoration: none'><i class="material-icons">group</i> 취뽀게시판</a>
 				</h3>
 			</div>
 			<!-- /.col-lg-12 -->
@@ -22,15 +22,15 @@
 					<!-- /.panel-heading -->
 					<div class="panel-body">
 						<div class="container">
-							<table class="table table-bordered table-hover">
+							<table class="table table-bordered table-hover"  style="text-align: center;">
 								<thead>
 									<tr>
-										<th>번호</th>
-										<th>제목</th>
-										<th>작성자</th>
-										<th>작성일</th>
-										<th>수정일</th>
-										<th>조회</th>
+										<th style="width: 6%">번호</th>
+										<th style="width: 45%">제목</th>
+										<th style="width: 12%">작성자</th>
+										<th style="width: 10%">작성일</th>
+										<th style="width: 10%">수정일</th>
+										<th style="width: 5%">조회</th>
 									</tr>
 								</thead>
 
@@ -38,7 +38,7 @@
 								<c:forEach items="${list }" var="board">
 									<tr>
 										<td><c:out value="${board.board_id }" /></td>
-										<td><a class='move'
+										<td style="text-align: left;"><a class='move'
 											href='<c:out value="${board.board_id }"/>'>
 												<c:out value="${board.board_title }" />
 												<b>[<c:out value="${board.replyCnt}" />]</b></a></td>

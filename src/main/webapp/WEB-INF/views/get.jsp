@@ -65,14 +65,13 @@
 </style>
 
 
-
+<br>
 <div class="container center-block mt-4">
 	<div class="card border-primary">
 		<div class="row">
-			<div class="col-lg-12 mt-2 ml-2">
-				<h4
-					class='page-header text-font-weight-bold card-title text-primary'>작성글</h4>
-				<hr>
+			<div class="col-lg-12 mt-2 ml-4">
+				<h4 class='page-header text-font-weight-bold card-title text-primary'>작성글</h4>
+				<hr style="width : 95%;">
 			</div>
 			<!-- /.col-lg-12 -->
 		</div>
@@ -88,24 +87,27 @@
 						<div class="panel-body">
 
 							<div class="container">
-								<div class="form-group">
+							
+							<div class="row">
+								<div class="form-group col-lg-8" >
 									<label>제목</label> <input class="form-control"
 										name='board_title' style="background-color:white;" 
 										value='<c:out value="${board.board_title}" />'
 										readonly="readonly">
 								</div>
-								<div class="form-group">
+								<div class="form-group col-lg-4">
 									<label>작성자</label> <input class="form-control" rows="3"
 										name='board_writer' style="background-color:white;"
 										value='<c:out value="${board.board_writer}" />'
 										readonly="readonly">
 								</div>
+							</div>
 								<div class="form-group">
 									<label>내용</label>
-									<textarea class="form-control" rows="3" style="background-color:white;" name='board_content'
-										readonly="readonly"><c:out
-											value="${board.board_content}" /></textarea>
+									<textarea class="form-control" rows="10" style="background-color:white;" name='board_content'
+										readonly="readonly"> <c:out value="${board.board_content}" /></textarea>
 								</div>
+								
 								<input class="form-control" name='board_id' type='hidden'
 									value='<c:out value="${board.board_id}" />' readonly="readonly">
 
@@ -113,7 +115,7 @@
 								<input class="form-control" name='board_userid' type='hidden'
 									value='<c:out value="${board.user_id}" />' readonly="readonly">
 								</div>
-								<div class="container">
+								
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="panel panel-default">
@@ -123,15 +125,17 @@
 
 													<!-- /.panel-heading -->
 													<div class="panel-body">
-														<div class="card border-info">
+														<div class="card border-gray">
 															<div>
 																<div class='replyCard'>
 																<div class='row ml-4 mt-3'>
+																
 																	<textarea name='reply_content' id="need"
-																		style="width: 85%; height: 85%;"></textarea>
-																	<button id='addReplyBtn' class='btn btn-primary btn-xs'>New
-																		Reply</button>
+																		style="width: 86%; height: 85%;"></textarea>
+																		
+																	<button id='addReplyBtn' class='btn btn-primary btn-xs ml-4'>등 &nbsp;&nbsp;&nbsp;록</button>
 																	<br>
+																	
 																	</div>
 																	<div class='row ml-4 mt-3'>
 																	<ul class="chat" style="list-style: none;">
@@ -159,7 +163,7 @@
 														<div class="panel-heading">첨부파일</div>
 														<!-- /.panel-heading -->
 														<div class="panel-body">
-															<div class="card border-info">
+															<div class="card border-gray">
 																<div class='uploadResult'>
 																	<ul>
 																	</ul>
@@ -176,13 +180,13 @@
 										</div>
 									</div>
 									<br>
-									<button data-oper='modify' class="btn btn-warning"
+									<button data-oper='modify' class="btn btn-warning mb-3"
 										onclick="location.href='modify?board_id=<c:out value="${board.board_id }"/>'">수정</button>
 
-									<button data-oper='list' class="btn btn-info"
+									<button data-oper='list' class="btn btn-info mb-3"
 										onclick="location.href='list'">List</button>
-								</div>
-								<br>
+								
+
 							</div>
 						</div>
 					</div>
@@ -315,15 +319,15 @@ replyService.getList(
 				return;
 			}
 			for (var i = 0, len = list.length || 0; i < len; i++) {
-				str += "<li class= 'clearfix' data-reply_id='" + list[i].reply_id + "'>";
+				str += "<li class= 'clearfix text-reply' data-reply_id='" + list[i].reply_id + "'>";
 				str += "<div><div class='header'><strong class='primary-font'>"
 						+ list[i].reply_writer
 						+ "</strong>";
-				str += "<small class='text-muted'>"
+				str += "<small class='text-muted ml-2' >"
 						+ replyService
 								.displayTime(list[i].reply_date)
 						+ "</small></div>";
-				str += "<p>"
+				str += "<p class='text-reply'>"
 						+ list[i].reply_content
 						+ "</p></div></li>";
 			}
