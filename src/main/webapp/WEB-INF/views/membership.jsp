@@ -8,7 +8,7 @@
 <div class="container">
     <div class="card-body text-center mt-5">
         <h1>멤버쉽 회원입니다.</h1>
-        <button class="btn btn-outline-info" onclick="opener.parent.location.reload(); self.close() ">확인</button>
+        <button class="btn btn-outline-info"  onclick="location.href='${path}/'">확인</button>
     </div>
 </div>
 <%@ include file="includes/footer.jsp" %>

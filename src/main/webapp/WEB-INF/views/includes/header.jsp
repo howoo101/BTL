@@ -118,7 +118,7 @@ if(user==null){
            <i class="material-icons" style="text:35px">face</i>
         </button>
         <ul class="dropdown-menu text-center" role="menu">
-            <li id="preauth"><a href="#"><b>정회원 인증</b></a></li>
+            <li id="preauth"><a href="kakaoPay"><b>정회원 인증</b></a></li>
             <li id="admauth"><a href="admin_page"><b>관리모드</b></a></li>
             <li><a href="myPage_menu"><b>마이페이지</b></a></li>
             <li><a href="logout"><b>로그아웃</b></a></li>
