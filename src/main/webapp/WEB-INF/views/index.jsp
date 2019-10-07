@@ -70,7 +70,7 @@
                                     <div class="col-md-6 text-center">
                                         <h5>${innerMap.key }</h5>
                                         <c:forEach items="${innerMap.value }" var="item">
-                                            <a href="#">
+                                            <a href="${path}/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">
                                                 <p>${item.ci_companyName }</p>
                                             </a>
                                         </c:forEach>
