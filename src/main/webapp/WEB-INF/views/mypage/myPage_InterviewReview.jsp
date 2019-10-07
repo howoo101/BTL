@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: h
-  Date: 19. 8. 31.
-  Time: 오후 3:14
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -210,7 +203,6 @@ var interviewmodifyService = (function () {
         $.get("${pageContext.request.contextPath}/interviewReview/" + ir_id + ".json", function (result) {
 
             if (callback) {
-                console.log(result);
                 callback(result);
             }
 
@@ -267,7 +259,6 @@ var interviewmodifyService = (function () {
 
 
             $("#interviewModifyBtn").on("click", function (e) {
-                console.log(modal.find("input[name='ir_id']").val());
                 const interviewReview = {
                     ir_id: interviewIrIdModal.val(),
                     ir_difficulty: difficultyModal.val(),
@@ -296,8 +287,6 @@ var interviewmodifyService = (function () {
         });
 
     });
-
-
 </script>
 
 

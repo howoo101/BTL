@@ -5,7 +5,6 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,40 +18,38 @@
     <%--부트스트랩 CSS--%>
     <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
     <%-- index css 커스텀  --%>
-     <link rel="stylesheet" type="text/css" href="resources/css/indexStyle.css">
-    <%-- TH css 커스텀  --%>
-    <link rel="stylesheet" type="text/css" href="resources/css/THStyle.css">
-    <%-- ssh css 커스텀  --%>
-    <link rel="stylesheet" type="text/css" href="resources/css/sshStyle.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/customCSS.css">
 
     <!--부트스트랩 와치 -->
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet" integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
     <!-- 카카오 js -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <!-- 카카오 init -->
     <script>Kakao.init('34800e916b17799e85bcefde72c06423')</script>
     <!-- 네이버 js -->
-  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-  
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+            charset="utf-8"></script>
+
     <%--구글 로그인 커스텀  --%>
- <script src="https://apis.google.com/js/api:client.js"></script>
+    <script src="https://apis.google.com/js/api:client.js"></script>
 
- 
-<!-- 구글 아이콘 -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<%-- 아이콘--%>
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-<!-- 카카오 지도 -->
-<script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c3c4fdcbe2ae096fbd9562312c53b316&libraries=services,clusterer,drawing"></script>
+    <!-- 구글 아이콘 -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <%-- 아이콘--%>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-<%-- chart 생성 위한 Chart.js --%>
-<script type="text/javascript" src="resources/js/Chart.js"></script>
-<script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
-<title>홈</title>
-    
+    <!-- 카카오 지도 -->
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c3c4fdcbe2ae096fbd9562312c53b316&libraries=services,clusterer,drawing"></script>
+
+    <%-- chart 생성 위한 Chart.js --%>
+    <script type="text/javascript" src="resources/js/Chart.js"></script>
+    <script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
+    <title>홈</title>
+
 </head>
 
 <body>
@@ -60,105 +57,109 @@
 <!-- 세션받아오기 -->
     <% String user = (String) session.getAttribute("user");%>
     <% String name = (String) session.getAttribute("name");%>
-   <% String grade = (String) session.getAttribute("grade");%>
-   
+    <% String grade = (String) session.getAttribute("grade");%>
+
 <input id="session" type="hidden" value="<%=user%>">  <!-- 로그인 세션파라미터 -->
 <input id="name" type="hidden" value="<%=name%>">  <!-- 유저 이름 세션파라미터 -->
 <input id="grade" type="hidden" value="<%=grade%>">  <!-- 유저 등급 세션파라미터 -->
 
- <% String user_id = (String) session.getAttribute("user_id");%>
-  
+    <% String user_id = (String) session.getAttribute("user_id");%>
+
 <!-- 로그인 인터셉터 (로그인창을 띄어주는 스크립트 임시호출)-->
     <% String ltr = (String) request.getAttribute("ltr");
 if(user==null){
-  if(ltr != null){  
+  if(ltr != null){
 %>
-<%=ltr%>
-<%
+    <%=ltr%>
+    <%
   }
 }
 %>
 
 <!-- admin 인터셉터 -->
-<% String atr = (String) request.getAttribute("atr");
+    <% String atr = (String) request.getAttribute("atr");
  if(atr != null){  
 %>
-<%=atr%>
-<%
+    <%=atr%>
+    <%
 }
 %>
 
 <!-- 계정제한 사용자 인터셉터 -->
-<% String ktr = (String) request.getAttribute("ktr");
+    <% String ktr = (String) request.getAttribute("ktr");
  if(ktr != null){  
 %>
-<%=ktr%>
-<%
+    <%=ktr%>
+    <%
 }
 %>
 
-  
 <header class="header-fixed"> <!-- 헤더 고정 태그 시작 -->
- <nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
-    <div class="container-fluid" >
-       <div class="navbar-header">
-         <a class="navbar-brand" href="${path}/"> <img src="${path}/resources/img/55.png" height="50" width="100" alt=""> </a>      
-         <button type="button" class="navbar-toggler" aria-expanded="false" data-toggle="collapse" data-target="#navbarNav">
-          <i class="material-icons" style="size:24px">search</i>
-         </button>
-         </div>
-         
-         <div class="collapse navbar-collapse" id="navbarNav" style="width:70%;" >
-           <form action="search" class="form-inline " role="search" class="navbar-toggle" data-toggle="collapse">
-              <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="기업명을 검색해주세요">
-              <button type="submit" class="btn btn-dark">검색</button>
-           </form>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="${path}/"> <img src="${path}/resources/img/55.png" height="50" width="100"
+                                                              alt=""> </a>
+                <button type="button" class="navbar-toggler" aria-expanded="false" data-toggle="collapse"
+                        data-target="#navbarNav">
+                    <i class="material-icons" style="size:24px">search</i>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav" style="width:70%;">
+                <form action="search" class="form-inline " role="search" class="navbar-toggle" data-toggle="collapse">
+                    <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="기업명을 검색해주세요">
+                    <button type="submit" class="btn btn-dark">검색</button>
+                </form>
+            </div>
+
+            <div class="nav navbar-nav navbar-right">
+                <button type="button" class="navbar-right navbar-toggler" aria-expanded="false" data-toggle="collapse"
+                        data-target="#navbarNav2">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <div class="nav navbar-nav navbar-right collapse navbar-collapse" id="navbarNav2"
+                 style="width:480px; position:relative; right:-120px;">
+                <div> <!-- 묶기 -->
+                    <button type="button" class="btn btn-light navbar-btn mr-2" onclick="location.href='${path}/list'">
+                        <i class="material-icons">create</i>취뽀게시판
+                    </button>
+                    <button type="button" id="loginmd" class="btn btn-dark navbar-btn " data-toggle="modal"
+                            data-target="#loginModal">
+                        <i class="material-icons ">account_circle</i> <b>Login</b></button>
+
+
+                    <div class="btn-group usermodal mr-2"><!--usermodal 시작 -->
+                        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
+                            <b id="ucon">${name} </b>
+                            <i class="material-icons" style="text:35px">face</i>
+                        </button>
+                        <ul class="dropdown-menu text-center" role="menu">
+                            <li id="preauth"><a href="kakaoPay"><b>정회원 인증</b></a></li>
+                            <li id="admauth"><a href="admin_page"><b>관리모드</b></a></li>
+                            <li><a href="myPage_menu"><b>마이페이지</b></a></li>
+                            <li><a href="logout"><b>로그아웃</b></a></li>
+                        </ul>
+                    </div><!--usermodal 끝 -->
+                </div> <!-- 묶기 끝 -->
+            </div>
+
         </div>
-        
-        <div class="nav navbar-nav navbar-right" >
-         <button type="button" class="navbar-right navbar-toggler" aria-expanded="false" data-toggle="collapse" data-target="#navbarNav2">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-       </div>
-       
-<div class="nav navbar-nav navbar-right collapse navbar-collapse" id="navbarNav2" style="width:480px; position:relative; right:-120px;"> 
-   <div> <!-- 묶기 -->
-       <button type="button" class="btn btn-light navbar-btn mr-2" onclick="location.href='${path}/list'">
-       <i class="material-icons">create</i>취뽀게시판</button>
-      <button type="button" id="loginmd" class="btn btn-dark navbar-btn " data-toggle="modal" data-target="#loginModal" >
-       <i class="material-icons ">account_circle</i> <b>Login</b></button>
-        
-   
-       <div class="btn-group usermodal mr-2"><!--usermodal 시작 -->
-        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-           <b id="ucon">${name} </b>
-           <i class="material-icons" style="text:35px">face</i>
-        </button>
-        <ul class="dropdown-menu text-center" role="menu">
-            <li id="preauth"><a href="kakaoPay"><b>정회원 인증</b></a></li>
-            <li id="admauth"><a href="admin_page"><b>관리모드</b></a></li>
-            <li><a href="myPage_menu"><b>마이페이지</b></a></li>
-            <li><a href="logout"><b>로그아웃</b></a></li>
-        </ul>
-      </div><!--usermodal 끝 -->
-   </div> <!-- 묶기 끝 -->
-</div>
-
-   </div>
-   </nav>
-</header> <!-- 헤더 고정 태그 끝 --> 
-
-   
-
+    </nav>
+</header> <!-- 헤더 고정 태그 끝 -->
 
 
 <!-- 모달 div -->
-<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" >
+<div id="loginModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog loginmodal-dialog">
         <div class="modal-content loginmodal-content">
             <div class="modal-header loginmodal-header">
                 <h5 class="modal-title loginmodal-title">LOGIN</h5>
-                <button type="button" id="close lmclose" class="close lmclose" data-dismiss="modal" aria-hidden="true" style="color:#F5F5F5">×
+                <button type="button" id="close lmclose" class="close lmclose" data-dismiss="modal" aria-hidden="true"
+                        style="color:#F5F5F5">×
                 </button>
             </div>
             <div class="modal-body loginmodal-body">
@@ -179,15 +180,13 @@ if(user==null){
 
 <script>
 
-var grade = $('#grade').val(); 
-$('#preauth').css("display", "block");  
- $('#admauth').css("display", "none");  
-    if(grade==1){
-    $('#preauth').css("display", "none");  
-    $('#admauth').css("display", "block");  
-   }
-
-   
+    var grade = $('#grade').val();
+    $('#preauth').css("display", "block");
+    $('#admauth').css("display", "none");
+    if (grade == 1) {
+        $('#preauth').css("display", "none");
+        $('#admauth').css("display", "block");
+    }
 
 
     $("#loading-bar").hide(); // 평상시 감춤
@@ -222,23 +221,23 @@ $('#preauth').css("display", "block");
 
     //클릭시 modal-body에 해당 url로드
     $("#login").click(function () {
-       $('.loginmodal-title').empty();
-      $('.loginmodal-title').html('<i class="material-icons mt-1">account_circle</i>&nbsp Login');
+        $('.loginmodal-title').empty();
+        $('.loginmodal-title').html('<i class="material-icons mt-1">account_circle</i>&nbsp Login');
         $(".loginmodal-body").load("login");
     });
 
     $("#signup").click(function () {
-       $('.loginmodal-title').empty();
-      $('.loginmodal-title').html('<i class="material-icons mt-1">how_to_reg</i>&nbsp Sign-Up');
+        $('.loginmodal-title').empty();
+        $('.loginmodal-title').html('<i class="material-icons mt-1">how_to_reg</i>&nbsp Sign-Up');
         $(".loginmodal-body").load("signup");
     });
 
     $("#pwfind").click(function () {
-         $('.loginmodal-title').empty();
-      $('.loginmodal-title').html('<i class="material-icons mt-1">help</i>&nbsp Forgot Your Password?');
+        $('.loginmodal-title').empty();
+        $('.loginmodal-title').html('<i class="material-icons mt-1">help</i>&nbsp Forgot Your Password?');
         $(".loginmodal-body").load("pwfind");
     });
-  
+
     // modal-footer
     $("#login").click(function () {
         $("#login").hide();
@@ -257,7 +256,4 @@ $('#preauth').css("display", "block");
         $("#signup").show();
         $("#pwfind").hide();
     });
-
-    
-    
 </script>

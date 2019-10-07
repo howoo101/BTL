@@ -19,13 +19,13 @@ public class KakaoPayServiceImpl implements KakaoPayService {
     }
 
     @Override
-    public  KakaoPayApprovalVO get(String user_id) {
+    public KakaoPayApprovalVO get(String user_id) {
         return kakaoPayMapper.get(user_id);
     }
 
     @Override
     public void update(String user_id) {
-    kakaoPayMapper.update(user_id);
+        kakaoPayMapper.update(user_id);
     }
 
 }

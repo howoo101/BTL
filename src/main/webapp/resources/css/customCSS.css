@@ -1,0 +1,344 @@
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&display=swap');
+
+/* faq */
+* {
+    font-family: 'Nanum Gothic Coding', monospace;
+    padding: 0;
+    margin: 0;
+}
+
+.faq-wrapper {
+    padding-top: 10px;
+    padding-bottom:10px;
+    padding-left: 20px;
+}
+
+.faq-header-text {
+    width: 80%;
+    padding-left: 20px;
+    font-weight: 700;
+}
+
+.faq-body-text p {
+    padding-top: 5px;
+    padding-bottom:10px;
+    padding-left:5px;
+    width:80%;
+}
+
+/* hiringInfo */
+.panel-border {
+    border: 1px solid #819FF7;
+}
+
+.panel-body {
+    padding-top: 5px;
+}
+
+
+
+/* sidenav */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+
+
+.sidenav a {
+    color: #4582EC;
+    padding: 8px 8px 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav i {
+    font-size:35px;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+/* header */
+.header-fixed{
+    width: 100%;
+    position: fixed;
+    top:0;
+    z-index:6;
+    margin-top: 0px;
+}
+
+/*<!--매인페이지 가운데 정렬-->*/
+html, body {
+    height: 100%;
+}
+
+
+.center {
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*회전목마 css*/
+.carousel-indicators li {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 10px;
+    text-indent: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    background-color: #f6fcff;
+    box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-indicators .active {
+    width: 10px;
+    height: 10px;
+    margin: 10px;
+    background-color: #250bff;
+}
+
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+/*메인화면 비디*/
+.headerVideo {
+    position: relative;
+    background-color: black;
+    height: 63vh;
+    min-height: 25rem;
+    width: 100%;
+    overflow: hidden;
+}
+
+.headerVideo video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.headerVideo .container {
+    position: relative;
+    z-index: 2;
+}
+
+.headerVideo .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+@media (pointer: coarse) and (hover: none) {
+    header {
+        background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;
+    }
+
+    header video {
+        display: none;
+    }
+}
+
+/*로그인 css*/
+#sns_nav {
+    text-align: center;
+}
+
+#gSignInWrapper {
+    display: inline-block;
+}
+
+#kSignInWrapper {
+    display: inline-block;
+}
+
+#NSignInWrapper {
+    display: inline-block;
+}
+
+/* 네이버 */
+#naverBtn {
+    display: inline-block;
+    background: #1EC800;
+    color: #FFFFFF;
+    width: 140px;
+    height: 40px;
+    border-radius: 5px;
+    border: thin solid #888;
+    box-shadow: 2px 2px 2px grey;
+    text-align: center;
+}
+
+#nbicon.nicon {
+    background: url('../img/naver_logo.png') transparent 5px 50% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    width: 38px;
+    height: 38px;
+    margin-left: -24px;
+}
+
+#naverBtn:hover {
+    cursor: pointer;
+}
+
+#naverBtn.buttonText {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 42px;
+    padding-right: 42px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+/* 카카오 */
+
+#kakaoBtn {
+    display: inline-block;
+    background: #FFEB00;
+    color: #3C1E1E;
+    width: 140px;
+    height: 40px;
+    border-radius: 5px;
+    border: thin solid #888;
+    box-shadow: 2px 2px 2px grey;
+    text-align: center;
+}
+
+#kbicon.kicon {
+    background: url('../img/kakao_logo2.PNG') transparent 5px 50% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    width: 38px;
+    height: 38px;
+    margin-left: -24px;
+}
+
+#kakaoBtn:hover {
+    cursor: pointer;
+}
+
+#kakaoBtn.buttonText {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 42px;
+    padding-right: 42px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+/* 구글  */
+
+#customBtn {
+    display: inline-block;
+    background: white;
+    color: #444;
+    width: 140px;
+    height: 40px;
+    border-radius: 5px;
+    border: thin solid #888;
+    box-shadow: 2px 2px 2px grey;
+    text-align: center;
+}
+
+#customBtn:hover {
+    cursor: pointer;
+}
+
+#customBtn.label {
+    font-family: serif;
+    font-weight: normal;
+}
+
+#cbicon.icon {
+    background: url('../img/g-normal.png') transparent 5px 50% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    width: 38px;
+    height: 38px;
+    margin-left: -24px;
+
+}
+
+#customBtn.buttonText {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 42px;
+    padding-right: 42px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+
+/* header */
+.loginmodal-header { background:#4582EC; color:#F5F5F5;}
+
+
+/* user_info */
+#user_status {padding: 8px; border: 3px solid #F2F2F2; width:100%; text-align:center;}
+
+#user_status_header{width:100%;  text-align:center;}
+#user_status_body{width:100%;  text-align:center;}
+
+#user_info_modal{ padding: 8px; border: 3px solid #F2F2F2; width:500px;}
+#user_info_modal > #uim_back {width:80%; text-align:center;}
+
+
+.col-xs-12 { margin: 10px; padding: 20px; }
+
+
+

@@ -1,18 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: h
-  Date: 19. 8. 31.
-  Time: 오후 3:14
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<% 	int user_id = (int) request.getAttribute("user_id");   %>
-
-
-
+<% int user_id = (int) request.getAttribute("user_id"); %>
 
 <div class="container mt-4">
     <div class="card border-primary">
@@ -32,7 +22,8 @@
                 <tbody>
                 <c:forEach items="${myInterviewList }" var="list">
                     <tr>
-                        <th scope="row"><a class='move' href="${pageContext.request.contextPath}/info?ci_companyName=${list.ci_companyName}&ci_id=${list.ci_id}">${list.ci_companyName}</a>
+                        <th scope="row"><a class='move'
+                                           href="${pageContext.request.contextPath}/info?ci_companyName=${list.ci_companyName}&ci_id=${list.ci_id}">${list.ci_companyName}</a>
                         </th>
                         <td><c:out value="${list.ir_result}"/></td>
                         <td><c:out value="${list.ir_interviewDate}"/></td>
@@ -43,7 +34,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal modifyInterview fade" tabindex="-1" role="dialog"
      aria-labelledby="ModalLabel" aria-hidden="true">
@@ -164,9 +154,9 @@
                     </div>
                     <div class="col-sm-9">
                         <label>
-                            <input class="form-control" type="date" name='ir_resultDate'>                         
-                     
-                         	<input class="user_id" type="hidden" value="<%=user_id%>"> 
+                            <input class="form-control" type="date" name='ir_resultDate'>
+
+                            <input class="user_id" type="hidden" value="<%=user_id%>">
                             <input class="ir_id" type="hidden" name="ir_id">
                         </label>
                     </div>

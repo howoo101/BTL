@@ -13,12 +13,12 @@ public class InterviewReviewServiceImpl implements InterviewReviewService {
 
     @Override
     public int interviewReviewRegister(InterviewReviewDTO interviewReviewDTO) {
-        return  interviewReviewMapper.interviewReviewRegister(interviewReviewDTO);
+        return interviewReviewMapper.interviewReviewRegister(interviewReviewDTO);
     }
 
     @Override
     public InterviewReviewPageDTO getListPage(InterviewReviewCriteria interviewReviewCriteria, int ci_id) {
-        return new InterviewReviewPageDTO(interviewReviewMapper.getCount(ci_id), interviewReviewMapper.getListWithPaging(interviewReviewCriteria,ci_id));
+        return new InterviewReviewPageDTO(interviewReviewMapper.getCount(ci_id), interviewReviewMapper.getListWithPaging(interviewReviewCriteria, ci_id));
     }
 
     @Override

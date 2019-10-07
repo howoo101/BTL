@@ -19,6 +19,5 @@
 <script>
     $("#kakaoBtnSubmit").on("click", function(){
         window.open("", "popup_window", "width=500, height=700, scrollbars=no");
-        // $("#myform").submit();
     });
 </script>

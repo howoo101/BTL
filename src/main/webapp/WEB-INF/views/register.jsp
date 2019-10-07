@@ -100,27 +100,20 @@ $(document).ready(function(e){
 		}
 		else{
     
-    console.log("submit clicked");
-    
     var str = "";
     
     $(".uploadResult ul li").each(function(i, obj){
       
       var jobj = $(obj);
       
-      console.dir(jobj);
-      console.log("-------------------------");
-      console.log(jobj.data("filename"));
-      
-      
+
       str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
       str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
       str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
       str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
     });
     
-    console.log(str);
-    
+
     formObj.append(str).submit();
 	 }
   });
@@ -167,8 +160,7 @@ $(document).ready(function(e){
       formData,type: 'POST',
       dataType:'json',
         success: function(result){
-          console.log(result); 
-		  showUploadResult(result); //업로드 결과 처리 함수 
+		  showUploadResult(result); //업로드 결과 처리 함수
 
       }
     }); //$.ajax
@@ -195,19 +187,19 @@ $(document).ready(function(e){
 			str += "data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
 			str += "<img src='display?fileName="+fileCallPath+"'>";
 			str += "</div>";
-			str +"</li>";
+			str +="</li>";
 		}else{
 			var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);			      
 		    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 		      
-			str += "<li "
+			str += "<li ";
 			str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' ><div>";
 			str += "<span> "+ obj.fileName+"</span>";
 			str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
 			str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
 			str += "<img src='/resources/img/attach.png'></a>";
 			str += "</div>";
-			str +"</li>";
+			str +="</li>";
 		}
 
     });
@@ -217,8 +209,6 @@ $(document).ready(function(e){
 
   $(".uploadResult").on("click", "button", function(e){
 	    
-    console.log("delete file");
-      
     var targetFile = $(this).data("file");
     var type = $(this).data("type");
     

@@ -324,6 +324,7 @@
 					  alert( "Data Saved success ")
 				  },
 				  error: function(e){
+				    alert("저장에 실패하였습니다.");
                     if (request.status === 403) {
                       location.href = "logininterceptor";
                     }
@@ -347,18 +348,10 @@
         editable: true, // 수정 할수 있게끔
         droppable: true, // 드롭기능이 활성화 할수 있는 엘리먼트
         
-        // drop 함수
-        drop: function(arg) {
-        },
-
         // 캘린터에서 클릭을 했을때 발생하는 핸들러 (callback)
         eventClick: function(info){
             // 클릭을 했을때 요소를 지우는 함수
             info.event.remove();
-        },
-
-        // 날짜를 클릭할때 걸리는 핸들러
-        dateClick: function(date){
         },
 
         // 이벤트 보이는 제한 걸기

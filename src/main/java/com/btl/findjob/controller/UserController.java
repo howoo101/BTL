@@ -1,13 +1,10 @@
 package com.btl.findjob.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
@@ -32,473 +29,413 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.mysql.cj.Session;
-
-
 
 @Controller
 public class UserController {
 
-	@Inject
-	MailSendService mailsender;
-	
-	@Autowired
-	UserService userservice;
-	
-	
-	private static final HttpTransport transport = new NetHttpTransport();
-	private static final  JsonFactory jsonFactory = new JacksonFactory();
+    @Inject
+    MailSendService mailsender;
 
+    @Autowired
+    UserService userservice;
 
-	
-	// 로그인 창
-	@RequestMapping(value = "login", method = {RequestMethod.GET ,  RequestMethod.POST}) 
-	public String login() {
+    private static final HttpTransport transport = new NetHttpTransport();
+    private static final JsonFactory jsonFactory = new JacksonFactory();
 
-		
-		return "user/login";
-	}
-	
-	//로그인 체크 로직
-	@RequestMapping(value = "login_chk", method = {RequestMethod.POST}) 
-	@ResponseBody
-	public String login_chk(@Param("user_email") String user_email,@Param("user_password") String user_password,HttpServletRequest request,Model model) {
-		
-			
-		 if(userservice.emailchk(user_email)==1) { //해당 이메일이 존재 하는지 확인
-			 if(userservice.snschk(user_email)>=1) { //sns회원인지  판별 (아닐경우)
-					return userservice.snstype(user_email);  //snstype이 무엇인지 확인함 sns회원이므로 일반 로그인 실패 처리
-				} else {
-					 String memberSalt = userservice.getsalt(user_email); // 멤버의 salt 가져오기
-					 String inputpassword = user_password;  //입력된 암호 가져오기
-					 String newpassword = SHA256Util.getEncrypt(inputpassword, memberSalt); // 가져온 salt을 이용하여 sha 암호 get		  
-					  if(userservice.login(user_email, newpassword)==1)  {  //로그인 검증 
-						HttpSession session = request.getSession(true);     //로그인 세션 추가
-						     if(SessionListener.getInstance().isUsing(user_email)) {  // 로그인 중복시 
-							    	if(SessionListener.getInstance().chk_table(session, user_email)) {
-							    		SessionListener.getInstance().removeSession(user_email);
-							    		session.setAttribute("user", user_email); // 세션추가
-										session.setAttribute("name", userservice.getname(user_email)); //닉네임 겟 
-										session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
-										session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
-										SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장	
-							    		return "1";
-							    	}  
-						        }
-						     else { //중복로그인이 아닐시  로그인처리
-								session.setAttribute("user", user_email); // 세션추가
-								session.setAttribute("name", userservice.getname(user_email)); //닉네임 겟 
-								session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
-								session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
-								SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장	
-								return "1"; //인증회원 로그인
-						       }
-						  	  }  
-						 else if (userservice.login(user_email, newpassword)==0){
-							return "2"; // 로그인 실패 
-						  }
-						}
-		 		 }
-				 else {
-					 return "2";
-				     }
-		 return "2";
-}
-		
-		
-	
-	
-	//구글 sns
-	@RequestMapping(value = "google", method = {RequestMethod.POST})
-	@ResponseBody
-	public String google(@RequestParam("idtoken") String idtoken,HttpServletRequest request)throws Exception {
+    // 로그인 창
+    @RequestMapping(value = "login", method = {RequestMethod.GET, RequestMethod.POST})
+    public String login() {
+        return "user/login";
+    }
 
-		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-	    .setAudience(Collections.singletonList("589581046105-skr2iee57c8j3o02lsl3g284ts0g0ks9.apps.googleusercontent.com"))
-	    .build();
+    //로그인 체크 로직
+    @RequestMapping(value = "login_chk", method = {RequestMethod.POST})
+    @ResponseBody
+    public String login_chk(@Param("user_email") String user_email, @Param("user_password") String user_password, HttpServletRequest request, Model model) {
+        if (userservice.emailchk(user_email) == 1) { //해당 이메일이 존재 하는지 확인
+            if (userservice.snschk(user_email) >= 1) { //sns회원인지  판별 (아닐경우)
+                return userservice.snstype(user_email);  //snstype이 무엇인지 확인함 sns회원이므로 일반 로그인 실패 처리
+            } else {
+                String memberSalt = userservice.getsalt(user_email); // 멤버의 salt 가져오기
+                String inputpassword = user_password;  //입력된 암호 가져오기
+                String newpassword = SHA256Util.getEncrypt(inputpassword, memberSalt); // 가져온 salt을 이용하여 sha 암호 get
+                if (userservice.login(user_email, newpassword) == 1) {  //로그인 검증
+                    HttpSession session = request.getSession(true);     //로그인 세션 추가
+                    if (SessionListener.getInstance().isUsing(user_email)) {  // 로그인 중복시
+                        if (SessionListener.getInstance().chk_table(session, user_email)) {
+                            SessionListener.getInstance().removeSession(user_email);
+                            session.setAttribute("user", user_email); // 세션추가
+                            session.setAttribute("name", userservice.getname(user_email)); //닉네임 겟
+                            session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+                            session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
+                            SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장
+                            return "1";
+                        }
+                    } else { //중복로그인이 아닐시  로그인처리
+                        session.setAttribute("user", user_email); // 세션추가
+                        session.setAttribute("name", userservice.getname(user_email)); //닉네임 겟
+                        session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+                        session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
+                        SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장
+                        return "1"; //인증회원 로그인
+                    }
+                } else if (userservice.login(user_email, newpassword) == 0) {
+                    return "2"; // 로그인 실패
+                }
+            }
+        } else {
+            return "2";
+        }
+        return "2";
+    }
 
-		GoogleIdToken idToken = verifier.verify(idtoken);
-		if (idToken != null) {
-		  Payload payload = idToken.getPayload();
-	
-		  
-		  String user_email = payload.getEmail();
-		  String user_name = (String) payload.get("name");
-		  
-			HttpSession session = request.getSession();
-			
-		  //이메일이 중복일경우 로그인
-			 
-			  
-			  if(userservice.snstype(user_email).equals("google")) {
-				   session.setAttribute("user", user_email);
-				   session.setAttribute("name", userservice.getname(user_email));
-				   session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
-				   session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
-				   SessionListener.getInstance().setSession(session, user_email);
-				   return "1";
-			  		}
-			  //아닐경우 가입 후 자동 로그인
-			 else if(userservice.snstype(user_email) == null || userservice.snstype(user_email) == "") {
-				 int authorization = 4; // sns 회원은 메일인증이 필요없어서 인증등급부여
-		 
-				TempKey tempkey = new TempKey();   
-				String key = tempkey.getKey(20, false);//sns회원이라서 랜덤 비밀번호생성
-				
-				String salt = SHA256Util.generateSalt();
-				String user_password = SHA256Util.getEncrypt(key, salt);
-				
-				String sns_key = "test";
-				String sns_type = "google";
-				
-				//sns 회원가입 (인증키가 없고 비밀번호는 랜덤비밀번호를 사용 (사실상 일반회원로그인이 안되게 막은것))
-				userservice.snsjoin_insert(user_email,user_name,user_password,authorization,sns_key,sns_type);
-				session.setAttribute("user", user_email);
-				session.setAttribute("name", userservice.getname(user_email));
-				session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
-				session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
-				SessionListener.getInstance().setSession(session, user_email);
-			 return "3";
-			 }
-		 else {
-			 return "2";
-			}
-		} 
-		else {
-		  System.out.println("토큰이없음");
-		}
-		return "4";
-	}
-	
-	
+    //구글 sns
+    @RequestMapping(value = "google", method = {RequestMethod.POST})
+    @ResponseBody
+    public String google(@RequestParam("idtoken") String idtoken, HttpServletRequest request) throws Exception {
 
-//카카오
-@RequestMapping(value = "kakao", method = {RequestMethod.POST})
-@ResponseBody
-public String kakao(@RequestParam("user_email") String user_email,@RequestParam("user_name") String user_name,HttpServletRequest request)throws Exception {
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+                .setAudience(Collections.singletonList("589581046105-skr2iee57c8j3o02lsl3g284ts0g0ks9.apps.googleusercontent.com"))
+                .build();
 
-HttpSession session = request.getSession();
+        GoogleIdToken idToken = verifier.verify(idtoken);
+        if (idToken != null) {
+            Payload payload = idToken.getPayload();
+
+            String user_email = payload.getEmail();
+            String user_name = (String) payload.get("name");
+
+            HttpSession session = request.getSession();
+
+            //이메일이 중복일경우 로그인
+            if (userservice.snstype(user_email).equals("google")) {
+                session.setAttribute("user", user_email);
+                session.setAttribute("name", userservice.getname(user_email));
+                session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+                session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
+                SessionListener.getInstance().setSession(session, user_email);
+                return "1";
+            }
+            //아닐경우 가입 후 자동 로그인
+            else if (userservice.snstype(user_email) == null || userservice.snstype(user_email) == "") {
+                int authorization = 4; // sns 회원은 메일인증이 필요없어서 인증등급부여
+
+                TempKey tempkey = new TempKey();
+                String key = tempkey.getKey(20, false);//sns회원이라서 랜덤 비밀번호생성
+
+                String salt = SHA256Util.generateSalt();
+                String user_password = SHA256Util.getEncrypt(key, salt);
+
+                String sns_key = "test";
+                String sns_type = "google";
+
+                //sns 회원가입 (인증키가 없고 비밀번호는 랜덤비밀번호를 사용 (사실상 일반회원로그인이 안되게 막은것))
+                userservice.snsjoin_insert(user_email, user_name, user_password, authorization, sns_key, sns_type);
+                session.setAttribute("user", user_email);
+                session.setAttribute("name", userservice.getname(user_email));
+                session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+                session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
+                SessionListener.getInstance().setSession(session, user_email);
+                return "3";
+            } else {
+                return "2";
+            }
+        } else {
+            System.out.println("토큰이없음");
+        }
+        return "4";
+    }
+
+    //카카오
+    @RequestMapping(value = "kakao", method = {RequestMethod.POST})
+    @ResponseBody
+    public String kakao(@RequestParam("user_email") String user_email, @RequestParam("user_name") String user_name, HttpServletRequest request) throws Exception {
+
+        HttpSession session = request.getSession();
 
 //이메일이 중복일경우 로그인
-  if(userservice.snstype(user_email).equals("kakao")) {
-   session.setAttribute("user", user_email);
-   session.setAttribute("name", userservice.getname(user_email));
-   session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
-   session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
-   SessionListener.getInstance().setSession(session, user_email);
-   return "1";
-  }
-	
-  //아닐경우 가입 후 자동 로그인
- else if(userservice.snstype(user_email) == null || userservice.snstype(user_email) == ""){
-	int authorization = 4; // sns 회원은 메일인증이 필요없어서 인증등급부여
- 
-	TempKey tempkey = new TempKey();   
-	String key = tempkey.getKey(20, false);//sns회원이라서 랜덤 비밀번호생성
-	
-	String salt = SHA256Util.generateSalt();
-	String user_password = SHA256Util.getEncrypt(key, salt);
-	
-	
-	String sns_key = "test";
-	String sns_type = "kakao";
-	
-	//sns 회원가입 (인증키가 없고 비밀번호는 랜덤비밀번호를 사용 (사실상 일반회원로그인이 안되게 막은것))
-	userservice.snsjoin_insert(user_email,user_name,user_password,authorization,sns_key,sns_type); 
-	session.setAttribute("user", user_email);
-	session.setAttribute("name", userservice.getname(user_email));
-	session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
-	session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
-	SessionListener.getInstance().setSession(session, user_email);
+        if (userservice.snstype(user_email).equals("kakao")) {
+            session.setAttribute("user", user_email);
+            session.setAttribute("name", userservice.getname(user_email));
+            session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+            session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
+            SessionListener.getInstance().setSession(session, user_email);
+            return "1";
+        }
 
- return "3";
- 	}
- else {
-	  return "2";
-	  }
-  
-} 
-	
-//네이버
-	@RequestMapping(value = "naver", method = {RequestMethod.POST})
-	@ResponseBody
-	public String naver(@RequestParam("user_email") String user_email,@RequestParam("user_name") String user_name,HttpServletRequest request)throws Exception {
-	
-	HttpSession session = request.getSession();
-	
-	//이메일이 중복일경우 로그인
-  if(userservice.snstype(user_email).equals("naver")) {
-   session.setAttribute("user", user_email);
-   session.setAttribute("name", userservice.getname(user_email));
-   session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
-   session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
-   SessionListener.getInstance().setSession(session, user_email);
-   return "1";
-  }
-	  //아닐경우 가입 후 자동 로그인
- else if(userservice.snstype(user_email) == null || userservice.snstype(user_email) == ""){
-	 int authorization = 4; // sns 회원은 메일인증이 필요없어서 인증등급부여
-	TempKey tempkey = new TempKey();   
-	String key = tempkey.getKey(20, false);//sns회원이라서 랜덤 비밀번호생성
-		
-	String salt = SHA256Util.generateSalt();
-	String user_password = SHA256Util.getEncrypt(key, salt);
-		
-	String sns_key = "test";
-	String sns_type = "naver";
-	
-	//sns 회원가입 (인증키가 없고 비밀번호는 랜덤비밀번호를 사용 (사실상 일반회원로그인이 안되게 막은것))
-	userservice.snsjoin_insert(user_email,user_name,user_password,authorization,sns_key,sns_type); 
-	session.setAttribute("user", user_email);
-	session.setAttribute("name", userservice.getname(user_email));
-	session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
-	session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
-	SessionListener.getInstance().setSession(session, user_email);
-	 return "3";		
-	 }
-  else {
-	  return "2";
-  	}
+        //아닐경우 가입 후 자동 로그인
+        else if (userservice.snstype(user_email) == null || userservice.snstype(user_email) == "") {
+            int authorization = 4; // sns 회원은 메일인증이 필요없어서 인증등급부여
 
-} 
-	
-@RequestMapping(value = "callback", method = {RequestMethod.GET ,  RequestMethod.POST})
-public String callback()throws Exception {
+            TempKey tempkey = new TempKey();
+            String key = tempkey.getKey(20, false);//sns회원이라서 랜덤 비밀번호생성
 
-	return "user/callback";
-	} 
+            String salt = SHA256Util.generateSalt();
+            String user_password = SHA256Util.getEncrypt(key, salt);
 
-	
-	
-	
- @RequestMapping(value="/logout")
+
+            String sns_key = "test";
+            String sns_type = "kakao";
+
+            //sns 회원가입 (인증키가 없고 비밀번호는 랜덤비밀번호를 사용 (사실상 일반회원로그인이 안되게 막은것))
+            userservice.snsjoin_insert(user_email, user_name, user_password, authorization, sns_key, sns_type);
+            session.setAttribute("user", user_email);
+            session.setAttribute("name", userservice.getname(user_email));
+            session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+            session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
+            SessionListener.getInstance().setSession(session, user_email);
+
+            return "3";
+        } else {
+            return "2";
+        }
+
+    }
+
+    //네이버
+    @RequestMapping(value = "naver", method = {RequestMethod.POST})
+    @ResponseBody
+    public String naver(@RequestParam("user_email") String user_email, @RequestParam("user_name") String user_name, HttpServletRequest request) throws Exception {
+
+        HttpSession session = request.getSession();
+
+        //이메일이 중복일경우 로그인
+        if (userservice.snstype(user_email).equals("naver")) {
+            session.setAttribute("user", user_email);
+            session.setAttribute("name", userservice.getname(user_email));
+            session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+            session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
+            SessionListener.getInstance().setSession(session, user_email);
+            return "1";
+        }
+        //아닐경우 가입 후 자동 로그인
+        else if (userservice.snstype(user_email) == null || userservice.snstype(user_email) == "") {
+            int authorization = 4; // sns 회원은 메일인증이 필요없어서 인증등급부여
+            TempKey tempkey = new TempKey();
+            String key = tempkey.getKey(20, false);//sns회원이라서 랜덤 비밀번호생성
+
+            String salt = SHA256Util.generateSalt();
+            String user_password = SHA256Util.getEncrypt(key, salt);
+
+            String sns_key = "test";
+            String sns_type = "naver";
+
+            //sns 회원가입 (인증키가 없고 비밀번호는 랜덤비밀번호를 사용 (사실상 일반회원로그인이 안되게 막은것))
+            userservice.snsjoin_insert(user_email, user_name, user_password, authorization, sns_key, sns_type);
+            session.setAttribute("user", user_email);
+            session.setAttribute("name", userservice.getname(user_email));
+            session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+            session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
+            SessionListener.getInstance().setSession(session, user_email);
+            return "3";
+        } else {
+            return "2";
+        }
+
+    }
+
+    @RequestMapping(value = "callback", method = {RequestMethod.GET, RequestMethod.POST})
+    public String callback() throws Exception {
+
+        return "user/callback";
+    }
+
+
+    @RequestMapping(value = "/logout")
     public String logout(HttpSession session) {
-	 if(SessionListener.getInstance().getUserID(session)==null){
-		 session.invalidate();
-	 }
-	   SessionListener.getInstance().removeSession(SessionListener.getInstance().getUserID(session));
-        return "redirect:/"; 
-
- }
-
-	
-// 가입
-@RequestMapping(value = "signup", method = {RequestMethod.GET ,  RequestMethod.POST}) 
-public String signup() {
-
-	
-	return "user/signup";
-}
-	
-	
+        if (SessionListener.getInstance().getUserID(session) == null) {
+            session.invalidate();
+        }
+        SessionListener.getInstance().removeSession(SessionListener.getInstance().getUserID(session));
+        return "redirect:/";
+    }
 
 
-// 비밀번호 찾기
-@RequestMapping(value = "pwfind", method = {RequestMethod.GET ,  RequestMethod.POST}) 
-public String pwfind() {
+    // 가입
+    @RequestMapping(value = "signup", method = {RequestMethod.GET, RequestMethod.POST})
+    public String signup() {
+        return "user/signup";
+    }
 
-	
-	return "user/pwfind";
-}
 
-	
-	// 비밀번호 찾기 
-	@RequestMapping(value = "pwfind_go", method = {RequestMethod.GET ,  RequestMethod.POST}) 
-	@ResponseBody 
-	public String pwfind_go(@Param("user_email") String user_email,HttpServletRequest request) {
+    // 비밀번호 찾기
+    @RequestMapping(value = "pwfind", method = {RequestMethod.GET, RequestMethod.POST})
+    public String pwfind() {
+        return "user/pwfind";
+    }
 
-		
-		TempKey tempkey = new TempKey();             
-		String key  = tempkey.getKey(10, false); //임시비밀번호 10사이즈 생성       
-		
-		String salt = SHA256Util.generateSalt();
-		String newpassword = SHA256Util.getEncrypt(key, salt); //임시비밀번호 암호화 처리
-		
-		if(userservice.snstype(user_email)== "" || userservice.snstype(user_email)==null) {
-   	    userservice.pw_modify(newpassword, salt, user_email);  //비밀번호 업데이트
-		mailsender.tempkey_submit(user_email, key, request);  // 수정된 비밀번호를 전송
-		return "1";
-		}
-	
-		return "2";
-	}
-	
-	
-	//이메일 인증코드 발송
-	@RequestMapping(value = "auth_submit" , method = {RequestMethod.POST}) 
-	@ResponseBody
-	public String auth_submit(@Param("user_email") String user_email,HttpServletRequest request) throws IOException {
 
-		TempKey tempkey = new TempKey();             
-		String key = tempkey.getKey(15, false); //랜덤으로 이루어진 인증키 15사이즈 생성       
-		
-		HttpSession session = request.getSession();
-		Object obj = session.getAttribute("authkey");
-		
-		//세션에 인증키 임시등록
-		if(obj==null) {
-		session.setAttribute("authkey", key);
-		mailsender.mailSendWithUserKey(user_email, key, request);
-		return "1";
-		}
-		else{
-		session.removeAttribute("authkey");
-		session.setAttribute("authkey", key);
-		mailsender.mailSendWithUserKey(user_email, key, request);
-		return "1";
-		}
-		
+    // 비밀번호 찾기
+    @RequestMapping(value = "pwfind_go", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String pwfind_go(@Param("user_email") String user_email, HttpServletRequest request) {
+        TempKey tempkey = new TempKey();
+        String key = tempkey.getKey(10, false); //임시비밀번호 10사이즈 생성
 
-	}
-	
-	//이메일 인증코드 확인
-	
-	@RequestMapping(value = "auth_check" , method = {RequestMethod.POST}) 
-	@ResponseBody
-	public String auth_check(@Param("auth_key") String auth_key,HttpServletRequest request) {
+        String salt = SHA256Util.generateSalt();
+        String newpassword = SHA256Util.getEncrypt(key, salt); //임시비밀번호 암호화 처리
 
-		HttpSession session = request.getSession();
-		String emauth_key = (String)session.getAttribute("authkey");
-		
-		if(auth_key.equals(emauth_key)) {
-		   session.invalidate();
-		return "1";
-		}
-		return "2";
-		   
-	}
-	
-	//가입 
-	@RequestMapping(value = "signup_go" , method = {RequestMethod.POST}) 
-	@ResponseBody
-	public String signup_go(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name,HttpServletRequest request) {
+        if (userservice.snstype(user_email) == "" || userservice.snstype(user_email) == null) {
+            userservice.pw_modify(newpassword, salt, user_email);  //비밀번호 업데이트
+            mailsender.tempkey_submit(user_email, key, request);  // 수정된 비밀번호를 전송
+            return "1";
+        }
+        return "2";
+    }
 
-	String salt = SHA256Util.generateSalt();
-	String newPassword = SHA256Util.getEncrypt(user_password, salt);
-	
 
-		int authorization = 4; //인증회원  
+    //이메일 인증코드 발송
+    @RequestMapping(value = "auth_submit", method = {RequestMethod.POST})
+    @ResponseBody
+    public String auth_submit(@Param("user_email") String user_email, HttpServletRequest request) throws IOException {
 
-	
-		userservice.join_insert(user_email,newPassword,user_name,authorization,salt); 
-		
-		return "1";
-		   
-	}
-	
+        TempKey tempkey = new TempKey();
+        String key = tempkey.getKey(15, false); //랜덤으로 이루어진 인증키 15사이즈 생성
 
-	@RequestMapping(value = "auth" , method = {RequestMethod.GET ,  RequestMethod.POST}) 
-	public String auth(){
+        HttpSession session = request.getSession();
+        Object obj = session.getAttribute("authkey");
 
-		return "user/auth";
-	}
-	
-	
-	
-	
-	
-	@RequestMapping(value = "emailchk" , method = {RequestMethod.GET ,  RequestMethod.POST}) 
-	@ResponseBody 
-	public String emailchk(@Param ("user_email") String user_email){
+        //세션에 인증키 임시등록
+        if (obj == null) {
+            session.setAttribute("authkey", key);
+            mailsender.mailSendWithUserKey(user_email, key, request);
+            return "1";
+        } else {
+            session.removeAttribute("authkey");
+            session.setAttribute("authkey", key);
+            mailsender.mailSendWithUserKey(user_email, key, request);
+            return "1";
+        }
+    }
 
-		return Integer.toString(userservice.emailchk(user_email));
-	}
-	
-	
-	//로그인 인터셉터
-	@RequestMapping(value = "logininterceptor" , method = {RequestMethod.GET ,  RequestMethod.POST}) 
-	public ModelAndView interceptor(){
-		
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("index");
+    //이메일 인증코드 확인
 
-		String ltr = "";	
-		ltr += "<script langueage='JavaScript'>";
-		ltr += "$(window).on('load',function(){";
-		ltr += "var result = confirm('로그인이 필요한 영역입니다. 로그인 하시겠습니까?');";
-		ltr += "if(result) {$('#loginModal').modal('show');";
-		ltr += "}else {";
-		ltr += "history.back();";
-		ltr += "}";
-		ltr += "});";
-		ltr += "</script>";
-		
-		mv.addObject("ltr", ltr);
-		
-		return  mv;
-		
-		
-	}
-	
-	@RequestMapping(value = "myPage_menu" , method = {RequestMethod.GET,RequestMethod.POST}) 
-	public String myPage_menu(HttpSession session,Model model){
-		
-		String user_email = (String) session.getAttribute("user");
+    @RequestMapping(value = "auth_check", method = {RequestMethod.POST})
+    @ResponseBody
+    public String auth_check(@Param("auth_key") String auth_key, HttpServletRequest request) {
 
-		model.addAttribute("Uinfo_list", userservice.user_info(user_email));
-	
-		
-		return "mypage/myPage_Menu";
-	}
-	
-		
-	@RequestMapping(value = "/user_info" , method = {RequestMethod.GET,RequestMethod.POST}) 
-	public String user_info(HttpSession session,Model model){
-		
-		String user_email = (String) session.getAttribute("user");
-	
-		model.addAttribute("Uinfo_list", userservice.user_info(user_email));
-		model.addAttribute("snschk", Integer.toString(userservice.snschk(user_email))); 
-		
-		return "mypage/user_info";
-	}
-		
-	
-	@RequestMapping(value = "name_modify" , method = {RequestMethod.POST}) 
-	@ResponseBody
-	public String user_info_modify(@Param("user_email") String user_email,@Param("user_password") String user_password,@Param("user_name") String user_name,HttpSession session){
-		
-		userservice.name_modify(user_email, user_name);
-		
-		session.removeAttribute("name");
-		session.setAttribute("name", userservice.getname(user_email)); 
-		
-		return "1";
-	}
-	
-	@RequestMapping(value = "pw_modify" , method = {RequestMethod.POST}) 
-	@ResponseBody
-	public String pw_modify(@Param("user_email") String user_email,@Param("user_password") String user_password,HttpSession session){
-		
-		String salt = SHA256Util.generateSalt();
-		String newPassword = SHA256Util.getEncrypt(user_password, salt);
-		
-		userservice.pw_modify(newPassword, salt, user_email);
-		
-		SessionListener.getInstance().removeSession(SessionListener.getInstance().getUserID(session));
+        HttpSession session = request.getSession();
+        String emauth_key = (String) session.getAttribute("authkey");
+        if (auth_key.equals(emauth_key)) {
+            session.invalidate();
+            return "1";
+        }
+        return "2";
+    }
 
-		
-		return "1";
-	}
+    //가입
+    @RequestMapping(value = "signup_go", method = {RequestMethod.POST})
+    @ResponseBody
+    public String signup_go(@Param("user_email") String user_email, @Param("user_password") String user_password, @Param("user_name") String user_name, HttpServletRequest request) {
 
-	
-	//킥 된 사용자
-		@RequestMapping(value = "gradeceptor" , method = {RequestMethod.GET ,  RequestMethod.POST}) 
-		public ModelAndView gradeceptor(){
-			
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("index");
+        String salt = SHA256Util.generateSalt();
+        String newPassword = SHA256Util.getEncrypt(user_password, salt);
+        int authorization = 4; //인증회원
+        userservice.join_insert(user_email, newPassword, user_name, authorization, salt);
+        return "1";
+    }
 
-			String ktr = "";	
-			ktr += "<script langueage='JavaScript'>";
-			ktr += "alert('회원님은 계정 제한 상태입니다. 관리자 메일로 문의해주십시오.')";
-			ktr += "</script>";
-			
-			mv.addObject("ktr", ktr);
-			
-			return  mv;
-			
-			
-		}
-	
+
+    @RequestMapping(value = "auth", method = {RequestMethod.GET, RequestMethod.POST})
+    public String auth() {
+        return "user/auth";
+    }
+
+
+    @RequestMapping(value = "emailchk", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String emailchk(@Param("user_email") String user_email) {
+        return Integer.toString(userservice.emailchk(user_email));
+    }
+
+
+    //로그인 인터셉터
+    @RequestMapping(value = "logininterceptor", method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView interceptor() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("index");
+
+        String ltr = "";
+        ltr += "<script langueage='JavaScript'>";
+        ltr += "$(window).on('load',function(){";
+        ltr += "var result = confirm('로그인이 필요한 영역입니다. 로그인 하시겠습니까?');";
+        ltr += "if(result) {$('#loginModal').modal('show');";
+        ltr += "}else {";
+        ltr += "history.back();";
+        ltr += "}";
+        ltr += "});";
+        ltr += "</script>";
+
+        mv.addObject("ltr", ltr);
+
+        return mv;
+    }
+
+    @RequestMapping(value = "myPage_menu", method = {RequestMethod.GET, RequestMethod.POST})
+    public String myPage_menu(HttpSession session, Model model) {
+
+        String user_email = (String) session.getAttribute("user");
+
+        model.addAttribute("Uinfo_list", userservice.user_info(user_email));
+
+        return "mypage/myPage_Menu";
+    }
+
+
+    @RequestMapping(value = "/user_info", method = {RequestMethod.GET, RequestMethod.POST})
+    public String user_info(HttpSession session, Model model) {
+
+        String user_email = (String) session.getAttribute("user");
+
+        model.addAttribute("Uinfo_list", userservice.user_info(user_email));
+        model.addAttribute("snschk", Integer.toString(userservice.snschk(user_email)));
+
+        return "mypage/user_info";
+    }
+
+
+    @RequestMapping(value = "name_modify", method = {RequestMethod.POST})
+    @ResponseBody
+    public String user_info_modify(@Param("user_email") String user_email, @Param("user_password") String user_password, @Param("user_name") String user_name, HttpSession session) {
+
+        userservice.name_modify(user_email, user_name);
+
+        session.removeAttribute("name");
+        session.setAttribute("name", userservice.getname(user_email));
+
+        return "1";
+    }
+
+    @RequestMapping(value = "pw_modify", method = {RequestMethod.POST})
+    @ResponseBody
+    public String pw_modify(@Param("user_email") String user_email, @Param("user_password") String user_password, HttpSession session) {
+
+        String salt = SHA256Util.generateSalt();
+        String newPassword = SHA256Util.getEncrypt(user_password, salt);
+
+        userservice.pw_modify(newPassword, salt, user_email);
+
+        SessionListener.getInstance().removeSession(SessionListener.getInstance().getUserID(session));
+
+
+        return "1";
+    }
+
+
+    //킥 된 사용자
+    @RequestMapping(value = "gradeceptor", method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView gradeceptor() {
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("index");
+
+        String ktr = "";
+        ktr += "<script langueage='JavaScript'>";
+        ktr += "alert('회원님은 계정 제한 상태입니다. 관리자 메일로 문의해주십시오.')";
+        ktr += "</script>";
+
+        mv.addObject("ktr", ktr);
+
+        return mv;
+    }
 }

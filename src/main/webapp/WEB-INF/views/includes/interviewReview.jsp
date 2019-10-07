@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: h
-  Date: 19. 8. 30.
-  Time: 오후 6:44
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <div id="section5" class="mt-3">
@@ -55,7 +48,6 @@
             </div>
         </div>
     </div>
-
 
     <!--모달창 -->
     <div class="modal interviewModal fade" tabindex="-1" role="dialog"
@@ -624,7 +616,6 @@
                 }
             }
         });
-
     };
 
 </script>
