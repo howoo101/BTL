@@ -173,7 +173,7 @@
             var user_id = $div.find('input[class="user_id"]').val();
 
 
-            if (!cr_comment || !cr_starRt || !forInsert || !cr_category || !user_id) {
+            if (!cr_comment || !cr_starRt || !forInsert || !cr_category) {
                 alert("필수값이 입력되지 않았습니다.");
             } else {
                 $.ajax({

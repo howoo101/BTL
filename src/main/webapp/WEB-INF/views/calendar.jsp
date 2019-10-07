@@ -245,9 +245,8 @@
 						  // event에다가 loadevent를 put
 						  totalEvents.push(loadEvent);
 						  calendar.addEvent(loadEvent);
-					  })
+					  });
 					  
-					  console.log(totalEvents);
 				  },
 				  error: function(e){
 					  alert(" Data Load: fail")
@@ -304,7 +303,6 @@
                 		}
             			
 	            		saveEvent.end = element.end.getFullYear()+'-'+endMonth+'-'+endDate;
-	            		console.log(saveEvent.end);
             		}
             		// 현재 접속하고 있는 user 넣기
             		saveEvent.useremail = '${user}';
@@ -323,15 +321,15 @@
 				  success: function(msg){
 					  alert( "Data Saved success ")
 				  },
-				  error: function(e){
-				    alert("저장에 실패하였습니다.");
+                  error : function(request) {
+				    alert("등록에 실패하였습니다.");
                     if (request.status === 403) {
                       location.href = "logininterceptor";
                     }
                     if (request.status === 404) {
                       location.href = "gradeceptor";
                     }
-				  }
+                  }
             	}); // end of ajax
             	
             } // end of click event
