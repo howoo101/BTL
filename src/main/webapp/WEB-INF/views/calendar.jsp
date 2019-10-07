@@ -219,42 +219,35 @@
 				  contentType : "application/json; charset=utf-8",
 				  
 				  success: function(data){
+					  var totalEvents = [];
 					  // 이메일이 일치하는 애들을 불러와서 event에 등록시켜주기.
-					  var totalEvent = []
-
 					  $.each(data, function(index, item){
-						  var loadEvents = []; 
+						  var loadEvent = []; 
 						  // 아이템들을 loadEvents에다가 push 하고,
-						  loadEvents.title = item.title;
-						  loadEvents.start = item.start;
-						  loadEvents.end = item.end;
-						  loadEvents.textColor = "#ffffff";
+						  loadEvent.title = item.title;
+						  loadEvent.start = item.start;
+						  loadEvent.end = item.end;
+						  loadEvent.textColor = "#ffffff";
 					  		
 						  // 단 색을 바꾸는데 채용공고 색과  내가 등록한 이벤트들의 각자 색을 다르게 넣어주기
 					      if(item.title == "중요"){
-					    	  loadEvents.color = "#d63031";
+					    	  loadEvent.color = "#d63031";
 					      } else if(item.title == "자소서 마감"){
-					    	  loadEvents.color = "#0984e3";
+					    	  loadEvent.color = "#0984e3";
 					      } else if(item.title == "면접"){
-					    	  loadEvents.color = "#00b894";
+					    	  loadEvent.color = "#00b894";
 					      } else if(item.title == "채용 발표"){
-					    	  loadEvents.color = "#fd79a8";
+					    	  loadEvent.color = "#fd79a8";
 					      } else {
-					    	  loadEvents.color = "#3742fa";
+					    	  loadEvent.color = "#fdcb6e";
 					      }
 					      
 						  // event에다가 loadevent를 put
-						  totalEvent.push(loadEvents);
-						  calendar.addEvent(loadEvents);
+						  totalEvents.push(loadEvent);
+						  calendar.addEvent(loadEvent);
 					  })
-					  var event = {title:"hihi/ttt", start:'2019-10-03', end:'2019-10-03', textColor:'#ffffff',color:'red'}
-					  calendar.addEvent(event);
-					  var event = {title:"hihi/ttt222", start:'2019-10-03', end:'2019-10-03', textColor:'#ffffff',color:'red'}
-					  calendar.addEvent(event);
 					  
-					  console.log(totalEvent[0]);
-					  
-					  
+					  console.log(totalEvents);
 				  },
 				  error: function(e){
 					  alert(" Data Load: fail")
@@ -274,12 +267,44 @@
             	// 이벤트별 타이틀, start, end 값들을 json에다가 넣기.
             	events.forEach(function(element){
 	            	var saveEvent = {};
+	            	
             		saveEvent.title = element.title;
-            		saveEvent.start = element.start.getFullYear()+'-'+(element.start.getMonth()+1)+'-'+element.start.getDate();
+					
+            		// 날짜 형식 맞춰주기 (start)
+	            	var startMonth = '';
+            		if (element.start.getMonth()+1 < 10){
+            			startMonth = '0' + (element.start.getMonth()+1);
+            		} else if (element.start.getMonth()+1 >= 10){
+            			startMonth = (element.start.getMonth()+1);
+            		}
+	            	var startDate = '';
+	            	if (element.start.getDate() < 10){
+	            		startDate = '0' + element.start.getDate();
+            		} else if (element.start.getDate() >= 10){
+            			startDate = element.start.getDate();
+            		}
+            		saveEvent.start = element.start.getFullYear() + '-' + startMonth + '-' + startDate;
+            		
+            		// 날짜 형식 맞춰주기(end)
             		if(!element.end){
             			saveEvent.end = 0;       			
             		} else {
-	            		saveEvent.end = element.end.getFullYear()+'-'+(element.end.getMonth()+1)+'-'+element.end.getDate();
+            			
+            			var endMonth = '';
+                		if (element.end.getMonth()+1 < 10){
+                			endMonth = '0' + (element.end.getMonth()+1);
+                		} else if (element.end.getMonth()+1 >= 10){
+                			endMonth = (element.end.getMonth()+1);
+                		}
+    	            	var endDate = '';
+    	            	if (element.end.getDate() < 10){
+    	            		endDate = '0' + element.end.getDate();
+                		} else if (element.end.getDate() >= 10){
+                			endDate = element.end.getDate();
+                		}
+            			
+	            		saveEvent.end = element.end.getFullYear()+'-'+endMonth+'-'+endDate;
+	            		console.log(saveEvent.end);
             		}
             		// 현재 접속하고 있는 user 넣기
             		saveEvent.useremail = '${user}';
@@ -299,7 +324,12 @@
 					  alert( "Data Saved success ")
 				  },
 				  error: function(e){
-					  alert(" Data Saved fail")
+                    if (request.status === 403) {
+                      location.href = "logininterceptor";
+                    }
+                    if (request.status === 404) {
+                      location.href = "gradeceptor";
+                    }
 				  }
             	}); // end of ajax
             	

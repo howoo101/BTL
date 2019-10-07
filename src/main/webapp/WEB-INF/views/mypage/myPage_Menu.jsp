@@ -10,6 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ include file="../includes/header.jsp" %>
+
 <style>
 
 
@@ -70,6 +71,7 @@
 
 <!-- mypage js들 -->
 <script>
+
 $('#mprc').click(function(){
 $("#mp_body").load("${pageContext.request.contextPath}/myPage_ReviewComment");
 });
