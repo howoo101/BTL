@@ -55,4 +55,3 @@ target/
 .settings/
 .gitignore
 src/test/
-.project
