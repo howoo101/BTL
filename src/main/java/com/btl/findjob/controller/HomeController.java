@@ -3,10 +3,8 @@ package com.btl.findjob.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.mail.internet.NewsAddress;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,15 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.btl.findjob.model.*;
 
-import com.btl.findjob.mapper.CompanyMapper;
-
 import com.btl.findjob.service.CompanyReviewService;
 import com.btl.findjob.service.CompanyService;
 import com.btl.findjob.service.InterviewReviewService;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.javassist.compiler.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +28,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.btl.findjob.model.MypageCriteria;
 import com.btl.findjob.model.MypagePageDTO;
-import com.btl.findjob.service.CompanyReviewService;
 import com.btl.findjob.service.EnterpriseService;
 import com.btl.findjob.service.MypageService;
 import com.btl.findjob.utils.CookieUtils;
 import com.btl.findjob.utils.NaverSearchAPI;
-
-import lombok.extern.log4j.Log4j;
 
 /**
  * Handles requests for the application home page.
@@ -81,17 +73,19 @@ public class HomeController {
 		// 코드 더러움 개선이 필요해
 		Map<String,List<CompanyListVO>> map1 = new HashMap<>();
 		Map<String,Map<String,List<CompanyListVO>>> map2 = new HashMap<>();
-		Map<String,List<CompanyListVO>> tmpMap1 = new HashMap<>();
-		Map<String,List<CompanyListVO>> tmpMap2 = new HashMap<>();
+		Map<String,List<CompanyListVO>> carousel1 = new HashMap<>();
+		Map<String,List<CompanyListVO>> carousel2 = new HashMap<>();
 		map1.put("follow 많은 기업", companyService.getManyFollowOrdersList());
 		map1.put("면접리뷰 많은 기업", companyService.getManyInterviewReviewOrdersList());
-		
-		tmpMap1.put("승진 기회 및 가능성", companyService.getMostCt0OrdersList());
-		tmpMap1.put("복지 및 급여", companyService.getMostCt1OrdersList());
-		map2.put("1",tmpMap1);
-		tmpMap2.put("일과 삶의 균형", companyService.getMostCt2OrdersList());
-		tmpMap2.put("사내문화", companyService.getMostCt3OrdersList());
-		map2.put("2",tmpMap2);
+
+
+		carousel1.put("승진 기회 및 가능성", companyService.getMostCt0OrdersList());
+		carousel1.put("복지 및 급여", companyService.getMostCt1OrdersList());
+		map2.put("1",carousel1);
+		carousel2.put("일과 삶의 균형", companyService.getMostCt2OrdersList());
+		carousel2.put("사내문화", companyService.getMostCt3OrdersList());
+		map2.put("2",carousel2);
+
 		
 		model.addAttribute("map1", map1);
 		model.addAttribute("map2", map2);
@@ -103,7 +97,6 @@ public class HomeController {
 			@Param ("ci_id") String ci_id,HttpServletResponse res,
 			Model model,HttpServletRequest req) {
 		logger.info("기업 상세 페이지");
-		System.out.println(ci_id);
 		Cookie[] cookies = req.getCookies();
 		Cookie cookie = CookieUtils.getCookie(cookies, "ciId");
 		if(cookie != null) {
@@ -183,10 +176,6 @@ public class HomeController {
 		
 		model.addAttribute("news", list);
 		
-		
-
-
-
 		//면접 차트 정보
 		String[] difficultyArr = {"쉬움","약간 쉬움","보통","약간 어려움", "어려움"};
 		List<Integer> difficultyList = new ArrayList<>();
@@ -203,7 +192,6 @@ public class HomeController {
 			expList.add(interviewReviewService.expCnt(Integer.parseInt(ci_id), s));
 			model.addAttribute("expList", expList);
 		}
-			log.info(expList);
 
 		String[] resultArr = {"합격", "대기중", "불합격"};
 		List<Integer> resultList = new ArrayList<>();
@@ -216,7 +204,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)
 	public String myPage_Following(MypageCriteria criteria,Model model,HttpServletRequest req) {
-		logger.info("mypage following");
+
 		String userEmail = (String)req.getSession().getAttribute("user");
 		model.addAttribute("companyList",mypageService.followCompanyGetList(userEmail,criteria));
 		int total = mypageService.getTotalFollowCount(userEmail);
@@ -237,7 +225,7 @@ public class HomeController {
 	@RequestMapping(value = "/myPage_Last", method = RequestMethod.GET)
 	public String myPage_Last(HttpServletRequest req, Model model) {
 		String userEmail = (String)req.getSession().getAttribute("user");
-		String[] arr = null; 
+		String[] arr = {};
 		arr = CookieUtils.getValues(req.getCookies(), "ciId");
 		
 		model.addAttribute("companyList",

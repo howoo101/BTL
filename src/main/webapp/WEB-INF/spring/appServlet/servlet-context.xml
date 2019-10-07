@@ -45,17 +45,22 @@
 	
 	 <!-- 인터셉터 객체 생성 -->
     <beans:bean id="authenticationInterceptor" class="com.btl.findjob.interceptor.AuthenticationInterceptor">
+    </beans:bean> 
+     <beans:bean id="adminInterceptor" class="com.btl.findjob.interceptor.AdminInterceptor">
     </beans:bean>
     
     <!-- 인터셉터 맵핑 설정 (로그인이 필요한곳) -->
-     <interceptors>
+    <interceptors>
         <interceptor>
            <mapping path="/register"/> 
      		<mapping path="/follow/*"/>
+     		<mapping path="/myPage_menu"/>
+     		<mapping path="/myPage_Following"/>
+     		<mapping path="/myPage_InterviewReview"/>
+     		<mapping path="/myPage_Last"/>
+     		<mapping path="/myPage_ReviewComment"/>
      		<mapping path="/mypage/*"/> 
-			<mapping path="/admin/*"/> 
         	<mapping path="/replies/new"/> 
-        	<mapping path="/myPage_Last"/>
         	<mapping path="/companyReview/new"/>
         	<mapping path="/interviewReview/new"/>
         	<mapping path="/kakaoPay"/>
@@ -63,9 +68,18 @@
 
             <beans:ref bean="authenticationInterceptor"/>
         </interceptor>
+    </interceptors> 
+    
+        <!-- 인터셉터 맵핑 설정 (관리자) -->
+     <interceptors>
+        <interceptor>
+        <mapping path="/admin_page"/>
+        <mapping path="/user_status"/>
+            <beans:ref bean="adminInterceptor"/>
+        </interceptor>
     </interceptors>
+    
  
-
 	<beans:bean id="multipartResolver"
 	class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
 	

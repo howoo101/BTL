@@ -14,38 +14,28 @@ import com.btl.findjob.model.SessionListener;
 import com.btl.findjob.service.UserService;
 
 
-public class AuthenticationInterceptor extends HandlerInterceptorAdapter{
-	
-
-	
-@Autowired
-UserService userservice;
-
+public class AdminInterceptor extends HandlerInterceptorAdapter{
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 			System.out.println("XMLHttpRequest".equals(request.getHeader("x-requested-with")));
 			HttpSession session = request.getSession();
-			Object obj = session.getAttribute("user");
 			String grade = (String) session.getAttribute("grade");
-		
-			RequestDispatcher logininterceptor = request.getRequestDispatcher("/logininterceptor");
-			RequestDispatcher gradeceptor = request.getRequestDispatcher("/gradeceptor");
-			//로그인이 안되어있을경우.. 컨트롤러 요청으로 가지 않도록 false 반환
-			if(obj==null) {
-				if("XMLHttpRequest".equals(request.getHeader("x-requested-with"))) {
-					response.sendError(403);
-					return false;
-				}
-				logininterceptor.forward(request,response);
+			
+		RequestDispatcher gradeceptor = request.getRequestDispatcher("/adminceptor");
+	
+			if(grade == null) {
+				gradeceptor.forward(request,response);
 				return false; // 컨트롤러 uri로의 요청으로 가지않도록 false
 			}
-			else if(grade.equals("5")) {
-				gradeceptor.forward(request,response);
-				return false;
-			}
+			else if(grade.equals("1")){
 			return true; // 요청 true
+			}
+			else {
+				gradeceptor.forward(request,response);
+				return false; // 요청 false
+			}
 	}
 
 	@Override
