@@ -71,14 +71,31 @@
 <!-- 로그인 인터셉터 (로그인창을 띄어주는 스크립트 임시호출)-->
     <% String ltr = (String) request.getAttribute("ltr");
 if(user==null){
-   if(ltr != null){  
+  if(ltr != null){  
 %>
-    <%=ltr%>
-    <%
-   }
+<%=ltr%>
+<%
+  }
 }
 %>
 
+<!-- admin 인터셉터 -->
+<% String atr = (String) request.getAttribute("atr");
+ if(atr != null){  
+%>
+<%=atr%>
+<%
+}
+%>
+
+<!-- 계정제한 사용자 인터셉터 -->
+<% String ktr = (String) request.getAttribute("ktr");
+ if(ktr != null){  
+%>
+<%=ktr%>
+<%
+}
+%>
 
   
 <header class="header-fixed"> <!-- 헤더 고정 태그 시작 -->
@@ -91,7 +108,7 @@ if(user==null){
          </button>
          </div>
          
-         <div class="collapse navbar-collapse" id="navbarNav" style="width:70%;">
+         <div class="collapse navbar-collapse" id="navbarNav" style="width:70%;" >
            <form action="search" class="form-inline " role="search" class="navbar-toggle" data-toggle="collapse">
               <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="기업명을 검색해주세요">
               <button type="submit" class="btn btn-dark">검색</button>
@@ -104,7 +121,7 @@ if(user==null){
         </button>
        </div>
        
-<div class="nav navbar-nav navbar-right collapse navbar-collapse" id="navbarNav2" > 
+<div class="nav navbar-nav navbar-right collapse navbar-collapse" id="navbarNav2" style="width:480px; position:relative; right:-120px;"> 
    <div> <!-- 묶기 -->
        <button type="button" class="btn btn-light navbar-btn mr-2" onclick="location.href='${path}/list'">
        <i class="material-icons">create</i>취뽀게시판</button>

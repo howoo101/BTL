@@ -2,6 +2,7 @@ package com.btl.findjob.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,18 @@ AdminMapper mapper;
 	public List<UserDTO> get_userlist() {
 		// TODO Auto-generated method stub
 		return mapper.get_userlist();
+	}
+
+	@Override
+	public void grade_modify(@Param("user_id")int user_id,@Param("authorization_id")String authorization_id) {
+
+		mapper.grade_modify(user_id, authorization_id);
+		
+	}
+
+	@Override
+	public List<UserDTO> user_search(String user_name) {
+		return mapper.user_search(user_name);
 	}
 	  
 }

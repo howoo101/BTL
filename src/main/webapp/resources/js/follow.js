@@ -2,7 +2,7 @@
  * 
  */
 
-let follow = function(path,btn) {
+const follow = function(path,btn) {
 						var id = ""
 						var tagId = btn.attr("id")
 						var url = ""

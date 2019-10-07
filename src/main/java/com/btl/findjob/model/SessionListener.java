@@ -32,6 +32,12 @@ public class SessionListener implements HttpSessionBindingListener {
 	         
 	}
 	
+	public boolean chk_table(HttpSession session,String user_email) { 
+		   return userList.containsValue(user_email);
+	}
+
+	
+	
 	 public String getUserID(HttpSession session){
 	       return (String)userList.get(session);
 	   }
@@ -42,7 +48,8 @@ public class SessionListener implements HttpSessionBindingListener {
 	        while(e.hasMoreElements()){
 	            session = (HttpSession)e.nextElement();
 	            if(userList.get(session).equals(user_email)){
-	                session.invalidate();
+	            	userList.remove(user_email);
+	                session.invalidate();     
 	            }
 	       }
 	    }
@@ -71,7 +78,6 @@ public class SessionListener implements HttpSessionBindingListener {
 		}
 		return sessionListner;	
 	}
-	
 	
 	//세션 연결시 호출됨
 	@Override

@@ -213,7 +213,7 @@ public class HomeController {
     return "info";
 	}
 
-	@RequestMapping(value = "/myPage_Following", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage_Following", method = RequestMethod.GET)
 	public String myPage_Following(MypageCriteria criteria,Model model,HttpServletRequest req) {
 		logger.info("mypage following");
 		String userEmail = (String)req.getSession().getAttribute("user");
@@ -223,7 +223,7 @@ public class HomeController {
 		return "mypage/myPage_Following";
 	}
 
-	@RequestMapping(value = "/myPage_InterviewReview", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage_InterviewReview", method = RequestMethod.GET)
 	public String myPage_InterviewReview(HttpServletRequest httpServletRequest, Model model) {
 
 		int user_id = Integer.parseInt((String)httpServletRequest.getSession().getAttribute("user_id"));
@@ -233,7 +233,7 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value = "/myPage_Last", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage_Last", method = RequestMethod.GET)
 	public String myPage_Last(HttpServletRequest req, Model model) {
 		String userEmail = (String)req.getSession().getAttribute("user");
 		String[] arr = null; 
@@ -244,7 +244,7 @@ public class HomeController {
 		return "mypage/myPage_Last";
 	}
 
-	@RequestMapping(value = "/myPage_ReviewComment", method = RequestMethod.GET)
+	@RequestMapping(value = "myPage_ReviewComment", method = RequestMethod.GET)
 	public String myPage_ReviewComment(HttpServletRequest httpServletRequest, Model model) {
 
 

@@ -93,7 +93,7 @@
 			]]>
 		</select>
 		
-		
+
 		
 		<!-- 동종산업 전체 이번달  인원수 순위   --> 	
 		<select id="alltotalrank" resultType="INT" parameterType="String">
