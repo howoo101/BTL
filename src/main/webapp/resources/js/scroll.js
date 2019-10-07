@@ -16,7 +16,6 @@
 								'keyword' : keyword
 							}),
 							success : function(result) {
-								console.log(result)
 								if (result.length < 20)
 									isEnd = true;
 								 $.each(result, function(idx,vo){
@@ -36,7 +35,6 @@
 					
 					
 					let renderList = function(mode, idx,res,path){
-						console.log(res)
 						//follow check
 						let followBtn = ""
 						if(res.followId === 0) followBtn = '<button id="unfollow" class="follow btn btn-outline-danger" data-ciId="'+res.ci_id+ '">♡</button>'

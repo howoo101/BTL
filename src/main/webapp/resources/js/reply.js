@@ -3,7 +3,6 @@ console.log("reply Module......");
 var replyService = (function() {
 
 	function add(reply_content, callback, error) {
-		console.log("add reply.........");
 
 		$.ajax({
 			type : 'post',
@@ -58,7 +57,6 @@ var replyService = (function() {
 		});
 	}
 	function update(reply_content, callback, error) {
-		console.log("reply_id :" + reply_content.reply_id);
 		$.ajax({
 			type : 'put',
 			url : 'replies/' + reply_content.reply_id,

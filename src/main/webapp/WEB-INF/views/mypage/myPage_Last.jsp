@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: h
-  Date: 19. 8. 31.
-  Time: 오후 3:14
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -24,8 +17,7 @@
 								<div class="col-lg-6 ml-5">
 									<div class="row">
 										<h4>
-											<a
-												href="${path }/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">${item.ci_companyName}</a>
+											<a	href="${path }/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">${item.ci_companyName}</a>
 											<c:if test="${item.followId eq 0}">
 												<button id="unfollow" class="follow btn btn-outline-danger"
 													data-ciId=${item.ci_id }>♡</button>
@@ -66,30 +58,26 @@
 			</div>
 		</div>
 	</div>
-
-
-
 </div>
+
 <script>
 	var follow = function(path, btn) {
-		var id = ""
-		var tagId = btn.attr("id")
-		var url = ""
-		var type = ""
+		var id = "";
+		var tagId = btn.attr("id");
+		var url = "";
+		var type = "";
 		if (tagId == "unfollow") {
-			btn.html("♥")
-			btn.attr("id", "follow")
+			btn.html("♥");
+			btn.attr("id", "follow");
 			id = btn.attr("data-ciId");
-			url = path + "/follow/new"
+			url = path + "/follow/new";
 			type = 'post'
 		} else {
-			btn.html("♡")
-			btn.attr("id", "unfollow")
-			id = btn.attr("data-followId")
-			console.log(btn);
-			console.log(id);
+			btn.html("♡");
+			btn.attr("id", "unfollow");
+			id = btn.attr("data-followId");
 			btn.removeAttr("data-followId");
-			url = path + "/follow/" + id
+			url = path + "/follow/" + id;
 			type = 'delete'
 		}
 
@@ -106,8 +94,8 @@
 				}
 			},
 			error : function(request, status, error) {
-				//			alert("status : "+request.status + 
-				//					"\n error: "+ error)
+				alert("status : " + request.status +
+						"\n error: " + error)
 				if (request.status === 403) {
 					location.href = "logininterceptor";
 				}
@@ -117,7 +105,7 @@
 			}
 		})
 
-	}
+	};
 	var path = "${pageContext.request.contextPath}";
 	window.onpageshow = function(event) {
 
@@ -125,7 +113,7 @@
 				|| (window.performance && window.performance.navigation.type == 2)) {
 			location.reload(true);
 		}
-	}
+	};
 
 	$(document).ready(function() {
 		//follow

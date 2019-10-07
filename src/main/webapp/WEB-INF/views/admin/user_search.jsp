@@ -4,23 +4,22 @@
 <%@ include file="../includes/header.jsp" %>
 
 <style>
-	#admin_div {
-		padding: 8px;
-		text-align: center;
-		width: 100%;
-	}
+    #admin_div {
+        padding: 8px;
+        text-align: center;
+        width: 100%;
+    }
 
-	#admin_div > #admin_body {
-		width: 100%;
-		text-align: center;
-	}
+    #admin_div > #admin_body {
+        width: 100%;
+        text-align: center;
+    }
 
-	#admin_div > #admin_body > #tables {
-		width: 90%;
-		margin-left: auto;
-		margin-right: auto;
-	}
-
+    #admin_div > #admin_body > #tables {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
 </style>
 <section>
 

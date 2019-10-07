@@ -32,7 +32,6 @@ public class KakaoPayController {
         String user_email = (String) httpSession.getAttribute("user");
         ;
         int check_user = userService.gradechk(user_email);
-        log.info(user_email);
 
         if (check_user < 4) {
             return "redirect:membership";
@@ -50,8 +49,6 @@ public class KakaoPayController {
     public String kakaoPay(HttpSession httpSession) {
         String user_id = (String) httpSession.getAttribute("user_id");
 
-        log.info(user_id);
-        log.info(kakaopay.kakaoPayReady(user_id));
         return "redirect:" + kakaopay.kakaoPayReady(user_id);
 
     }
@@ -59,8 +56,6 @@ public class KakaoPayController {
     @GetMapping("kakaoPaySuccess")
     public void kakaoPaySuccess(@RequestParam(value = "pg_token") String pg_token, Model model, HttpSession httpSession) {
         String user_id = (String) httpSession.getAttribute("user_id");
-        log.info("kakaoPaySuccess get............................................");
-        log.info("kakaoPaySuccess pg_token : " + pg_token);
 
         //db
         kakaoPayService.insert(kakaopay.kakaoPayInfo(pg_token, user_id));
@@ -70,13 +65,10 @@ public class KakaoPayController {
 
         model.addAttribute("info", kakaoPayService.get(user_id));
 
-        log.info(model);
-
     }
 
     @GetMapping("kakaoPayCancel")
     public void kakaoPayCancel(){
 
     }
-
 }
