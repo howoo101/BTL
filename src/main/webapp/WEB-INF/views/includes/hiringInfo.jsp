@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: h
-  Date: 19. 8. 30.
-  Time: 오후 6:35
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <div id="section2" class="mt-3">
@@ -37,7 +30,7 @@ $.ajax({
     dataType:"JSON",
 
     success : function(data) {
-    	var week = ['일', '월', '화', '수', '목', '금', '토'] 
+    	var week = ['일', '월', '화', '수', '목', '금', '토'];
     	var currentDate = + new Date();
     	var saramInRow = document.getElementById("saramInRow");
     	// 검색된 회사만큼 반복

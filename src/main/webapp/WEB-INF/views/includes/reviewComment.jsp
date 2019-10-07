@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: h
-  Date: 19. 8. 30.
-  Time: 오후 6:39
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -140,7 +133,7 @@
         // Configuration options go here
         options: {
             maintainAspectRatio: false,
-        	scales: {
+            scales: {
                 xAxes: [{
                     display: true,
                     ticks: {
@@ -160,7 +153,7 @@
 
         }
     });
-    
+
 </script>
 
 <%--별점과 리뷰 db에 등록--%>
@@ -180,7 +173,7 @@
             var user_id = $div.find('input[class="user_id"]').val();
 
 
-            if (!cr_comment|| !cr_starRt|| !forInsert || !cr_category || !user_id) {
+            if (!cr_comment || !cr_starRt || !forInsert || !cr_category) {
                 alert("필수값이 입력되지 않았습니다.");
             } else {
                 $.ajax({

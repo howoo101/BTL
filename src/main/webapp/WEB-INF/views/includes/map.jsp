@@ -22,7 +22,6 @@
 	<%--end section --%>
 </div>
 
-
 <script>
 	//마커를 담을 배열입니다
 	var markers = [];
@@ -73,14 +72,12 @@
 	    // 에러가 뜬다면 404 이미지 띄우기
 		} else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 			notfoundImg.style.display = "block";
-			mapContainer.style.display = "none"
-			console.log('검색 결과 중 오류가 발생했습니다.');
+			mapContainer.style.display = "none";
 			return;
 
 		} else if (status === kakao.maps.services.Status.ERROR) {
 			notfoundImg.style.display = "block";
-			mapContainer.style.display = "none"
-			console.log('검색 결과 중 오류가 발생했습니다.');
+			mapContainer.style.display = "none";
 			return;
 		}
 	}

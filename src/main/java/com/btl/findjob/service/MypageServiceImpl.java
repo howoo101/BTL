@@ -14,36 +14,33 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MypageServiceImpl implements MypageService {
 
-	@Autowired
-	MypageMapper mapper;
-	
-	@Override
-	public List<CompanyListVO> followCompanyGetList(String userEmail,MypageCriteria criteria) {
-		// TODO Auto-generated method stub
-		return mapper.followCompanyGetListWithPage(userEmail,criteria);
-	}
+    @Autowired
+    MypageMapper mapper;
 
-	@Override
-	public int getTotalFollowCount(String userEmail) {
-		// TODO Auto-generated method stub
-		return mapper.getTotalFollowCount(userEmail);
-	}
+    @Override
+    public List<CompanyListVO> followCompanyGetList(String userEmail, MypageCriteria criteria) {
+        return mapper.followCompanyGetListWithPage(userEmail, criteria);
+    }
 
-	@Override
-	public List<CompanyListVO> getRecentCompanyList(String userEmail, String[] recentArr) {
-		// TODO Auto-generated method stub
-		return mapper.getRecentCompanyList(userEmail, recentArr);
-	}
+    @Override
+    public int getTotalFollowCount(String userEmail) {
+        return mapper.getTotalFollowCount(userEmail);
+    }
 
-	@Override
-	public List<CompanyReview> myReviewComment(int user_id) {
-		return mapper.myReviewComment(user_id);
-	}
+    @Override
+    public List<CompanyListVO> getRecentCompanyList(String userEmail, String[] recentArr) {
+        return mapper.getRecentCompanyList(userEmail, recentArr);
+    }
 
-	@Override
-	public List<InterviewReviewDTO> myInterviewReview(int user_id) {
-		return mapper.myInterviewReview(user_id);
-	}
+    @Override
+    public List<CompanyReview> myReviewComment(int user_id) {
+        return mapper.myReviewComment(user_id);
+    }
+
+    @Override
+    public List<InterviewReviewDTO> myInterviewReview(int user_id) {
+        return mapper.myInterviewReview(user_id);
+    }
 
 
 }

@@ -42,15 +42,6 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
-
-		<!-- google api 구글 로그인에 사용 -->
-		<dependency>
-			<groupId>com.google.api-client</groupId>
-			<artifactId>google-api-client</artifactId>
-			<version>1.30.2</version>
-		</dependency>
-
-
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>

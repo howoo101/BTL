@@ -245,9 +245,8 @@
 						  // event에다가 loadevent를 put
 						  totalEvents.push(loadEvent);
 						  calendar.addEvent(loadEvent);
-					  })
+					  });
 					  
-					  console.log(totalEvents);
 				  },
 				  error: function(e){
 					  alert(" Data Load: fail")
@@ -304,7 +303,6 @@
                 		}
             			
 	            		saveEvent.end = element.end.getFullYear()+'-'+endMonth+'-'+endDate;
-	            		console.log(saveEvent.end);
             		}
             		// 현재 접속하고 있는 user 넣기
             		saveEvent.useremail = '${user}';
@@ -323,14 +321,15 @@
 				  success: function(msg){
 					  alert( "Data Saved success ")
 				  },
-				  error: function(e){
+                  error : function(request) {
+				    alert("등록에 실패하였습니다.");
                     if (request.status === 403) {
                       location.href = "logininterceptor";
                     }
                     if (request.status === 404) {
                       location.href = "gradeceptor";
                     }
-				  }
+                  }
             	}); // end of ajax
             	
             } // end of click event
@@ -347,18 +346,10 @@
         editable: true, // 수정 할수 있게끔
         droppable: true, // 드롭기능이 활성화 할수 있는 엘리먼트
         
-        // drop 함수
-        drop: function(arg) {
-        },
-
         // 캘린터에서 클릭을 했을때 발생하는 핸들러 (callback)
         eventClick: function(info){
             // 클릭을 했을때 요소를 지우는 함수
             info.event.remove();
-        },
-
-        // 날짜를 클릭할때 걸리는 핸들러
-        dateClick: function(date){
         },
 
         // 이벤트 보이는 제한 걸기

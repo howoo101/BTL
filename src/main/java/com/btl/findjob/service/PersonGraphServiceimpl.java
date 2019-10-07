@@ -13,11 +13,11 @@ import com.btl.findjob.model.PersonInfoGraphDTO;
 @Service
 public class PersonGraphServiceimpl implements PersonGraphService {
 
-	@Inject
-	PersonGraphMapper personGrpah;
-	
-	public List<PersonInfoGraphDTO> personGetGraph(String ciName) {
-		return personGrpah.personGetGraph(ciName);
-	}
+    @Inject
+    PersonGraphMapper personGrpah;
+
+    public List<PersonInfoGraphDTO> personGetGraph(String ciName) {
+        return personGrpah.personGetGraph(ciName);
+    }
 
 }

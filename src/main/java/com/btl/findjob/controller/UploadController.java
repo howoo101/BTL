@@ -40,9 +40,7 @@ public class UploadController {
     @GetMapping("uploadForm")
     public void uploadForm() {
 
-        log.info("upload form");
     }
-
 
 
     @PostMapping("uploadFormAction")
@@ -51,10 +49,6 @@ public class UploadController {
         String uploadFolder = "C:\\upload";
 
         for (MultipartFile multipartFile : uploadFile) {
-
-            log.info("-------------------------------------");
-            log.info("Upload File Name: " + multipartFile.getOriginalFilename());
-            log.info("Upload File Size: " + multipartFile.getSize());
 
             File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
 
@@ -69,8 +63,6 @@ public class UploadController {
 
     @GetMapping("uploadAjax")
     public void uploadAjax() {
-
-        log.info("upload ajax");
     }
 
 
@@ -86,7 +78,6 @@ public class UploadController {
     }
 
 
-
     private boolean checkImageType(File file) {
 
         try {
@@ -95,7 +86,6 @@ public class UploadController {
             return contentType.startsWith("image");
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -168,11 +158,7 @@ public class UploadController {
     @ResponseBody
     public ResponseEntity<byte[]> getFile(String fileName) {
 
-        log.info("fileName: " + fileName);
-
         File file = new File("c:\\upload\\" + fileName);
-
-        log.info("file: " + file);
 
         ResponseEntity<byte[]> result = null;
 
@@ -189,16 +175,12 @@ public class UploadController {
     }
 
 
-
     @GetMapping(value = "download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
     public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
 
-        log.info("downloadfile:" +fileName);
-        
         Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
-        
-        log.info(resource);
+
         if (resource.exists() == false) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -229,13 +211,11 @@ public class UploadController {
 
         return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
     }
-    
+
 
     @PostMapping("deleteFile")
     @ResponseBody
     public ResponseEntity<String> deleteFile(String fileName, String type) {
-
-        log.info("deleteFile: " + fileName);
 
         File file;
 
@@ -247,8 +227,6 @@ public class UploadController {
             if (type.equals("image")) {
 
                 String largeFileName = file.getAbsolutePath().replace("s_", "");
-
-                log.info("largeFileName: " + largeFileName);
 
                 file = new File(largeFileName);
 
@@ -263,6 +241,6 @@ public class UploadController {
         return new ResponseEntity<String>("deleted", HttpStatus.OK);
 
     }
-    
+
 
 }

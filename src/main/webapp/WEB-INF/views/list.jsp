@@ -81,7 +81,6 @@
 							<button id='regBtn' type="button" class="btn btn-primary pull-right mr-3 mb-2">글작성</button>
 						</div>
 					</div>
-
 								<!--  페이지번호 이벤트 처리-->
 								<nav aria-label="Board Page navigation">
 									<ul class="pagination justify-content-end">
@@ -160,8 +159,7 @@
 		var actionForm = $("#actionForm");
 		$(".page-item a").on("click", function(e){
 			e.preventDefault();
-			console.log('click');
-			
+
 			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 			actionForm.submit();
 		});
