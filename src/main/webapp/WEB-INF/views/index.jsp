@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="includes/header.jsp" %>
-
+<h1>test</h1>
 <section>
     <div class="headerVideo">
         <div class="overlay"></div>
