@@ -74,15 +74,23 @@ public class UserController {
 					 String newpassword = SHA256Util.getEncrypt(inputpassword, memberSalt); // 가져온 salt을 이용하여 sha 암호 get		  
 					  if(userservice.login(user_email, newpassword)==1)  {  //로그인 검증 
 						HttpSession session = request.getSession(true);     //로그인 세션 추가
-						     if(SessionListener.getInstance().isUsing(user_email)) {  // 로그인 중복시 로그인 실패처리
-						        	return "3";
+						     if(SessionListener.getInstance().isUsing(user_email)) {  // 로그인 중복시 
+							    	if(SessionListener.getInstance().chk_table(session, user_email)) {
+							    		SessionListener.getInstance().removeSession(user_email);
+							    		session.setAttribute("user", user_email); // 세션추가
+										session.setAttribute("name", userservice.getname(user_email)); //닉네임 겟 
+										session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
+										session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
+										SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장	
+							    		return "1";
+							    	}  
 						        }
 						     else { //중복로그인이 아닐시  로그인처리
 								session.setAttribute("user", user_email); // 세션추가
 								session.setAttribute("name", userservice.getname(user_email)); //닉네임 겟 
 								session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
 								session.setAttribute("grade", Integer.toString(userservice.gradechk(user_email))); // 유저 등급 겟
-								SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장
+								SessionListener.getInstance().setSession(session, user_email);//로그인을 완료한 사용자의 아이디를 세션에 저장	
 								return "1"; //인증회원 로그인
 						       }
 						  	  }  
@@ -422,7 +430,7 @@ public String pwfind() {
 		
 	}
 	
-	@RequestMapping(value = "/myPage_menu" , method = {RequestMethod.GET,RequestMethod.POST}) 
+	@RequestMapping(value = "myPage_menu" , method = {RequestMethod.GET,RequestMethod.POST}) 
 	public String myPage_menu(HttpSession session,Model model){
 		
 		String user_email = (String) session.getAttribute("user");
@@ -473,5 +481,24 @@ public String pwfind() {
 		return "1";
 	}
 
+	
+	//킥 된 사용자
+		@RequestMapping(value = "gradeceptor" , method = {RequestMethod.GET ,  RequestMethod.POST}) 
+		public ModelAndView gradeceptor(){
+			
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("index");
+
+			String ktr = "";	
+			ktr += "<script langueage='JavaScript'>";
+			ktr += "alert('회원님은 계정 제한 상태입니다. 관리자 메일로 문의해주십시오.')";
+			ktr += "</script>";
+			
+			mv.addObject("ktr", ktr);
+			
+			return  mv;
+			
+			
+		}
 	
 }

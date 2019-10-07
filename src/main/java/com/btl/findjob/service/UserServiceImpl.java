@@ -128,7 +128,7 @@ UserMapper mapper;
 	@Override
 	public List<UserDTO> user_info(String user_email) {
 		
-		return  mapper.user_info(user_email);
+		return mapper.user_info(user_email);
 
 	}
 

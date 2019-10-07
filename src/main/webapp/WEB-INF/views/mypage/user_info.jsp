@@ -123,7 +123,7 @@ $('#name_modify').click(function(){
 			success: function(data){
 	 		if(data=='1'){
 	 		 	alert("수정이 완료되었습니다.");
-	 		 	$(location).attr("href", "myPage_Following");
+	 		 	$(location).attr("href", "myPage_menu");
  			}
 			},
 	 		error: function(){

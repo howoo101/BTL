@@ -2,6 +2,7 @@ package com.btl.findjob.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 
 import com.btl.findjob.model.CompanyReview;
 import com.btl.findjob.model.InterviewReviewDTO;
@@ -14,6 +15,7 @@ public interface AdminMapper {
 	
 	List<InterviewReviewDTO> myInterviewReview(int user_id);
    
+	public void grade_modify(@Param("user_id")int user_id,@Param("authorization_id")String authorization_id);
 
-
+	public List<UserDTO> user_search(String user_name);
 }

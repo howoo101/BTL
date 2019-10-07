@@ -70,6 +70,7 @@
 
 
 </div>
+
 <script>
 	var follow = function(path, btn) {
 		var id = ""
