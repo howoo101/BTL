@@ -324,7 +324,12 @@
 					  alert( "Data Saved success ")
 				  },
 				  error: function(e){
-					  alert(" Data Saved fail")
+                    if (request.status === 403) {
+                      location.href = "logininterceptor";
+                    }
+                    if (request.status === 404) {
+                      location.href = "gradeceptor";
+                    }
 				  }
             	}); // end of ajax
             	
