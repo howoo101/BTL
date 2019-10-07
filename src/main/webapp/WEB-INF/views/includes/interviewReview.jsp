@@ -196,6 +196,7 @@
 </div>
 
 <script>
+    const kakaoPay = '${path}/kakaoPay';
     $(document).ready(function () {
         const ci_idValue = '<c:out value="${companyList[0].ci_id}"/>';//homeController에 있는 모델 받아서 사용 0 넣지 안으면 에러
 
@@ -333,7 +334,7 @@
                 }
 
                 let str = "";
-
+                let check = 0;
                 //List가 비어있는 경우 "" 처리
                 if (interviewReviewDTOList.length === 0) {
 
@@ -341,8 +342,14 @@
                     return;
                 }
                 // 등급별 블러처리
-                if(${grade} > 3)
-					interviewReviewUL.css('filter','blur(5px)')
+                var grade = '${grade}';
+
+                if(grade === '' || Number(grade) === 4) {
+                    check = 1;
+                    str+="<div class='card-body' style='position:relative'> " +
+                        "<button class='btn btn-outline-info' onclick='location.href=kakaoPay' style='position: absolute; width: 350px; height: 100px; left: 50%; top: 50%; margin-left:-175px; margin-top: -50px; z-index: 1000;'><h5>멤버쉽 가입에 가입해주세요.</h5></button>" +
+                        "<div style='filter: blur(5px);'>";
+                }
                 for (let i = 0, len = interviewReviewDTOList.length || 0; i < len; i++) {
 
                     str += "<div class='card border-info mb-3'>";
@@ -372,7 +379,10 @@
                     str += "                                               <div class = 'col-lg-4' style = 'border-left: 2px solid #ddd'><span class='font-weight-bold'>면접 경험</span><br>" + interviewReviewDTOList[i].ir_experience + "</div>";
                     str += "</div></div></div></div></div>";
                 }
-				
+
+                if(check === 1) {
+                    str+=("</div></div>");
+                }
                 interviewReviewUL.html(str);
 
                 showInterviewReviewPage(interviewReviewCnt);
