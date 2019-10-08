@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div id="section8" class="mt-3" style="position: fixed;z-index: 3; top:60px;">
-	<div id="mySidenav" class="sidenav">
+<div id="section8" class="mt-5" style="position: fixed;z-index: 3; top:60px;">
+	<div id="mySidenav" class="sidenav mt-3">
 		<a onclick="fnMove('0'); closeNav()" href="#"> 
 		<i class="material-icons">info</i> <br> 기업정보</a>
 	  						
