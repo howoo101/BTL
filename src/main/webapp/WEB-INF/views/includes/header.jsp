@@ -123,7 +123,7 @@ if(user==null){
 
             <div class="nav navbar-nav navbar-right collapse navbar-collapse" id="navbarNav2"
                  style="width:480px; position:relative; right:-120px;">
-                <div> <!-- 묶기 -->
+                <div style="width: 70%" class="text-right"> <!-- 묶기 -->
                     <button type="button" class="btn btn-light navbar-btn mr-2" onclick="location.href='${path}/list'">
                         <i class="material-icons">create</i>취뽀게시판
                     </button>
