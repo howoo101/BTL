@@ -11,7 +11,7 @@
 </head>
 <body>
 <%@ include file="includes/header.jsp" %>
-<div class="container mt-4">
+<div class="container mt-5">
     <div class="card border-primary" id="go">
         <h5 class="ml-4 mt-4" style="color: royalblue;">기업 검색 결과 : ${keyword }</h5>
 
