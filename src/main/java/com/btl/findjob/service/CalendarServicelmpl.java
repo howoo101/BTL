@@ -72,7 +72,6 @@ public class CalendarServicelmpl implements CalendarService {
                 cList.add(cDto);
             }
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

@@ -17,12 +17,11 @@
     <script type="text/javascript" src="resources/js/bootstrap.js"></script>
     <%--부트스트랩 CSS--%>
     <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
-    <%-- index css 커스텀  --%>
-    <link rel="stylesheet" type="text/css" href="resources/css/customCSS.css">
-
     <!--부트스트랩 와치 -->
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
+    <%-- index css 커스텀  --%>
+    <link rel="stylesheet" type="text/css" href="resources/css/customCSS.css">
     <!-- 카카오 js -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <!-- 카카오 init -->
@@ -48,6 +47,8 @@
     <%-- chart 생성 위한 Chart.js --%>
     <script type="text/javascript" src="resources/js/Chart.js"></script>
     <script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
+
+
     <title>홈</title>
 
 </head>

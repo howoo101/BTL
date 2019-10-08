@@ -65,7 +65,6 @@ public class KakaoPay {
             return kakaoPayReadyVO.getNext_redirect_pc_url();
 
         } catch (RestClientException | URISyntaxException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -102,7 +101,6 @@ public class KakaoPay {
             return kakaoPayApprovalVO;
 
         } catch (RestClientException | URISyntaxException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
