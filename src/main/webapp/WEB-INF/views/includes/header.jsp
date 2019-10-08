@@ -48,12 +48,11 @@
     <%-- chart 생성 위한 Chart.js --%>
     <script type="text/javascript" src="resources/js/Chart.js"></script>
     <script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
-
-
+    
+    <!-- alert창 -->
+    <script src="resources/js/sweetalert2.all.min.js"></script>
     <title>홈</title>
-
 </head>
-
 <body>
 
 <!-- 세션받아오기 -->
