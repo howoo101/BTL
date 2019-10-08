@@ -13,7 +13,7 @@
 <%@ include file="includes/header.jsp" %>
 <div class="container mt-4">
     <div class="card border-primary" id="go">
-        <h5 class="ml-4 mt-4" style="color: royalblue;">기업 검색 결과</h5>
+        <h5 class="ml-4 mt-4" style="color: royalblue;">기업 검색 결과 : ${keyword }</h5>
 
         <c:forEach items="${companyList }" var="item">
             <div class="card-body" data-startNo=${item.ci_id }>
@@ -63,7 +63,7 @@
                             </div>
                             <div class="col-lg-auto text-center">
                                 <div class="row justify-content-center">
-                                    <h5>${item.companyReviewAvg }</h5>
+                                    <h5 style="margin-bottom:0;">${item.companyReviewAvg }</h5>
                                 </div>
                                 <div class="row " style="">
                                     <div class="col-sm-12 text-center">${item.interviewReviewCnt }</div>
@@ -93,6 +93,7 @@
     let isEnd = false;
     var path = "${path}";
     $(document).ready(function () {
+    	$("#search").attr("placeholder","${keyword}")
         //follow
         $(document).on("click", ".follow", function () {
             var btn = $(this);
