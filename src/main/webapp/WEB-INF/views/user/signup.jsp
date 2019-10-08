@@ -124,25 +124,40 @@
         //유효성검사
         $('#signUp').click(function () {
             if ($.trim($('#inputEmail').val()) == '') {
-                alert("이메일 입력이 되지 않았습니다.");
+            	Swal.fire({
+          		  type: 'warning',
+          		  text: '이메일 입력이 되지 않았습니다.'
+          		})
                 $('#inputEmail').focus();
                 return;
             } else if ($.trim($('#inputPassword').val()) == '') {
-                alert("패스워드 입력이 되지 않았습니다.");
+            	Swal.fire({
+          		  type: 'warning',
+          		  text: '패스워드 입력이 되지 않았습니다.'
+          		})
                 $('#inputPassword').focus();
                 return;
             }
             //패스워드 2번 입력 확인
             else if ($('#inputPassword').val() != $('#inputPasswordchk').val()) {
-                alert('패스워드가 다릅니다.');
+            	Swal.fire({
+            		  type: 'warning',
+            		  text: '패스워드가 다릅니다.'
+            		})
                 $('#inputPasswordchk').focus();
                 return;
             } else if (pwch == 0) {
-                alert('비밀번호를 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.');
-                $('#inputPassword').focus();
+            	Swal.fire({
+          		  type: 'warning',
+          		  text: '비밀번호를 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.'
+          		})
+               $('#inputPassword').focus();
                 return;
             } else if (namech == 0) {
-                alert('닉네임은 2~10글자로 작성해주세요.');
+            	Swal.fire({
+            		  type: 'warning',
+            		  text: '닉네임은 2~10글자로 작성해주세요.'
+            		})
                 $('#inputName').focus();
                 return;
             }

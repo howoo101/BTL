@@ -29,10 +29,7 @@
                         </th>
                         <td><c:out value="${list.cr_comment }"/></td>
                         <td><c:out value="${list.cr_regDate }"/></td>
-                        <td>
-                            <input type="hidden" value="${list.ci_id}">
-                            <button class="callmodify btn btn-light" value="<c:out value='${list.cr_id }'/>">수정</button>
-                        </td>
+                   	
                     </tr>
                 </c:forEach>
                 </tbody>

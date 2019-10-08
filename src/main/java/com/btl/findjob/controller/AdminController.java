@@ -15,27 +15,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.btl.findjob.model.AdminCriteria;
+import com.btl.findjob.model.AdminPageDTO;
 import com.btl.findjob.model.BoardCriteria;
 import com.btl.findjob.model.BoardPageDTO;
 import com.btl.findjob.model.UserDTO;
 import com.btl.findjob.service.AdminService;
+import com.btl.findjob.service.BoardService;
 import com.btl.findjob.service.MypageService;
 import com.btl.findjob.service.UserService;
 
+import lombok.AllArgsConstructor;
+
 @Controller
+@AllArgsConstructor
 public class AdminController {
 
-    @Autowired
-    AdminService adminservice;
-    @Inject
-    UserService userservice;
+@Autowired
+AdminService adminservice;
+@Inject
+UserService userservice;
 
 
     @RequestMapping(value = "admin_page", method = {RequestMethod.GET, RequestMethod.POST})
-    public String admin_page(Model model) {
-
-        model.addAttribute("user_list", adminservice.get_userlist());
-
+    public String admin_page(AdminCriteria cri,Model model) {
+        model.addAttribute("user_list", adminservice.getList(cri));
+        int total = adminservice.getTotal(cri);
+        model.addAttribute("pageMaker", new AdminPageDTO(cri,total));
         return "admin/admin_page";
     }
 
