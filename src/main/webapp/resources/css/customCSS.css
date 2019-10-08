@@ -7,6 +7,10 @@
     margin: 0;
 }
 
+p {
+    font-family: 'Nanum Gothic Coding', monospace;
+}
+
 .faq-wrapper {
     padding-top: 10px;
     padding-bottom:10px;
@@ -20,6 +24,7 @@
 }
 
 .faq-body-text p {
+    font-family: 'Nanum Gothic Coding', monospace;
     padding-top: 5px;
     padding-bottom:10px;
     padding-left:5px;

@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<div id="section0" class="mt-3">
+<div id="section0" class="mt-5">
     <div class="container center-block">
         <div class="card border-primary">
             <div class="card-body">
