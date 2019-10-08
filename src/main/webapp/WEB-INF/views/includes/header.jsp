@@ -108,7 +108,7 @@ if(user==null){
 
             <div class="collapse navbar-collapse" id="navbarNav" style="width:70%;">
                 <form action="search" class="form-inline " role="search" class="navbar-toggle" data-toggle="collapse">
-                    <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="기업명을 검색해주세요">
+                    <input id="search" class="form-control mr-sm-2" type="text" name="keyword" placeholder="기업명을 검색해주세요">
                     <button type="submit" class="btn btn-dark">검색</button>
                 </form>
             </div>

@@ -80,7 +80,7 @@
 							+ 					'</div>'
 		        			+					'<div class="col-lg-auto text-center">'
 							+						'<div class="row justify-content-center">'
-		        			+							'<h5>'+res.companyReviewAvg.toFixed(1)+'</h5>'
+		        			+							'<h5 style="margin-bottom:0;">'+res.companyReviewAvg.toFixed(1)+'</h5>'
 							+						 '</div>'	
 							+						'<div class="row ">'
 							+							'<div class="col-sm-12 text-center">'+res.interviewReviewCnt+'</div>'

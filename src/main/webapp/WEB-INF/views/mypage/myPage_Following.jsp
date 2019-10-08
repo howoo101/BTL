@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-lg-auto text-center">
                                     <div class="row row justify-content-center">
-                                        <h5>${item.companyReviewAvg }</h5>
+                                        <h5 style="margin-bottom:0;">${item.companyReviewAvg }</h5>
                                     </div>
                                     <div class="row " style="">
                                         <div class="col-sm-12 text-center">${item.interviewReviewCnt }</div>
