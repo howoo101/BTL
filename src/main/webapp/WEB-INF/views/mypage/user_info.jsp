@@ -55,154 +55,150 @@
 
     </div>
 
-    <script>
-        $(document).ready(function (e) {
+<script>
+$(document).ready(function (e) {
 
-            $('#inputEmail').attr("readonly", true);
+    $('#inputEmail').attr("readonly", true);
 
-            var snschk = $("#snschk").val();
+    var snschk = $("#snschk").val();
 
-            if (snschk == 1) {
-                $('#pw_modify_body').hide();
-            }
+    if (snschk == 1) {
+        $('#pw_modify_body').hide();
+    }
 
-            var namech = 1;	 //닉네임 정규식
-            var pwch = 0; //비밀번호 정규식
+    var namech = 1;	 //닉네임 정규식
+    var pwch = 0; //비밀번호 정규식
 
 //이름 실시간 입력감지
-            $("#inputName").on("propertychange change click keyup input paste", function () {
-                var name = $(this).val();
-                if (name == '' || name == 'undefined' || name == null)
-                    return;
-                if (!name_chk(name)) {
-                    namech = 0;
-                    return false;
-                } else
-                    namech = 1;
+$("#inputName").on("propertychange change click keyup input paste", function () {
+    var name = $(this).val();
+    if (name == '' || name == 'undefined' || name == null)
+        return;
+    if (!name_chk(name)) {
+        namech = 0;
+        return false;
+    } else
+        namech = 1;
 
-            });
+});
 
 // 비밀번호 실시간 입력감지
-            $("#inputPassword").on("propertychange change click keyup input paste", function () {
-                var pw = $(this).val();
-                if (pw == '' || pw == 'undefined' || pw == null)
-                    return;
-                if (!pw_chk(pw)) {
-                    pwch = 0;
-                    return false;
-                } else
-                    pwch = 1;
-            });
-
+$("#inputPassword").on("propertychange change click keyup input paste", function () {
+    var pw = $(this).val();
+    if (pw == '' || pw == 'undefined' || pw == null)
+        return;
+    if (!pw_chk(pw)) {
+        pwch = 0;
+        return false;
+    } else
+        pwch = 1;
+});
 
 // 닉네임 정규표현식 통과시 true 반환
-            function name_chk(name) {
-                var nameRule = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$/;
-                return (name != '' && name != 'undefined' && nameRule.test(name));
-            }
+function name_chk(name) {
+    var nameRule = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$/;
+    return (name != '' && name != 'undefined' && nameRule.test(name));
+}
 
 //닉네임 수정 유효성검사
-            $('#name_modify').click(function () {
-                var result = confirm('닉네임을 현재 입력된 닉네임으로 수정하시겠습니까?');
-                if (result) {
-                    if (namech == 0) {
-                        alert('닉네임을 2~10글자로 작성해주세요.');
-                        $('#inputName').focus();
-                        return;
-                    } else {
-                        $.ajax({
-                            url: "${pageContext.request.contextPath}/name_modify.do",
-                            type: "post",
-                            data: {
-                                "user_email": $('#inputEmail').val(),
-                                "user_name": $('#inputName').val()
-                            },
-                            success: function (data) {
-                                if (data == '1') {
-                                    alert("수정이 완료되었습니다.");
-                                    $(location).attr("href", "myPage_menu");
-                                }
-                            },
-                            error: function () {
-                                alert("서버에러");
-                            }
-                        });
+$('#name_modify').click(function () {
+    var result = confirm('닉네임을 현재 입력된 닉네임으로 수정하시겠습니까?');
+    if (result) {
+        if (namech == 0) {
+            alert('닉네임을 2~10글자로 작성해주세요.');
+            $('#inputName').focus();
+            return;
+        } else {
+            $.ajax({
+                url: "${pageContext.request.contextPath}/name_modify.do",
+                type: "post",
+                data: {
+                    "user_email": $('#inputEmail').val(),
+                    "user_name": $('#inputName').val()
+                },
+                success: function (data) {
+                    if (data == '1') {
+                        alert("수정이 완료되었습니다.");
+                        $(location).attr("href", "myPage_menu");
                     }
-                } else {
+                },
+                error: function () {
+                    alert("서버에러");
                 }
             });
+        }
+    } else {
+    }
+});
 
-
-            $("#inputPassword").on("propertychange change click keyup input paste", function () {
-                var pw = $(this).val();
-                if (pw == '' || pw == 'undefined' || pw == null)
-                    return;
-                if (!pw_chk(pw)) {
-                    pwch = 0;
-                    return false;
-                } else
-                    pwch = 1;
-            });
+$("#inputPassword").on("propertychange change click keyup input paste", function () {
+    var pw = $(this).val();
+    if (pw == '' || pw == 'undefined' || pw == null)
+        return;
+    if (!pw_chk(pw)) {
+        pwch = 0;
+        return false;
+    } else
+        pwch = 1;
+});
 
 //비밀번호 정규표현식 통과시 true 반환
-            function pw_chk(pw) {
-                var passRule = /^.*(?=^.{8,12}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-                return (pw != '' && pw != 'undefined' && passRule.test(pw));
-            }
+function pw_chk(pw) {
+    var passRule = /^.*(?=^.{8,12}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+    return (pw != '' && pw != 'undefined' && passRule.test(pw));
+}
 
-
-            $('#pw_modify').click(function () {
-                var result = confirm('비밀번호를 현재 입력된 비밀번호로 수정하시겠습니까?');
-                if (result) {
-                    if ($.trim($('#inputPassword').val()) == '') {
-                        alert("패스워드 입력이 되지 않았습니다.");
-                        $('#inputPassword').focus();
-                        return;
+$('#pw_modify').click(function () {
+    var result = confirm('비밀번호를 현재 입력된 비밀번호로 수정하시겠습니까?');
+    if (result) {
+        if ($.trim($('#inputPassword').val()) == '') {
+            alert("패스워드 입력이 되지 않았습니다.");
+            $('#inputPassword').focus();
+            return;
+        }
+        //패스워드 2번 입력 확인
+        else if ($('#inputPassword').val() != $('#inputPasswordchk').val()) {
+            alert('패스워드가 다릅니다.');
+            $('#inputPasswordchk').focus();
+            return;
+        } else if (pwch == 0) {
+            alert('비밀번호를 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.');
+            $('#inputPassword').focus();
+            return;
+        } else {
+            $.ajax({
+                url: "${pageContext.request.contextPath}/pw_modify.do",
+                type: "post",
+                data: {
+                    "user_email": $('#inputEmail').val(),
+                    "user_password": $('#inputPassword').val()
+                },
+                success: function (data) {
+                    if (data == '1') {
+                        alert("수정이 완료되었습니다. 수정한 비밀번호로 다시 로그인 해주세요.");
+                        $(location).attr("href", "${pageContext.request.contextPath}/");
                     }
-                    //패스워드 2번 입력 확인
-                    else if ($('#inputPassword').val() != $('#inputPasswordchk').val()) {
-                        alert('패스워드가 다릅니다.');
-                        $('#inputPasswordchk').focus();
-                        return;
-                    } else if (pwch == 0) {
-                        alert('비밀번호를 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.');
-                        $('#inputPassword').focus();
-                        return;
-                    } else {
-                        $.ajax({
-                            url: "${pageContext.request.contextPath}/pw_modify.do",
-                            type: "post",
-                            data: {
-                                "user_email": $('#inputEmail').val(),
-                                "user_password": $('#inputPassword').val()
-                            },
-                            success: function (data) {
-                                if (data == '1') {
-                                    alert("수정이 완료되었습니다. 수정한 비밀번호로 다시 로그인 해주세요.");
-                                    $(location).attr("href", "${pageContext.request.contextPath}/");
-                                }
-                            },
-                            error: function () {
-                                alert("서버에러");
-                            }
-                        });
-                    }
-                } else {
+                },
+                error: function () {
+                    alert("서버에러");
                 }
             });
+        }
+    } else {
+    }
+});
 
-            $('#uim_back_btn').click(function () {
-                var result = confirm('현재 입력을 취소하고 뒤로 가시겠습니까?');
-                if (result) {
-                    history.back(-1);
-                } else {
-                }
-            });
+  $('#uim_back_btn').click(function () {
+      var result = confirm('현재 입력을 취소하고 뒤로 가시겠습니까?');
+      if (result) {
+          history.back(-1);
+      } else {
+      }
+  });
 
+});
 
-        });
-
-    </script>
+</script>
 </section>
 
 <%@ include file="../includes/footer.jsp" %>

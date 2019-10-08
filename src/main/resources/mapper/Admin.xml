@@ -3,36 +3,75 @@
 
 <mapper namespace="com.btl.findjob.mapper.AdminMapper">
 	
-	<!-- 유저 리스트  -->
-	<select id="get_userlist" resultType="com.btl.findjob.model.UserDTO" >
-		select * from user
-	</select>
-	
-	 <select id="myReviewComment" resultType="com.btl.findjob.model.CompanyReview">
-                        SELECT companyreview.*, companyinfo.ci_companyName
-                FROM companyreview
-                         LEFT JOIN companyinfo
-                                   ON companyreview.ci_id = companyinfo.ci_id
-                WHERE user_id = #{user_id}
-                ORDER BY cr_regDate desc
-    </select>
+<!-- 유저 리스트  -->
+<select id="getList" resultType="com.btl.findjob.model.UserDTO" parameterType="com.btl.findjob.model.AdminCriteria">
+	<![CDATA[
+select * from user where user_id > 0
+	]]>
+</select>
 
-    <select id="myInterviewReview" resultType="com.btl.findjob.model.InterviewReviewDTO">
-        SELECT interviewreview.*, companyinfo.ci_companyName
-        FROM interviewreview
-                 LEFT JOIN companyinfo
-                           ON interviewreview.ci_id = companyinfo.ci_id
-        WHERE user_id = #{user_id}
-        ORDER BY ir_interviewDate desc
-    </select>
-    
-	<update id="grade_modify" parameterType="com.btl.findjob.model.UserDTO" >
-		update user set authorization_id = #{authorization_id} where user_id = #{user_id} 
-	</update>
+<!-- 페이징 -->
+<select id="getListWithPaging" resultType="com.btl.findjob.model.UserDTO">
+	<![CDATA[
+	SELECT *
+	FROM user 
+	where user_id > 0
+	]]>
+	<include refid="criteria"></include>
+	<![CDATA[    
+	ORDER BY user_id DESC
+	LIMIT #{pageStart}, #{amount}
+	]]>
 	
-	<select id="user_search" resultType="com.btl.findjob.model.UserDTO">
-		select * from user where user_name like concat('%',#{user_name},'%')
-	</select>
+</select>
+
+<sql id="criteria">
+		<if test="type != null">
+			<if test="type == 'i'.toString()">
+				and user_id like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'n'.toString()">
+				and user_name like CONCAT('%', #{keyword}, '%')
+			</if>	
+		</if>
+</sql>
+
+
+<select id="getTotalCount" resultType="int">
+<![CDATA[  
+	select count(*) from user where user_id > 0
+	]]>
+	<include refid="criteria"></include>
+</select>
+
+
+
+
+<select id="myReviewComment" resultType="com.btl.findjob.model.CompanyReview">
+                      SELECT companyreview.*, companyinfo.ci_companyName
+              FROM companyreview
+                       LEFT JOIN companyinfo
+                                 ON companyreview.ci_id = companyinfo.ci_id
+              WHERE user_id = #{user_id}
+              ORDER BY cr_regDate desc
+</select>
+
+<select id="myInterviewReview" resultType="com.btl.findjob.model.InterviewReviewDTO">
+    SELECT interviewreview.*, companyinfo.ci_companyName
+    FROM interviewreview
+             LEFT JOIN companyinfo
+                       ON interviewreview.ci_id = companyinfo.ci_id
+    WHERE user_id = #{user_id}
+    ORDER BY ir_interviewDate desc
+</select>
+   
+<update id="grade_modify" parameterType="com.btl.findjob.model.UserDTO" >
+	update user set authorization_id = #{authorization_id} where user_id = #{user_id} 
+</update>
+
+<select id="user_search" resultType="com.btl.findjob.model.UserDTO">
+	select * from user where user_name like concat('%',#{user_name},'%')
+</select>
 
 </mapper>
 

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
-<!-- 로그인 css -->
-<link rel="stylesheet" type="text/css" href="resources/css/login.css">
+
+
 <!-- 구글 로그인 -->
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 <script src="https://apis.google.com/js/api:client.js"></script>
@@ -97,17 +97,29 @@
                             $('.close').trigger('click');
                             location.reload();
                         } else if (data == '2') {
-                            alert("로그인에 실패하였습니다 해당 이메일은 이미 다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다.");
+                        	 Swal.fire({
+                               	type: 'error',                    	
+                             		title:"로그인에 실패하였습니다. ",
+                             		text:"해당 이메일은  다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다."
+                               	});     
                             $('.close').trigger('click');
                             location.reload();
                         } else if (data == '3') {
-                            alert("sns회원 자동가입이 완료되었습니다.");
+                        	Swal.fire({
+                            	  type: 'success',
+                          		  text: 'sns회원 자동가입이 완료되었습니다.',
+                          		showConfirmButton: false,
+                          		  timer: 1500,
+                            	 });
                             $('.close').trigger('click');
                             location.reload();
                         }
                     },
                     error: function () {
-                        alert("서버에러");
+                    	 Swal.fire({
+                           	type: 'error',
+                         		text: '서버 에러',
+                           	});
                     }
                 });
 
@@ -156,15 +168,24 @@
     /* 로그인 */
     $('#loginbtn').click(function () {
         if ($.trim($('#inputEmail').val()) == '') {
-            alert("이메일 입력이 되지 않았습니다.");
+        	Swal.fire({
+        		  type: 'warning',
+        		  text: '이메일 입력이 되지 않았습니다.'
+        		})
             $('#inputEmail').focus();
             return;
         } else if ($.trim($('#inputPassword').val()) == '') {
-            alert("패스워드 입력이 되지 않았습니다.");
+        	Swal.fire({
+      		  type: 'warning',
+      		  text: '패스워드 입력이 되지 않았습니다.'
+      		})
             $('#inputPassword').focus();
             return;
         } else if (Erchk == 0) {
-            alert("이메일을 정확히 입력해주세요.");
+        	Swal.fire({
+      		  type: 'warning',
+      		  text: '이메일을 정확히 입력해주세요.'
+      		})
             $('#inputEmail').focus();
             return;
         } else {
@@ -177,28 +198,45 @@
                 },
                 success: function (data) {
                     if (data == '1') {
-                        alert("로그인 되었습니다.");
-                        $('.close').trigger('click');
-                        location.reload();
+                    	Swal.fire({
+                    	  type: 'success',
+                  		  text: '로그인 되었습니다.',
+                  		showConfirmButton: false,
+                  		  timer: 1500,
+                    	});
+                  		$('.close').trigger('click');
+                        location.reload(); 
                     } else if (data == '2') {
-                        alert("이메일 혹은 비밀번호를 다시 확인해주세요.");
+                        Swal.fire({
+                      	type: 'error',
+                    	text: '이메일 혹은 비밀번호를 다시 확인해주세요.',
+                      	});
                         $('#inputEmail').focus();
                     } else if (data == '3') {
-                        alert("이미 접속중인 계정입니다.");
+                    	 Swal.fire({
+                         	type: 'error',
+                       		text: '이미 접속중인 계정입니다.',
+                         	});
                         $('.close').trigger('click');
                         location.reload();
                     } else if (data == "google"
                         || data == "naver"
-                        || data == "kakao") {
-                        var snstype = data;
-                        alert("회원님은 "
-                            + snstype
-                            + " SNS 계정으로 가입된 회원입니다.\n 해당 SNS플랫폼으로 로그인 해주세요.");
+                        || data == "kakao") 
+                    	{
+                        var snstype = data;  
+                        Swal.fire({
+                         	type: 'error',                    	
+                       		title:"회원님은 " + snstype + " SNS 계정으로 가입된 회원입니다. ",
+                       		text:'해당 플랫폼으로 로그인 해주세요.'
+                         	});      
                         $('#inputEmail').focus();
                     }
                 },
                 error: function () {
-                    alert("서버에러");
+                	 Swal.fire({
+                      	type: 'error',
+                    		text: '서버 에러',
+                      	});
                 }
             });
         }
@@ -227,24 +265,39 @@
                                     $('.close').trigger('click');
                                     location.reload();
                                 } else if (data == '2') {
-                                    alert("로그인에 실패하였습니다 해당 이메일은 이미 다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다.")
+                                	 Swal.fire({
+                                      	type: 'error',                    	
+                                    		title:"로그인에 실패하였습니다. ",
+                                    		text:"해당 이메일은  다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다."
+                                      	});      
                                     $('.close').trigger('click');
                                     location.reload();
                                 } else if (data == '3') {
-                                    alert("sns회원 자동가입이 완료되었습니다.")
+                                	Swal.fire({
+                                  	  type: 'success',
+                                		  text: 'sns회원 자동가입이 완료되었습니다.',
+                                		showConfirmButton: false,
+                                		  timer: 1500,
+                                  	 });
                                     $('.close').trigger('click');
                                     location.reload();
                                 }
                             },
                             error: function () {
-                                alert("서버에러");
+                            	 Swal.fire({
+                                   	type: 'error',
+                                 		text: '서버 에러',
+                                   	});
                             }
                         });
                     }
                 });
             },
             fail: function (err) {
-                alert(JSON.stringify(err));
+            	 Swal.fire({
+                   	type: 'error',
+                 		text: JSON.stringify(err),
+                   	}); 
             }
         });
     }
@@ -264,18 +317,30 @@
                     $('.close').trigger('click');
                     location.reload();
                 } else if (data == '2') {
-                    alert("로그인에 실패하였습니다 해당 이메일은 이미 다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다.")
+                	 Swal.fire({
+                       	type: 'error',                    	
+                     		title:"로그인에 실패하였습니다. ",
+                     		text:"해당 이메일은 다른 sns플랫폼 혹은 일반회원 계정으로 가입되어있습니다."
+                       	});    
                     $('.close').trigger('click');
                     location.reload();
                 } else if (data == '3') {
-                    alert("sns회원 자동가입이 완료되었습니다.")
+                	Swal.fire({
+                    	  type: 'success',
+                  		  text: 'sns회원 자동가입이 완료되었습니다.',
+                  		showConfirmButton: false,
+                  		  timer: 1500,
+                    	 });
                     $('.close').trigger('click');
                     location.reload();
                 }
 
             },
             error: function () {
-                alert("서버에러");
+            	 Swal.fire({
+                   	type: 'error',
+                 		text: '서버 에러',
+                   	});
             }
         });
     }

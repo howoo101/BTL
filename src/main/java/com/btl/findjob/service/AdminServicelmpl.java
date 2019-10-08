@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.btl.findjob.mapper.AdminMapper;
+import com.btl.findjob.model.AdminCriteria;
+import com.btl.findjob.model.BoardCriteria;
 import com.btl.findjob.model.CompanyReview;
 import com.btl.findjob.model.InterviewReviewDTO;
 import com.btl.findjob.model.UserDTO;
@@ -19,21 +21,18 @@ public class AdminServicelmpl implements AdminService {
 
     @Override
     public List<CompanyReview> myReviewComment(int user_id) {
-        // TODO Auto-generated method stub
         return mapper.myReviewComment(user_id);
     }
 
     @Override
     public List<InterviewReviewDTO> myInterviewReview(int user_id) {
-        // TODO Auto-generated method stub
         return mapper.myInterviewReview(user_id);
     }
 
 
     @Override
-    public List<UserDTO> get_userlist() {
-        // TODO Auto-generated method stub
-        return mapper.get_userlist();
+    public List<UserDTO> getList(AdminCriteria cri) {
+        return mapper.getListWithPaging(cri);
     }
 
     @Override
@@ -47,5 +46,10 @@ public class AdminServicelmpl implements AdminService {
     public List<UserDTO> user_search(String user_name) {
         return mapper.user_search(user_name);
     }
+
+	@Override
+	public int getTotal(AdminCriteria cri) {
+		return mapper.getTotalCount(cri);
+	}
 
 }

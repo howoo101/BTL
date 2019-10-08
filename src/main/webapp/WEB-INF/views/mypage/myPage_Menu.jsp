@@ -5,7 +5,13 @@
 <%@ include file="../includes/header.jsp" %>
 
 <style>
-
+	#user_status 
+	{
+	position:relative; bottom:-3px;
+	border: 3px solid #F2F2F2;
+	padding: 8px;
+	text-align: center;
+	}
     #mprc:hover {
         cursor: pointer;
     }
@@ -24,57 +30,59 @@
 
 </style>
 
+<div class="container">
 <div class="col-lg-12 mt-4" id="user_status">
-    <c:forEach var="ul" items="${Uinfo_list}">
+<c:forEach var="ul" items="${Uinfo_list}">
 
-        <script>
-            var authorization = ${ul.authorization_id};
-            if (authorization == 4) {
-                var grade = "<b>일반회원</b>";
-            } else if (authorization == 3) {
-                var grade = "<b>정회원</b>";
-            } else if (authorization == 1) {
-                var grade = "<b>관리자</b>";
-            }
-        </script>
+    <script>
+        var authorization = ${ul.authorization_id};
+        if (authorization == 4) {
+            var grade = "<b>일반회원</b>";
+        } else if (authorization == 3) {
+            var grade = "<b>정회원</b>";
+        } else if (authorization == 1) {
+            var grade = "<b>관리자</b>";
+        }
+    </script>
 
-        <%String str = "<script>document.writeln(grade)</script>";%>
+    <%String str = "<script>document.writeln(grade)</script>";%>
 
-        <div class="col-lg-12 mt-4" id="user_status_header">
-            <h4 style="color:royalblue">${ul.user_name}</h4>
+    <div class="col-lg-12 mt-4" id="user_status_header">
+        <h4 style="color:royalblue">${ul.user_name}</h4>
 
-        </div>
-        <div class="col-ls-12 mt-3" id="user_status_body">
-            회원 등급  <%=str%> | 가입일자 <b>${ul.user_create_date}</b>
-        </div>
+    </div>
+    <div class="col-ls-12 mt-3" id="user_status_body">
+        회원 등급  <%=str%> | 가입일자 <b>${ul.user_create_date}</b>
+    </div>
 
-        <div class="col-lg-12 mt-4" id="user_status_footer">
-            <button type="button" class="btn btn-primary navbar-btn mt-2" onclick="location.href='${path}/user_info'"><i
-                    class="material-icons ">settings_applications</i><b>회원정보 수정</b></button>
-        </div>
-    </c:forEach>
+<div class="col-lg-12 mt-4" id="user_status_footer">
+    <button type="button" class="btn btn-primary navbar-btn mt-2" onclick="location.href='${path}/user_info'">
+    <i class="material-icons ">settings_applications</i><b>회원정보 수정</b></button>
+    <hr>
 </div>
-
+</c:forEach>
 
 <div class="row col-lg-12 mt-3 text-center" id="menu_nav">
-
-    <div class="col-lg-3 text-primary" id="mprc">
-        <h4>내 리뷰 코멘트</h4>
+    <div class="col-lg-3" id="mprc">
+		<button class="btn btn-light text-primary mt-2" style="width:100%"><h4>내 리뷰 코멘트</h4></button>
     </div>
-    <div class="col-lg-3 text-primary" id="mpir">
-        <h4>내 면접 후기</h4>
+    <div class="col-lg-3" id="mpir">
+        <button class="btn btn-light text-primary mt-2" style="width:100%"><h4>내 면접 후기</h4></button>
     </div>
-    <div class="col-lg-3 text-primary" id="mpf">
-        <h4>팔로잉 기업</h4>
+    <div class="col-lg-3" id="mpf">
+        <button class="btn btn-light text-primary mt-2" style="width:100%"><h4>팔로잉 기업</h4></button>
     </div>
-    <div class="col-lg-3 text-primary" id="mpl">
-        <h4>최근 본 기업</h4>
+    <div class="col-lg-3" id="mpl">
+        <button class="btn btn-light text-primary mt-2" style="width:100%"><h4>최근 본 기업</h4></button>
     </div>
 </div>
+
 <div id="mp_body">
 
 </div>
 
+</div>
+</div>
 <!-- mypage js들 -->
 <script>
 

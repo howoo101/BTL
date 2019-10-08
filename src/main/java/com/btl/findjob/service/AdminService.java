@@ -4,13 +4,18 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.btl.findjob.model.AdminCriteria;
+import com.btl.findjob.model.BoardCriteria;
+import com.btl.findjob.model.BoardDTO;
 import com.btl.findjob.model.CompanyReview;
 import com.btl.findjob.model.InterviewReviewDTO;
 import com.btl.findjob.model.UserDTO;
 
 public interface AdminService {
 
-    public List<UserDTO> get_userlist();
+	public List<UserDTO> getList(AdminCriteria cri);
+	
+    public int getTotal(AdminCriteria cri);
 
     List<CompanyReview> myReviewComment(int user_id);
 
