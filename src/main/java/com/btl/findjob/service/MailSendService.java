@@ -20,7 +20,7 @@ public class MailSendService {
 
 
     public void mailSendWithUserKey(@Param("user_email") String user_email, @Param("user_emailauthkey") String user_emailauthkey, HttpServletRequest request) {
-
+    	
         MimeMessage mail = mailSender.createMimeMessage();
         String htmlStr = "<h2>안녕하세요 BTL 취업지원 사이트 입니다.</h2><br><br>"
                 + "회원님의 인증번호 키는 <b> " + user_emailauthkey + "</b> 입니다.<br>"

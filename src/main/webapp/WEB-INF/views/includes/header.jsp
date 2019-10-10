@@ -10,7 +10,6 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- 부트스트랩 -->
@@ -59,41 +58,20 @@
     <% String user = (String) session.getAttribute("user");%>
     <% String name = (String) session.getAttribute("name");%>
     <% String grade = (String) session.getAttribute("grade");%>
+    <% String ltr = (String) request.getAttribute("ltr");%> 
+    <% String atr = (String) request.getAttribute("atr");%>
+    <% String ktr = (String) request.getAttribute("ktr");%>
+    
+<% String user_id = (String) session.getAttribute("user_id");%>
 
 <input id="session" type="hidden" value="<%=user%>">  <!-- 로그인 세션파라미터 -->
 <input id="name" type="hidden" value="<%=name%>">  <!-- 유저 이름 세션파라미터 -->
 <input id="grade" type="hidden" value="<%=grade%>">  <!-- 유저 등급 세션파라미터 -->
 
-    <% String user_id = (String) session.getAttribute("user_id");%>
+<input id="ltr" type="hidden" value="<%=ltr%>"> <!--로그인 인터셉터  -->
+<input id="atr" type="hidden" value="<%=atr%>"> <!--어드민 인터셉터  -->
+<input id="ktr" type="hidden" value="<%=ktr%>"> <!--등급제한 인터셉터  -->
 
-<!-- 로그인 인터셉터 (로그인창을 띄어주는 스크립트 임시호출)-->
-    <% String ltr = (String) request.getAttribute("ltr");
-if(user==null){
-  if(ltr != null){
-%>
-    <%=ltr%>
-    <%
-  }
-}
-%>
-
-<!-- admin 인터셉터 -->
-    <% String atr = (String) request.getAttribute("atr");
- if(atr != null){  
-%>
-    <%=atr%>
-    <%
-}
-%>
-
-<!-- 계정제한 사용자 인터셉터 -->
-    <% String ktr = (String) request.getAttribute("ktr");
- if(ktr != null){  
-%>
-    <%=ktr%>
-    <%
-}
-%>
 
 <header class="header-fixed"> <!-- 헤더 고정 태그 시작 -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -181,13 +159,28 @@ if(user==null){
 
 <script>
 
-    var grade = $('#grade').val();
-    $('#preauth').css("display", "block");
-    $('#admauth').css("display", "none");
-    if (grade == 1) {
-        $('#preauth').css("display", "none");
-        $('#admauth').css("display", "block");
-    }
+var ltr = $('#ltr').val();
+var atr = $('#atr').val();
+var ktr = $('#ktr').val();
+
+if(ltr != 'null'){
+document.write($('#ltr').val());
+} 
+if(atr != 'null'){
+document.write($('#atr').val());
+} 
+if(ktr != 'null'){
+document.write($('#ktr').val());
+} 	
+
+
+var grade = $('#grade').val();
+$('#preauth').css("display", "block");
+$('#admauth').css("display", "none");
+if (grade == 1) {
+    $('#preauth').css("display", "none");
+    $('#admauth').css("display", "block");
+}
 
 
     $("#loading-bar").hide(); // 평상시 감춤

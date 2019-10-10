@@ -2,6 +2,9 @@ package com.btl.findjob.controller;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.btl.findjob.model.CompanyListVO;
 import com.btl.findjob.model.SHA256Util;
 import com.btl.findjob.model.SessionListener;
 import com.btl.findjob.model.TempKey;
+import com.btl.findjob.service.CompanyService;
 import com.btl.findjob.service.MailSendService;
 import com.btl.findjob.service.UserService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -38,7 +43,10 @@ public class UserController {
 
     @Autowired
     UserService userservice;
-
+    
+    @Autowired
+    CompanyService companyService;
+    
     private static final HttpTransport transport = new NetHttpTransport();
     private static final JsonFactory jsonFactory = new JacksonFactory();
 
@@ -271,7 +279,6 @@ public class UserController {
     public String pwfind_go(@Param("user_email") String user_email, HttpServletRequest request) {
         TempKey tempkey = new TempKey();
         String key = tempkey.getKey(10, false); //임시비밀번호 10사이즈 생성
-
         String salt = SHA256Util.generateSalt();
         String newpassword = SHA256Util.getEncrypt(key, salt); //임시비밀번호 암호화 처리
 
@@ -351,24 +358,53 @@ public class UserController {
 
     //로그인 인터셉터
     @RequestMapping(value = "logininterceptor", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView interceptor() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("index");
+    public String interceptor(Model model) {
+    	
+    	Map<String, List<CompanyListVO>> map1 = new HashMap<>();
+        Map<String, Map<String, List<CompanyListVO>>> map2 = new HashMap<>();
+        Map<String, List<CompanyListVO>> carousel1 = new HashMap<>();
+        Map<String, List<CompanyListVO>> carousel2 = new HashMap<>();
+        map1.put("follow 많은 기업", companyService.getManyFollowOrdersList());
+        map1.put("면접리뷰 많은 기업", companyService.getManyInterviewReviewOrdersList());
+
+
+        carousel1.put("승진 기회 및 가능성", companyService.getMostCt0OrdersList());
+        carousel1.put("복지 및 급여", companyService.getMostCt1OrdersList());
+        map2.put("1", carousel1);
+        carousel2.put("일과 삶의 균형", companyService.getMostCt2OrdersList());
+        carousel2.put("사내문화", companyService.getMostCt3OrdersList());
+        map2.put("2", carousel2);
+
+
+        model.addAttribute("map1", map1);
+        model.addAttribute("map2", map2);
 
         String ltr = "";
-        ltr += "<script langueage='JavaScript'>";
+        ltr += "<script>";
         ltr += "$(window).on('load',function(){";
-        ltr += "var result = confirm('로그인이 필요한 영역입니다. 로그인 하시겠습니까?');";
-        ltr += "if(result) {$('#loginModal').modal('show');";
-        ltr += "}else {";
+        ltr += "Swal.fire({";
+        ltr += "title: '로그인이 필요합니다.',";
+        ltr += "text:'로그인 하시겠습니까?',";
+        ltr += "cancelButtonText: '취소',";
+        ltr += "type: 'warning',";
+        ltr += "showCancelButton: true,";
+        ltr += "confirmButtonColor: '#3085d6',";
+        ltr += "cancelButtonColor: '#d33',";
+        ltr += "confirmButtonText: '로그인'";
+        ltr += "}).then((result) => {";
+        ltr += "if (result.value) {";
+        ltr += "$('#loginModal').modal('show');";
+        ltr += "}";
+        ltr += "else {";
         ltr += "history.back();";
         ltr += "}";
         ltr += "});";
+        ltr += "});";
         ltr += "</script>";
 
-        mv.addObject("ltr", ltr);
-
-        return mv;
+       model.addAttribute("ltr", ltr);
+       
+       return "index";
     }
 
     @RequestMapping(value = "myPage_menu", method = {RequestMethod.GET, RequestMethod.POST})
@@ -424,18 +460,37 @@ public class UserController {
 
     //킥 된 사용자
     @RequestMapping(value = "gradeceptor", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView gradeceptor() {
+    public String gradeceptor(Model model) {
+    	 
+    	Map<String, List<CompanyListVO>> map1 = new HashMap<>();
+          Map<String, Map<String, List<CompanyListVO>>> map2 = new HashMap<>();
+          Map<String, List<CompanyListVO>> carousel1 = new HashMap<>();
+          Map<String, List<CompanyListVO>> carousel2 = new HashMap<>();
+          map1.put("follow 많은 기업", companyService.getManyFollowOrdersList());
+          map1.put("면접리뷰 많은 기업", companyService.getManyInterviewReviewOrdersList());
 
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("index");
+
+          carousel1.put("승진 기회 및 가능성", companyService.getMostCt0OrdersList());
+          carousel1.put("복지 및 급여", companyService.getMostCt1OrdersList());
+          map2.put("1", carousel1);
+          carousel2.put("일과 삶의 균형", companyService.getMostCt2OrdersList());
+          carousel2.put("사내문화", companyService.getMostCt3OrdersList());
+          map2.put("2", carousel2);
+
+
+          model.addAttribute("map1", map1);
+          model.addAttribute("map2", map2);
 
         String ktr = "";
-        ktr += "<script langueage='JavaScript'>";
-        ktr += "alert('회원님은 계정 제한 상태입니다. 관리자 메일로 문의해주십시오.')";
+        ktr += "<script>";
+        ktr += "Swal.fire({";
+        ktr += "type: 'warning',";
+        ktr += "html: '회원님은 계정 제한 상태입니다.<br> 관리자 메일로 문의해주십시오.'";
+        ktr += "})";
         ktr += "</script>";
 
-        mv.addObject("ktr", ktr);
+        model.addAttribute("ktr", ktr);
 
-        return mv;
+        return "index";
     }
 }
