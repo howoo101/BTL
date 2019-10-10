@@ -17,7 +17,7 @@
                                 <div class="col-lg-6 ml-5">
                                     <div class="row justify-content-center">
                                         <h4>
-                                            <a href="${path }/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">
+                                            <a href="${pageContext.request.contextPath }/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">
                                                     ${item.ci_companyName}</a>
                                             <c:if test="${item.followId eq 0}">
                                                 <button id="unfollow" class="follow btn btn-outline-danger"
