@@ -260,7 +260,9 @@
                 operForm.attr("action", "modify").submit();
 
             } else {
-                alert("작성자가 아닙니다.");
+                Swal.fire({
+                    type:"error",
+                    text : "작성자가 아닙니다."});
                 location.reload();
             }
 
@@ -412,8 +414,8 @@
 
                     /* 필수값입력하게하기 */
                     if (!need.val() || !need_writer.val()) {
-                        alert("필수값이 입력되지 않았습니다.");
-                        return;
+                        Swal.fire({type : "warning",
+                            text: "필수값이 입력되지 않았습니다."});
                     } else {
 
                         var reply_content = {
@@ -427,7 +429,9 @@
                         replyService.add(reply_content,
                             function (result) {
 
-                                alert(result);
+                                Swal.fire({
+                                    type:"success",
+                                    text : result});
 
                                 replyCard.find("input")
                                     .val("");
@@ -487,7 +491,9 @@
                     replyService.update(
                         reply_content,
                         function (result) {
-                            alert(result);
+                            Swal.fire({
+                                type:"success",
+                                text : result});
                             modal.modal("hide");
                             showList(pageNum);
 
@@ -500,7 +506,9 @@
                     replyService.remove(reply_id,
                         function (
                             result) {
-                            alert(result);
+                            Swal.fire({
+                                type:"success",
+                                text : result});
                             modal.modal("hide");
                             showList(pageNum);
                         });

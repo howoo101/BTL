@@ -174,7 +174,9 @@
 
 
             if (!cr_comment || !cr_starRt || !forInsert || !cr_category) {
-                alert("필수값이 입력되지 않았습니다.");
+                Swal.fire({
+                    type:"warning",
+                    text : "필수값이 입력되지 않았습니다."});
             } else {
                 $.ajax({
                         type: "post",
@@ -188,7 +190,9 @@
                         }),
                         contentType: "application/json; charset=utf-8",
                         success: function (result) {
-                            alert("리뷰가 등록되었습니다.");
+                            Swal.fire({
+                                type:"success",
+                                text : "등록에 성공하였습니다."});
                             // showList(1);
                             location.reload();
                         },
