@@ -273,10 +273,13 @@ var interviewmodifyService = (function () {
                     ir_resultDate: interviewResultDateModal.val(),
                 };
                 if (!interviewReview.ir_interviewDate || !interviewReview.ir_difficulty || !interviewReview.ir_experience || !interviewReview.ir_route || !interviewReview.user_id || !interviewReview.ir_title || !interviewReview.ir_question || !interviewReview.ir_answer || !interviewReview.ir_result || !interviewReview.ir_resultDate) {
-                    alert("필수값이 입력되지 않았습니다.");
+                    Swal.fire({type : "warning",
+                        text: "필수값이 입력되지 않았습니다."});
                 } else {
                 	interviewmodifyService.interviewModify(interviewReview, function (result) {
-                        alert("성공적으로 변경되었습니다.");
+                        Swal.fire({
+                            type:"success",
+                            text : "성공적으로 변경되었습니다."});
                         modal.modal("hide");
                         location.reload()
                     });

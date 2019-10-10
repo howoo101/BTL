@@ -174,10 +174,13 @@
                     user_id: user_id.val()
                 };
                 if (!reviewComment.cr_starRt || !reviewComment.cr_category || !reviewComment.cr_comment) {
-                    alert("필수값이 입력되지 않았습니다.");
+                    Swal.fire({type : "warning",
+                        text: "필수값이 입력되지 않았습니다."});
                 } else {
                     modifyService.commentModify(reviewComment, function (result) {
-                        alert("성공적으로 변경되었습니다.");
+                        Swal.fire({
+                            type:"success",
+                            text : "성공적으로 변경되었습니다."});
                         modal.modal("hide");
                         /*   location.reload() */
                     });

@@ -95,8 +95,9 @@ $(document).ready(function(e){
 
    		/* 필수값입력하게하기 */
 		if (!board_title || !board_content) {
-			alert("필수값이 입력되지 않았습니다.");
-			return;
+			Swal.fire({
+				type:"warning",
+				text : "필수값이 입력되지 않았습니다."});
 		}
 		else{
     
@@ -125,12 +126,16 @@ $(document).ready(function(e){
   function checkExtension(fileName, fileSize){
     
     if(fileSize >= maxSize){
-      alert("파일 사이즈 초과");
+		Swal.fire({
+			type:"warning",
+			text : "파일 사이즈가 초과되었습니다."});
       return false;
     }
     
     if(regex.test(fileName)){
-      alert("해당 종류의 파일은 업로드할 수 없습니다.");
+		Swal.fire({
+			type:"warning",
+			text : "해당 종류의 파일은 업로드 할 수 없습니다."});
       return false;
     }
     return true;
@@ -220,7 +225,9 @@ $(document).ready(function(e){
       dataType:'text',
       type: 'POST',
         success: function(result){
-           alert(result);
+			Swal.fire({
+				type:"success",
+				text : result});
            
            targetLi.remove();
          }
