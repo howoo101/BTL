@@ -73,6 +73,8 @@
 <input id="ktr" type="hidden" value="<%=ktr%>"> <!--등급제한 인터셉터  -->
 
 
+
+
 <header class="header-fixed"> <!-- 헤더 고정 태그 시작 -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -163,14 +165,14 @@ var ltr = $('#ltr').val();
 var atr = $('#atr').val();
 var ktr = $('#ktr').val();
 
-if(ltr != 'null'){
-document.write($('#ltr').val());
+if($('#session').val() == 'null'){
+document.write(ltr);
 } 
-if(atr != 'null'){
-document.write($('#atr').val());
+if($('#session').val() == 'null'){
+document.write(atr);
 } 
-if(ktr != 'null'){
-document.write($('#ktr').val());
+if($('#session').val() == 'null'){
+document.write(ktr);
 } 	
 
 
