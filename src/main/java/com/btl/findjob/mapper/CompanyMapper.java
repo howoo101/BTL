@@ -22,8 +22,6 @@ public interface CompanyMapper {
 	//index 리스트
 	public List<CompanyListVO> getManyFollowOrdersList();
 	public List<CompanyListVO> getManyInterviewReviewOrdersList();
-	public List<CompanyListVO> getMostCt0OrdersList();
-	public List<CompanyListVO> getMostCt1OrdersList();
-	public List<CompanyListVO> getMostCt2OrdersList();
-	public List<CompanyListVO> getMostCt3OrdersList();
+	public List<CompanyListVO> getMostCtOrdersList(int i);
+	public String[] getCategoryArr();
 }

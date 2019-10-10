@@ -81,20 +81,20 @@ CompanyService companyService;
     public String interceptor(Model model) {
 
     	Map<String, List<CompanyListVO>> map1 = new HashMap<>();
-        Map<String, Map<String, List<CompanyListVO>>> map2 = new HashMap<>();
-        Map<String, List<CompanyListVO>> carousel1 = new HashMap<>();
-        Map<String, List<CompanyListVO>> carousel2 = new HashMap<>();
         map1.put("follow 많은 기업", companyService.getManyFollowOrdersList());
         map1.put("면접리뷰 많은 기업", companyService.getManyInterviewReviewOrdersList());
-
-
-        carousel1.put("승진 기회 및 가능성", companyService.getMostCt0OrdersList());
-        carousel1.put("복지 및 급여", companyService.getMostCt1OrdersList());
-        map2.put("1", carousel1);
-        carousel2.put("일과 삶의 균형", companyService.getMostCt2OrdersList());
-        carousel2.put("사내문화", companyService.getMostCt3OrdersList());
-        map2.put("2", carousel2);
-
+        
+        Map<Integer, Map<String, List<CompanyListVO>>> map2 = new HashMap<>();
+        List<Map<String, List<CompanyListVO>>> list = new ArrayList<>();
+        String[] categoryArr = companyService.getCategoryArr();
+        for(int i = 0; i < categoryArr.length/2; i++) {
+        	list.add(new HashMap<>());
+        	for(int j = 2*i; j < categoryArr.length; j++) {
+            	if(list.get(i).size()==2) continue;
+        		list.get(i).put(categoryArr[j], companyService.getMostCtOrdersList(j));
+            	if(j%2 == 1) map2.put(i, list.get(i)); 
+            }
+        }
 
         model.addAttribute("map1", map1);
         model.addAttribute("map2", map2);

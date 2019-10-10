@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.btl.findjob.mapper.CompanyMapper;
 import com.btl.findjob.model.CompanyInfoDTO;
 import com.btl.findjob.model.CompanyListVO;
-import com.btl.findjob.model.FollowVO;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -18,7 +17,6 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyInfoDTO> companyGetList(String keyword, String startNum) {
-
         return mapper.companyGetList(keyword, startNum);
     }
 
@@ -55,28 +53,17 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<CompanyListVO> getMostCt0OrdersList() {
-        return mapper.getMostCt0OrdersList();
-    }
-
-    @Override
-    public List<CompanyListVO> getMostCt1OrdersList() {
-        return mapper.getMostCt1OrdersList();
-    }
-
-    @Override
-    public List<CompanyListVO> getMostCt2OrdersList() {
-        return mapper.getMostCt2OrdersList();
-    }
-
-    @Override
-    public List<CompanyListVO> getMostCt3OrdersList() {
-        return mapper.getMostCt3OrdersList();
-    }
-
-    @Override
     public int getFollowId(String userEmail, String ciId) {
         return mapper.getFollowId(userEmail, ciId);
     }
 
+	@Override
+	public List<CompanyListVO> getMostCtOrdersList(int i) {
+		return mapper.getMostCtOrdersList(i);
+	}
+	
+	@Override
+	public String[] getCategoryArr() {
+		return mapper.getCategoryArr();
+	}
 }
