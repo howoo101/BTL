@@ -183,8 +183,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <button data-oper='modify' class="btn btn-warning mb-3"
-                                        onclick="location.href='modify?board_id=<c:out value="${board.board_id }"/>'">수정
+                                <button data-oper='modify' class="btn btn-warning mb-3">수정
                                 </button>
 
                                 <button data-oper='list' class="btn btn-info mb-3"
@@ -254,16 +253,15 @@
         var container_board = $("#container_board");
         var checkUser = container_board.find("input[name='board_userid']").val();
         var user_id = <%=user_id%>;
-
+        var checkGrade =  <%=grade%>;
         $("button[data-oper='modify']").on("click", function (e) {
-            if (user_id === Number(checkUser)) {
+            if (checkGrade === 1 || user_id === Number(checkUser)) {
                 operForm.attr("action", "modify").submit();
-
+               location.href='modify?board_id=<c:out value="${board.board_id }"/>';
             } else {
                 Swal.fire({
                     type:"error",
                     text : "작성자가 아닙니다."});
-                location.reload();
             }
 
         });
