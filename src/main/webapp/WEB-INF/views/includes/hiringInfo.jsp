@@ -86,7 +86,10 @@ $.ajax({
     	}
     },
 	error : function(xhr, status, error) {
-    	alert("채용정보 에러발생");
+    	Swal.fire({
+    		  type: 'error',
+    		  text: '채용정보 에러발생',
+    		})
 	}
 });
 </script>

@@ -249,7 +249,10 @@
 					  
 				  },
 				  error: function(e){
-					  alert(" Data Load: fail")
+					  Swal.fire({
+						  type: 'error',
+						  text: '데이터 불러오기에 실패했습니다.',
+					})
 				  }
 		    	}); // end of ajax
         	  
@@ -319,10 +322,17 @@
 				  contentType : "application/json; charset=utf-8",
 				  
 				  success: function(msg){
-					  alert( "Data Saved success ")
+					  Swal.fire({
+						  type: 'success',
+						  text: '등록에 성공했습니다.',
+						})
+					  
 				  },
                   error : function(request) {
-				    alert("등록에 실패하였습니다.");
+                	  Swal.fire({
+                		  type: 'error',
+                		  text: '등록에 실패하였습니다.',
+                		})
                     if (request.status === 403) {
                       location.href = "logininterceptor";
                     }
