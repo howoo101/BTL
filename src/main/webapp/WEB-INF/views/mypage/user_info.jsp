@@ -101,35 +101,57 @@ function name_chk(name) {
 }
 
 //닉네임 수정 유효성검사
+
 $('#name_modify').click(function () {
-    var result = confirm('닉네임을 현재 입력된 닉네임으로 수정하시겠습니까?');
-    if (result) {
-        if (namech == 0) {
-            alert('닉네임을 2~10글자로 작성해주세요.');
-            $('#inputName').focus();
-            return;
-        } else {
-            $.ajax({
-                url: "${pageContext.request.contextPath}/name_modify.do",
-                type: "post",
-                data: {
-                    "user_email": $('#inputEmail').val(),
-                    "user_name": $('#inputName').val()
-                },
-                success: function (data) {
-                    if (data == '1') {
-                        alert("수정이 완료되었습니다.");
-                        $(location).attr("href", "myPage_menu");
-                    }
-                },
-                error: function () {
-                    alert("서버에러");
-                }
-            });
-        }
-    } else {
-    }
-});
+Swal.fire({
+	  text: "닉네임을 현재 입력된 닉네임으로 수정하시겠습니까?",
+	  type: 'question',
+	  showCancelButton: true,
+	  confirmButtonColor: '#3085d6',
+	  cancelButtonColor: '#d33',
+	  cancelButtonText: '취소',
+	  confirmButtonText: '확인'
+	}).then((result) => {
+if (result.value) {
+	  if (namech == 0) {
+		  Swal.fire({
+    		  type: 'warning',
+    		  text: '닉네임은 2~10글자로 작성해주세요.'
+    		})
+          $('#inputName').focus();
+          return;
+	  } else {
+          $.ajax({
+              url: "${pageContext.request.contextPath}/name_modify.do",
+              type: "post",
+              data: {
+                  "user_email": $('#inputEmail').val(),
+                  "user_name": $('#inputName').val()
+              },
+              success: function (data) {
+                  if (data == '1') {
+              		Swal.fire({
+                       	type: 'success',
+                     		  text: '수정이 완료되었습니다.',
+                     		showConfirmButton: false
+                       	});
+               	var timer = setInterval(function() { 
+               		$(location).attr("href", "myPage_menu");
+          			}, 1500); 
+                  }
+              },
+              error: function () {
+            	  Swal.fire({
+            		  type: 'warning',
+            		  text: '서버에러'
+            		})
+              }
+          });
+      }
+	 }
+	})
+});	
+
 
 $("#inputPassword").on("propertychange change click keyup input paste", function () {
     var pw = $(this).val();
@@ -149,24 +171,42 @@ function pw_chk(pw) {
 }
 
 $('#pw_modify').click(function () {
-    var result = confirm('비밀번호를 현재 입력된 비밀번호로 수정하시겠습니까?');
-    if (result) {
-        if ($.trim($('#inputPassword').val()) == '') {
-            alert("패스워드 입력이 되지 않았습니다.");
+Swal.fire({
+	  text: "비밀번호를 현재 입력된 비밀번호로 수정하시겠습니까?",
+	  type: 'question',
+	  showCancelButton: true,
+	  confirmButtonColor: '#3085d6',
+	  cancelButtonColor: '#d33',
+	  cancelButtonText: '취소',
+	  confirmButtonText: '확인'
+	}).then((result) => {
+if (result.value) {
+	
+	 if ($.trim($('#inputPassword').val()) == '') {
+			 Swal.fire({
+        		  type: 'warning',
+        		  text: '패스워드 입력이 되지 않았습니다.'
+        		})
             $('#inputPassword').focus();
             return;
         }
         //패스워드 2번 입력 확인
         else if ($('#inputPassword').val() != $('#inputPasswordchk').val()) {
-            alert('패스워드가 다릅니다.');
+        	Swal.fire({
+         		  type: 'warning',
+         		  text: '패스워드가 다릅니다.'
+         		})
             $('#inputPasswordchk').focus();
             return;
         } else if (pwch == 0) {
-            alert('비밀번호를 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.');
+        	Swal.fire({
+          		  type: 'warning',
+          		  text: '비밀번호를 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.'
+          	})
             $('#inputPassword').focus();
             return;
         } else {
-            $.ajax({
+        	$.ajax({
                 url: "${pageContext.request.contextPath}/pw_modify.do",
                 type: "post",
                 data: {
@@ -175,27 +215,47 @@ $('#pw_modify').click(function () {
                 },
                 success: function (data) {
                     if (data == '1') {
-                        alert("수정이 완료되었습니다. 수정한 비밀번호로 다시 로그인 해주세요.");
-                        $(location).attr("href", "${pageContext.request.contextPath}/");
+                        Swal.fire({
+                    		  type: 'success',
+                    		  html: '수정이 완료되었습니다.<br> 수정한 비밀번호로 다시 로그인 해주세요.',
+                    		  showConfirmButton: false
+                    		})
+                    		var timer = setInterval(function() { 
+                    			 $(location).attr("href", "${pageContext.request.contextPath}/");
+                    		}, 1500);
+                       
                     }
                 },
                 error: function () {
-                    alert("서버에러");
+                	Swal.fire({
+                 		  type: 'warning',
+                 		  text: '서버에러'
+                 		})
                 }
             });
         }
-    } else {
-    }
-});
+	 }
+	})
+});	
+
+
 
   $('#uim_back_btn').click(function () {
-      var result = confirm('현재 입력을 취소하고 뒤로 가시겠습니까?');
-      if (result) {
-          history.back(-1);
-      } else {
-      }
-  });
-
+	  Swal.fire({
+		  text: "현재 입력을 취소하고 뒤로 가시겠습니까?",
+		  type: 'question',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  cancelButtonText: '취소',
+		  confirmButtonText: '확인'
+		}).then((result) => {
+	if (result.value) {
+		history.back(-1);
+			}
+  		});
+	  });
+  	
 });
 
 </script>
