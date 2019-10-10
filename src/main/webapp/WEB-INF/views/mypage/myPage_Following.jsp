@@ -17,7 +17,7 @@
                                 <div class="col-lg-6 ml-5">
                                     <div class="row justify-content-center">
                                         <h4>
-                                            <a href="${path }/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">
+                                            <a href="${pageContext.request.contextPath }/info?ci_companyName=${item.ci_companyName}&ci_id=${item.ci_id}">
                                                     ${item.ci_companyName}</a>
                                             <c:if test="${item.followId eq 0}">
                                                 <button id="unfollow" class="follow btn btn-outline-danger"
@@ -107,7 +107,7 @@
 </div>
 
 <script>
-
+	
     var follow = function (path, btn) {
         var id = "";
         var tagId = btn.attr("id");
@@ -178,8 +178,10 @@
         $(".page-item a").on("click", function (e) {
             e.preventDefault();
 
-            actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-            actionForm.submit();
+            var pageNum = $(this).attr("href");
+            var amount = actionForm.find("input[name='amount']").val();
+            $("#mp_body").load("${pageContext.request.contextPath}/myPage_Following?pageNum="+pageNum+"&amount="+amount);
+            
         })
     });
 </script>

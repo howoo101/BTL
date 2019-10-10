@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <footer class="main-footer" style="height:100px;">
     <hr class="foot-hr">
     <div class="footer-nav col-md-auto mt-3">
@@ -8,7 +10,8 @@
                 </div>
                 <div class="footer-infos col-sm-10 text-right">
                     <strong>Copyright &copy;<a href="https://github.com/hohoho11/BTL" target="_blank">BTL</a></strong> All rights
-                    reserved.
+                    reserved.<br>
+                    <small><a href="mailto:btlmaster372@gmail.com">문의 메일</a></small>
                 </div>
             </div>
         </div>

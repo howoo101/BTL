@@ -32,18 +32,21 @@ public class KakaoPay {
     private static final String partner_order_id = UUID.randomUUID().toString();//주문 고유번호 생성 위해서 or random?
 
     private KakaoPayReadyVO kakaoPayReadyVO;
-
-    public String kakaoPayReady(String user_id) {
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        // 서버로 요청할 Header
+    RestTemplate restTemplate = new RestTemplate();
+    
+    public static HttpHeaders headers() {
+    	// 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "KakaoAK " + "6a4a878f48138ae2ac9a1e42f4033df7");
         headers.add("Accept", "application/x-www-form-urlencoded;charset=utf-8");
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 
-        // 서버로 요청할 Body
+    	return headers; 
+    }
+    
+    public String kakaoPayReady(String user_id) {
+    	
+    	// 서버로 요청할 Body
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");//사업장 고유번호
         params.add("partner_order_id", partner_order_id);//주문번호 uuid 사용
@@ -56,7 +59,7 @@ public class KakaoPay {
         params.add("cancel_url", CANCEL_URL);
         params.add("fail_url", FAIL_URL);
 
-        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers());
         try {
             kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
             log.info("" + kakaoPayReadyVO);
@@ -75,14 +78,8 @@ public class KakaoPay {
 
     public KakaoPayApprovalVO kakaoPayInfo(String pg_token, String user_id) {
 
-        RestTemplate restTemplate = new RestTemplate();
-
-        // 서버로 요청할 Header
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "KakaoAK " + "6a4a878f48138ae2ac9a1e42f4033df7");
-        headers.add("Accept", "application/x-www-form-urlencoded;charset=utf-8");
-        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
-
+    	// 서버로 요청할 Header
+    	
         // 서버로 요청할 Body
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
@@ -92,7 +89,7 @@ public class KakaoPay {
         params.add("pg_token", pg_token);
         params.add("total_amount",TOTAL_AMOUNT);//금액
 
-        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers());
 
         try {
             KakaoPayApprovalVO kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
