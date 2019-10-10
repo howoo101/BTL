@@ -107,7 +107,7 @@
 </div>
 
 <script>
-
+	
     var follow = function (path, btn) {
         var id = "";
         var tagId = btn.attr("id");
@@ -178,8 +178,10 @@
         $(".page-item a").on("click", function (e) {
             e.preventDefault();
 
-            actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-            actionForm.submit();
+            var pageNum = $(this).attr("href");
+            var amount = actionForm.find("input[name='amount']").val();
+            $("#mp_body").load("${pageContext.request.contextPath}/myPage_Following?pageNum="+pageNum+"&amount="+amount);
+            
         })
     });
 </script>
