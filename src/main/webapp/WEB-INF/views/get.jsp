@@ -318,11 +318,11 @@
                             str += "<div><div class='header'><strong class='primary-font'>"
                                 + list[i].reply_writer
                                 + "</strong>";
-                            str += "<small class='text-muted ml-2' >"
+                            str += "<small class='text-muted ml-2'>"
                                 + replyService
                                     .displayTime(list[i].reply_date)
                                 + "</small></div>";
-                            str += "<p class='text-reply'>"
+                            str += "<p class='text-reply ml-1'>"
                                 + list[i].reply_content
                                 + "</p></div></li>";
                         }
