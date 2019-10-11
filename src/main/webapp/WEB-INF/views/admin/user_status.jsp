@@ -2,8 +2,19 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ include file="../includes/header.jsp" %>
-
+<%-- <%@ include file="../includes/header.jsp" %> --%>
+<script src="resources/js/sweetalert2.all.min.js"></script>
+ <!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- 부트스트랩 -->
+<script type="text/javascript" src="resources/js/bootstrap.js"></script>
+<%--부트스트랩 CSS--%>
+<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
+<!--부트스트랩 와치 -->
+<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-D/7uAka7uwterkSxa2LwZR7RJqH2X6jfmhkJ0vFPGUtPyBMF2WMq9S+f9Ik5jJu1" crossorigin="anonymous">
+<%-- index css 커스텀  --%>
+<link rel="stylesheet" type="text/css" href="resources/css/customCSS.css">
 
 <c:forEach var="ul" items="${Uinfo_list}">
 <div class="col-lg-12 mt-4" id="user_status">
@@ -82,5 +93,5 @@ $('#mpir').click(function () {
 });
 </script>
 </c:forEach>
-<%@ include file="../includes/footer.jsp" %>
+<%-- <%@ include file="../includes/footer.jsp" %> --%>
   
