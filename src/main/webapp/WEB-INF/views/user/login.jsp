@@ -201,10 +201,8 @@ $.ajax({
       		  text: '로그인 되었습니다.',
       		showConfirmButton: false
         	});
-        	var timer = setInterval(function() { 
-        		$('.close').trigger('click');
-        		 location.reload(); 
-   			}, 1000); 
+        	$('.close').trigger('click');
+   			 location.reload(); 
         } else if (data == '2') {
             Swal.fire({
           	type: 'error',

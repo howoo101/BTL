@@ -334,7 +334,7 @@ html, body {
 .col-xs-12 { margin: 10px; padding: 20px; }
 
 /* admin */
-#user_status {position:relative; bottom:-3px; text-align: center; border: 3px solid #F2F2F2;}
+#user_status {position:relative; bottom:-3px;  text-align: center; border: 3px solid #F2F2F2;}
 #mprc:hover { cursor: pointer;}
 #mpir:hover {cursor: pointer;}
 
