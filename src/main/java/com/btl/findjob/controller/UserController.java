@@ -115,9 +115,9 @@ public class UserController {
             String user_name = (String) payload.get("name");
 
             HttpSession session = request.getSession();
-
+            
             //이메일이 중복일경우 로그인
-            if (userservice.snstype(user_email).equals("google")) {
+            if ("google".equals(userservice.snstype(user_email))) {
                 session.setAttribute("user", user_email);
                 session.setAttribute("name", userservice.getname(user_email));
                 session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
@@ -126,7 +126,7 @@ public class UserController {
                 return "1";
             }
             //아닐경우 가입 후 자동 로그인
-            else if (userservice.snstype(user_email) == null || userservice.snstype(user_email) == "") {
+            else if (userservice.emailchk(user_email) == 0) {
                 int authorization = 4; // sns 회원은 메일인증이 필요없어서 인증등급부여
 
                 TempKey tempkey = new TempKey();
@@ -163,7 +163,7 @@ public class UserController {
         HttpSession session = request.getSession();
 
 //이메일이 중복일경우 로그인
-        if (userservice.snstype(user_email).equals("kakao")) {
+        if ("kakao".equals(userservice.snstype(user_email))) {
             session.setAttribute("user", user_email);
             session.setAttribute("name", userservice.getname(user_email));
             session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
@@ -173,7 +173,7 @@ public class UserController {
         }
 
         //아닐경우 가입 후 자동 로그인
-        else if (userservice.snstype(user_email) == null || userservice.snstype(user_email) == "") {
+        else if (userservice.emailchk(user_email) == 0) {
             int authorization = 4; // sns 회원은 메일인증이 필요없어서 인증등급부여
 
             TempKey tempkey = new TempKey();
@@ -209,7 +209,7 @@ public class UserController {
         HttpSession session = request.getSession();
 
         //이메일이 중복일경우 로그인
-        if (userservice.snstype(user_email).equals("naver")) {
+        if ("naver".equals(userservice.snstype(user_email))) {
             session.setAttribute("user", user_email);
             session.setAttribute("name", userservice.getname(user_email));
             session.setAttribute("user_id", userservice.get_userid(user_email)); // user_id 겟
@@ -218,7 +218,7 @@ public class UserController {
             return "1";
         }
         //아닐경우 가입 후 자동 로그인
-        else if (userservice.snstype(user_email) == null || userservice.snstype(user_email) == "") {
+        else if (userservice.emailchk(user_email) == 0) {
             int authorization = 4; // sns 회원은 메일인증이 필요없어서 인증등급부여
             TempKey tempkey = new TempKey();
             String key = tempkey.getKey(20, false);//sns회원이라서 랜덤 비밀번호생성
@@ -356,6 +356,11 @@ public class UserController {
         return Integer.toString(userservice.emailchk(user_email));
     }
 
+    @RequestMapping(value = "namechk", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String namechk(@Param("user_name") String user_name) {
+        return Integer.toString(userservice.namechk(user_name));
+    }
 
     //로그인 인터셉터
     @RequestMapping(value = "logininterceptor", method = {RequestMethod.GET, RequestMethod.POST})

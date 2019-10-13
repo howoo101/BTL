@@ -117,4 +117,10 @@ public class UserServiceImpl implements UserService {
 
         return mapper.get_userid(user_email);
     }
+
+	@Override
+	public int namechk(String user_name) {
+	
+		return mapper.namechk(user_name);
+	}
 }

@@ -102,7 +102,7 @@
                                                          aria-valuenow="60"
                                                          aria-valuemin="0"
                                                          aria-valuemax="100" style="width: 40%">
-                                                        <div class="col-md" id="precptxt"></div>
+                                                        <div class="col-md" id="precptxt" style="text-shadow:1px 1px #666;"></div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -117,7 +117,7 @@
                                                          aria-valuenow="60"
                                                          aria-valuemin="0"
                                                          aria-valuemax="100" style="width: 80%;">
-                                                        <div class="col-md" id="samecptxt"></div>
+                                                        <div class="col-md" id="samecptxt" style="text-shadow:1px 1px #666;"></div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -157,40 +157,45 @@
         $("#select").html("총 인원");
         $('#precp').attr("style", "width:100%");
         $('#precptxt').html(cptotal + "명");
+        $('#samecptxt').html("상위 " + latestcptotal + " %");
         $('#samecp').attr("style", "width:" + latestcptotal + "%");
-        $('#samecptxt').html(latestcptotal + "% 순위");
+        
 
         /* 인원 */
         $("#human").click(function () {
             $("#select").html("총 인원");
             $('#precp').attr("style", "width:100%");
             $('#precptxt').html(cptotal + "명");
+            $('#samecptxt').html("상위 " + latestcptotal + " %");
             $('#samecp').attr("style", "width:" + latestcptotal + "%");
-            $('#samecptxt').html(latestcptotal + "% 순위");
+          
         });
         /* 업력 */
         $("#since").click(function () {
             $("#select").html("업력");
             $('#precp').attr("style", "width:100%");
             $('#precptxt').html(cpsince + "년");
+            $('#samecptxt').html("상위 " + sincerank + " %");
             $('#samecp').attr("style", "width:" + sincerank + "%");
-            $('#samecptxt').html(sincerank + "% 순위");
+           
         });
         /* 입사 */
         $("#join").click(function () {
             $("#select").html("이번 달 입사");
             $('#precp').attr("style", "width:100%");
             $('#precptxt').html(tmin + "명");
+            $('#samecptxt').html("상위 " + alltminrank + " %");
             $('#samecp').attr("style", "width:" + alltminrank + "%");
-            $('#samecptxt').html(alltminrank + "% 순위");
+           
         });
         /* 퇴사 */
         $("#leave").click(function () {
             $("#select").html("이번 달 퇴사");
             $('#precp').attr("style", "width:100%");
             $('#precptxt').html(tmout + "명");
+            $('#samecptxt').html("상위 " + alltmoutrank + " %" );
             $('#samecp').attr("style", "width:" + alltmoutrank + "%");
-            $('#samecptxt').html(alltmoutrank + "% 순위");
+            
         });
     })
 </script>

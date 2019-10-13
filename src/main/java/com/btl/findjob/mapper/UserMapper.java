@@ -42,5 +42,6 @@ public interface UserMapper {
 	
 	public String get_userid(String user_email);
 	
+	public int namechk(String user_name);
 
 }
