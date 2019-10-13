@@ -41,4 +41,7 @@ public interface UserService {
     public void name_modify(@Param("user_email") String user_email, @Param("user_name") String user_name);
 
     public String get_userid(String user_email);
+    
+	public int namechk(String user_name);
+
 }

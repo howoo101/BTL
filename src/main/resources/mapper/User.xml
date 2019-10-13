@@ -92,6 +92,10 @@ values (#{authorization},#{user_email},#{user_name},#{user_password},NOW(),NOW()
 	select user_id from user where user_email = #{user_email}
 	</select>
 	
+	<!-- 닉네임체크-->
+	<select id="namechk" resultType="INT" parameterType="com.btl.findjob.model.UserDTO">
+		select count(*) from user where user_name = #{user_name}
+	</select>
 		
 </mapper>
 

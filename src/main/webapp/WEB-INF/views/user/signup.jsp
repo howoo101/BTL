@@ -2,18 +2,22 @@
          pageEncoding="UTF-8" %>
 
 <form id="signupform">
+
     <h3 class="form-signin-heading">회원가입</h3>
     <br>
+    
+
     <h6>이메일</h6>
     <label for="inputEmail" class="sr-only">Email address</label>
     <input type="email" name="user_email" id="inputEmail" class="form-control" placeholder="이메일주소" required autofocus>
-    <input type="button" id="check" value="중복체크" class="btn btn-dark mt-2">
+    <input type="button" id="emcheck" value="중복체크 후 사용" class="btn btn-dark mt-2">
+
+    <input type="button" id="emchange" value="이메일 변경" class="btn btn-dark mt-2">
     <p id="EmailCheck" class="mt-2" style="font-size:small"></p>
 
     <div class="container text-center" id="loading-bar1">
-        <img class="img-responsive center-block" src="resources/img/ajax-loader.gif"/>
+         <b style="font-size:small">잠시만 기다려주십시오...  <img class="img-responsive center-block"src="resources/img/ajax-loader.gif"/></b>
     </div>
-
 
     <div id="EmailAuthdiv">
         <br>
@@ -26,20 +30,20 @@
         <input type="button" id="authcheck" value="이메일 인증번호 확인" class="btn btn-dark mt-2">
         <br>
     </div>
+    
     <h6 class="mt-3">닉네임</h6>
     <label for="inputName" class="sr-only">Name</label>
     <input type="text" name="user_name" id="inputName" class="form-control" placeholder="닉네임" required>
-    <p id="nick" class="mt-2" style="font-size:small">닉네임은 2~10글자로 작성해주세요.</p>
+    <input type="button" id="nmcheck" value="중복체크 후 사용" class="btn btn-dark mt-2">
+     <input type="button" id="nmchange" value="닉네임 변경" class="btn btn-dark mt-2">
+    <p id="nameCheck" class="mt-2" style="font-size:small"></p>
     <br>
     <h6>비밀번호</h6>
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" name="user_password" id="inputPassword" class="form-control" placeholder="비밀번호" required>
     <input type="password" name="user_passwordchk" id="inputPasswordchk" class="form-control mt-1" placeholder="비밀번호 확인"
-           required>
+           required>      
     <p id="pwchk" class="mt-2" style="font-size:small">비밀번호는 문자,숫자,특수문자 포함 8~12자리 이내로 입력해주세요.</p>
-    <div class="container text-center" id="loading-bar2">
-        <img class="img-responsive center-block" src="resources/img/ajax-loader.gif"/>
-    </div>
     <br>
     <input type="button" id="signUp" value="가입" class="btn btn-lg btn-dark btn-block">
 </form>
@@ -47,41 +51,114 @@
 <script>
 $(document).ready(function (e) {
 
+	
+	
 
 //최초의 숨김 요소들
 $("#authsubmit").hide();
 $("#authcheck").hide();
+$("#emchange").hide();
+$("#nmchange").hide();
 $("#loading-bar1").hide();
-$("#loading-bar2").hide();
+$("#setIntervaling-bar2").hide();
 
 var Erchk = 0; //이메일 정규식
 var pwch = 0;	 // 비밀번호 정규식
 var namech = 0;	 //이름 정규식
 var authch = 0;	 // 인증키 인증여부
 
+
+
+$('#emchange').click(function () {
+	if(emailch==true){
+		Swal.fire({
+			  text: "입력하신 이메일을 변경하시겠습니까?",
+			  type: 'question',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  cancelButtonText: '취소',
+			  confirmButtonText: '확인'
+			}).then((result) => {
+			  if (result.value) {
+				  authch = 0;
+				  emailch = false;
+				  $('#inputAuthNum').attr("readonly", false);
+				  $('#inputAuthNum').val('');
+				  $('#inputEmail').attr("readonly", false);
+				  $('#inputEmail').val('');
+				  $("#EmailCheck").empty();
+		          $('#emcheck').show();
+		          $("#authsubmit").hide();
+		          $("#authcheck").hide();
+		          $("#emchange").hide();
+		          $("#EmailAuth").show();
+		          $("#EmailAuth").attr("style","font-size:small;");
+		          $('#EmailAuth').html("이메일 중복체크를 먼저 해주세요.");
+		          
+			  }
+			})
+	}
+})
+ 
+
+
+$('#nmchange').click(function () {
+	if(namechk==true){
+		Swal.fire({
+			  text: "입력하신 닉네임을 변경하시겠습니까?",
+			  type: 'question',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  cancelButtonText: '취소',
+			  confirmButtonText: '확인'
+			}).then((result) => {
+			  if (result.value) {
+				  namechk = false;		
+				  $('#inputName').val('');
+				  $('#inputName').attr("readonly", false);
+				  $('#nameCheck').empty();
+		          $('#nmcheck').show();
+		          $("#nmchange").hide();
+			  }
+			})
+	}
+})
+
+
 // 이메일 실시간 입력감지
 $("#inputEmail").on("propertychange change click keyup input paste", function () {
+	if(emailch==false){	
     var email = $(this).val();
-
     // if value is empty then exit
-    if (email == '' || email == 'undefined' || email == null)
+    if (email == '' || email == 'undefined' || email == null){
+    	$("#inputEmail").attr("style","border-color:none;");
+    	$("#EmailCheck").empty();
         return;
+    }
     if (!email_check(email)) {
-        $("#EmailCheck").html("잘못된 이메일 양식 ");
+         $("#EmailCheck").html("이메일을 정확히 입력해주세요. ");
+         $("#inputEmail").attr("style","border-color: red; box-shadow: none; -webkit-box-shadow: none;");
+        $("#EmailCheck").attr("style","color:red;font-size:small;");
         $(this).focus();
         Erchk = 0;
         return false;
     } else
-        $("#EmailCheck").html("올바른 이메일 양식 ok");
-    Erchk = 1;
+    	$("#inputEmail").attr("style","border-color:none;");
+        $("#EmailCheck").html("올바른 이메일 양식입니다.");
+    $("#EmailCheck").attr("style","color:green;font-size:small;");
+    Erchk = 1;}
+	else{}
 });
 
 
 // 비밀번호 실시간 입력감지
 $("#inputPassword").on("propertychange change click keyup input paste", function () {
     var pw = $(this).val();
-    if (pw == '' || pw == 'undefined' || pw == null)
+    if (pw == '' || pw == 'undefined' || pw == null){
         return;
+    }
     if (!pw_chk(pw)) {
         pwch = 0;
         return false;
@@ -91,14 +168,25 @@ $("#inputPassword").on("propertychange change click keyup input paste", function
 
 //이름 실시간 입력감지
 $("#inputName").on("propertychange change click keyup input paste", function () {
+	if(namechk==false){	
     var name = $(this).val();
-    if (name == '' || name == 'undefined' || name == null)
+    if (name == '' || name == 'undefined' || name == null){
+    	$("#inputName").attr("style","border-color:none;");
+    	$("#nameCheck").empty();
         return;
+    }
     if (!name_chk(name)) {
+    	 $("#inputName").attr("style","border-color: red; box-shadow: none; -webkit-box-shadow: none;");
+    	$("#nameCheck").attr("style","color:red;font-size:small;");
+    	$("#nameCheck").html("닉네임은 특수문자를 제외 2~10 글자로 입력해주세요.");
         namech = 0;
         return false;
     } else
+    	$("#inputName").attr("style","border-color:none;");
+    	$("#nameCheck").attr("style","color:green;font-size:small;");
+    	$("#nameCheck").html("올바른 닉네임 양식입니다. ");
         namech = 1;
+	}else{}
 });
 
 //이메일 정규표현식 통과시 true 반환
@@ -115,12 +203,12 @@ function pw_chk(pw) {
 
 // 닉네임 정규표현식 통과시 true 반환
 function name_chk(name) {
-    var nameRule = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$/;
+    var nameRule = /^[0-9a-zA-Z가-힣]{2,10}$/;
     return (name != '' && name != 'undefined' && nameRule.test(name));
 }
 
 var emailch = false; // 이메일 체크
-
+var namechk = false; // 닉네임 체크
 //유효성검사
 $('#signUp').click(function () {
 if ($.trim($('#inputEmail').val()) == '') {
@@ -153,10 +241,11 @@ else if ($('#inputPassword').val() != $('#inputPasswordchk').val()) {
 })
    $('#inputPassword').focus();
     return;
-} else if (namech == 0) {
+}
+else if (namechk == false) {
 	Swal.fire({
 		  type: 'warning',
-		  text: '닉네임은 2~10글자로 작성해주세요.'
+		  text: '닉네임 중복체크를 해주세요.'
 		})
     $('#inputName').focus();
     return;
@@ -184,23 +273,16 @@ $.ajax({
         "user_password": $('#inputPassword').val(),
         "user_name": $('#inputName').val()
     },
-    beforeSend: function () {
-        $("#loading-bar").show();
-    },
     success: function (data) {
-        $("#loading-bar").hide();
-
         if (data == '1') {            
         	Swal.fire({
           	type: 'success',
-        		  text: '가입이 완료 되었습니다! 로그인 해주세요.',
-        		showConfirmButton: false
+        		  html: '가입이 완료 되었습니다! <br> 로그인 해주세요.',
+        		showConfirmButton: false,
+        		timer: 1500
           	});
-        	var timer = setInterval(function() { 
         		$(".loginmodal-body").load("login");
-   			}, 1500); 
-        	
-        }
+       		 }
     },
     error: function () {
     	Swal.fire({
@@ -213,7 +295,7 @@ $.ajax({
 });
 
 /* 이메일 중복 확인  */
-$('#check').click(function () {
+$('#emcheck').click(function () {
   if (!Erchk == 0) { //이메일 정규식 통과 검사
   $.ajax({
      url: "${pageContext.request.contextPath}/emailchk.do",
@@ -224,15 +306,19 @@ $('#check').click(function () {
     success: function (data) {
         if (data == 0 && $.trim($('#inputEmail').val()) != '') {
             emailch = true;
-            $('#inputEmail').attr("readonly", true);
             $('#EmailCheck').empty();
+            $("#EmailCheck").attr("style","color:green;font-size:small;");
             $('#EmailCheck').html("사용가능한 이메일입니다.");
-            $('#check').hide();
-            $('#authsubmit').show();
             $('#EmailAuth').empty();
+            $("#authsubmit").show();
+            $('#emcheck').hide();
+        	$('#inputEmail').attr("readonly", true);
+    		$("#emchange").show();
 
         } else {
             $('#EmailCheck').empty();
+            $("#inputEmail").attr("style","border-color: red; box-shadow: none; -webkit-box-shadow: none;");
+            $("#EmailCheck").attr("style","color:red;font-size:small;");
             $('#EmailCheck').html("이미 가입된 이메일입니다.");
         }
     },
@@ -245,7 +331,50 @@ $('#check').click(function () {
     }); //ajax 이벤트 끝
 } else {
     $('#EmailCheck').empty();
+    $("#EmailCheck").attr("style","color:red;font-size:small;");
     $('#EmailCheck').html("이메일을 올바르게 입력하고 확인버튼을 눌러주세요.");
+}
+}); // click 이벤트 끝
+
+
+
+/* 닉네임 중복 확인  */
+$('#nmcheck').click(function () {
+  if (!namech == 0) { //닉네임 정규식 통과 검사
+  $.ajax({
+     url: "${pageContext.request.contextPath}/namechk.do",
+     type: "GET",
+     data: {
+         "user_name": $('#inputName').val()
+     },
+    success: function (data) {
+        if (data == 0 && $.trim($('#inputName').val()) != '') {
+        	namechk = true;
+            $('#inputName').attr("readonly", true);
+            $('#nameCheck').empty();            
+            $("#nameCheck").attr("style","color:green;font-size:small;");
+            $('#nameCheck').html("사용가능한 닉네임입니다.");
+            $('#nmcheck').hide();
+            $('#nmchange').show();
+
+        } else {
+            $('#nameCheck').empty();
+            $("#inputName").attr("style","border-color: red; box-shadow: none; -webkit-box-shadow: none;");
+            $("#nameCheck").attr("style","color:red;font-size:small;");
+            $('#nameCheck').html("이미 사용중인 닉네임입니다.");
+        }
+    },
+   error: function () {
+   	Swal.fire({
+ 		  type: 'warning',
+ 		  text: '서버에러'
+ 		})
+   }
+    }); //ajax 이벤트 끝
+} else {
+    $('#nameCheck').empty();
+    $("#nameCheck").attr("style","color:red;font-size:small;");
+    $('#nameCheck').html("닉네임을 올바르게 입력하고 확인버튼을 눌러주세요.");
 }
 }); // click 이벤트 끝
 
@@ -312,6 +441,7 @@ $.ajax({
               	});
             $("#authsubmit").hide();
             $("#authcheck").hide();
+            $("#EmailAuth").attr("style","color:green;font-size:small;");
             $('#EmailAuth').html("인증번호가 확인되었습니다.");
             authch = 1;
         } else if (data == '2') {
@@ -319,6 +449,7 @@ $.ajax({
               	type: 'error',
             		text: '인증번호가 틀렸습니다.',
               	});
+        	$("#EmailAuth").attr("style","color:red;font-size:small;");
             $('#EmailAuth').html("인증번호가 틀렸습니다.");
         }
     },

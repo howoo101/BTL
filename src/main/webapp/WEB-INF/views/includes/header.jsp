@@ -168,10 +168,10 @@ var ktr = $('#ktr').val();
 if($('#session').val() == 'null'){
 document.write(ltr);
 } 
-if($('#session').val() == 'null'){
+if($('#session').val() != 'null'){
 document.write(atr);
 } 
-if($('#session').val() == 'null'){
+if($('#session').val() != 'null'){
 document.write(ktr);
 } 	
 
@@ -244,7 +244,7 @@ if (grade == 1) {
     $("#signup").click(function () {
         $("#login").show();
         $("#signup").hide();
-        $("#pwfind").show();
+        $("#pwfind").hide();
     });
 
     $("#pwfind").click(function () {

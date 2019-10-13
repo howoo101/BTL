@@ -57,7 +57,8 @@
 
 <div class="col-lg-12 mt-4" id="user_status_footer">
     <button type="button" class="btn btn-primary navbar-btn mt-2" onclick="location.href='${path}/user_info'">
-    <i class="material-icons ">settings_applications</i><b>회원정보 수정</b></button>
+    <b>회원정보 수정</b>
+    </button>
     <hr>
 </div>
 </c:forEach>

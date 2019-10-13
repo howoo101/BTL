@@ -25,7 +25,7 @@
 		</form>
 	</div>
 	<div class="col-ls-12 mt-4" id="admin_body">
-	    <table id="tables" border="1">
+	    <table id="tables" class="table table-striped" >
 	        <c:forEach var="ul" items="${user_list}">
 	           <tr>
 	               <td><b>관리</b></td>

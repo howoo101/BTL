@@ -34,12 +34,16 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         //로그인이 안되어있을경우.. 컨트롤러 요청으로 가지 않도록 false 반환
         if (obj == null) {
             if ("XMLHttpRequest".equals(request.getHeader("x-requested-with"))) {
-                response.sendError(403);
+            	response.setStatus(403);
                 return false;
             }
             logininterceptor.forward(request, response);
             return false; // 컨트롤러 uri로의 요청으로 가지않도록 false
         } else if (grade.equals("5")) {
+        	 if ("XMLHttpRequest".equals(request.getHeader("x-requested-with"))) {
+             	response.setStatus(404);
+                 return false;
+             }
             gradeceptor.forward(request, response);
             return false;
         }

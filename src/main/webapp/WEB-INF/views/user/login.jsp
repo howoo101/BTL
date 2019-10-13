@@ -59,6 +59,90 @@
 
 
 <script>
+//이메일 정규표현식 통과시 true 반환
+function email_check(email) {
+    var regex = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    return (email != '' && email != 'undefined' && regex.test(email));
+}
+
+/* 로그인 */
+$('#loginbtn').click(function () {
+if ($.trim($('#inputEmail').val()) == '') {
+	Swal.fire({
+		  type: 'warning',
+		  text: '이메일 입력이 되지 않았습니다.'
+		})
+    $('#inputEmail').focus();
+    return;
+} else if ($.trim($('#inputPassword').val()) == '') {
+	Swal.fire({
+  type: 'warning',
+  text: '패스워드 입력이 되지 않았습니다.'
+})
+    $('#inputPassword').focus();
+    return;
+} else if (Erchk == 0) {
+	Swal.fire({
+  type: 'warning',
+  text: '이메일을 정확히 입력해주세요.'
+})
+    $('#inputEmail').focus();
+    return;
+} else {
+$.ajax({
+    url: "${pageContext.request.contextPath}/login_chk.do",
+    type: "POST",
+    data: {
+        "user_email": $('#inputEmail').val(),
+        "user_password": $('#inputPassword').val(),
+    },
+    success: function (data) {
+        if (data == '1') {
+        	Swal.fire({
+        	  type: 'success',
+      		  text: '로그인 되었습니다.',
+      		showConfirmButton: false
+        	});
+     	var timer = setInterval(function() { 
+        		$('.close').trigger('click');
+        		 location.reload(); 
+        		 clearInterval(timer);
+   			}, 500); 
+        } else if (data == '2') {
+            Swal.fire({
+          	type: 'error',
+        	text: '이메일 혹은 비밀번호를 다시 확인해주세요.',
+          	});
+            $('#inputEmail').focus();
+        } else if (data == '3') {
+        	 Swal.fire({
+             	type: 'error',
+           		text: '이미 접속중인 계정입니다.',
+             	});
+            $('.close').trigger('click');
+            location.reload();
+        } else if (data == "google"
+            || data == "naver"
+            || data == "kakao") 
+        	{
+            var snstype = data;  
+            Swal.fire({
+             	type: 'error',                    	
+           		html:"회원님은 " + snstype + " 소셜 계정으로 가입된 회원입니다. <br> 해당 플랫폼 계정으로 로그인 해주세요."
+             	});      
+            $('#inputEmail').focus();
+        }
+    },
+    error: function () {
+    	 Swal.fire({
+          	type: 'error',
+        		text: '서버 에러',
+          	});
+    }
+});
+    }
+});
+
 
 $("#kakaoBtn").click(function () {
     loginWithKakao();
@@ -98,11 +182,9 @@ function attachSignin(element) {
             } else if (data == '2') {
             	 Swal.fire({
                    	type: 'error',                    	
-                 		title:"로그인에 실패하였습니다. ",
-                 		text:"해당 이메일은  다른 소셜플랫폼 혹은 일반회원 계정으로 가입되어있습니다."
+                 		title:"로그인 실패 ",
+                 		html:"해당 이메일은  다른 소셜플랫폼 <br>혹은 일반회원 계정으로 가입되어 있습니다."
                    	});     
-                $('.close').trigger('click');
-                location.reload();
             } else if (data == '3') {
             	Swal.fire({
                 	  type: 'success',
@@ -146,12 +228,48 @@ $("#inputEmail").on("propertychange change click keyup input paste", function ()
         Erchk = 1;
 });
 
+//네이버 로그인
+function naverlogin() {
+  $.ajax({
+      url: "${pageContext.request.contextPath}/naver",
+      type: "post",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      data: {
+          "user_email": $('#naver_email').val(),
+          "user_name": $('#naver_name').val()
+      },
+    success: function (data) {
+        if (data == '1') {
+            $('.close').trigger('click');
+            location.reload();
+        } else if (data == '2') {
+        	 Swal.fire({
+                	type: 'error',                    	
+              		title:"로그인 실패 ",
+              		html:"해당 이메일은  다른 소셜플랫폼 <br>혹은 일반회원 계정으로 가입되어 있습니다."
+                	});    
+        } else if (data == '3') {
+        	Swal.fire({
+            	  type: 'success',
+          		  text: '소셜 회원 자동가입이 완료되었습니다.',
+          		showConfirmButton: false,
+          		  timer: 1500,
+            	 });
+            $('.close').trigger('click');
+            location.reload();
+        }
 
-    //이메일 정규표현식 통과시 true 반환
-    function email_check(email) {
-        var regex = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-        return (email != '' && email != 'undefined' && regex.test(email));
-    }
+    },
+   error: function () {
+   	 Swal.fire({
+          	type: 'error',
+        		text: '서버 에러',
+          	});
+   }
+    });
+}
+
+ 
 
 
     var naver_id_login = new naver_id_login("qbkbZvOsyDOQedGRhs0e",
@@ -162,81 +280,6 @@ $("#inputEmail").on("propertychange change click keyup input paste", function ()
     naver_id_login.setPopup();
     naver_id_login.init_naver_id_login();
 
-
-/* 로그인 */
-$('#loginbtn').click(function () {
-if ($.trim($('#inputEmail').val()) == '') {
-	Swal.fire({
-		  type: 'warning',
-		  text: '이메일 입력이 되지 않았습니다.'
-		})
-    $('#inputEmail').focus();
-    return;
-} else if ($.trim($('#inputPassword').val()) == '') {
-	Swal.fire({
-  type: 'warning',
-  text: '패스워드 입력이 되지 않았습니다.'
-})
-    $('#inputPassword').focus();
-    return;
-} else if (Erchk == 0) {
-	Swal.fire({
-  type: 'warning',
-  text: '이메일을 정확히 입력해주세요.'
-})
-    $('#inputEmail').focus();
-    return;
-} else {
-$.ajax({
-    url: "${pageContext.request.contextPath}/login_chk.do",
-    type: "POST",
-    data: {
-        "user_email": $('#inputEmail').val(),
-        "user_password": $('#inputPassword').val(),
-    },
-    success: function (data) {
-        if (data == '1') {
-        	Swal.fire({
-        	  type: 'success',
-      		  text: '로그인 되었습니다.',
-      		showConfirmButton: false
-        	});
-        	$('.close').trigger('click');
-   			 location.reload(); 
-        } else if (data == '2') {
-            Swal.fire({
-          	type: 'error',
-        	text: '이메일 혹은 비밀번호를 다시 확인해주세요.',
-          	});
-            $('#inputEmail').focus();
-        } else if (data == '3') {
-        	 Swal.fire({
-             	type: 'error',
-           		text: '이미 접속중인 계정입니다.',
-             	});
-            $('.close').trigger('click');
-            location.reload();
-        } else if (data == "google"
-            || data == "naver"
-            || data == "kakao") 
-        	{
-            var snstype = data;  
-            Swal.fire({
-             	type: 'error',                    	
-           		html:"회원님은 " + snstype + " 소셜 계정으로 가입된 회원입니다. <br> 해당 플랫폼 계정으로 로그인 해주세요."
-             	});      
-            $('#inputEmail').focus();
-        }
-    },
-    error: function () {
-    	 Swal.fire({
-          	type: 'error',
-        		text: '서버 에러',
-          	});
-    }
-});
-    }
-});
 
     /* 카카오 로그인  */
 function loginWithKakao() {  // 로그인 창을 띄웁니다.
@@ -260,13 +303,11 @@ function loginWithKakao() {  // 로그인 창을 띄웁니다.
            $('.close').trigger('click');
            location.reload();
        } else if (data == '2') {
-       	 Swal.fire({
-             	type: 'error',                    	
-           		title:"로그인에 실패하였습니다. ",
-           		text:"해당 이메일은  다른 소셜 플랫폼 혹은 일반회원 계정으로 가입되어있습니다."
-             	});      
-           $('.close').trigger('click');
-           location.reload();
+    	   Swal.fire({
+              	type: 'error',                    	
+            		title:"로그인 실패 ",
+            		html:"해당 이메일은  다른 소셜플랫폼 <br>혹은 일반회원 계정으로 가입되어 있습니다."
+              	});     
        } else if (data == '3') {
        	Swal.fire({
          	  type: 'success',
@@ -297,46 +338,5 @@ function loginWithKakao() {  // 로그인 창을 띄웁니다.
  });
 }
 
-    //네이버 로그인
-function naverlogin() {
-  $.ajax({
-      url: "${pageContext.request.contextPath}/naver",
-      type: "post",
-      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-      data: {
-          "user_email": $('#naver_email').val(),
-          "user_name": $('#naver_name').val()
-      },
-    success: function (data) {
-        if (data == '1') {
-            $('.close').trigger('click');
-            location.reload();
-        } else if (data == '2') {
-        	 Swal.fire({
-               	type: 'error',                    	
-             		title:"로그인에 실패하였습니다. ",
-             		text:"해당 이메일은 다른 소셜 플랫폼 혹은 일반회원 계정으로 가입되어있습니다."
-               	});    
-            $('.close').trigger('click');
-            location.reload();
-        } else if (data == '3') {
-        	Swal.fire({
-            	  type: 'success',
-          		  text: '소셜 회원 자동가입이 완료되었습니다.',
-          		showConfirmButton: false,
-          		  timer: 1500,
-            	 });
-            $('.close').trigger('click');
-            location.reload();
-        }
-
-    },
-   error: function () {
-   	 Swal.fire({
-          	type: 'error',
-        		text: '서버 에러',
-          	});
-   }
-    });
-}
+   
 </script>

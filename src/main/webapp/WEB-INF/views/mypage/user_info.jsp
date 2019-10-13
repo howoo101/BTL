@@ -26,7 +26,9 @@
             <label for="inputName" class="sr-only">Name</label>
             <input type="text" value=${ul.user_name} name="user_name" id="inputName" class="form-control"
                    placeholder="닉네임" required>
-            <p id="nick" class="mt-2" style="font-size:small">닉네임은 2~10글자로 작성해주세요.</p>
+            <input type="button" id="nmcheck" value="중복체크 후 사용" class="btn btn-dark">
+            <p id="nameCheck" class="mt-2" style="font-size:small">닉네임은 특수문자를 제외 2~10 글자로 입력해주세요.</p>
+            <br>
             <input type="button" id="name_modify" value="닉네임 수정" class="btn btn-lg btn-dark btn-block">
         </c:forEach>
 
@@ -67,19 +69,28 @@ $(document).ready(function (e) {
     }
 
     var namech = 1;	 //닉네임 정규식
+    var namechk = false; // 닉네임 체크
     var pwch = 0; //비밀번호 정규식
 
 //이름 실시간 입력감지
 $("#inputName").on("propertychange change click keyup input paste", function () {
     var name = $(this).val();
-    if (name == '' || name == 'undefined' || name == null)
+    if (name == '' || name == 'undefined' || name == null){
+    	$("#inputName").attr("style","border-color:none;");
+    	$("#nameCheck").empty();
         return;
+    }
     if (!name_chk(name)) {
+    	 $("#inputName").attr("style","border-color: red; box-shadow: none; -webkit-box-shadow: none;");
+    	$("#nameCheck").attr("style","color:red;font-size:small;");
+    	$("#nameCheck").html("닉네임은 특수문자를 제외 2~10 글자로 입력해주세요.");
         namech = 0;
         return false;
     } else
+    	$("#inputName").attr("style","border-color:none;");
+    	$("#nameCheck").attr("style","color:green;font-size:small;");
+    	$("#nameCheck").html("올바른 닉네임 양식입니다. ");
         namech = 1;
-
 });
 
 // 비밀번호 실시간 입력감지
@@ -96,13 +107,56 @@ $("#inputPassword").on("propertychange change click keyup input paste", function
 
 // 닉네임 정규표현식 통과시 true 반환
 function name_chk(name) {
-    var nameRule = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$/;
+    var nameRule = /^[0-9a-zA-Z가-힣]{2,10}$/;
     return (name != '' && name != 'undefined' && nameRule.test(name));
 }
+
+
+/* 닉네임 중복 확인  */
+$('#nmcheck').click(function () {
+  if (!namech == 0) { //닉네임 정규식 통과 검사
+  $.ajax({
+     url: "${pageContext.request.contextPath}/namechk.do",
+     type: "GET",
+     data: {
+         "user_name": $('#inputName').val()
+     },
+    success: function (data) {
+        if (data == 0 && $.trim($('#inputName').val()) != '') {
+        	namechk = true;
+            $('#inputName').attr("readonly", true);
+            $('#nameCheck').empty();            
+            $("#nameCheck").attr("style","color:green;font-size:small;");
+            $('#nameCheck').html("사용가능한 닉네임입니다.");
+            $('#nmcheck').hide();
+            $('#nmchange').show();
+
+        } else {
+            $('#nameCheck').empty();
+            $("#inputName").attr("style","border-color: red; box-shadow: none; -webkit-box-shadow: none;");
+            $("#nameCheck").attr("style","color:red;font-size:small;");
+            $('#nameCheck').html("이미 사용중인 닉네임입니다.");
+        }
+    },
+   error: function () {
+   	Swal.fire({
+ 		  type: 'warning',
+ 		  text: '서버에러'
+ 		})
+   }
+    }); //ajax 이벤트 끝
+} else {
+    $('#nameCheck').empty();
+    $("#nameCheck").attr("style","color:red;font-size:small;");
+    $('#nameCheck').html("닉네임을 올바르게 입력하고 확인버튼을 눌러주세요.");
+}
+}); // click 이벤트 끝
+
 
 //닉네임 수정 유효성검사
 
 $('#name_modify').click(function () {
+if(namechk==true){
 Swal.fire({
 	  text: "닉네임을 현재 입력된 닉네임으로 수정하시겠습니까?",
 	  type: 'question',
@@ -116,7 +170,7 @@ if (result.value) {
 	  if (namech == 0) {
 		  Swal.fire({
     		  type: 'warning',
-    		  text: '닉네임은 2~10글자로 작성해주세요.'
+    		  text: '닉네임은 특수문자를 제외 2~10 글자로 입력해주세요.'
     		})
           $('#inputName').focus();
           return;
@@ -150,6 +204,14 @@ if (result.value) {
       }
 	 }
 	})
+	}else{
+		Swal.fire({
+			  type: 'warning',
+			  text: '닉네임 중복체크를 해주세요.'
+			})
+	    $('#inputName').focus();
+	    return;
+	}
 });	
 
 
@@ -217,7 +279,7 @@ if (result.value) {
                     if (data == '1') {
                         Swal.fire({
                     		  type: 'success',
-                    		  html: '수정이 완료되었습니다.<br> 수정한 비밀번호로 다시 로그인 해주세요.',
+                    		  html: '수정이 완료되었습니다. <br> 수정한 비밀번호로 다시 로그인 해주세요.',
                     		  showConfirmButton: false
                     		})
                     		var timer = setInterval(function() { 
