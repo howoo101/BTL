@@ -74,7 +74,7 @@
 										<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
 										<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
 										<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
-										<button class='btn btn-primary'>Search</button>
+										<button class='btn btn-primary'>검색</button>
 									</form>
 								</div>
 							<div class="panel-heading text-right col-lg-4">

@@ -158,7 +158,7 @@
                                             class="btn btn-warning">수정
                                     </button>
                                     <button type="submit" data-oper='remove' class="btn btn-danger">삭제</button>
-                                    <button type="submit" data-oper='list' class="btn btn-info">List</button>
+                                    <button type="submit" data-oper='list' class="btn btn-info">목록</button>
 
                                 </form>
                                 <br>

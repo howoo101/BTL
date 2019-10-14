@@ -28,34 +28,8 @@
                         </c:forEach>
                     </table>
                 </div>
-                <div class="col-lg-12 mt-4" id="admin_footer">
-                    <nav aria-label="Admin Page navigation">
-                        <ul class="pagination justify-content-end">
-                            <c:if test="${pageMaker.prev}">
-                                <li class="page-item previous"><a class="page-link" href="${pageMaker.startPage -1 }">Previous</a>
-                                </li>
-                            </c:if> <c:forEach var="num" begin="${pageMaker.startPage }"
-                                               end="${pageMaker.endPage }">
-                            <li class="page-item ${pageMaker.cri.pageNum == num? 'active' : ''}"><a class="page-link"
-                                                                                                    href="${num}">${num}</a>
-                            </li>
-                        </c:forEach> <c:if test="${pageMaker.next }">
-                            <li class="page-item next"><a class="page-link" href="${pageMaker.endPage +1}">Next</a></li>
-                        </c:if>
-                        </ul>
-                    </nav>
-                </div>
             </div>
         </div>
-
-        <!-- 페이징번호 -->
-        <form id='actionForm' action="admin_page" method='get'>
-            <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-            <input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-            <input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}" />'>
-            <input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}" />'>
-        </form>
-
     </div>
 
 </section>

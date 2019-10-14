@@ -187,7 +187,7 @@
                                 </button>
 
                                 <button data-oper='list' class="btn btn-info mb-3"
-                                        onclick="location.href='list'">List
+                                        onclick="location.href='list'">목록
                                 </button>
 
 
@@ -229,15 +229,15 @@
                                               value='' readonly="readonly">
                 </div>
                 <div class="form-group">
-                    <label>Reply Date</label> <input class="form-control"
+                    <label>작성일</label> <input class="form-control"
                                                      name=reply_date value=''>
 
                 </div>
             </div>
             <div class="modal-footer">
-                <button id='modalModBtn' type="button" class="btn btn-warning">Modify</button>
-                <button id='modalRemoveBtn' type="button" class="btn btn-danger">Remove</button>
-                <button id='modalRegisterBtn' type="button" class="btn btn-primary">Register</button>
+                <button id='modalModBtn' type="button" class="btn btn-warning">수정</button>
+                <button id='modalRemoveBtn' type="button" class="btn btn-danger">삭제</button>
+                <button id='modalRegisterBtn' type="button" class="btn btn-primary">등록</button>
             </div>
         </div>
     </div>

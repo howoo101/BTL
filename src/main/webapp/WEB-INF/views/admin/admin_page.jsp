@@ -23,7 +23,7 @@
                     <input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
                     <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
                     <input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
-                    <button class='btn btn-primary'>검색</button>
+                    <button class='btn btn-primary' id ="searchBtn">검색</button>
                 </form>
             </div>
             <div class="col-ls-12 mt-4" id="admin_body">
@@ -40,7 +40,6 @@
                     </tr>
                     <c:forEach var="ul" items="${user_list}">
                         <tr>
-
                             <td>${ul.user_id}</td>
                             <td>${ul.authorization_id}</td>
                             <td>${ul.user_name}</td>
@@ -87,20 +86,26 @@
 
     <script>
         var actionForm = $("#actionForm");
+        var searchForm = $("#searchForm");
         $(".page-item a").on("click", function (e) {
             e.preventDefault();
 
-            actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-            actionForm.submit();
+            var pageNum = $(this).attr("href");
+            var amount = actionForm.find("input[name='amount']").val();
+            $("#ap_body").load("${pageContext.request.contextPath}/admin_page?pageNum="+pageNum+"&amount="+amount);
+
         });
 
-        $(".move").on("click", function (e) {
+        $("#searchBtn").on("click", function (e) {
             e.preventDefault();
-            actionForm.append("<input type='hidden' name='user_id' value='" + $(this).attr("href") + "'>");
-            actionForm.attr("action", "get");
-            actionForm.submit()
+            var pageNum = actionForm.find("input[name='pageNum']").val();
+            var amount = actionForm.find("input[name='amount']").val();
+            var keyword = searchForm.find("input[name='keyword']").val();
+            var type = searchForm.find("select[name='type']").val();
 
-        });
+            $("#ap_body").load("${pageContext.request.contextPath}/admin_page?type="+type+"&keyword="+keyword+"&pageNum="+pageNum+"&amount="+amount);
+        })
+
 
     </script>
 </section>

@@ -109,7 +109,7 @@
                     </button>
                     <button type="button" id="loginmd" class="btn btn-dark navbar-btn " data-toggle="modal"
                             data-target="#loginModal">
-                        <i class="material-icons ">account_circle</i> <b>Login</b></button>
+                        <i class="material-icons ">account_circle</i> <b>로그인</b></button>
 
 
                     <div class="btn-group usermodal mr-2"><!--usermodal 시작 -->
@@ -118,11 +118,11 @@
                             <b id="ucon">${name} </b>
                             <i class="material-icons" style="text:35px">face</i>
                         </button>
-                        <ul class="dropdown-menu text-center" role="menu">
-                            <li id="preauth"><a href="kakaoPay"><b>정회원 인증</b></a></li>
-                            <li id="admauth"><a href="admin_Menu"><b>관리모드</b></a></li>
-                            <li><a href="myPage_menu"><b>마이페이지</b></a></li>
-                            <li><a href="logout"><b>로그아웃</b></a></li>
+                        <ul class="dropdown-menu text-center" role="menu" style="font-size: small;">
+                            <li id="preauth" class="mb-1 mt-1"><a href="kakaoPay"><b>정회원 인증</b></a></li>
+                            <li id="admauth" class="mb-1 mt-1"><a href="admin_Menu"><b>관리모드</b></a></li>
+                            <li class="mb-1"><a href="myPage_menu"><b>마이페이지</b></a></li>
+                            <li class="mb-1"><a href="logout"><b>로그아웃</b></a></li>
                         </ul>
                     </div><!--usermodal 끝 -->
                 </div> <!-- 묶기 끝 -->
