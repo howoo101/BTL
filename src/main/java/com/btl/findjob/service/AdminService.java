@@ -2,14 +2,8 @@ package com.btl.findjob.service;
 
 import java.util.List;
 
+import com.btl.findjob.model.*;
 import org.apache.ibatis.annotations.Param;
-
-import com.btl.findjob.model.AdminCriteria;
-import com.btl.findjob.model.BoardCriteria;
-import com.btl.findjob.model.BoardDTO;
-import com.btl.findjob.model.CompanyReview;
-import com.btl.findjob.model.InterviewReviewDTO;
-import com.btl.findjob.model.UserDTO;
 
 public interface AdminService {
 
@@ -25,4 +19,11 @@ public interface AdminService {
 
     public List<UserDTO> user_search(String user_name);
 
+    List<QnADTO> adminAnswerList();
+
+    void updateAdminAnswer(QnADTO qnADTO);
+
+    void deleteIR(String ir_id);
+
+    void deleteCR(String cr_id);
 }

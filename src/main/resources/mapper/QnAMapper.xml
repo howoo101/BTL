@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.btl.findjob.mapper.QnAMapper">
+
+    <select id="list" resultType="com.btl.findjob.model.QnADTO">
+	<![CDATA[
+        select *
+        from qna
+        where QnA_id > 0
+          and QnA_user_id = #{qnA_user_id}
+        order by QnA_id desc
+        ]]>
+	</select>
+    <insert id="register">
+        insert into qna(QnA_id, QnA_title, QnA_content, QnA_state, QnA_user_id)
+        values (#{qnA_id}, #{qnA_title},
+                #{qnA_content}, #{qnA_state}, #{qnA_user_id})
+    </insert>
+
+    <select id="getQnA" resultType="com.btl.findjob.model.QnADTO">
+        select *
+        from qna
+        where QnA_id = #{qnA_id}
+    </select>
+</mapper>

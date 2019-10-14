@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <script src="resources/js/star.js"></script>
 
@@ -28,7 +28,8 @@
                                href="${pageContext.request.contextPath}/info?ci_companyName=${list.ci_companyName}&ci_id=${list.ci_id}">${list.ci_companyName}</a>
                         </th>
                         <td><c:out value="${list.cr_comment }"/></td>
-                        <td><c:out value="${list.cr_regDate }"/></td>
+                        <td><fmt:formatDate pattern="yyyy-MM-dd"
+                                                value="${list.cr_regDate }" /></td>
                         <td>
                             <input type="hidden" value="${list.ci_id}">
                             <button class="callmodify btn btn-light" value="<c:out value='${list.cr_id }'/>">수정</button>
@@ -53,6 +54,9 @@
             </div>
             <div class="modal-body" name="need">
                 <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>카테고리</label>
+                    </div>
                     <div class="col-sm-9">
                         <label>
                             <select class="form-control custom-select" name="cr_category">

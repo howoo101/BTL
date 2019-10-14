@@ -2,12 +2,15 @@ package com.btl.findjob.controller;
 
 import com.btl.findjob.model.*;
 import com.btl.findjob.service.InterviewReviewService;
+import com.btl.findjob.service.KakaoPayService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @Log4j
 @RestController
@@ -16,12 +19,17 @@ import org.springframework.web.bind.annotation.*;
 public class InterviewReviewController {
 
     private InterviewReviewService interviewReviewService;
+    private KakaoPayService kakaoPayService;
 
     @PostMapping(value = "/new", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-    public ResponseEntity<String> register(@RequestBody InterviewReviewDTO interviewReviewDTO) {
+    public ResponseEntity<String> register(@RequestBody InterviewReviewDTO interviewReviewDTO, HttpSession httpSession) {
 
         int insertCount = interviewReviewService.interviewReviewRegister(interviewReviewDTO);
+        String user_id = (String) httpSession.getAttribute("user_id");
 
+        if(insertCount == 1){
+            kakaoPayService.update(user_id);
+        }
         return insertCount == 1
                 ? new ResponseEntity<>("success", HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

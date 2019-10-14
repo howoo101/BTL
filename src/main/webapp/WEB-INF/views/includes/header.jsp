@@ -50,7 +50,7 @@
     
     <!-- alert창 -->
     <script src="resources/js/sweetalert2.all.min.js"></script>
-    <title>홈</title>
+    <title>Find Job</title>
 </head>
 <body>
 
@@ -120,7 +120,7 @@
                         </button>
                         <ul class="dropdown-menu text-center" role="menu">
                             <li id="preauth"><a href="kakaoPay"><b>정회원 인증</b></a></li>
-                            <li id="admauth"><a href="admin_page"><b>관리모드</b></a></li>
+                            <li id="admauth"><a href="admin_Menu"><b>관리모드</b></a></li>
                             <li><a href="myPage_menu"><b>마이페이지</b></a></li>
                             <li><a href="logout"><b>로그아웃</b></a></li>
                         </ul>

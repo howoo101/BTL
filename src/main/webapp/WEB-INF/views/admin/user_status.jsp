@@ -84,12 +84,14 @@ $.ajax({
 	}		
 	})
 });	
-        
+
+var user_id = '${ul.user_id}';
+var user_email ='${ul.user_email}';
 $('#mprc').click(function () {
-    $("#mp_body").load("${pageContext.request.contextPath}/user_ReviewComment", {"user_id":${ul.user_id}});
+    $("#mp_body").load("${pageContext.request.contextPath}/user_ReviewComment", {"user_id":user_id,"user_email":user_email});
 });
 $('#mpir').click(function () {
-    $("#mp_body").load("${pageContext.request.contextPath}/user_InterviewReview", {"user_id":${ul.user_id}});
+    $("#mp_body").load("${pageContext.request.contextPath}/user_InterviewReview", {"user_id":user_id,"user_email":user_email});
 });
 </script>
 </c:forEach>

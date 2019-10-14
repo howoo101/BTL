@@ -27,7 +27,11 @@ public class CalendarController {
     @RequestMapping(value = "/calendar")
     public String calendar(String ci_companyName, Model model) {
         List<CalendarDTO> cList = new ArrayList<>();
+        if(ci_companyName == null){
+            return "calendar";
+        }
         cList = cs.JData(ci_companyName);
+
         // 이름가지고 사람인 데이터 불러오기
         model.addAttribute("jdata", cList);
         model.addAttribute("ci_companyName", ci_companyName);

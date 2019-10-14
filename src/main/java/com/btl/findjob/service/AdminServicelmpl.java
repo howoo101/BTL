@@ -2,22 +2,22 @@ package com.btl.findjob.service;
 
 import java.util.List;
 
+import com.btl.findjob.mapper.QnAMapper;
+import com.btl.findjob.model.*;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.btl.findjob.mapper.AdminMapper;
-import com.btl.findjob.model.AdminCriteria;
-import com.btl.findjob.model.BoardCriteria;
-import com.btl.findjob.model.CompanyReview;
-import com.btl.findjob.model.InterviewReviewDTO;
-import com.btl.findjob.model.UserDTO;
 
 @Service
+@AllArgsConstructor
 public class AdminServicelmpl implements AdminService {
 
-    @Autowired
     AdminMapper mapper;
+
+    QnAMapper qnAMapper;
 
     @Override
     public List<CompanyReview> myReviewComment(int user_id) {
@@ -47,9 +47,29 @@ public class AdminServicelmpl implements AdminService {
         return mapper.user_search(user_name);
     }
 
-	@Override
-	public int getTotal(AdminCriteria cri) {
-		return mapper.getTotalCount(cri);
-	}
+    @Override
+    public List<QnADTO> adminAnswerList() {
+        return mapper.adminAnswerList();
+    }
+
+    @Override
+    public void updateAdminAnswer(QnADTO qnADTO) {
+        mapper.updateAdminAnswer(qnADTO);
+    }
+
+    @Override
+    public void deleteIR(String ir_id) {
+        mapper.deleteIR(ir_id);
+    }
+
+    @Override
+    public void deleteCR(String cr_id) {
+        mapper.deleteCR(cr_id);
+    }
+
+    @Override
+    public int getTotal(AdminCriteria cri) {
+        return mapper.getTotalCount(cri);
+    }
 
 }
