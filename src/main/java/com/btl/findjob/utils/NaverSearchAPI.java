@@ -57,12 +57,14 @@ public class NaverSearchAPI {
                     text = text.substring(0, text.indexOf("("));
                 text = text.trim();
                 System.out.println("회사이름 : " + text);
-				for (Object o : jsonArr) {
+				
+                for (Object o : jsonArr) {
 					String[] arr = new String[3];
 					String title = ((JSONObject) o).get("title").toString();
 					String discription = ((JSONObject) o).get("description").toString();
 					if (title.contains("주가") || discription.contains("주가")) continue;
 					String link = ((JSONObject) o).get("link").toString();
+			
 					//date format
 					String date = ((JSONObject) o).get("pubDate").toString();
 					SimpleDateFormat transFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -70,10 +72,12 @@ public class NaverSearchAPI {
 					SimpleDateFormat transFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 					date = transFormat2.format(to);
 					//
+					
 					arr[0] = title;
 					arr[1] = link;
 					arr[2] = date;
-					if (title.contains(text))
+					//기업명포함된 기사만 추가
+					if (title.contains(text) || discription.contains(text))
 						list.add(arr);
 				}
 

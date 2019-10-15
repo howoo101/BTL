@@ -23,7 +23,7 @@ public class KakaoPay {
     private static final String HOST = "https://kapi.kakao.com";
 
     private static final String QUANTITY = "1";//주문수량 고정
-    private static final String TOTAL_AMOUNT = "1000000"; //가격 고정
+    private static final String TOTAL_AMOUNT = "1000"; //가격 고정
     private static final String TAX_FREE_AMOUNT = "10000";//제세
     private static final String APPROVAL_URL = "http://localhost:8282/findjob/kakaoPaySuccess";//성공 URL
     private static final String CANCEL_URL = "http://localhost:8282/findjob/kakaoPayCancel";//취소 URL
