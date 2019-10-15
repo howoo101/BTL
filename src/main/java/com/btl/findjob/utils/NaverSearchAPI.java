@@ -36,7 +36,7 @@ public class NaverSearchAPI {
             // response 수신
             int responseCode = con.getResponseCode();
             if (responseCode == 200) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));
                 String inputLine;
                 StringBuffer response = new StringBuffer();
                 while ((inputLine = in.readLine()) != null) {
