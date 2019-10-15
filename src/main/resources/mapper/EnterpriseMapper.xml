@@ -4,7 +4,7 @@
 
 	<!-- 기업 검색 페이지에서 기업클릭시 불러오는 기업정보   -->
 	<select id="companyList" resultType="com.btl.findjob.model.CompanyListVO">
-		SELECT ci.*, ifnull(follow.follow_id,0) followId FROM BTL.COMPANYINFO ci
+		SELECT ci.*, ifnull(follow.follow_id,0) followId FROM companyinfo ci
         left join (select * from follow
         where follow.user_id = (select user.user_id 
         from user where user.user_email= #{userEmail})) follow on follow.ci_id = ci.ci_id
