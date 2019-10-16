@@ -26,7 +26,7 @@
             <label for="inputName" class="sr-only">Name</label>
             <input type="text" value=${ul.user_name} name="user_name" id="inputName" class="form-control"
                    placeholder="닉네임" required>
-            <input type="button" id="nmcheck" value="중복체크 후 사용" class="btn btn-dark">
+            <input type="button" id="nmcheck" value="중복체크 후 사용" class="btn btn-dark mt-2">
             <p id="nameCheck" class="mt-2" style="font-size:small">닉네임은 특수문자를 제외 2~10 글자로 입력해주세요.</p>
             <br>
             <input type="button" id="name_modify" value="닉네임 수정" class="btn btn-lg btn-dark btn-block">
