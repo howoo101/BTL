@@ -25,4 +25,4 @@
 </table>
 
 
-<button id="qnAregisterBtn" onclick="location.href='${path}/QnARegister'">문의하기</button>
+<button id="qnAregisterBtn" class="btn btn-primary" onclick="location.href='${path}/QnARegister'">문의하기</button>
