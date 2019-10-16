@@ -338,9 +338,9 @@
                     return;
                 }
                 // 등급별 블러처리
-                var grade = '${grade}';
+                const grade = '${gradechk}';
 
-                if(grade === '' || Number(grade) === 4) {
+                if(grade === '' || Number(grade) >= 4) {
                     check = 1;
                     str+="<div class='card-body' style='position:relative'> " +
                         "<button class='btn btn-outline-info' onclick='location.href=kakaoPay' style='position: absolute; width: 350px; height: 100px; left: 50%; top: 50%; margin-left:-175px; margin-top: -50px; z-index: 1000;'><h5>멤버쉽 가입에 가입해주세요.</h5></button>" +

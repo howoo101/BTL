@@ -12,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.btl.findjob.model.*;
 
-import com.btl.findjob.service.CompanyReviewService;
-import com.btl.findjob.service.CompanyService;
-import com.btl.findjob.service.InterviewReviewService;
+import com.btl.findjob.service.*;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.ibatis.annotations.Param;
@@ -28,8 +27,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.btl.findjob.model.MypageCriteria;
 import com.btl.findjob.model.MypagePageDTO;
-import com.btl.findjob.service.EnterpriseService;
-import com.btl.findjob.service.MypageService;
 import com.btl.findjob.utils.CookieUtils;
 import com.btl.findjob.utils.NaverSearchAPI;
 
@@ -38,40 +35,18 @@ import com.btl.findjob.utils.NaverSearchAPI;
  */
 @Log4j
 @Controller
+@AllArgsConstructor
 public class HomeController {
 
-    @Autowired
-    EnterpriseService enterService;
-    @Autowired
-    CompanyService companyService;
-
-
+    private EnterpriseService enterService;
+    private CompanyService companyService;
     private CompanyReviewService companyReviewService;
-
-    @Autowired
-    public void setCompanyReviewService(CompanyReviewService companyReviewService) {
-        this.companyReviewService = companyReviewService;
-    }
-
-    ;
-
     private InterviewReviewService interviewReviewService;
-
-    @Autowired
-    public void setInterviewReviewService(InterviewReviewService interviewReviewService) {
-        this.interviewReviewService = interviewReviewService;
-    }
-
-    ;
-
-    @Autowired
-    MypageService mypageService;
+    private MypageService mypageService;
+    private UserService userService;
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-    /**
-     * Simply selects the home view to render by returning its name.
-     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model) {
         // carousel
@@ -182,6 +157,12 @@ public class HomeController {
         model.addAttribute("news", list);
 
         //면접 차트 정보
+        if(userEmail.equals("")) {
+            model.addAttribute("gradechk", "");
+        }else {
+            model.addAttribute("gradechk", userService.gradechk(userEmail));
+        }
+
         String[] difficultyArr = {"쉬움", "약간 쉬움", "보통", "약간 어려움", "어려움"};
         List<Integer> difficultyList = new ArrayList<>();
 
