@@ -58,7 +58,7 @@ $.ajax({
 	    	var experienceLevel = data['jobs']['job'][i]['position']['experience-level']['name'];
 			var requiredEducationLevel = data['jobs']['job'][i]['position']['required-education-level']['name'];
 			var location = data['jobs']['job'][i]['position']['location']['name'];
-    	
+			if(companyName == hireName) {
     		saramInRow.innerHTML +=
     			  '<div class="col-sm-4" style="padding-top:5px; padding-bottom: 5px;">'
     			+ '  <!-- 패널 배경색 넣는곳 -->'
@@ -83,6 +83,7 @@ $.ajax({
     			+ '    </div>'
     			+ '  </div>'
     			+ '</div>'
+			}
     	}
     },
 	error : function(xhr, status, error) {
