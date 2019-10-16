@@ -30,7 +30,7 @@ public class KakaoPayController {
     @GetMapping("kakaoPay")
     public String kakaoPayGet(HttpSession httpSession) {
         String user_email = (String) httpSession.getAttribute("user");
-        ;
+
         int check_user = userService.gradechk(user_email);
 
         if (check_user < 4) {
@@ -69,6 +69,11 @@ public class KakaoPayController {
 
     @GetMapping("kakaoPayCancel")
     public void kakaoPayCancel(){
+
+    }
+
+    @GetMapping ("kakaoPaySuccessFail")
+    public void kakaoPaySuccessFail(){
 
     }
 }

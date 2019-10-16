@@ -4,7 +4,7 @@
 <%@ include file="includes/header.jsp"%>
 <div class="container">
     <div class="card-body text-center mt-5">
-<h1> 멤버쉽 결제 </h1>
+<h1> 멤버십 결제 </h1>
 
 
 <form method="post" action="kakaoPay" target="popup_window">

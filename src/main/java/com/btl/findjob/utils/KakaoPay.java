@@ -24,15 +24,15 @@ public class KakaoPay {
 
     private static final String QUANTITY = "1";//주문수량 고정
     private static final String TOTAL_AMOUNT = "1000"; //가격 고정
-    private static final String TAX_FREE_AMOUNT = "10000";//제세
+    private static final String TAX_FREE_AMOUNT = "100";//제세
     private static final String APPROVAL_URL = "http://localhost:8282/findjob/kakaoPaySuccess";//성공 URL
     private static final String CANCEL_URL = "http://localhost:8282/findjob/kakaoPayCancel";//취소 URL
     private static final String FAIL_URL = "http://localhost:8282/findjob/kakaoPaySuccessFail";//실패 URL
-    private static final String ITEM_NAME = "프리미엄회원권";//성공 URL
+    private static final String ITEM_NAME = "프리미엄회원권";//상품명
     private static final String partner_order_id = UUID.randomUUID().toString();//주문 고유번호 생성 위해서 or random?
 
     private KakaoPayReadyVO kakaoPayReadyVO;
-    RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate = new RestTemplate();
 
     public static HttpHeaders headers() {
         // 서버로 요청할 Header
@@ -40,12 +40,9 @@ public class KakaoPay {
         String[] headerName = {"Authorization", "Accept", "Content"};
         String[] headerValue = {"KakaoAK " + "6a4a878f48138ae2ac9a1e42f4033df7", "application/x-www-form-urlencoded;charset=utf-8", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8"};
 
-        for (int i = 0; i <  headerName.length; i++) {
+        for (int i = 0; i < headerName.length; i++) {
             headers.add(headerName[i], headerValue[i]);
         }
-//        headers.add("Authorization", "KakaoAK " + "6a4a878f48138ae2ac9a1e42f4033df7");
-//        headers.add("Accept", "application/x-www-form-urlencoded;charset=utf-8");
-//        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 
         return headers;
     }
@@ -72,14 +69,11 @@ public class KakaoPay {
 
             //성공시
             return kakaoPayReadyVO.getNext_redirect_pc_url();
-
         } catch (RestClientException | URISyntaxException e) {
             e.printStackTrace();
         }
-
-        return "pay";
         //실패시
-
+        return FAIL_URL;
     }
 
     public KakaoPayApprovalVO kakaoPayInfo(String pg_token, String user_id) {

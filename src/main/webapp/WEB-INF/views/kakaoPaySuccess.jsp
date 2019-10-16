@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="includes/header.jsp" %>
 
 <div class="container">
     <div class="card-body text-center mt-5">
         <h2>결제가 완료되었습니다.</h2>
-        <table>
+        <table class="table">
 
             <tr>
                 <td>
@@ -21,7 +21,8 @@
                     결제일시
                 </td>
                 <td>
-                    ${info.approved_at}
+                    <fmt:formatDate pattern="yyyy-MM-dd"
+                                    value="${info.approved_at}" />
                 </td>
             </tr>
             <tr>
