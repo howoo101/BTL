@@ -37,14 +37,14 @@ public class GraphController {
         return saraminData(ci_companyName);
     }
 
-    public String saraminData(String comapany) {
+    public String saraminData(String company) {
         BufferedReader in = null;
         String json = "";
         try {
             // URL 생성
             String saraminUrl = "https://oapi.saramin.co.kr/job-search?";
             String accessKey = "&access-key=e8iNhZzwll1Rot7ie6H6eZSrzZ7YBwxczxmTF9on1TVL6pZkMiVW&keywords=";
-            String keyword = URLEncoder.encode(comapany, "UTF-8");
+            String keyword = URLEncoder.encode(company, "UTF-8");
 
             String URL = saraminUrl + accessKey + keyword;
 
