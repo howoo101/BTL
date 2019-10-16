@@ -145,7 +145,7 @@
                                                                     <input name='reply_writer' type='hidden'
                                                                            id="need_writer"
                                                                            value="<%=name%>">
-                                                                    <input class="user_id"
+                                                                    <input name="user_id"
                                                                            type="hidden" value="<%=user_id%>">
                                                                     <input name='reply_date' type='hidden'>
                                                                 </div>
@@ -388,6 +388,8 @@
                 .find("textarea[name='reply_content']");
             var inputReplyer = replyCard
                 .find("input[name='reply_writer']");
+            var inputUserId = replyCard
+                .find("input[name='user_id']");
             var inputReplyDate = replyCard
                 .find("input[name='reply_date']");
 
@@ -420,6 +422,8 @@
                             reply_content: inputReply
                                 .val(),
                             reply_writer: inputReplyer
+                                .val(),
+                            user_id: inputUserId
                                 .val(),
                             board_id: board_idValue
                         };
