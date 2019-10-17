@@ -48,9 +48,9 @@
                             <td><fmt:formatDate pattern="yyyy-MM-dd"
                                                 value="${ul.user_modify_date}"/></td>
                             <td>
-                            <c:if test="${ul.sns_type eq 'google'}"><img src="resources/img/g-normal.png" style=" width:24px; box-shadow: 1px 1px grey;"></img></c:if>
-                            <c:if test="${ul.sns_type eq 'kakao'}"><img src="resources/img/kakao_logo2.PNG" style="width:24px; box-shadow: 1px 1px grey;"></img></c:if>
-                            <c:if test="${ul.sns_type eq 'naver'}"><img src="resources/img/naver_logo.png" style="width:24px; box-shadow: 1px 1px grey;"></img></c:if>
+                            <c:if test="${ul.sns_type eq 'google'}"><img src="resources/img/g-normal.png"  style=" width:24px; box-shadow: 1px 1px grey;"> Google</img></c:if>
+                            <c:if test="${ul.sns_type eq 'kakao'}"><img src="resources/img/kakao_logo2.PNG" style="width:24px; box-shadow: 1px 1px grey;"> Kakao</img></c:if>
+                            <c:if test="${ul.sns_type eq 'naver'}"><img src="resources/img/naver_logo.png"  style="width:24px; box-shadow: 1px 1px grey;"> Naver</img></c:if>
                             </td>
                             <td><a href="user_status?user_email=${ul.user_email}"
                                    onclick="window.open(this.href,'유저 관리','width=800, height=500'); return false;"><i class="material-icons">search</i></a>
