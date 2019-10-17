@@ -168,7 +168,7 @@ var ktr = $('#ktr').val();
 if($('#session').val() == 'null'){
 document.write(ltr);
 } 
-if($('#session').val() != 'null'){
+if($('#grade').val() != '1' ){
 document.write(atr);
 } 
 if($('#session').val() != 'null'){

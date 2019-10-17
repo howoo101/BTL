@@ -139,6 +139,18 @@ public class UserController {
                 String sns_type = "google";
 
                 //sns 회원가입 (인증키가 없고 비밀번호는 랜덤비밀번호를 사용 (사실상 일반회원로그인이 안되게 막은것))
+                
+                if(1==(userservice.namechk(user_name))){
+                	int i = 0;
+                	while(true) {
+                	user_name = user_name + i;
+                	i++;
+                	if(0==(userservice.namechk(user_name))) {
+                		break;
+                	}
+                	}
+                }
+                
                 userservice.snsjoin_insert(user_email, user_name, user_password, authorization, sns_key, sns_type);
                 session.setAttribute("user", user_email);
                 session.setAttribute("name", userservice.getname(user_email));
@@ -186,6 +198,16 @@ public class UserController {
             String sns_key = "test";
             String sns_type = "kakao";
 
+            if(1==(userservice.namechk(user_name))){
+            	int i = 0;
+            	while(true) {
+            	user_name = user_name + i;
+            	i++;
+            	if(0==(userservice.namechk(user_name))) {
+            		break;
+            	}
+            	}
+            }
             //sns 회원가입 (인증키가 없고 비밀번호는 랜덤비밀번호를 사용 (사실상 일반회원로그인이 안되게 막은것))
             userservice.snsjoin_insert(user_email, user_name, user_password, authorization, sns_key, sns_type);
             session.setAttribute("user", user_email);
@@ -228,6 +250,17 @@ public class UserController {
 
             String sns_key = "test";
             String sns_type = "naver";
+            
+            if(1==(userservice.namechk(user_name))){
+            	int i = 0;
+            	while(true) {
+            	user_name = user_name + i;
+            	i++;
+            	if(0==(userservice.namechk(user_name))) {
+            		break;
+            	}
+            	}
+            }
 
             //sns 회원가입 (인증키가 없고 비밀번호는 랜덤비밀번호를 사용 (사실상 일반회원로그인이 안되게 막은것))
             userservice.snsjoin_insert(user_email, user_name, user_password, authorization, sns_key, sns_type);
