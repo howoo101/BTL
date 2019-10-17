@@ -36,19 +36,18 @@ public class CalendarServicelmpl implements CalendarService {
             JSONArray jobarr = (JSONArray) jobdata.get("job");
 
 
-            for (int i = 0; i < jobarr.size(); i++) {
+            for (Object o : jobarr) {
+
                 CalendarDTO cDto = new CalendarDTO();
                 //0번째 요소를 하나 선택해서
-                JSONObject indexObj = (JSONObject) jobarr.get(i);
+                JSONObject indexObj = (JSONObject) o;
                 // url
                 // 회사 이름
                 JSONObject jsonObjCompany = (JSONObject) indexObj.get("company");
                 JSONObject jsonObjDetail = (JSONObject) jsonObjCompany.get("detail");
                 // 직무
                 JSONObject jsonObjPosition = (JSONObject) indexObj.get("position");
-
                 cDto.setTitle(jsonObjDetail.get("name") + " / " + jsonObjPosition.get("title"));
-
                 // 채용 오픈
                 SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
                 Long hireStamp = Long.parseLong((String) indexObj.get("opening-timestamp")) * 1000;
@@ -68,8 +67,9 @@ public class CalendarServicelmpl implements CalendarService {
                     cDto.setStart(sf.format(hDate));
                     cDto.setEnd(sf.format(eDate));
                 }
-
-                cList.add(cDto);
+                if (jsonObjDetail.get("name").equals(ci_companyName)) {
+                    cList.add(cDto);
+                }
             }
         } catch (ParseException e) {
             e.printStackTrace();

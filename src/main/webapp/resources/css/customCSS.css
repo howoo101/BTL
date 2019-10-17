@@ -191,6 +191,12 @@ html, body {
     }
 }
 
+@media (max-width: 400px) {
+ #mySidenav {
+     display: none;
+ }
+}
+
 /*로그인 css*/
 #sns_nav {
     text-align: center;
