@@ -230,8 +230,7 @@
                 </div>
                 <div class="form-group">
                     <label>작성일</label> <input class="form-control"
-                                                     name=reply_date value=''>
-
+                                              name=reply_date value=''>
                 </div>
             </div>
             <div class="modal-footer">
@@ -257,11 +256,12 @@
         $("button[data-oper='modify']").on("click", function (e) {
             if (checkGrade === 1 || user_id === Number(checkUser)) {
                 operForm.attr("action", "modify").submit();
-               location.href='modify?board_id=<c:out value="${board.board_id }"/>';
+                location.href = 'modify?board_id=<c:out value="${board.board_id }"/>';
             } else {
                 Swal.fire({
-                    type:"error",
-                    text : "작성자가 아닙니다."});
+                    type: "error",
+                    text: "작성자가 아닙니다."
+                });
             }
 
         });
@@ -390,8 +390,6 @@
                 .find("input[name='reply_writer']");
             var inputUserId = replyCard
                 .find("input[name='user_id']");
-            var inputReplyDate = replyCard
-                .find("input[name='reply_date']");
 
             var modalInputReply = modal
                 .find("input[name='reply_content']");
@@ -402,7 +400,6 @@
 
             var modalModBtn = $("#modalModBtn");
             var modalRemoveBtn = $("#modalRemoveBtn");
-            var modalRegisterBtn = $("#modalRegisterBtn");
 
             //추가 버튼 누를시 close빼고 hide이후 등록 버튼만 보이도록 수정
             $("#addReplyBtn")
@@ -414,8 +411,10 @@
 
                     /* 필수값입력하게하기 */
                     if (!need.val() || !need_writer.val()) {
-                        Swal.fire({type : "warning",
-                            text: "필수값이 입력되지 않았습니다."});
+                        Swal.fire({
+                            type: "warning",
+                            text: "필수값이 입력되지 않았습니다."
+                        });
                     } else {
 
                         var reply_content = {
@@ -432,8 +431,9 @@
                             function (result) {
 
                                 Swal.fire({
-                                    type:"success",
-                                    text : result});
+                                    type: "success",
+                                    text: result
+                                });
 
                                 replyCard.find("input")
                                     .val("");
@@ -467,18 +467,26 @@
                     replyService.get(reply_id,
                         function (reply_content) {
 
-                            modalInputReply.val(reply_content.reply_content);
-                            modalInputReplyer.val(reply_content.reply_writer);
-                            modalInputReplyDate.val(
-                                replyService.displayTime(reply_content.reply_date))
-                                .attr("readonly", "readonly");
-                            modal.data("reply_id", reply_content.reply_id);
+                            if (reply_content.user_id === <%=user_id%>) {
 
-                            modal.find("button[id != 'modalCloseBtn']").hide();
-                            modalModBtn.show();
-                            modalRemoveBtn.show();
+                                modalInputReply.val(reply_content.reply_content);
+                                modalInputReplyer.val(reply_content.reply_writer);
+                                modalInputReplyDate.val(
+                                    replyService.displayTime(reply_content.reply_date))
+                                    .attr("readonly", "readonly");
+                                modal.data("reply_id", reply_content.reply_id);
 
-                            $(".modal_r").modal("show");
+                                modal.find("button[id != 'modalCloseBtn']").hide();
+                                modalModBtn.show();
+                                modalRemoveBtn.show();
+
+                                $(".modal_r").modal("show");
+                            }else {
+                                Swal.fire({
+                                    type: "warning",
+                                    text: "작성자가 아닙니다."
+                                });
+                            }
 
                         });
                 });
@@ -494,8 +502,9 @@
                         reply_content,
                         function (result) {
                             Swal.fire({
-                                type:"success",
-                                text : result});
+                                type: "success",
+                                text: result
+                            });
                             modal.modal("hide");
                             showList(pageNum);
 
@@ -509,8 +518,9 @@
                         function (
                             result) {
                             Swal.fire({
-                                type:"success",
-                                text : result});
+                                type: "success",
+                                text: result
+                            });
                             modal.modal("hide");
                             showList(pageNum);
                         });

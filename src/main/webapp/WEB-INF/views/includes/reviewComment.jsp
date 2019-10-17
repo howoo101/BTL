@@ -9,7 +9,7 @@
                 <div class="card border-info">
                     <div class="row">
                         <div class="card-body col-md-6 text-center">
-                            <p>총 만족도</p>
+                            <p>평균 만족도</p>
                             <div class="card-body">
                                 <div class="row justify-content-center">
                                     <div class="text-warning">
