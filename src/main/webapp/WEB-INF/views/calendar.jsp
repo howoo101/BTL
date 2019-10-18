@@ -7,126 +7,128 @@
 <html>
 <head>
 <meta charset='utf-8' />
-  <link href='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.css' rel='stylesheet' />
-  <link href='https://unpkg.com/@fullcalendar/daygrid@4.3.0/main.min.css' rel='stylesheet' />
-  <link href='https://unpkg.com/@fullcalendar/timegrid@4.3.0/main.min.css' rel='stylesheet' />
+<link href='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.css'
+	rel='stylesheet' />
+<link href='https://unpkg.com/@fullcalendar/daygrid@4.3.0/main.min.css'
+	rel='stylesheet' />
+<link href='https://unpkg.com/@fullcalendar/timegrid@4.3.0/main.min.css'
+	rel='stylesheet' />
 
-  <script src='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.js'></script>
-  <script src='https://unpkg.com/@fullcalendar/interaction@4.3.0/main.min.js'></script>
-  <script src='https://unpkg.com/@fullcalendar/daygrid@4.3.0/main.min.js'></script>
-  <script src='https://unpkg.com/@fullcalendar/timegrid@4.3.0/main.min.js'></script>
+<script src='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.js'></script>
+<script
+	src='https://unpkg.com/@fullcalendar/interaction@4.3.0/main.min.js'></script>
+<script src='https://unpkg.com/@fullcalendar/daygrid@4.3.0/main.min.js'></script>
+<script src='https://unpkg.com/@fullcalendar/timegrid@4.3.0/main.min.js'></script>
 
 
 <style>
+body {
+	margin-top: 40px;
+	font-size: 14px;
+	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+}
 
-  body {
-    margin-top: 40px;
-    font-size: 14px;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  }
+#wrap {
+	width: 1100px;
+	margin: 0 auto;
+}
 
-  #wrap {
-    width: 1100px;
-    margin: 0 auto;
-  }
+#external-events {
+	float: left;
+	width: 150px;
+	padding: 0 10px;
+	border: 1px solid #ccc;
+	background: #e6e6e6;
+	text-align: left;
+	margin-top: 60px;
+	display: inline;
+}
 
-  #external-events{
-    float: left;
-    width: 150px;
-    padding: 0 10px;
-    border: 1px solid #ccc;
-    background: #e6e6e6;
-    text-align: left;
-    margin-top: 60px;
-    display: inline;
-  }
+#external-events h4 {
+	font-size: 16px;
+	margin-top: 0;
+	padding-top: 1em;
+}
 
-  #external-events h4 {
-    font-size: 16px;
-    margin-top: 0;
-    padding-top: 1em;
-  }
+#external-events .fc-event {
+	margin: 10px 0;
+	cursor: pointer;
+}
 
-  #external-events .fc-event{
-    margin: 10px 0;
-    cursor: pointer;
-  }
+#calendar {
+	float: right;
+	width: 900px;
+}
 
-  #calendar {
-    float: right;
-    width: 900px;
-  }
+#external-events .important {
+	background-color: #d63031;
+	border-color: #d63031;
+	color: #ffffff;
+}
 
-  #external-events .important { 
-    background-color: #d63031;
-    border-color: #d63031;
-    color: #ffffff;
-  }
+#external-events .report-end {
+	background-color: #0984e3;
+	border-color: #0984e3;
+	color: #ffffff;
+}
 
-  #external-events .report-end { 
-    background-color: #0984e3;
-    border-color: #0984e3;
-    color: #ffffff;
-  }
+#external-events .interview {
+	background-color: #00b894;
+	border-color: #00b894;
+	color: #ffffff;
+}
 
-  #external-events .interview { 
-    background-color: #00b894;
-    border-color: #00b894;
-    color: #ffffff;
-  }
+#external-events .announcement {
+	background-color: #fd79a8;
+	border-color: #fd79a8;
+	color: #ffffff;
+}
 
-  #external-events .announcement { 
-    background-color: #fd79a8;
-    border-color: #fd79a8;
-    color: #ffffff;
-  }
+.hire {
+	background-color: #4a69bd;
+	border-color: #4a69bd;
+	color: #ffffff;
+}
 
-  .hire {
-    background-color: #4a69bd;
-    border-color: #4a69bd;
-    color: #ffffff;
-  }
-
-  /* 토요일 */
-  .fc-sat { 
-    color:#0000FF; 
-    background-color: rgba(0,0,255,0.05);
-  }
-  /* 일요일 */     
-  .fc-sun { 
-    color:#FF0000;
-    background-color: rgba(255,0,0,0.05) 
-  }    
-
+/* 토요일 */
+.fc-sat {
+	color: #0000FF;
+	background-color: rgba(0, 0, 255, 0.05);
+}
+/* 일요일 */
+.fc-sun {
+	color: #FF0000;
+	background-color: rgba(255, 0, 0, 0.05)
+}
 </style>
 </head>
 
 <body>
-  <%@ include file="includes/header.jsp"%>
-  <br/>
-  <br/>
-  
-  <!-- id='wrap'-->
-  <div id='wrap'>
-    <!-- 마커 이벤트 요소.-->
-    <div id='external-events'>
-      <h4>마커</h4>
+	<%@ include file="includes/header.jsp"%>
+	<br />
+	<br />
 
-      <div id='external-events-list'>
-        <div class='fc-event important'>중요</div>
-        <div class='fc-event report-end'>자소서 마감</div>
-        <div class='fc-event interview'>면접</div>
-        <div class='fc-event announcement'>채용 발표</div>
-      </div>
-    </div>
+	<!-- id='wrap'-->
+	<div id='wrap'>
+		<!-- 마커 이벤트 요소.-->
+		<div id='external-events'>
+			<h4>마커</h4>
 
-    <!-- 캘린더 생성 -->
-    <div id='calendar'></div>
-    <div style="clear:both"></div>
-    
-  </div>
-    
-<script>
+			<div id='external-events-list'>
+				<div class='fc-event important'>중요</div>
+				<div class='fc-event report-end'>자소서 마감</div>
+				<div class='fc-event interview'>면접</div>
+				<div class='fc-event announcement'>채용 발표</div>
+			</div>
+		</div>
+
+		<!-- 캘린더 생성 -->
+		<div id='calendar'></div>
+		<div style="clear: both"></div>
+
+	</div>
+
+	<script>
 
 	// 달력 시작
 	document.addEventListener('DOMContentLoaded', function() {
@@ -325,20 +327,41 @@
 					  Swal.fire({
 						  type: 'success',
 						  text: '등록에 성공했습니다.',
-						})
-					  
+						})				  
 				  },
                   error : function(request) {
                 	  Swal.fire({
                 		  type: 'error',
                 		  text: '등록에 실패하였습니다.',
                 		})
-                    if (request.status === 403) {
-                      location.href = "logininterceptor";
-                    }
-                    if (request.status === 404) {
-                      location.href = "gradeceptor";
-                    }
+                      if (request.status === 403) {
+            	
+                   Swal.fire({
+                   title: '로그인이 필요합니다.',
+                   text:'로그인 하시겠습니까?',
+                   cancelButtonText: '취소',
+                   type: 'warning',
+                   showCancelButton: true,
+                   confirmButtonColor: '#3085d6',
+                   cancelButtonColor: '#d33',
+                   confirmButtonText: '로그인'
+                   }).then((result) => {
+                   if (result.value) {
+                  $('#loginModal').modal('show');
+                   }
+                   else {
+                   }
+                   });
+                
+
+            	}
+            if (request.status === 404) {
+            
+            	Swal.fire({
+                 type: 'warning',
+                 html: '회원님은 계정 제한 상태입니다.<br> 관리자 메일로 문의해주십시오.'
+                 })	
+            }
                   }
             	}); // end of ajax
             	
@@ -386,7 +409,7 @@
     });
 
 </script>
-  
-  <%@ include file="includes/footer.jsp"%>
+
+	<%@ include file="includes/footer.jsp"%>
 </body>
 </html>

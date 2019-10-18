@@ -52,8 +52,8 @@
     <!-- 인터셉터 맵핑 설정 (로그인이 필요한곳) -->
     <interceptors>
         <interceptor>
-           <mapping path="/list"/> 
-     		<mapping path="/follow/*"/>
+           <mapping path="/register"/> 
+     		<mapping path="/follow/new"/>
      		<mapping path="/myPage_menu"/>
      		<mapping path="/myPage_Following"/>
      		<mapping path="/myPage_InterviewReview"/>

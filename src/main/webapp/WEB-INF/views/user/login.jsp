@@ -58,7 +58,11 @@
 <input id="naver_name" type="hidden" value="">
 
 
+<!-- 인터셉터 변수 -->
+<input id="logininter" type="hidden">
+
 <script>
+console.log($('#logininter').val());
 //이메일 정규표현식 통과시 true 반환
 function email_check(email) {
     var regex = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -104,7 +108,7 @@ $.ajax({
       		showConfirmButton: false
         	});
      	var timer = setInterval(function() { 
-        		$('.close').trigger('click');
+        		$('.close').trigger('click');	
         		 location.reload(); 
         		 clearInterval(timer);
    			}, 500); 

@@ -301,12 +301,32 @@
                     }
                 },
                 error: function (request, status, error) {
+
                     if (request.status === 403) {
-                        location.href = "logininterceptor";
-                    }
+                           Swal.fire({
+                           title: '로그인이 필요합니다.',
+                           text:'로그인 하시겠습니까?',
+                           cancelButtonText: '취소',
+                           type: 'warning',
+                           showCancelButton: true,
+                           confirmButtonColor: '#3085d6',
+                           cancelButtonColor: '#d33',
+                           confirmButtonText: '로그인'
+                           }).then((result) => {
+                           if (result.value) {
+                          $('#loginModal').modal('show');
+                           }
+                           else {
+                           }
+                           });       
+                    	}
                     if (request.status === 404) {
-                        location.href = "gradeceptor";
-                    }
+                    
+                    	Swal.fire({
+                         type: 'warning',
+                         html: '회원님은 계정 제한 상태입니다.<br> 관리자 메일로 문의해주십시오.'
+                         })	
+                    	}
                 }
             });
         }//add
