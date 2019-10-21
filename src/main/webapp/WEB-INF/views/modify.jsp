@@ -184,8 +184,7 @@
             var operation = $(this).data("oper");
 
             if (operation === 'remove') {
-                formObj.attr("action", "remove");
-
+                formObj.attr("method","post").attr("action", "remove");
             } else if (operation === 'list') {
                 //move to list
                 formObj.attr("action", "list").attr("method", "get");
@@ -272,7 +271,7 @@
 
         $(".uploadResult").on("click", "button", function (e) {
 
-            if (confirm("Remove this file? ")) {
+            if (confirm("파일을 삭제하시겠습니까? ")) {
 
                 var targetLi = $(this).closest("li");
                 targetLi.remove();

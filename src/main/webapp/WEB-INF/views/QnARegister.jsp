@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ include file="includes/header.jsp" %>
 
-<div class="container">
+<div class="container mt-3">
     <form role="form" action="QnARegister" method="post" name="need">
         <div class="row">
             <div class="form-group col-lg-8">
