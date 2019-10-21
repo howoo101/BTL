@@ -25,8 +25,10 @@ public class NaverSearchAPI {
         ArrayList<String[]> list = new ArrayList<>();
 
         try {
-
+        	//String text = query;
+        	System.out.println("before encoding" + query);
             String text = URLEncoder.encode(query, "UTF-8");
+            System.out.println("after encoding" + text);
             String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&start=1&display=20";
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -36,10 +38,12 @@ public class NaverSearchAPI {
             // response 수신
             int responseCode = con.getResponseCode();
             if (responseCode == 200) {
+            	System.out.println("connected");
                 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));
                 String inputLine;
                 StringBuffer response = new StringBuffer();
                 while ((inputLine = in.readLine()) != null) {
+                	System.out.println(inputLine);
                     response.append(inputLine);
                 }
                 in.close();
@@ -48,16 +52,17 @@ public class NaverSearchAPI {
                 JSONObject jsonObj = (JSONObject) obj;
                 JSONArray jsonArr = (JSONArray) jsonObj.get("items");
                 text = URLDecoder.decode(text).trim();
+                query = query.trim();
                 //회사명 뽑아내기
                 if (text.contains("주식회사"))
-                    text = text.substring(4);
+                	query = query.substring(query.indexOf("주식회사")+4);
                 else if (text.indexOf(")") < 4)
-                    text = text.substring(text.indexOf(")") + 1);
+                	query = query.substring(query.indexOf(")") + 1);
                 else
-                    text = text.substring(0, text.indexOf("("));
-                text = text.trim();
-                System.out.println("회사이름 : " + text);
-				
+                	query = query.substring(0, query.indexOf("("));
+                query = query.trim();
+                System.out.println("회사이름 : " + query);
+				System.out.println(jsonArr.size());
                 for (Object o : jsonArr) {
 					String[] arr = new String[3];
 					String title = ((JSONObject) o).get("title").toString();
@@ -77,7 +82,7 @@ public class NaverSearchAPI {
 					arr[1] = link;
 					arr[2] = date;
 					//기업명포함된 기사만 추가
-					if (title.contains(text) || discription.contains(text))
+					if (title.contains(query) || discription.contains(query))
 						list.add(arr);
 				}
 
