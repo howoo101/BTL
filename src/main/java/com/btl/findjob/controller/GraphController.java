@@ -10,6 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,7 +34,7 @@ public class GraphController {
     // 채용정보
     @RequestMapping(value = "/hireinfo", produces = "application/text; charset=utf8")
     public @ResponseBody
-    String hireinfo(String ci_companyName) {
+    String hireinfo(String ci_companyName, Model model) {
         return saraminData(ci_companyName);
     }
 
@@ -44,6 +45,14 @@ public class GraphController {
             // URL 생성
             String saraminUrl = "https://oapi.saramin.co.kr/job-search?";
             String accessKey = "&access-key=e8iNhZzwll1Rot7ie6H6eZSrzZ7YBwxczxmTF9on1TVL6pZkMiVW&keywords=";
+
+            String[] keywordFilter = {"(주)", "주식회사"};
+
+            for (String s : keywordFilter) {
+                if (company.contains(s)) {
+                    company = company.replace(s, "");
+                }
+            }
             String keyword = URLEncoder.encode(company, "UTF-8");
 
             String URL = saraminUrl + accessKey + keyword;
@@ -56,6 +65,7 @@ public class GraphController {
             con.setRequestMethod("GET");
             in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
             json = in.readLine();
+
 
         } catch (Exception e) {
             e.printStackTrace();
